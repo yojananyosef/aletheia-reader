@@ -35,7 +35,9 @@
   --text-pergamino: #222222;
   --border-pergamino: rgba(34, 34, 34, 0.12);
   --muted-pergamino: #666666;
-  --accent-pergamino: #7c4d25;
+  --accent-pergamino: #9A5B24; /* Terracota Noble / Bronce Pergamino */
+  --accent-fg-pergamino: #FFFFFF;
+  --accent-subtle-pergamino: rgba(154, 91, 36, 0.12);
   --hover-pergamino: rgba(34, 34, 34, 0.05);
 
   /* Modo Noche Suave - Contraste Suave (Sin Negro Puro) */
@@ -43,7 +45,9 @@
   --text-noche: #E8E8E8;
   --border-noche: rgba(232, 232, 232, 0.15);
   --muted-noche: #999999;
-  --accent-noche: #d4a373;
+  --accent-noche: #D4A373; /* Arena Dorada Cálida / Bronce Luna - cero deslumbramiento */
+  --accent-fg-noche: #1A1A1A;
+  --accent-subtle-noche: rgba(212, 163, 115, 0.18);
   --hover-noche: rgba(232, 232, 232, 0.08);
 
   /* Modo Sepia Académico - Calidez de Papel Antiguo */
@@ -51,7 +55,9 @@
   --text-sepia: #2B261F;
   --border-sepia: rgba(43, 38, 31, 0.14);
   --muted-sepia: #6e6457;
-  --accent-sepia: #8b5a2b;
+  --accent-sepia: #784421; /* Nogal Antiguo / Bistre Profundo */
+  --accent-fg-sepia: #FDFBF6;
+  --accent-subtle-sepia: rgba(120, 68, 33, 0.14);
   --hover-sepia: rgba(43, 38, 31, 0.06);
 
   /* Familias Tipográficas */
@@ -70,6 +76,8 @@
   --reader-border: var(--border-pergamino);
   --reader-muted: var(--muted-pergamino);
   --reader-accent: var(--accent-pergamino);
+  --reader-accent-fg: var(--accent-fg-pergamino);
+  --reader-accent-subtle: var(--accent-subtle-pergamino);
   --reader-hover: var(--hover-pergamino);
   background-color: var(--reader-bg);
   color: var(--reader-text);
@@ -81,6 +89,8 @@
   --reader-border: var(--border-noche);
   --reader-muted: var(--muted-noche);
   --reader-accent: var(--accent-noche);
+  --reader-accent-fg: var(--accent-fg-noche);
+  --reader-accent-subtle: var(--accent-subtle-noche);
   --reader-hover: var(--hover-noche);
   background-color: var(--reader-bg);
   color: var(--reader-text);
@@ -92,6 +102,8 @@
   --reader-border: var(--border-sepia);
   --reader-muted: var(--muted-sepia);
   --reader-accent: var(--accent-sepia);
+  --reader-accent-fg: var(--accent-fg-sepia);
+  --reader-accent-subtle: var(--accent-subtle-sepia);
   --reader-hover: var(--hover-sepia);
   background-color: var(--reader-bg);
   color: var(--reader-text);
@@ -125,7 +137,7 @@ input:focus-visible,
 select:focus-visible, 
 a:focus-visible,
 [tabindex]:focus-visible {
-  outline: 3px solid var(--reader-accent, #7c4d25) !important;
+  outline: 3px solid var(--reader-accent, #9A5B24) !important;
   outline-offset: 2px !important;
 }
 
@@ -162,13 +174,32 @@ a:focus-visible,
   font-size: 0.7em;
   line-height: 0;
   vertical-align: super;
-  opacity: 0.7;
+  opacity: 0.85;
   color: var(--reader-accent);
   cursor: pointer;
   margin-left: 0.15em;
   margin-right: 0.25em;
   padding: 0 0.2em;
   font-weight: 700;
+}
+
+/* Clases de Utilidad de Acento Dinámico */
+.bg-reader-accent {
+  background-color: var(--reader-accent) !important;
+  color: var(--reader-accent-fg) !important;
+}
+
+.text-reader-accent {
+  color: var(--reader-accent) !important;
+}
+
+.border-reader-accent {
+  border-color: var(--reader-accent) !important;
+}
+
+.bg-reader-accent-subtle {
+  background-color: var(--reader-accent-subtle) !important;
+  color: var(--reader-accent) !important;
 }
 
 /* Deshabilitar animaciones intrusivas si el usuario prefiere movimiento reducido */

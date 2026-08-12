@@ -71,7 +71,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
         {/* Left: Brand & Book/Chapter Selector Button */}
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4 text-amber-700 dark:text-amber-400 shrink-0" />
+            <BookOpen className="h-4 w-4 text-reader-accent shrink-0" />
             <span className="font-bold tracking-wide uppercase text-xs hidden lg:inline opacity-80">
               Alethia Reader
             </span>
@@ -155,7 +155,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               aria-label="Modo Pergamino"
               className={`flex h-9 px-2.5 items-center gap-1.5 rounded-lg text-xs font-medium transition-all ${
                 settings.theme === 'pergamino'
-                  ? 'bg-[#FDFBF6] text-[#222222] ring-2 ring-amber-700/60 shadow-xs'
+                  ? 'bg-[#FDFBF6] text-[#222222] ring-2 ring-[#9A5B24] shadow-xs font-bold'
                   : 'hover:bg-neutral-500/10 opacity-70'
               }`}
             >
@@ -169,7 +169,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               aria-label="Modo Sepia Académico"
               className={`flex h-9 px-2.5 items-center gap-1.5 rounded-lg text-xs font-medium transition-all ${
                 settings.theme === 'sepia'
-                  ? 'bg-[#F5EFEB] text-[#2B261F] ring-2 ring-amber-800/60 shadow-xs'
+                  ? 'bg-[#F5EFEB] text-[#2B261F] ring-2 ring-[#784421] shadow-xs font-bold'
                   : 'hover:bg-neutral-500/10 opacity-70'
               }`}
             >
@@ -183,7 +183,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               aria-label="Modo Noche Suave"
               className={`flex h-9 px-2.5 items-center gap-1.5 rounded-lg text-xs font-medium transition-all ${
                 settings.theme === 'noche'
-                  ? 'bg-[#1A1A1A] text-[#E8E8E8] ring-2 ring-neutral-400 shadow-xs'
+                  ? 'bg-[#1A1A1A] text-[#E8E8E8] ring-2 ring-[#D4A373] shadow-xs font-bold'
                   : 'hover:bg-neutral-500/10 opacity-70'
               }`}
             >
@@ -204,9 +204,9 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               style={{ borderColor: 'var(--reader-border)' }}
               title="Versículos Guardados"
             >
-              <BookMarked className="h-4 w-4 text-amber-600" />
+              <BookMarked className="h-4 w-4 text-reader-accent" />
               {bookmarksCount > 0 && (
-                <span className="flex h-4 min-w-[16px] items-center justify-center rounded-full bg-amber-600 px-1 text-[10px] font-bold text-white">
+                <span className="flex h-4 min-w-[16px] items-center justify-center rounded-full bg-reader-accent px-1 text-[10px] font-bold shadow-xs">
                   {bookmarksCount}
                 </span>
               )}
@@ -241,7 +241,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             className="flex min-h-[38px] items-center gap-1.5 rounded-xl border px-3 py-1 font-medium text-xs sm:text-sm transition-all hover:bg-neutral-500/10 active:scale-95"
             style={{ borderColor: 'var(--reader-border)' }}
           >
-            <Settings className="h-4 w-4" />
+            <Settings className="h-4 w-4 text-reader-accent" />
             <span className="hidden sm:inline">Ajustes</span>
           </button>
         </div>
@@ -252,7 +252,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
         <div
           role="dialog"
           aria-label="Panel de Ajustes de Lectura y Accesibilidad"
-          className="fixed inset-0 z-50 flex justify-end bg-black/30 backdrop-blur-xs animate-in fade-in duration-150"
+          className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-xs animate-in fade-in duration-150"
           onClick={() => setShowSettingsDrawer(false)}
         >
           <div
@@ -266,14 +266,14 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           >
             <div className="flex items-center justify-between border-b pb-4 mb-6" style={{ borderColor: 'var(--reader-border)' }}>
               <div className="flex items-center gap-2">
-                <Settings className="h-5 w-5 text-amber-600" />
+                <Settings className="h-5 w-5 text-reader-accent" />
                 <h2 className="text-lg font-bold">Ajustes de Confort E-Ink</h2>
               </div>
               <button
                 type="button"
                 onClick={() => setShowSettingsDrawer(false)}
                 aria-label="Cerrar panel de ajustes"
-                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/10"
+                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/15"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -291,7 +291,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                     onClick={() => onUpdateSettings({ theme: 'pergamino' })}
                     className={`flex flex-col items-center justify-center gap-2 rounded-xl p-3 border text-xs font-semibold transition-all ${
                       settings.theme === 'pergamino'
-                        ? 'ring-2 ring-amber-700 bg-amber-500/10'
+                        ? 'ring-2 ring-[#9A5B24] bg-[#9A5B24]/15 font-bold shadow-xs'
                         : 'hover:bg-neutral-500/10'
                     }`}
                     style={{ borderColor: 'var(--reader-border)' }}
@@ -305,7 +305,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                     onClick={() => onUpdateSettings({ theme: 'sepia' })}
                     className={`flex flex-col items-center justify-center gap-2 rounded-xl p-3 border text-xs font-semibold transition-all ${
                       settings.theme === 'sepia'
-                        ? 'ring-2 ring-amber-800 bg-amber-500/10'
+                        ? 'ring-2 ring-[#784421] bg-[#784421]/15 font-bold shadow-xs'
                         : 'hover:bg-neutral-500/10'
                     }`}
                     style={{ borderColor: 'var(--reader-border)' }}
@@ -319,7 +319,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                     onClick={() => onUpdateSettings({ theme: 'noche' })}
                     className={`flex flex-col items-center justify-center gap-2 rounded-xl p-3 border text-xs font-semibold transition-all ${
                       settings.theme === 'noche'
-                        ? 'ring-2 ring-neutral-400 bg-white/10'
+                        ? 'ring-2 ring-[#D4A373] bg-[#D4A373]/20 font-bold shadow-xs text-white'
                         : 'hover:bg-neutral-500/10'
                     }`}
                     style={{ borderColor: 'var(--reader-border)' }}
@@ -341,13 +341,13 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                     onClick={() => onUpdateSettings({ font: 'bookerly' })}
                     className={`flex w-full min-h-[48px] items-center justify-between rounded-xl px-4 py-3 border text-left transition-all ${
                       settings.font === 'bookerly'
-                        ? 'ring-2 ring-amber-700 bg-amber-500/10 font-bold'
+                        ? 'ring-2 border-reader-accent bg-reader-accent-subtle font-bold'
                         : 'hover:bg-neutral-500/10'
                     }`}
                     style={{ borderColor: 'var(--reader-border)' }}
                   >
                     <span className="font-serif text-base">Bookerly / Literata (Kindle Serif)</span>
-                    {settings.font === 'bookerly' && <span className="text-xs font-sans uppercase text-amber-700 font-bold">Activa</span>}
+                    {settings.font === 'bookerly' && <span className="text-xs font-sans uppercase text-reader-accent font-bold">Activa</span>}
                   </button>
 
                   <button
@@ -355,7 +355,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                     onClick={() => onUpdateSettings({ font: 'atkinson' })}
                     className={`flex w-full min-h-[48px] items-center justify-between rounded-xl px-4 py-3 border text-left transition-all ${
                       settings.font === 'atkinson'
-                        ? 'ring-2 ring-amber-700 bg-amber-500/10 font-bold'
+                        ? 'ring-2 border-reader-accent bg-reader-accent-subtle font-bold'
                         : 'hover:bg-neutral-500/10'
                     }`}
                     style={{ borderColor: 'var(--reader-border)' }}
@@ -364,7 +364,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                       <span className="font-sans text-base">Atkinson Hyperlegible</span>
                       <span className="text-xs opacity-70">Braille Institute (Anti-homóglifos)</span>
                     </div>
-                    {settings.font === 'atkinson' && <span className="text-xs uppercase text-amber-700 font-bold">Activa</span>}
+                    {settings.font === 'atkinson' && <span className="text-xs uppercase text-reader-accent font-bold">Activa</span>}
                   </button>
 
                   <button
@@ -372,7 +372,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                     onClick={() => onUpdateSettings({ font: 'opendyslexic' })}
                     className={`flex w-full min-h-[48px] items-center justify-between rounded-xl px-4 py-3 border text-left transition-all ${
                       settings.font === 'opendyslexic'
-                        ? 'ring-2 ring-amber-700 bg-amber-500/10 font-bold'
+                        ? 'ring-2 border-reader-accent bg-reader-accent-subtle font-bold'
                         : 'hover:bg-neutral-500/10'
                     }`}
                     style={{ borderColor: 'var(--reader-border)' }}
@@ -381,7 +381,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                       <span className="text-base" style={{ fontFamily: 'OpenDyslexic, sans-serif' }}>OpenDyslexic</span>
                       <span className="text-xs opacity-70">Gravedad inferior para dislexia</span>
                     </div>
-                    {settings.font === 'opendyslexic' && <span className="text-xs uppercase text-amber-700 font-bold">Activa</span>}
+                    {settings.font === 'opendyslexic' && <span className="text-xs uppercase text-reader-accent font-bold">Activa</span>}
                   </button>
                 </div>
               </div>
@@ -403,7 +403,8 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                     step="1"
                     value={settings.fontSize}
                     onChange={(e) => onUpdateSettings({ fontSize: Number(e.target.value) })}
-                    className="h-3 w-full cursor-pointer appearance-none rounded-lg bg-neutral-400/30 accent-amber-600"
+                    className="h-3 w-full cursor-pointer appearance-none rounded-lg bg-neutral-400/30"
+                    style={{ accentColor: 'var(--reader-accent)' }}
                     aria-label="Ajustar tamaño de fuente"
                   />
                   <span className="text-sm font-semibold opacity-70">28px</span>
@@ -414,7 +415,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               <div className="rounded-2xl border p-4" style={{ backgroundColor: 'var(--reader-hover)', borderColor: 'var(--reader-border)' }}>
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
-                    <SunMedium className="h-4 w-4 text-amber-600" />
+                    <SunMedium className="h-4 w-4 text-reader-accent" />
                     <label className="text-xs font-bold uppercase tracking-wider">
                       Luminancia por Software (PWM Free)
                     </label>
@@ -433,7 +434,8 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                   step="0.05"
                   value={settings.softwareBrightness}
                   onChange={(e) => onUpdateSettings({ softwareBrightness: Number(e.target.value) })}
-                  className="h-3 w-full cursor-pointer appearance-none rounded-lg bg-neutral-400/30 accent-amber-600"
+                  className="h-3 w-full cursor-pointer appearance-none rounded-lg bg-neutral-400/30"
+                  style={{ accentColor: 'var(--reader-accent)' }}
                   aria-label="Ajustar atenuación por software"
                 />
               </div>
@@ -441,7 +443,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               {/* 5. Line Focus Mode (ADHD & Cognitive Ease) */}
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <Focus className="h-4 w-4 text-amber-600" />
+                  <Focus className="h-4 w-4 text-reader-accent" />
                   <label className="text-xs font-bold uppercase tracking-wider opacity-80">
                     Modo Enfoque de Líneas (TDAH)
                   </label>
@@ -454,10 +456,14 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                       onClick={() => onUpdateSettings({ lineFocus: mode })}
                       className={`flex min-h-[44px] items-center justify-center rounded-xl border text-xs font-semibold transition-all ${
                         settings.lineFocus === mode
-                          ? 'ring-2 ring-amber-700 bg-amber-500/10 font-bold'
+                          ? 'border-reader-accent bg-reader-accent font-bold shadow-xs'
                           : 'hover:bg-neutral-500/10'
                       }`}
-                      style={{ borderColor: 'var(--reader-border)' }}
+                      style={
+                        settings.lineFocus !== mode
+                          ? { borderColor: 'var(--reader-border)' }
+                          : undefined
+                      }
                     >
                       {mode === 'off' ? 'Apagado' : mode.replace('-line', ' L')}
                     </button>
@@ -488,13 +494,13 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           >
             <div className="flex items-center justify-between border-b pb-3 mb-4" style={{ borderColor: 'var(--reader-border)' }}>
               <div className="flex items-center gap-2">
-                <Keyboard className="h-5 w-5 text-amber-600" />
+                <Keyboard className="h-5 w-5 text-reader-accent" />
                 <h3 className="text-lg font-bold">Navegación y Atajos de Accesibilidad</h3>
               </div>
               <button
                 type="button"
                 onClick={() => setShowShortcutsModal(false)}
-                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/10"
+                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/15"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -539,7 +545,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             </div>
 
             <div className="mt-6 rounded-xl p-3 border text-xs leading-relaxed" style={{ backgroundColor: 'var(--reader-hover)', borderColor: 'var(--reader-border)' }}>
-              <strong>Estándar WCAG 2.2 AAA:</strong> Todas las áreas táctiles tienen un tamaño mínimo de 44x44px, los ratios de contraste superan 12:1 y no se emiten contrastes cegadores de blanco o negro puro.
+              <strong>Estándar WCAG 2.2 AAA:</strong> Todas las áreas táctiles tienen un tamaño mínimo de 44x44px, los ratios de contraste superan 12:1 y los colores se adaptan específicamente a la luminancia del modo seleccionado.
             </div>
           </div>
         </div>

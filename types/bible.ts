@@ -25,20 +25,6 @@ export interface ChapterPayload {
   sections?: SectionHeading[];
 }
 
-export interface ComfortBibleReaderProps {
-  data: ChapterPayload;
-  initialVerse?: string | number;
-  onPageChange?: (page: number, totalPages: number) => void;
-  onBookmarkVerse?: (verseNumber: string | number) => void;
-  onNextChapter?: () => void;
-  onPrevChapter?: () => void;
-  hasPrevChapter?: boolean;
-  hasNextChapter?: boolean;
-  onOpenBookSelector?: () => void;
-  onOpenBookmarks?: () => void;
-  bookmarksCount?: number;
-}
-
 export type ThemeMode = 'pergamino' | 'noche' | 'sepia';
 
 export type FontOption = 'bookerly' | 'atkinson' | 'opendyslexic';
@@ -54,6 +40,22 @@ export interface ReaderSettings {
   lineFocus: LineFocusMode;
   showToolbar: boolean;
   fontWeight: number; // 400 to 700
+}
+
+export interface ComfortBibleReaderProps {
+  data: ChapterPayload;
+  initialVerse?: string | number;
+  theme?: ThemeMode;
+  onThemeChange?: (theme: ThemeMode) => void;
+  onPageChange?: (page: number, totalPages: number) => void;
+  onBookmarkVerse?: (verseNumber: string | number) => void;
+  onNextChapter?: () => void;
+  onPrevChapter?: () => void;
+  hasPrevChapter?: boolean;
+  hasNextChapter?: boolean;
+  onOpenBookSelector?: () => void;
+  onOpenBookmarks?: () => void;
+  bookmarksCount?: number;
 }
 
 export interface BibleBookMeta {

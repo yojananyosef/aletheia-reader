@@ -39,7 +39,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
       {/* Chapter Progress Bar */}
       <div className="w-full bg-neutral-500/20 h-1 rounded-full overflow-hidden mb-2">
         <div
-          className="h-full bg-amber-600 transition-all duration-200"
+          className="h-full bg-reader-accent transition-all duration-200"
           style={{ width: `${percentage}%` }}
           role="progressbar"
           aria-valuenow={percentage}

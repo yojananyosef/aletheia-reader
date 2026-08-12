@@ -55,10 +55,11 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   const pages = useMemo<Verse[][]>(() => {
     if (!data.verses || data.verses.length === 0) return [[]];
 
-    const effectiveHeight = Math.max(300, viewportDimensions.height - 180);
+    // Standard page height minus top header space and bottom margin
+    const effectiveHeight = Math.max(320, viewportDimensions.height - 200);
     const linePx = settings.fontSize * settings.lineHeight;
     const linesPerPage = Math.max(6, Math.floor(effectiveHeight / linePx));
-    const charsPerPage = linesPerPage * 52;
+    const baseCharsPerPage = linesPerPage * 52;
 
     const resultPages: Verse[][] = [];
     let currentPageVerses: Verse[] = [];
@@ -66,14 +67,18 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
 
     for (let i = 0; i < data.verses.length; i++) {
       const verse = data.verses[i];
+      // Page 1 has the larger chapter title, so it fits slightly fewer characters
+      const isFirstPage = resultPages.length === 0;
+      const pageCapacity = isFirstPage ? Math.floor(baseCharsPerPage * 0.82) : baseCharsPerPage;
+
       // Check if this verse has a section heading before it
       const hasSection = data.sections?.some(
         (sec) => String(sec.beforeVerse) === String(verse.number)
       );
-      const sectionExtraChars = hasSection ? 60 : 0;
+      const sectionExtraChars = hasSection ? 45 : 0;
       const verseChars = verse.text.length + 15 + sectionExtraChars;
 
-      if (currentChars + verseChars > charsPerPage && currentPageVerses.length > 0) {
+      if (currentChars + verseChars > pageCapacity && currentPageVerses.length > 0) {
         resultPages.push(currentPageVerses);
         currentPageVerses = [verse];
         currentChars = verseChars;
@@ -135,6 +140,13 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   };
 
   // Keyboard navigation (SC 2.1.1 Keyboard Accessible)
+  const nextChapterRef = useRef(onNextChapter);
+  const prevChapterRef = useRef(onPrevChapter);
+  useEffect(() => {
+    nextChapterRef.current = onNextChapter;
+    prevChapterRef.current = onPrevChapter;
+  });
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
@@ -145,22 +157,22 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
         e.preventDefault();
         if (currentPage < totalPages) {
           onPageChange(currentPage + 1, totalPages);
-        } else if (onNextChapter) {
-          onNextChapter();
+        } else if (nextChapterRef.current) {
+          nextChapterRef.current();
         }
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) {
         e.preventDefault();
         if (currentPage > 1) {
           onPageChange(currentPage - 1, totalPages);
-        } else if (onPrevChapter) {
-          onPrevChapter();
+        } else if (prevChapterRef.current) {
+          prevChapterRef.current();
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentPage, totalPages, onPageChange, onNextChapter, onPrevChapter]);
+  }, [currentPage, totalPages, onPageChange]);
 
   // Click Navigation Zones (Kindle standard: left 1/3 = prev, right 1/3 = next, middle = toggle toolbar)
   const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -209,7 +221,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
       onClick={handleCanvasClick}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className={`eink-discrete-page-container relative flex-1 flex flex-col justify-center items-center w-full px-4 sm:px-8 py-6 select-text transition-colors duration-200 cursor-default ${fontClass}`}
+      className={`eink-discrete-page-container relative flex-1 flex flex-col justify-start items-center w-full px-4 sm:px-8 pt-6 sm:pt-8 pb-4 select-text transition-colors duration-200 cursor-default ${fontClass}`}
       style={{
         backgroundColor: 'var(--reader-bg)',
         color: 'var(--reader-text)',
@@ -220,40 +232,53 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
         {`${data.bookName} Capítulo ${data.chapterNumber}, Página ${currentPage} de ${totalPages}`}
       </div>
 
-      {/* Discrete Page Content Block (Strictly 50-60 CPL, left aligned, line-height 1.6) */}
+      {/* Discrete Page Content Block (Strictly 50-60 CPL, left aligned, line-height 1.6, top-anchored) */}
       <div
         className="w-full max-w-[60ch] flex-1 flex flex-col justify-start text-left"
         style={{
           fontSize: `${settings.fontSize}px`,
           lineHeight: settings.lineHeight,
           fontWeight: settings.fontWeight,
-          minHeight: '50vh',
+          minHeight: '60vh',
         }}
       >
+        {/* Fixed Height Header Container (Guarantees zero layout shift / exact same border line on all pages) */}
+        <div
+          className="w-full h-[68px] mb-5 flex flex-col justify-end border-b pb-2 select-none transition-colors"
+          style={{ borderColor: 'var(--reader-border)' }}
+        >
+          {currentPage === 1 ? (
+            /* Page 1 Chapter Heading */
+            <div className="flex flex-col justify-end">
+              <span className="text-[11px] uppercase tracking-widest opacity-60 font-semibold block font-sans leading-none mb-1">
+                {data.bookName}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight leading-none" style={{ color: 'var(--reader-text)' }}>
+                Capítulo {data.chapterNumber}
+              </h2>
+            </div>
+          ) : (
+            /* Pages 2+ Stable Running Head */
+            <div className="w-full flex items-center justify-between opacity-50 text-xs font-semibold uppercase tracking-widest font-sans leading-none">
+              <span>{data.bookName} {data.chapterNumber}</span>
+              <span className="text-[10px] font-mono">Pág. {currentPage}/{totalPages}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Page Content with smooth transition */}
         <AnimatePresence mode="wait">
           <motion.div
             key={`${data.bookId}-${data.chapterNumber}-${currentPage}`}
-            initial={{ opacity: 0.4, x: 10 }}
+            initial={{ opacity: 0.4, x: 8 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0.4, x: -10 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
+            exit={{ opacity: 0.4, x: -8 }}
+            transition={{ duration: 0.12, ease: 'easeOut' }}
             className="flex-1"
           >
-            {/* Chapter Header (Only on Page 1) */}
-            {currentPage === 1 && (
-              <header className="mb-6 border-b pb-4" style={{ borderColor: 'var(--reader-border)' }}>
-                <span className="text-xs uppercase tracking-widest opacity-60 font-semibold block">
-                  {data.bookName}
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mt-1" style={{ color: 'var(--reader-text)' }}>
-                  Capítulo {data.chapterNumber}
-                </h2>
-              </header>
-            )}
-
             {/* Continuous Biblical Paragraph Flow */}
             <div className="m-0 p-0 text-left leading-[1.6em] tracking-normal">
-              {activeVerses.map((verse) => {
+              {activeVerses.map((verse, idx) => {
                 const isBookmarked = bookmarkedVerses.some(
                   (bv) => String(bv) === String(verse.number)
                 );
@@ -272,12 +297,15 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
 
                 return (
                   <React.Fragment key={String(verse.number)}>
-                    {/* Section Subtitle / Perícope Heading */}
+                    {/* Section Subtitle / Perícope Heading (Clean typography, no border clash) */}
                     {section && (
                       <h3
-                        className="w-full text-base sm:text-lg font-bold tracking-tight my-4 pt-2 border-t opacity-90 block"
+                        className={`w-full font-bold tracking-tight opacity-90 block font-sans ${
+                          idx === 0 && currentPage === 1
+                            ? 'text-sm sm:text-base my-2.5 opacity-80'
+                            : 'text-base sm:text-lg my-4 pt-1 opacity-90'
+                        }`}
                         style={{
-                          borderColor: 'var(--reader-border)',
                           color: 'var(--reader-text)',
                         }}
                       >
@@ -287,7 +315,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
 
                     <span
                       className={`inline relative rounded-md transition-colors ${
-                        isBookmarked ? 'bg-amber-500/10' : ''
+                        isBookmarked ? 'bg-reader-accent-subtle' : ''
                       }`}
                     >
                       {/* Inline attenuated superscript verse number */}
@@ -303,7 +331,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                       >
                         {verse.number}
                         {isBookmarked && (
-                          <Bookmark className="inline h-2.5 w-2.5 ml-0.5 fill-amber-600 text-amber-600" />
+                          <Bookmark className="inline h-2.5 w-2.5 ml-0.5 fill-current text-reader-accent" />
                         )}
                       </button>
 

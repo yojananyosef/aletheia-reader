@@ -5,6 +5,7 @@ import {
   ComfortBibleReaderProps,
   ReaderSettings,
   Verse,
+  ThemeMode,
 } from '@/types/bible';
 import { ReaderToolbar } from './ReaderToolbar';
 import { ReaderFooter } from './ReaderFooter';
@@ -17,6 +18,8 @@ import { VerseModal } from './VerseModal';
 export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   data,
   initialVerse,
+  theme = 'pergamino',
+  onThemeChange,
   onPageChange,
   onBookmarkVerse,
   onNextChapter,
@@ -27,7 +30,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 }) => {
   // --- Core Reader Settings ---
   const [settings, setSettings] = useState<ReaderSettings>({
-    theme: 'pergamino',
+    theme: theme,
     font: 'bookerly',
     fontSize: 18,
     lineHeight: 1.6,
@@ -36,6 +39,9 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     showToolbar: true,
     fontWeight: 400,
   });
+
+  // Effective active theme (prop takes precedence if provided)
+  const currentTheme: ThemeMode = theme || settings.theme;
 
   // Calculate initial page based on initialVerse if provided
   const getInitialPage = useCallback(() => {
@@ -59,8 +65,15 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
   // Apply theme class and CSS properties to container
   const updateSettings = useCallback((updates: Partial<ReaderSettings>) => {
-    setSettings((prev) => ({ ...prev, ...updates }));
-  }, []);
+    setSettings((prev) => {
+      const next = { ...prev, ...updates };
+      return next;
+    });
+
+    if (updates.theme && onThemeChange) {
+      onThemeChange(updates.theme as ThemeMode);
+    }
+  }, [onThemeChange]);
 
   // Handle Page Change notification
   const handlePageChange = useCallback(
@@ -124,25 +137,23 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     return data.verses.reduce((acc, v) => acc + v.text.split(/\s+/).length, 0);
   }, [data.verses]);
 
-  // Theme Class
-  const themeClass =
-    settings.theme === 'pergamino'
-      ? 'theme-pergamino'
-      : settings.theme === 'noche'
-      ? 'theme-noche'
-      : 'theme-sepia';
+  // Active settings with synced theme
+  const activeSettings = {
+    ...settings,
+    theme: currentTheme,
+  };
 
   return (
     <div
       ref={containerRef}
-      className={`relative flex min-h-screen w-full flex-col overflow-hidden transition-colors duration-200 ${themeClass}`}
+      className="relative flex min-h-screen w-full flex-col overflow-hidden transition-colors duration-200"
       style={{
         backgroundColor: 'var(--reader-bg)',
         color: 'var(--reader-text)',
       }}
     >
       {/* 1. Procedural SVG Paper Texture Overlay */}
-      <PaperGrainOverlay theme={settings.theme} />
+      <PaperGrainOverlay theme={currentTheme} />
 
       {/* 2. GPU Software Dimmer (PWM Flicker Mitigation) */}
       <PwmDimmerOverlay brightness={settings.softwareBrightness} />
@@ -157,7 +168,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       {/* 4. Accessible Unified Toolbar / HUD */}
       {settings.showToolbar && (
         <ReaderToolbar
-          settings={settings}
+          settings={activeSettings}
           onUpdateSettings={updateSettings}
           bookTitle={data.bookName}
           chapterNumber={data.chapterNumber}
@@ -173,7 +184,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       <main className="relative flex flex-1 flex-col justify-center items-center overflow-hidden">
         <ReadingCanvas
           data={data}
-          settings={settings}
+          settings={activeSettings}
           currentPage={currentPage}
           onPageChange={handlePageChange}
           onSelectVerse={(verse) => setSelectedVerse(verse)}

@@ -76,7 +76,7 @@ export const VerseModal: React.FC<VerseModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="verse-modal-title"
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-4 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div
@@ -84,15 +84,15 @@ export const VerseModal: React.FC<VerseModalProps> = ({
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-xl rounded-t-2xl sm:rounded-2xl border p-6 shadow-2xl transition-all duration-200"
         style={{
-          backgroundColor: 'var(--reader-bg, #FDFBF6)',
-          borderColor: 'var(--reader-border, rgba(0,0,0,0.12))',
-          color: 'var(--reader-text, #222222)',
+          backgroundColor: 'var(--reader-bg)',
+          borderColor: 'var(--reader-border)',
+          color: 'var(--reader-text)',
         }}
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b pb-3 mb-4" style={{ borderColor: 'var(--reader-border)' }}>
           <div className="flex items-center gap-2">
-            <span className="flex h-8 px-2.5 items-center justify-center rounded-full bg-amber-600/10 font-bold text-amber-700 dark:text-amber-400 text-xs">
+            <span className="flex h-8 px-2.5 items-center justify-center rounded-full bg-reader-accent-subtle font-bold text-xs">
               v.{verse.number}
             </span>
             <h2 id="verse-modal-title" className="text-lg font-bold">
@@ -105,7 +105,7 @@ export const VerseModal: React.FC<VerseModalProps> = ({
             type="button"
             onClick={onClose}
             aria-label="Cerrar ventana de versículo"
-            className="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-neutral-500/10 focus-visible:ring-2"
+            className="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-neutral-500/15 focus-visible:ring-2"
           >
             <X className="h-5 w-5" />
           </button>
@@ -128,7 +128,7 @@ export const VerseModal: React.FC<VerseModalProps> = ({
             <ul className="space-y-2">
               {relevantFootnotes.map((fn) => (
                 <li key={fn.id} className="leading-relaxed opacity-95">
-                  <span className="font-bold mr-1.5 inline-flex items-center px-1.5 py-0.5 rounded bg-amber-600/10 text-amber-800 dark:text-amber-300 text-xs">
+                  <span className="font-bold mr-1.5 inline-flex items-center px-1.5 py-0.5 rounded bg-reader-accent-subtle text-xs">
                     [{fn.marker || '*'}] v.{fn.verseNumber}
                   </span>
                   {fn.note}
@@ -162,9 +162,9 @@ export const VerseModal: React.FC<VerseModalProps> = ({
           <button
             type="button"
             onClick={() => onToggleBookmark(verse.number)}
-            className={`flex min-h-[44px] min-w-[44px] items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-colors active:scale-95 ${
+            className={`flex min-h-[44px] min-w-[44px] items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all active:scale-95 ${
               isBookmarked
-                ? 'bg-amber-600 text-white'
+                ? 'bg-reader-accent border-reader-accent shadow-xs'
                 : 'border hover:bg-neutral-500/10'
             }`}
             style={!isBookmarked ? { borderColor: 'var(--reader-border)' } : undefined}

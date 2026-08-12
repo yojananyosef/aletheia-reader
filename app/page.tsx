@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { BibleBookMeta, ChapterPayload } from '@/types/bible';
+import { BibleBookMeta, ChapterPayload, ThemeMode } from '@/types/bible';
 import { getBibleBooks, getChapterData } from '@/lib/bible-service';
 import { ComfortBibleReader } from '@/components/reader/ComfortBibleReader';
 import {
@@ -20,6 +20,7 @@ export default function Home() {
   const [initialVerse, setInitialVerse] = useState<string | number | undefined>(undefined);
   const [chapterPayload, setChapterPayload] = useState<ChapterPayload | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [theme, setTheme] = useState<ThemeMode>('pergamino');
 
   // Navigation Drawers
   const [showBookSelector, setShowBookSelector] = useState<boolean>(false);
@@ -176,18 +177,33 @@ export default function Home() {
     });
   };
 
+  const themeClass =
+    theme === 'pergamino'
+      ? 'theme-pergamino'
+      : theme === 'noche'
+      ? 'theme-noche'
+      : 'theme-sepia';
+
   return (
-    <div className="relative min-h-screen flex flex-col w-full">
+    <div
+      className={`relative min-h-screen flex flex-col w-full transition-colors duration-200 ${themeClass}`}
+      style={{
+        backgroundColor: 'var(--reader-bg)',
+        color: 'var(--reader-text)',
+      }}
+    >
       {/* Main ComfortBibleReader Component */}
       {loading && !chapterPayload ? (
         <div className="flex-1 flex flex-col items-center justify-center p-12 space-y-3 min-h-screen">
-          <Loader2 className="h-8 w-8 animate-spin text-amber-700" />
+          <Loader2 className="h-8 w-8 animate-spin text-reader-accent" />
           <p className="text-sm font-medium opacity-70">Cargando Sagradas Escrituras...</p>
         </div>
       ) : chapterPayload ? (
         <ComfortBibleReader
           data={chapterPayload}
           initialVerse={initialVerse}
+          theme={theme}
+          onThemeChange={setTheme}
           onBookmarkVerse={handleBookmarkVerse}
           onNextChapter={handleNextChapter}
           onPrevChapter={handlePrevChapter}
@@ -210,28 +226,28 @@ export default function Home() {
           role="dialog"
           aria-modal="true"
           aria-label="Explorador de Libros y Capítulos de la Biblia"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-6 backdrop-blur-xs animate-in fade-in duration-150"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-2 sm:p-6 backdrop-blur-xs animate-in fade-in duration-150"
           onClick={() => setShowBookSelector(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl border shadow-2xl overflow-hidden"
+            className="w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl border shadow-2xl overflow-hidden transition-colors"
             style={{
-              backgroundColor: 'var(--reader-bg, #FDFBF6)',
-              borderColor: 'var(--reader-border, rgba(0,0,0,0.15))',
-              color: 'var(--reader-text, #222222)',
+              backgroundColor: 'var(--reader-bg)',
+              borderColor: 'var(--reader-border)',
+              color: 'var(--reader-text)',
             }}
           >
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b p-4" style={{ borderColor: 'var(--reader-border)' }}>
               <div className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-amber-700 dark:text-amber-400" />
+                <BookOpen className="h-5 w-5 text-reader-accent" />
                 <h2 className="text-base sm:text-lg font-bold">Explorador Bíblico (66 Libros)</h2>
               </div>
               <button
                 type="button"
                 onClick={() => setShowBookSelector(false)}
-                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/10"
+                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/15"
                 aria-label="Cerrar explorador"
               >
                 <X className="h-5 w-5" />
@@ -248,8 +264,11 @@ export default function Home() {
                   placeholder="Buscar libro (ej. Génesis, Salmos, Mateo, Romanos)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-xl border pl-10 pr-4 py-2.5 text-sm bg-transparent outline-none transition-all focus:ring-2 focus:ring-amber-600"
-                  style={{ borderColor: 'var(--reader-border)' }}
+                  className="w-full rounded-xl border pl-10 pr-4 py-2.5 text-sm bg-transparent outline-none transition-all focus:ring-2 focus:ring-reader-accent"
+                  style={{
+                    borderColor: 'var(--reader-border)',
+                    color: 'var(--reader-text)',
+                  }}
                 />
                 {searchQuery && (
                   <button
@@ -270,7 +289,7 @@ export default function Home() {
                     onClick={() => setActiveTestamentTab('AT')}
                     className={`flex-1 min-h-[38px] rounded-lg text-xs font-bold transition-all ${
                       activeTestamentTab === 'AT'
-                        ? 'bg-amber-600 text-white shadow-xs'
+                        ? 'bg-reader-accent shadow-xs'
                         : 'opacity-70 hover:bg-neutral-500/10'
                     }`}
                   >
@@ -281,7 +300,7 @@ export default function Home() {
                     onClick={() => setActiveTestamentTab('NT')}
                     className={`flex-1 min-h-[38px] rounded-lg text-xs font-bold transition-all ${
                       activeTestamentTab === 'NT'
-                        ? 'bg-amber-600 text-white shadow-xs'
+                        ? 'bg-reader-accent shadow-xs'
                         : 'opacity-70 hover:bg-neutral-500/10'
                     }`}
                   >
@@ -309,10 +328,10 @@ export default function Home() {
                       onClick={() => setBrowsingBook(book)}
                       className={`flex w-full items-center justify-between px-3 py-2.5 rounded-xl text-left text-sm font-medium transition-all ${
                         isSelected
-                          ? 'bg-amber-600 text-white font-bold shadow-xs'
+                          ? 'bg-reader-accent font-bold shadow-xs'
                           : isCurrent
-                          ? 'bg-amber-600/15 text-amber-900 dark:text-amber-200'
-                          : 'hover:bg-neutral-500/10'
+                          ? 'bg-reader-accent-subtle font-semibold'
+                          : 'hover:bg-neutral-500/10 opacity-90'
                       }`}
                     >
                       <div className="flex items-center gap-2">
@@ -338,7 +357,7 @@ export default function Home() {
                           Selecciona un capítulo ({browsingBook.totalChapters} disponibles)
                         </p>
                       </div>
-                      <span className="text-xs font-mono font-bold px-2 py-1 rounded bg-amber-600/10 text-amber-700 dark:text-amber-300">
+                      <span className="text-xs font-mono font-bold px-2 py-1 rounded bg-reader-accent-subtle">
                         {browsingBook.testament === 'AT' ? 'Antiguo Testamento' : 'Nuevo Testamento'}
                       </span>
                     </div>
@@ -361,10 +380,19 @@ export default function Home() {
                             }}
                             className={`flex min-h-[44px] items-center justify-center rounded-xl border text-sm font-bold transition-all active:scale-95 ${
                               isCurrentActive
-                                ? 'bg-amber-600 text-white border-amber-600 ring-2 ring-amber-600 ring-offset-2'
+                                ? 'bg-reader-accent border-reader-accent ring-2 ring-offset-2'
                                 : 'hover:bg-neutral-500/10'
                             }`}
-                            style={!isCurrentActive ? { borderColor: 'var(--reader-border)' } : undefined}
+                            style={
+                              !isCurrentActive
+                                ? {
+                                    borderColor: 'var(--reader-border)',
+                                    color: 'var(--reader-text)',
+                                  }
+                                : {
+                                    borderColor: 'var(--reader-accent)',
+                                  }
+                            }
                             title={`${browsingBook.name} Capítulo ${chapNum}`}
                           >
                             {chapNum}
@@ -389,27 +417,27 @@ export default function Home() {
         <div
           role="dialog"
           aria-label="Versículos Guardados"
-          className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-xs animate-in fade-in duration-150"
+          className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs animate-in fade-in duration-150"
           onClick={() => setShowBookmarksDrawer(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-md h-full overflow-y-auto border-l p-6 shadow-2xl transition-all animate-in slide-in-from-right duration-200 flex flex-col"
             style={{
-              backgroundColor: 'var(--reader-bg, #FDFBF6)',
-              borderColor: 'var(--reader-border, rgba(0,0,0,0.12))',
-              color: 'var(--reader-text, #222222)',
+              backgroundColor: 'var(--reader-bg)',
+              borderColor: 'var(--reader-border)',
+              color: 'var(--reader-text)',
             }}
           >
             <div className="flex items-center justify-between border-b pb-4 mb-4" style={{ borderColor: 'var(--reader-border)' }}>
               <div className="flex items-center gap-2">
-                <BookmarkCheck className="h-5 w-5 text-amber-600" />
+                <BookmarkCheck className="h-5 w-5 text-reader-accent" />
                 <h2 className="text-lg font-bold">Versículos Guardados</h2>
               </div>
               <button
                 type="button"
                 onClick={() => setShowBookmarksDrawer(false)}
-                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/10"
+                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/15"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -417,7 +445,7 @@ export default function Home() {
 
             {bookmarksList.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-3 opacity-60">
-                <BookMarked className="h-12 w-12 text-amber-600/40" />
+                <BookMarked className="h-12 w-12 text-reader-accent opacity-50" />
                 <p className="text-sm">No has guardado versículos todavía.</p>
                 <p className="text-xs">
                   Haz clic en cualquier número de versículo durante la lectura para guardarlo aquí.
@@ -428,11 +456,11 @@ export default function Home() {
                 {bookmarksList.map((bm, index) => (
                   <div
                     key={`${bm.bookId}-${bm.chapter}-${bm.verse}-${index}`}
-                    className="rounded-xl border p-3 transition-all hover:bg-neutral-500/5 flex flex-col gap-2"
+                    className="rounded-xl border p-3 transition-all hover:bg-neutral-500/10 flex flex-col gap-2"
                     style={{ borderColor: 'var(--reader-border)' }}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-sm text-amber-700 dark:text-amber-300">
+                      <span className="font-bold text-sm text-reader-accent">
                         {bm.bookName} {bm.chapter}:{bm.verse}
                       </span>
                       <button
@@ -444,7 +472,7 @@ export default function Home() {
                           setInitialVerse(bm.verse);
                           setShowBookmarksDrawer(false);
                         }}
-                        className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-amber-600/10 hover:bg-amber-600/20 text-amber-800 dark:text-amber-200 transition-colors"
+                        className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-reader-accent-subtle hover:opacity-80 transition-opacity"
                       >
                         Ir al pasaje
                       </button>
