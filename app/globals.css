@@ -180,6 +180,14 @@ a:focus-visible,
   background-color: var(--reader-hover);
 }
 
+/* Resaltado Bimodal Sincrónico para Narración TTS */
+.tts-active-verse {
+  background-color: var(--reader-accent-subtle) !important;
+  box-shadow: 0 0 0 3px var(--reader-accent-subtle), 0 0 12px rgba(154, 91, 36, 0.15);
+  border-radius: 4px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
 .footnote-indicator {
   font-size: 0.7em;
   line-height: 0;

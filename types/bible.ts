@@ -80,3 +80,21 @@ export interface BibleCatalog {
   };
   books: BibleBookMeta[];
 }
+
+export type TTSStatus = 'idle' | 'playing' | 'paused';
+
+export interface TTSVoiceOption {
+  name: string;
+  lang: string;
+  voiceURI: string;
+  default?: boolean;
+}
+
+export interface TTSState {
+  status: TTSStatus;
+  currentVerseIndex: number;
+  currentVerseNumber: string | number | null;
+  rate: number;
+  selectedVoiceURI: string | null;
+}
+

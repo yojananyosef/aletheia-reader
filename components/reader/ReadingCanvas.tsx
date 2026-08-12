@@ -15,6 +15,7 @@ interface ReadingCanvasProps {
   onToggleToolbar: () => void;
   onNextChapter?: () => void;
   onPrevChapter?: () => void;
+  activeSpokenVerseNumber?: string | number | null;
 }
 
 export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
@@ -27,6 +28,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   onToggleToolbar,
   onNextChapter,
   onPrevChapter,
+  activeSpokenVerseNumber,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [viewportDimensions, setViewportDimensions] = useState<{ width: number; height: number }>({
@@ -322,6 +324,10 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                 const isBookmarked = bookmarkedVerses.some(
                   (bv) => String(bv) === String(verse.number)
                 );
+                const isSpoken =
+                  activeSpokenVerseNumber !== null &&
+                  activeSpokenVerseNumber !== undefined &&
+                  String(activeSpokenVerseNumber) === String(verse.number);
 
                 // Check for section headings before this verse
                 const section = data.sections?.find(
@@ -354,8 +360,12 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                     )}
 
                     <span
-                      className={`inline relative rounded-md transition-colors ${
-                        isBookmarked ? 'bg-reader-accent-subtle' : ''
+                      className={`inline relative rounded-md transition-all ${
+                        isSpoken
+                          ? 'tts-active-verse'
+                          : isBookmarked
+                          ? 'bg-reader-accent-subtle'
+                          : ''
                       }`}
                     >
                       {/* Inline attenuated superscript verse number */}

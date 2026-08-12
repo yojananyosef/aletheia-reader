@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Verse, Footnote } from '@/types/bible';
-import { Bookmark, Copy, Check, X, BookOpen } from 'lucide-react';
+import { Bookmark, Copy, Check, X, BookOpen, Volume2 } from 'lucide-react';
 
 interface VerseModalProps {
   isOpen: boolean;
@@ -13,6 +13,7 @@ interface VerseModalProps {
   footnotes: Footnote[];
   isBookmarked: boolean;
   onToggleBookmark: (verseNumber: string | number) => void;
+  onPlayFromVerse?: (verseNumber: string | number) => void;
 }
 
 export const VerseModal: React.FC<VerseModalProps> = ({
@@ -24,6 +25,7 @@ export const VerseModal: React.FC<VerseModalProps> = ({
   footnotes,
   isBookmarked,
   onToggleBookmark,
+  onPlayFromVerse,
 }) => {
   const [copied, setCopied] = React.useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -141,6 +143,21 @@ export const VerseModal: React.FC<VerseModalProps> = ({
 
         {/* Actions Footer */}
         <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-3 border-t shrink-0" style={{ borderColor: 'var(--reader-border)' }}>
+          {onPlayFromVerse && (
+            <button
+              type="button"
+              onClick={() => {
+                onPlayFromVerse(verse.number);
+                onClose();
+              }}
+              className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-medium border transition-colors hover:bg-neutral-500/10 active:scale-95"
+              style={{ borderColor: 'var(--reader-border)' }}
+            >
+              <Volume2 className="h-4 w-4 text-reader-accent" />
+              <span>Escuchar desde aquí</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={handleCopy}
@@ -150,7 +167,7 @@ export const VerseModal: React.FC<VerseModalProps> = ({
             {copied ? (
               <>
                 <Check className="h-4 w-4 text-emerald-600" />
-                <span>¡Copiado al portapapeles!</span>
+                <span>¡Copiado!</span>
               </>
             ) : (
               <>

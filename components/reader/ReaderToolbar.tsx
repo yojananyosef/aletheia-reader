@@ -18,6 +18,7 @@ import {
   ChevronRight,
   ChevronDown,
   BookMarked,
+  Volume2,
 } from 'lucide-react';
 
 interface ReaderToolbarProps {
@@ -30,6 +31,8 @@ interface ReaderToolbarProps {
   onOpenBookSelector?: () => void;
   onOpenBookmarks?: () => void;
   bookmarksCount?: number;
+  onToggleAudioNarrator?: () => void;
+  isAudioNarratorActive?: boolean;
 }
 
 export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
@@ -42,6 +45,8 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
   onOpenBookSelector,
   onOpenBookmarks,
   bookmarksCount = 0,
+  onToggleAudioNarrator,
+  isAudioNarratorActive = false,
 }) => {
   const [showSettingsDrawer, setShowSettingsDrawer] = useState(false);
   const [showShortcutsModal, setShowShortcutsModal] = useState(false);
@@ -193,8 +198,26 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           </div>
         </div>
 
-        {/* Right: Bookmarks, Shortcuts, Fullscreen, Settings */}
+        {/* Right: Audio Narrator, Bookmarks, Shortcuts, Fullscreen, Settings */}
         <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+          {onToggleAudioNarrator && (
+            <button
+              type="button"
+              onClick={onToggleAudioNarrator}
+              aria-label={isAudioNarratorActive ? "Ocultar narrador de audio" : "Activar narrador de audio bíblico"}
+              className={`flex h-9 sm:h-10 px-2 sm:px-2.5 items-center gap-1 sm:gap-1.5 rounded-xl border transition-all text-xs font-semibold ${
+                isAudioNarratorActive
+                  ? 'bg-reader-accent shadow-xs border-reader-accent font-bold'
+                  : 'hover:bg-neutral-500/10'
+              }`}
+              style={!isAudioNarratorActive ? { borderColor: 'var(--reader-border)' } : undefined}
+              title="Narrador en Audio (TTS Bimodal)"
+            >
+              <Volume2 className={`h-4 w-4 ${isAudioNarratorActive ? 'animate-pulse' : 'text-reader-accent'}`} />
+              <span className="hidden md:inline">Audio</span>
+            </button>
+          )}
+
           {onOpenBookmarks && (
             <button
               type="button"
