@@ -229,20 +229,8 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                   </div>
                 </div>
 
-                {/* Center: Audio Playback Cluster */}
-                <div className="flex items-center justify-center gap-1.5 sm:gap-2">
-                  {onPrevVerseTTS && (
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={onPrevVerseTTS}
-                      title="Versículo Anterior"
-                      aria-label="Versículo anterior"
-                    >
-                      <SkipBack className="h-4 w-4" />
-                    </Button>
-                  )}
-
+                {/* Center: Audio Playback Cluster (Play/Pause & Stop) */}
+                <div className="flex items-center justify-center gap-2">
                   <Button
                     variant="default"
                     size="icon"
@@ -265,50 +253,15 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                       onClick={onStopTTS}
                       title="Detener Audio"
                       aria-label="Detener audio"
+                      className="h-10 w-10 min-w-[40px]"
                     >
                       <Square className="h-4 w-4" />
                     </Button>
                   )}
-
-                  {onNextVerseTTS && (
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={onNextVerseTTS}
-                      title="Siguiente Versículo"
-                      aria-label="Siguiente versículo"
-                    >
-                      <SkipForward className="h-4 w-4" />
-                    </Button>
-                  )}
                 </div>
 
-                {/* Right: Page Navigation & Close Narrator Button */}
-                <div className="flex items-center justify-between w-full sm:w-auto gap-2">
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="outline"
-                      size="icon-sm"
-                      onClick={onPrevPage}
-                      disabled={currentPage <= 1}
-                      title="Página Anterior"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </Button>
-                    <Badge variant="secondary" className="font-mono text-xs font-bold">
-                      {currentPage}/{totalPages}
-                    </Badge>
-                    <Button
-                      variant="outline"
-                      size="icon-sm"
-                      onClick={onNextPage}
-                      disabled={currentPage >= totalPages}
-                      title="Página Siguiente"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
-                  </div>
-
+                {/* Right: Close Narrator Button */}
+                <div className="flex items-center justify-end w-full sm:w-auto">
                   {onCloseNarrator && (
                     <Button
                       variant="ghost"
@@ -316,6 +269,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                       onClick={onCloseNarrator}
                       title="Cerrar barra de audio"
                       aria-label="Cerrar narrador de audio"
+                      className="h-9 w-9 opacity-70 hover:opacity-100"
                     >
                       <X className="h-4 w-4" />
                     </Button>
