@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TTSStatus, TTSVoiceOption } from '@/types/bible';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 interface ReaderFooterProps {
   currentPage: number;
@@ -82,14 +84,9 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
       aria-label="Paginación, estado de lectura y controles de audio"
       className={`sticky bottom-0 z-20 flex w-full flex-col transition-all duration-200 select-none ${
         showControls
-          ? 'border-t px-3.5 sm:px-6 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] backdrop-blur-md shadow-md'
+          ? 'border-t border-[var(--reader-border)] px-3.5 sm:px-6 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] backdrop-blur-md shadow-md bg-[var(--reader-bg)] text-[var(--reader-text)]'
           : 'border-t-0 px-3.5 sm:px-6 pt-1 pb-[max(0.4rem,env(safe-area-inset-bottom))] bg-transparent'
       }`}
-      style={{
-        backgroundColor: showControls ? 'var(--reader-bg)' : 'transparent',
-        borderColor: 'var(--reader-border)',
-        color: 'var(--reader-text)',
-      }}
     >
       {/* Slim Ambient Chapter Progress Bar (Always visible in both normal & immersive modes) */}
       <div className="w-full bg-neutral-500/15 h-1 rounded-full overflow-hidden transition-all mb-1">
@@ -132,27 +129,23 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                     {/* Speed Selector */}
                     {onSetRateTTS && (
                       <div className="relative">
-                        <button
-                          type="button"
+                        <Button
+                          variant="outline"
+                          size="sm"
                           onClick={() => {
                             setShowSpeedMenu(!showSpeedMenu);
                             setShowVoiceMenu(false);
                           }}
-                          className="flex h-8 items-center gap-1 px-2 rounded-lg text-[11px] font-mono font-bold border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                          style={{ borderColor: 'var(--reader-border)' }}
+                          className="h-8 px-2 font-mono font-bold text-[11px]"
                           title="Velocidad de voz"
                         >
                           <Gauge className="h-3 w-3" />
                           <span>{rate}x</span>
-                        </button>
+                        </Button>
 
                         {showSpeedMenu && (
                           <div
-                            className="absolute bottom-full left-0 sm:left-auto sm:right-0 mb-2 rounded-xl border p-1 shadow-2xl flex flex-col gap-0.5 min-w-[90px] z-50 animate-in fade-in zoom-in-95 duration-100"
-                            style={{
-                              backgroundColor: 'var(--reader-bg)',
-                              borderColor: 'var(--reader-border)',
-                            }}
+                            className="absolute bottom-full left-0 sm:left-auto sm:right-0 mb-2 rounded-xl border border-[var(--reader-border)] bg-[var(--reader-bg)] p-1 shadow-2xl flex flex-col gap-0.5 min-w-[90px] z-50 animate-in fade-in zoom-in-95 duration-100"
                           >
                             <span className="text-[10px] font-bold opacity-60 px-2 py-1 uppercase">Velocidad</span>
                             {SPEED_OPTIONS.map((speed) => (
@@ -163,8 +156,8 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                                   onSetRateTTS(speed);
                                   setShowSpeedMenu(false);
                                 }}
-                                className={`flex items-center justify-between px-2 py-1 rounded-lg text-xs font-mono font-bold text-left transition-colors ${
-                                  rate === speed ? 'bg-reader-accent shadow-xs' : 'hover:bg-neutral-500/10'
+                                className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold text-left transition-colors ${
+                                  rate === speed ? 'bg-reader-accent text-reader-accent-fg shadow-xs' : 'hover:bg-neutral-500/10'
                                 }`}
                               >
                                 <span>{speed}x</span>
@@ -179,27 +172,23 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                     {/* Voice Selector */}
                     {onSetVoiceTTS && availableVoices.length > 0 && (
                       <div className="relative">
-                        <button
-                          type="button"
+                        <Button
+                          variant="outline"
+                          size="sm"
                           onClick={() => {
                             setShowVoiceMenu(!showVoiceMenu);
                             setShowSpeedMenu(false);
                           }}
-                          className="flex h-8 items-center gap-1 px-2 rounded-lg text-[11px] font-medium border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                          style={{ borderColor: 'var(--reader-border)' }}
+                          className="h-8 px-2 text-[11px]"
                           title="Cambiar voz"
                         >
                           <UserCheck className="h-3 w-3" />
                           <span className="hidden sm:inline">Voz</span>
-                        </button>
+                        </Button>
 
                         {showVoiceMenu && (
                           <div
-                            className="absolute bottom-full right-0 mb-2 rounded-xl border p-1.5 shadow-2xl flex flex-col gap-1 max-h-52 overflow-y-auto w-56 sm:w-64 z-50 animate-in fade-in zoom-in-95 duration-100"
-                            style={{
-                              backgroundColor: 'var(--reader-bg)',
-                              borderColor: 'var(--reader-border)',
-                            }}
+                            className="absolute bottom-full right-0 mb-2 rounded-xl border border-[var(--reader-border)] bg-[var(--reader-bg)] p-1.5 shadow-2xl flex flex-col gap-1 max-h-52 overflow-y-auto w-56 sm:w-64 z-50 animate-in fade-in zoom-in-95 duration-100"
                           >
                             <span className="text-[10px] font-bold opacity-60 px-2 py-1 uppercase">Voces Disponibles</span>
                             {availableVoices.map((voice, idx) => {
@@ -213,7 +202,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                                     setShowVoiceMenu(false);
                                   }}
                                   className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors truncate ${
-                                    isSelected ? 'bg-reader-accent font-bold shadow-xs' : 'hover:bg-neutral-500/10'
+                                    isSelected ? 'bg-reader-accent text-reader-accent-fg font-bold shadow-xs' : 'hover:bg-neutral-500/10'
                                   }`}
                                   title={voice.name}
                                 >
@@ -232,21 +221,22 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                 {/* Center: Audio Playback Cluster */}
                 <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                   {onPrevVerseTTS && (
-                    <button
-                      type="button"
+                    <Button
+                      variant="outline"
+                      size="icon"
                       onClick={onPrevVerseTTS}
-                      className="flex h-10 w-10 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                      style={{ borderColor: 'var(--reader-border)' }}
                       title="Versículo Anterior"
+                      aria-label="Versículo anterior"
                     >
                       <SkipBack className="h-4 w-4" />
-                    </button>
+                    </Button>
                   )}
 
-                  <button
-                    type="button"
+                  <Button
+                    variant="default"
+                    size="default"
                     onClick={isPlaying ? onPauseTTS : onPlayTTS}
-                    className="flex h-10 px-4 items-center justify-center gap-1.5 rounded-xl bg-reader-accent font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 hover:opacity-95"
+                    className="h-10 px-4 font-bold text-xs sm:text-sm shadow-md"
                   >
                     {isPlaying ? (
                       <>
@@ -259,71 +249,69 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                         <span>{ttsStatus === 'paused' ? 'Reanudar' : 'Escuchar'}</span>
                       </>
                     )}
-                  </button>
+                  </Button>
 
                   {onStopTTS && (
-                    <button
-                      type="button"
+                    <Button
+                      variant="outline"
+                      size="icon"
                       onClick={onStopTTS}
-                      className="flex h-10 w-10 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                      style={{ borderColor: 'var(--reader-border)' }}
                       title="Detener Audio"
+                      aria-label="Detener audio"
                     >
                       <Square className="h-4 w-4" />
-                    </button>
+                    </Button>
                   )}
 
                   {onNextVerseTTS && (
-                    <button
-                      type="button"
+                    <Button
+                      variant="outline"
+                      size="icon"
                       onClick={onNextVerseTTS}
-                      className="flex h-10 w-10 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                      style={{ borderColor: 'var(--reader-border)' }}
                       title="Siguiente Versículo"
+                      aria-label="Siguiente versículo"
                     >
                       <SkipForward className="h-4 w-4" />
-                    </button>
+                    </Button>
                   )}
                 </div>
 
                 {/* Right: Page Navigation & Close Narrator Button */}
                 <div className="flex items-center justify-between w-full sm:w-auto gap-2">
                   <div className="flex items-center gap-1">
-                    <button
-                      type="button"
+                    <Button
+                      variant="outline"
+                      size="icon-sm"
                       onClick={onPrevPage}
                       disabled={currentPage <= 1}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors hover:bg-neutral-500/10 disabled:opacity-25 active:scale-95"
-                      style={{ borderColor: 'var(--reader-border)' }}
                       title="Página Anterior"
                     >
                       <ChevronLeft className="h-4 w-4" />
-                    </button>
-                    <span className="text-[11px] sm:text-xs font-mono font-bold px-1.5">
+                    </Button>
+                    <Badge variant="secondary" className="font-mono text-xs font-bold">
                       {currentPage}/{totalPages}
-                    </span>
-                    <button
-                      type="button"
+                    </Badge>
+                    <Button
+                      variant="outline"
+                      size="icon-sm"
                       onClick={onNextPage}
                       disabled={currentPage >= totalPages}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors hover:bg-neutral-500/10 disabled:opacity-25 active:scale-95"
-                      style={{ borderColor: 'var(--reader-border)' }}
                       title="Página Siguiente"
                     >
                       <ChevronRight className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </div>
 
                   {onCloseNarrator && (
-                    <button
-                      type="button"
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
                       onClick={onCloseNarrator}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-neutral-500/15 transition-colors"
                       title="Cerrar barra de audio"
                       aria-label="Cerrar narrador de audio"
                     >
                       <X className="h-4 w-4" />
-                    </button>
+                    </Button>
                   )}
                 </div>
               </div>
@@ -332,17 +320,16 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
               <div className="flex items-center justify-between overflow-hidden">
                 {/* Left: Previous Page Button & Book Chapter */}
                 <div className="flex items-center gap-2">
-                  <button
-                    type="button"
+                  <Button
+                    variant="outline"
+                    size="icon-lg"
                     onClick={onPrevPage}
                     disabled={currentPage <= 1}
                     aria-label="Ir a la página anterior"
-                    className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 disabled:opacity-25 disabled:pointer-events-none active:scale-95 shrink-0"
-                    style={{ borderColor: 'var(--reader-border)' }}
                     title="Página Anterior (Flecha Izquierda)"
                   >
                     <ChevronLeft className="h-5 w-5" />
-                  </button>
+                  </Button>
 
                   <span className="hidden md:inline text-xs opacity-70 font-medium font-sans truncate max-w-[200px]">
                     {bookName} {chapterNumber} • ~{estimatedMinutes} min
@@ -357,22 +344,23 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                   <span className="hidden sm:inline text-xs sm:text-sm font-mono font-bold tracking-wider" aria-live="polite">
                     Página {currentPage} de {totalPages}
                   </span>
-                  <span className="text-[11px] sm:text-xs opacity-60 font-mono">({percentage}%)</span>
+                  <Badge variant="secondary" className="font-mono text-[11px] sm:text-xs">
+                    {percentage}%
+                  </Badge>
                 </div>
 
                 {/* Right: Next Page Button */}
                 <div className="flex items-center gap-2">
-                  <button
-                    type="button"
+                  <Button
+                    variant="outline"
+                    size="icon-lg"
                     onClick={onNextPage}
                     disabled={currentPage >= totalPages}
                     aria-label="Ir a la página siguiente"
-                    className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 disabled:opacity-25 disabled:pointer-events-none active:scale-95 shrink-0"
-                    style={{ borderColor: 'var(--reader-border)' }}
                     title="Página Siguiente (Flecha Derecha)"
                   >
                     <ChevronRight className="h-5 w-5" />
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}
