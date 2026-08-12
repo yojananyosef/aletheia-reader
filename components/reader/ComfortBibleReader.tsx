@@ -195,7 +195,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         />
       </main>
 
-      {/* 6. Discrete Reading Progress Footer */}
+      {/* 6. Discrete Reading Progress Footer (Shows only slim progress bar in immersive mode) */}
       <ReaderFooter
         currentPage={currentPage}
         totalPages={totalPages}
@@ -204,6 +204,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         bookName={data.bookName}
         chapterNumber={data.chapterNumber}
         totalWords={totalWords}
+        showControls={settings.showToolbar}
       />
 
       {/* 7. Non-invasive Verse Details & Footnotes Modal */}
