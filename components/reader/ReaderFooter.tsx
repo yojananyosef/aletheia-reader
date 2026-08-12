@@ -34,8 +34,8 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
       aria-label="Paginación y estado de lectura"
       className={`sticky bottom-0 z-20 flex w-full flex-col transition-all duration-200 select-none ${
         showControls
-          ? 'border-t px-4 py-2 backdrop-blur-md shadow-xs'
-          : 'border-t-0 px-4 py-1.5 bg-transparent'
+          ? 'border-t px-3.5 sm:px-6 pt-2 pb-[max(0.6rem,env(safe-area-inset-bottom))] backdrop-blur-md shadow-xs'
+          : 'border-t-0 px-3.5 sm:px-6 pt-1 pb-[max(0.4rem,env(safe-area-inset-bottom))] bg-transparent'
       }`}
       style={{
         backgroundColor: showControls ? 'var(--reader-bg)' : 'transparent',
@@ -61,9 +61,9 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
         {showControls && (
           <motion.div
             initial={{ opacity: 0, height: 0, marginTop: 0 }}
-            animate={{ opacity: 1, height: 'auto', marginTop: 8 }}
+            animate={{ opacity: 1, height: 'auto', marginTop: 6 }}
             exit={{ opacity: 0, height: 0, marginTop: 0 }}
-            transition={{ duration: 0.15, ease: 'easeInOut' }}
+            transition={{ duration: 0.12, ease: 'easeInOut' }}
             className="flex items-center justify-between overflow-hidden"
           >
             {/* Left: Previous Page Button & Book Chapter */}
@@ -73,24 +73,27 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                 onClick={onPrevPage}
                 disabled={currentPage <= 1}
                 aria-label="Ir a la página anterior"
-                className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 disabled:opacity-30 disabled:pointer-events-none active:scale-95"
+                className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 disabled:opacity-25 disabled:pointer-events-none active:scale-95 shrink-0"
                 style={{ borderColor: 'var(--reader-border)' }}
                 title="Página Anterior (Flecha Izquierda)"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
 
-              <span className="hidden sm:inline text-xs opacity-70 font-medium font-sans">
-                {bookName} {chapterNumber} • ~{estimatedMinutes} min de lectura
+              <span className="hidden md:inline text-xs opacity-70 font-medium font-sans truncate max-w-[200px]">
+                {bookName} {chapterNumber} • ~{estimatedMinutes} min
               </span>
             </div>
 
-            {/* Center: Page Info */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs sm:text-sm font-mono font-bold tracking-wider" aria-live="polite">
+            {/* Center: Page Info (Responsive format) */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="sm:hidden text-xs font-mono font-bold tracking-wider" aria-live="polite">
+                Pág. {currentPage}/{totalPages}
+              </span>
+              <span className="hidden sm:inline text-xs sm:text-sm font-mono font-bold tracking-wider" aria-live="polite">
                 Página {currentPage} de {totalPages}
               </span>
-              <span className="text-xs opacity-60 font-mono">({percentage}%)</span>
+              <span className="text-[11px] sm:text-xs opacity-60 font-mono">({percentage}%)</span>
             </div>
 
             {/* Right: Next Page Button */}
@@ -100,7 +103,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                 onClick={onNextPage}
                 disabled={currentPage >= totalPages}
                 aria-label="Ir a la página siguiente"
-                className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 disabled:opacity-30 disabled:pointer-events-none active:scale-95"
+                className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 disabled:opacity-25 disabled:pointer-events-none active:scale-95 shrink-0"
                 style={{ borderColor: 'var(--reader-border)' }}
                 title="Página Siguiente (Flecha Derecha)"
               >

@@ -69,7 +69,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
         }}
       >
         {/* Left: Brand & Book/Chapter Selector Button */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0 max-w-[65%] sm:max-w-none">
           <div className="flex items-center gap-2">
             <BookOpen className="h-4 w-4 text-reader-accent shrink-0" />
             <span className="font-bold tracking-wide uppercase text-xs hidden lg:inline opacity-80">
@@ -84,7 +84,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                 type="button"
                 onClick={onPrevChapter}
                 aria-label="Capítulo anterior"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors hover:bg-neutral-500/10 active:scale-95"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors hover:bg-neutral-500/10 active:scale-95 shrink-0"
                 style={{ borderColor: 'var(--reader-border)' }}
                 title="Capítulo Anterior"
               >
@@ -95,12 +95,12 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             <button
               type="button"
               onClick={onOpenBookSelector}
-              className="flex min-h-[38px] items-center gap-1.5 sm:gap-2 rounded-xl border px-3 sm:px-3.5 py-1 font-bold text-xs sm:text-sm transition-all hover:bg-neutral-500/10 active:scale-95 shadow-2xs"
+              className="flex min-h-[38px] max-w-[130px] xs:max-w-[170px] sm:max-w-none items-center gap-1.5 sm:gap-2 rounded-xl border px-2.5 sm:px-3.5 py-1 font-bold text-xs sm:text-sm transition-all hover:bg-neutral-500/10 active:scale-95 shadow-2xs"
               style={{ borderColor: 'var(--reader-border)' }}
               aria-label="Abrir selector de libros y capítulos"
             >
-              <span>{bookTitle} {chapterNumber}</span>
-              <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+              <span className="truncate">{bookTitle} {chapterNumber}</span>
+              <ChevronDown className="h-3.5 w-3.5 opacity-60 shrink-0" />
             </button>
 
             {onNextChapter && (
@@ -108,7 +108,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                 type="button"
                 onClick={onNextChapter}
                 aria-label="Capítulo siguiente"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors hover:bg-neutral-500/10 active:scale-95"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors hover:bg-neutral-500/10 active:scale-95 shrink-0"
                 style={{ borderColor: 'var(--reader-border)' }}
                 title="Capítulo Siguiente"
               >
@@ -194,13 +194,13 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
         </div>
 
         {/* Right: Bookmarks, Shortcuts, Fullscreen, Settings */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
           {onOpenBookmarks && (
             <button
               type="button"
               onClick={onOpenBookmarks}
               aria-label="Ver versículos guardados"
-              className="flex h-10 px-2.5 items-center gap-1.5 rounded-xl border transition-colors hover:bg-neutral-500/10 text-xs font-semibold"
+              className="flex h-9 sm:h-10 px-2 sm:px-2.5 items-center gap-1 sm:gap-1.5 rounded-xl border transition-colors hover:bg-neutral-500/10 text-xs font-semibold"
               style={{ borderColor: 'var(--reader-border)' }}
               title="Versículos Guardados"
             >
@@ -213,11 +213,12 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             </button>
           )}
 
+          {/* Keyboard shortcut icon only on sm+ */}
           <button
             type="button"
             onClick={() => setShowShortcutsModal(true)}
             aria-label="Ver atajos de teclado y ayuda"
-            className="flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-neutral-500/10"
+            className="hidden sm:flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-neutral-500/10"
             title="Atajos de teclado"
           >
             <Keyboard className="h-4.5 w-4.5 opacity-80" />
@@ -227,10 +228,10 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             type="button"
             onClick={toggleFullscreen}
             aria-label={isFullscreen ? 'Salir de pantalla completa' : 'Activar pantalla completa'}
-            className="flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-neutral-500/10"
+            className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl transition-colors hover:bg-neutral-500/10"
             title="Pantalla Completa (F11)"
           >
-            {isFullscreen ? <Minimize className="h-4.5 w-4.5 opacity-80" /> : <Maximize className="h-4.5 w-4.5 opacity-80" />}
+            {isFullscreen ? <Minimize className="h-4 w-4 sm:h-4.5 sm:w-4.5 opacity-80" /> : <Maximize className="h-4 w-4 sm:h-4.5 sm:w-4.5 opacity-80" />}
           </button>
 
           <button
@@ -238,7 +239,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             onClick={() => setShowSettingsDrawer(!showSettingsDrawer)}
             aria-expanded={showSettingsDrawer}
             aria-label="Abrir panel de ajustes de lectura y accesibilidad"
-            className="flex min-h-[38px] items-center gap-1.5 rounded-xl border px-3 py-1 font-medium text-xs sm:text-sm transition-all hover:bg-neutral-500/10 active:scale-95"
+            className="flex min-h-[36px] sm:min-h-[38px] items-center gap-1 sm:gap-1.5 rounded-xl border px-2.5 sm:px-3 py-1 font-medium text-xs sm:text-sm transition-all hover:bg-neutral-500/10 active:scale-95"
             style={{ borderColor: 'var(--reader-border)' }}
           >
             <Settings className="h-4 w-4 text-reader-accent" />
@@ -257,7 +258,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md h-full overflow-y-auto border-l p-6 shadow-2xl transition-all animate-in slide-in-from-right duration-200"
+            className="w-full max-w-md h-full overflow-y-auto border-l p-4 sm:p-6 pb-safe shadow-2xl transition-all animate-in slide-in-from-right duration-200"
             style={{
               backgroundColor: 'var(--reader-bg)',
               borderColor: 'var(--reader-border)',

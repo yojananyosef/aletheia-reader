@@ -141,11 +141,21 @@ a:focus-visible,
   outline-offset: 2px !important;
 }
 
-/* Prevenir Scroll Vertical en el lienzo del lector */
+/* Prevenir Scroll Vertical en el lienzo del lector y optimizar toques táctiles */
 .eink-discrete-page-container {
   overflow: hidden !important;
   user-select: text;
   -webkit-user-select: text;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* Soporte de safe area insets para móviles */
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+}
+
+.pt-safe {
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
 }
 
 /* Estilos de superíndice bíblico ergonómico */

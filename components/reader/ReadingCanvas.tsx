@@ -30,53 +30,83 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [viewportDimensions, setViewportDimensions] = useState<{ width: number; height: number }>({
-    width: 800,
-    height: 600,
+    width: typeof window !== 'undefined' ? window.innerWidth : 800,
+    height: typeof window !== 'undefined' ? window.innerHeight : 600,
   });
 
-  // Track window resize to recompute pagination chunks
+  // Track window & container resize dynamically
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
         setViewportDimensions({
           width: rect.width || window.innerWidth,
-          height: rect.height || window.innerHeight,
+          height: rect.height || (window.visualViewport?.height || window.innerHeight),
+        });
+      } else {
+        setViewportDimensions({
+          width: window.innerWidth,
+          height: window.visualViewport?.height || window.innerHeight,
         });
       }
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.visualViewport?.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.visualViewport?.removeEventListener('resize', handleResize);
+    };
   }, []);
 
-  // Compute pages dynamically based on viewport, font size, and text length
+  // Compute pages dynamically based on viewport width, height, font size, and text length
   const pages = useMemo<Verse[][]>(() => {
     if (!data.verses || data.verses.length === 0) return [[]];
 
-    // Standard page height minus top header space and bottom margin
-    const effectiveHeight = Math.max(320, viewportDimensions.height - 200);
-    const linePx = settings.fontSize * settings.lineHeight;
-    const linesPerPage = Math.max(6, Math.floor(effectiveHeight / linePx));
-    const baseCharsPerPage = linesPerPage * 52;
+    const isMobile = viewportDimensions.width < 640;
+    const isTablet = viewportDimensions.width >= 640 && viewportDimensions.width < 1024;
 
+    // 1. Calculate actual available width for text
+    const horizontalPadding = isMobile ? 32 : isTablet ? 48 : 64;
+    const availableWidthPx = Math.max(260, viewportDimensions.width - horizontalPadding);
+    
+    // Average character width for typical serif/sans fonts (em proportion)
+    const charWidthPx = settings.fontSize * 0.52;
+    // Dynamic CPL (Characters Per Line) adapted to screen size
+    const effectiveCPL = Math.max(22, Math.min(58, Math.floor(availableWidthPx / charWidthPx)));
+
+    // 2. Calculate effective reading height (discounting fixed header & footer clearance)
+    // On mobile, headers are slightly more compact
+    const verticalDeductionPx = isMobile ? 140 : 170;
+    const effectiveHeightPx = Math.max(220, viewportDimensions.height - verticalDeductionPx);
+    const linePx = settings.fontSize * settings.lineHeight;
+    const linesPerPage = Math.max(5, Math.floor(effectiveHeightPx / linePx));
+
+    // Base character capacity for standard page
+    const baseCharsPerPage = linesPerPage * effectiveCPL;
+
+    // 3. Page partition algorithm with safe headroom
     const resultPages: Verse[][] = [];
     let currentPageVerses: Verse[] = [];
     let currentChars = 0;
 
     for (let i = 0; i < data.verses.length; i++) {
       const verse = data.verses[i];
-      // Page 1 has the larger chapter title, so it fits slightly fewer characters
       const isFirstPage = resultPages.length === 0;
-      const pageCapacity = isFirstPage ? Math.floor(baseCharsPerPage * 0.82) : baseCharsPerPage;
+
+      // Page 1 has the larger chapter title (deduct approx 2.5 lines of capacity)
+      const pageCapacity = isFirstPage
+        ? Math.floor(baseCharsPerPage * 0.78)
+        : Math.floor(baseCharsPerPage * 0.96); // 4% safety margin against word-wrap overflow
 
       // Check if this verse has a section heading before it
       const hasSection = data.sections?.some(
         (sec) => String(sec.beforeVerse) === String(verse.number)
       );
-      const sectionExtraChars = hasSection ? 45 : 0;
-      const verseChars = verse.text.length + 15 + sectionExtraChars;
+      const sectionExtraChars = hasSection ? Math.floor(effectiveCPL * 1.8) : 0;
+      const verseChars = verse.text.length + 12 + sectionExtraChars;
 
       if (currentChars + verseChars > pageCapacity && currentPageVerses.length > 0) {
         resultPages.push(currentPageVerses);
@@ -93,7 +123,14 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     }
 
     return resultPages;
-  }, [data.verses, data.sections, viewportDimensions.height, settings.fontSize, settings.lineHeight]);
+  }, [
+    data.verses,
+    data.sections,
+    viewportDimensions.width,
+    viewportDimensions.height,
+    settings.fontSize,
+    settings.lineHeight,
+  ]);
 
   const totalPages = pages.length;
 
@@ -105,10 +142,12 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   // Touch Swipe Gesture Detection
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
+  const touchStartTime = useRef<number>(0);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
+    touchStartTime.current = Date.now();
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -116,8 +155,10 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
 
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
     const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+    const deltaTime = Date.now() - touchStartTime.current;
 
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+    // Fast flick or clear horizontal swipe (> 35px in under 500ms)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 35 && deltaTime < 600) {
       if (deltaX < 0) {
         // Swiped Left -> Next Page / Next Chapter
         if (currentPage < totalPages) {
@@ -185,8 +226,8 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     const clickX = e.clientX - rect.left;
     const width = rect.width;
 
-    const leftThreshold = width * 0.3;
-    const rightThreshold = width * 0.7;
+    const leftThreshold = width * 0.28;
+    const rightThreshold = width * 0.72;
 
     if (clickX < leftThreshold) {
       if (currentPage > 1) {
@@ -221,7 +262,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
       onClick={handleCanvasClick}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className={`eink-discrete-page-container relative flex-1 flex flex-col justify-start items-center w-full px-4 sm:px-8 pt-6 sm:pt-8 pb-4 select-text transition-colors duration-200 cursor-default ${fontClass}`}
+      className={`eink-discrete-page-container relative flex-1 flex flex-col justify-start items-center w-full px-3.5 sm:px-8 pt-4 sm:pt-7 pb-2 sm:pb-4 select-text transition-colors duration-200 cursor-default ${fontClass}`}
       style={{
         backgroundColor: 'var(--reader-bg)',
         color: 'var(--reader-text)',
@@ -232,36 +273,35 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
         {`${data.bookName} Capítulo ${data.chapterNumber}, Página ${currentPage} de ${totalPages}`}
       </div>
 
-      {/* Discrete Page Content Block (Strictly 50-60 CPL, left aligned, line-height 1.6, top-anchored) */}
+      {/* Discrete Page Content Block (Strictly 50-60 CPL max, left aligned, line-height 1.6, top-anchored) */}
       <div
         className="w-full max-w-[60ch] flex-1 flex flex-col justify-start text-left"
         style={{
           fontSize: `${settings.fontSize}px`,
           lineHeight: settings.lineHeight,
           fontWeight: settings.fontWeight,
-          minHeight: '60vh',
         }}
       >
-        {/* Fixed Height Header Container (Guarantees zero layout shift / exact same border line on all pages) */}
+        {/* Fixed Height Header Container (Guarantees zero layout shift on page flips) */}
         <div
-          className="w-full h-[68px] mb-5 flex flex-col justify-end border-b pb-2 select-none transition-colors"
+          className="w-full h-[58px] sm:h-[68px] mb-3 sm:mb-5 flex flex-col justify-end border-b pb-2 select-none transition-colors"
           style={{ borderColor: 'var(--reader-border)' }}
         >
           {currentPage === 1 ? (
             /* Page 1 Chapter Heading */
             <div className="flex flex-col justify-end">
-              <span className="text-[11px] uppercase tracking-widest opacity-60 font-semibold block font-sans leading-none mb-1">
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-widest opacity-60 font-semibold block font-sans leading-none mb-1">
                 {data.bookName}
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight leading-none" style={{ color: 'var(--reader-text)' }}>
+              <h2 className="text-xl sm:text-3xl font-bold tracking-tight leading-none" style={{ color: 'var(--reader-text)' }}>
                 Capítulo {data.chapterNumber}
               </h2>
             </div>
           ) : (
             /* Pages 2+ Stable Running Head */
             <div className="w-full flex items-center justify-between opacity-50 text-xs font-semibold uppercase tracking-widest font-sans leading-none">
-              <span>{data.bookName} {data.chapterNumber}</span>
-              <span className="text-[10px] font-mono">Pág. {currentPage}/{totalPages}</span>
+              <span className="truncate max-w-[200px]">{data.bookName} {data.chapterNumber}</span>
+              <span className="text-[10px] font-mono shrink-0">Pág. {currentPage}/{totalPages}</span>
             </div>
           )}
         </div>
@@ -270,10 +310,10 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
         <AnimatePresence mode="wait">
           <motion.div
             key={`${data.bookId}-${data.chapterNumber}-${currentPage}`}
-            initial={{ opacity: 0.4, x: 8 }}
+            initial={{ opacity: 0.35, x: 6 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0.4, x: -8 }}
-            transition={{ duration: 0.12, ease: 'easeOut' }}
+            exit={{ opacity: 0.35, x: -6 }}
+            transition={{ duration: 0.1, ease: 'easeOut' }}
             className="flex-1"
           >
             {/* Continuous Biblical Paragraph Flow */}
@@ -297,13 +337,13 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
 
                 return (
                   <React.Fragment key={String(verse.number)}>
-                    {/* Section Subtitle / Perícope Heading (Clean typography, no border clash) */}
+                    {/* Section Subtitle / Perícope Heading */}
                     {section && (
                       <h3
                         className={`w-full font-bold tracking-tight opacity-90 block font-sans ${
                           idx === 0 && currentPage === 1
-                            ? 'text-sm sm:text-base my-2.5 opacity-80'
-                            : 'text-base sm:text-lg my-4 pt-1 opacity-90'
+                            ? 'text-xs sm:text-base my-2 sm:my-2.5 opacity-80'
+                            : 'text-sm sm:text-lg my-3 sm:my-4 pt-1 opacity-90'
                         }`}
                         style={{
                           color: 'var(--reader-text)',

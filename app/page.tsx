@@ -11,6 +11,7 @@ import {
   X,
   BookMarked,
   Loader2,
+  ChevronLeft,
 } from 'lucide-react';
 
 export default function Home() {
@@ -22,12 +23,13 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [theme, setTheme] = useState<ThemeMode>('pergamino');
 
-  // Navigation Drawers
+  // Navigation Drawers & Mobile Steps
   const [showBookSelector, setShowBookSelector] = useState<boolean>(false);
   const [showBookmarksDrawer, setShowBookmarksDrawer] = useState<boolean>(false);
   const [activeTestamentTab, setActiveTestamentTab] = useState<'AT' | 'NT'>('AT');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [browsingBook, setBrowsingBook] = useState<BibleBookMeta | null>(null);
+  const [mobileSelectorStep, setMobileSelectorStep] = useState<'books' | 'chapters'>('books');
 
   // Bookmarks List
   const [bookmarksList, setBookmarksList] = useState<
@@ -186,7 +188,7 @@ export default function Home() {
 
   return (
     <div
-      className={`relative min-h-screen flex flex-col w-full transition-colors duration-200 ${themeClass}`}
+      className={`relative min-h-[100dvh] flex flex-col w-full transition-colors duration-200 ${themeClass}`}
       style={{
         backgroundColor: 'var(--reader-bg)',
         color: 'var(--reader-text)',
@@ -194,7 +196,7 @@ export default function Home() {
     >
       {/* Main ComfortBibleReader Component */}
       {loading && !chapterPayload ? (
-        <div className="flex-1 flex flex-col items-center justify-center p-12 space-y-3 min-h-screen">
+        <div className="flex-1 flex flex-col items-center justify-center p-8 sm:p-12 space-y-3 min-h-[100dvh]">
           <Loader2 className="h-8 w-8 animate-spin text-reader-accent" />
           <p className="text-sm font-medium opacity-70">Cargando Sagradas Escrituras...</p>
         </div>
@@ -209,18 +211,19 @@ export default function Home() {
           onPrevChapter={handlePrevChapter}
           onOpenBookSelector={() => {
             setBrowsingBook(currentBookMeta || books[0]);
+            setMobileSelectorStep('books');
             setShowBookSelector(true);
           }}
           onOpenBookmarks={() => setShowBookmarksDrawer(true)}
           bookmarksCount={bookmarksList.length}
         />
       ) : (
-        <div className="flex-1 flex items-center justify-center p-8 min-h-screen">
+        <div className="flex-1 flex items-center justify-center p-8 min-h-[100dvh]">
           <p>No se pudo cargar el capítulo seleccionado.</p>
         </div>
       )}
 
-      {/* Full Bible Book & Chapter Navigation Modal */}
+      {/* Full Bible Book & Chapter Navigation Modal (Mobile-First 2-Step Drill-Down / Desktop 2-Column) */}
       {showBookSelector && (
         <div
           role="dialog"
@@ -231,7 +234,7 @@ export default function Home() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl border shadow-2xl overflow-hidden transition-colors"
+            className="w-full max-w-4xl max-h-[92dvh] sm:max-h-[90vh] flex flex-col rounded-2xl border shadow-2xl overflow-hidden transition-colors"
             style={{
               backgroundColor: 'var(--reader-bg)',
               borderColor: 'var(--reader-border)',
@@ -239,23 +242,30 @@ export default function Home() {
             }}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b p-4" style={{ borderColor: 'var(--reader-border)' }}>
+            <div className="flex items-center justify-between border-b p-3.5 sm:p-4" style={{ borderColor: 'var(--reader-border)' }}>
               <div className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-reader-accent" />
-                <h2 className="text-base sm:text-lg font-bold">Explorador Bíblico (66 Libros)</h2>
+                <BookOpen className="h-5 w-5 text-reader-accent shrink-0" />
+                <h2 className="text-sm sm:text-lg font-bold truncate">
+                  Explorador Bíblico (66 Libros)
+                </h2>
               </div>
               <button
                 type="button"
                 onClick={() => setShowBookSelector(false)}
-                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/15"
+                className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/15 active:scale-95"
                 aria-label="Cerrar explorador"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            {/* Search and Testament Tabs */}
-            <div className="p-4 border-b space-y-3" style={{ borderColor: 'var(--reader-border)' }}>
+            {/* Search and Testament Tabs (Hidden on mobile if currently in step 'chapters') */}
+            <div
+              className={`p-3 sm:p-4 border-b space-y-2.5 ${
+                mobileSelectorStep === 'chapters' ? 'hidden md:block' : 'block'
+              }`}
+              style={{ borderColor: 'var(--reader-border)' }}
+            >
               {/* Search Bar */}
               <div className="relative">
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 opacity-50" />
@@ -264,7 +274,7 @@ export default function Home() {
                   placeholder="Buscar libro (ej. Génesis, Salmos, Mateo, Romanos)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-xl border pl-10 pr-4 py-2.5 text-sm bg-transparent outline-none transition-all focus:ring-2 focus:ring-reader-accent"
+                  className="w-full rounded-xl border pl-10 pr-4 py-2 text-sm bg-transparent outline-none transition-all focus:ring-2 focus:ring-reader-accent"
                   style={{
                     borderColor: 'var(--reader-border)',
                     color: 'var(--reader-text)',
@@ -287,7 +297,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setActiveTestamentTab('AT')}
-                    className={`flex-1 min-h-[38px] rounded-lg text-xs font-bold transition-all ${
+                    className={`flex-1 min-h-[36px] rounded-lg text-xs font-bold transition-all ${
                       activeTestamentTab === 'AT'
                         ? 'bg-reader-accent shadow-xs'
                         : 'opacity-70 hover:bg-neutral-500/10'
@@ -298,7 +308,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setActiveTestamentTab('NT')}
-                    className={`flex-1 min-h-[38px] rounded-lg text-xs font-bold transition-all ${
+                    className={`flex-1 min-h-[36px] rounded-lg text-xs font-bold transition-all ${
                       activeTestamentTab === 'NT'
                         ? 'bg-reader-accent shadow-xs'
                         : 'opacity-70 hover:bg-neutral-500/10'
@@ -310,12 +320,21 @@ export default function Home() {
               )}
             </div>
 
-            {/* Body: Two Column Browser (Left: Books List, Right: Chapters Grid) */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-h-[350px]">
-              {/* Left: Books List */}
-              <div className="md:col-span-6 border-r overflow-y-auto p-3 space-y-1 max-h-[50vh] md:max-h-none" style={{ borderColor: 'var(--reader-border)' }}>
+            {/* Body: Responsive 2-Column Browser */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-h-[320px]">
+              {/* Left Column: Books List (Visible on mobile when step is 'books', always visible on md+) */}
+              <div
+                className={`md:col-span-6 border-r overflow-y-auto p-2.5 sm:p-3 space-y-1 ${
+                  mobileSelectorStep === 'chapters' ? 'hidden md:block' : 'block'
+                }`}
+                style={{ borderColor: 'var(--reader-border)' }}
+              >
                 <div className="text-[11px] uppercase tracking-wider font-bold opacity-60 px-2 py-1">
-                  {searchQuery ? `Resultados (${filteredBooks.length})` : activeTestamentTab === 'AT' ? 'Libros del Antiguo Testamento' : 'Libros del Nuevo Testamento'}
+                  {searchQuery
+                    ? `Resultados (${filteredBooks.length})`
+                    : activeTestamentTab === 'AT'
+                    ? 'Libros del Antiguo Testamento'
+                    : 'Libros del Nuevo Testamento'}
                 </div>
                 {filteredBooks.map((book) => {
                   const isSelected = browsingBook?.id === book.id;
@@ -325,7 +344,10 @@ export default function Home() {
                     <button
                       key={book.id}
                       type="button"
-                      onClick={() => setBrowsingBook(book)}
+                      onClick={() => {
+                        setBrowsingBook(book);
+                        setMobileSelectorStep('chapters');
+                      }}
                       className={`flex w-full items-center justify-between px-3 py-2.5 rounded-xl text-left text-sm font-medium transition-all ${
                         isSelected
                           ? 'bg-reader-accent font-bold shadow-xs'
@@ -346,23 +368,42 @@ export default function Home() {
                 })}
               </div>
 
-              {/* Right: Chapter Grid for the selected book */}
-              <div className="md:col-span-6 overflow-y-auto p-4 flex flex-col max-h-[50vh] md:max-h-none">
+              {/* Right Column: Chapter Grid (Visible on mobile when step is 'chapters', always visible on md+) */}
+              <div
+                className={`md:col-span-6 overflow-y-auto p-3.5 sm:p-4 flex flex-col ${
+                  mobileSelectorStep === 'books' ? 'hidden md:flex' : 'flex'
+                }`}
+              >
                 {browsingBook ? (
                   <>
-                    <div className="border-b pb-3 mb-4 flex items-center justify-between" style={{ borderColor: 'var(--reader-border)' }}>
-                      <div>
-                        <h3 className="text-base font-bold">{browsingBook.name}</h3>
-                        <p className="text-xs opacity-70">
-                          Selecciona un capítulo ({browsingBook.totalChapters} disponibles)
-                        </p>
+                    {/* Header for Chapter view (with Mobile Back Button) */}
+                    <div className="border-b pb-3 mb-3 sm:mb-4 flex items-center justify-between gap-2" style={{ borderColor: 'var(--reader-border)' }}>
+                      <div className="flex items-center gap-2">
+                        {/* Mobile Back to Books Button */}
+                        <button
+                          type="button"
+                          onClick={() => setMobileSelectorStep('books')}
+                          className="md:hidden flex h-10 px-2.5 items-center gap-1 rounded-xl border text-xs font-bold transition-colors hover:bg-neutral-500/10 active:scale-95"
+                          style={{ borderColor: 'var(--reader-border)' }}
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                          <span>Libros</span>
+                        </button>
+
+                        <div>
+                          <h3 className="text-sm sm:text-base font-bold truncate">{browsingBook.name}</h3>
+                          <p className="text-[11px] opacity-70">
+                            {browsingBook.totalChapters} capítulos disponibles
+                          </p>
+                        </div>
                       </div>
-                      <span className="text-xs font-mono font-bold px-2 py-1 rounded bg-reader-accent-subtle">
-                        {browsingBook.testament === 'AT' ? 'Antiguo Testamento' : 'Nuevo Testamento'}
+
+                      <span className="text-[10px] sm:text-xs font-mono font-bold px-2 py-0.5 rounded bg-reader-accent-subtle shrink-0">
+                        {browsingBook.testament === 'AT' ? 'AT' : 'NT'}
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                    <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2 pb-4">
                       {Array.from({ length: browsingBook.totalChapters }, (_, i) => i + 1).map((chapNum) => {
                         const isCurrentActive =
                           selectedBookId === browsingBook.id && selectedChapter === chapNum;
@@ -422,22 +463,23 @@ export default function Home() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md h-full overflow-y-auto border-l p-6 shadow-2xl transition-all animate-in slide-in-from-right duration-200 flex flex-col"
+            className="w-full max-w-md h-full overflow-y-auto border-l p-4 sm:p-6 pb-safe shadow-2xl transition-all animate-in slide-in-from-right duration-200 flex flex-col"
             style={{
               backgroundColor: 'var(--reader-bg)',
               borderColor: 'var(--reader-border)',
               color: 'var(--reader-text)',
             }}
           >
-            <div className="flex items-center justify-between border-b pb-4 mb-4" style={{ borderColor: 'var(--reader-border)' }}>
+            <div className="flex items-center justify-between border-b pb-3.5 mb-4" style={{ borderColor: 'var(--reader-border)' }}>
               <div className="flex items-center gap-2">
                 <BookmarkCheck className="h-5 w-5 text-reader-accent" />
-                <h2 className="text-lg font-bold">Versículos Guardados</h2>
+                <h2 className="text-base sm:text-lg font-bold">Versículos Guardados</h2>
               </div>
               <button
                 type="button"
                 onClick={() => setShowBookmarksDrawer(false)}
                 className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-neutral-500/15"
+                aria-label="Cerrar marcadores"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -446,13 +488,13 @@ export default function Home() {
             {bookmarksList.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-3 opacity-60">
                 <BookMarked className="h-12 w-12 text-reader-accent opacity-50" />
-                <p className="text-sm">No has guardado versículos todavía.</p>
+                <p className="text-sm font-medium">No has guardado versículos todavía.</p>
                 <p className="text-xs">
-                  Haz clic en cualquier número de versículo durante la lectura para guardarlo aquí.
+                  Toca cualquier número de versículo durante la lectura para guardarlo aquí.
                 </p>
               </div>
             ) : (
-              <div className="flex-1 overflow-y-auto space-y-3">
+              <div className="flex-1 overflow-y-auto space-y-3 pb-6">
                 {bookmarksList.map((bm, index) => (
                   <div
                     key={`${bm.bookId}-${bm.chapter}-${bm.verse}-${index}`}

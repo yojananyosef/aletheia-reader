@@ -28,12 +28,12 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   const apertureHeight = singleLinePx * lineMultiplier + (lineMultiplier > 1 ? 16 : 8);
 
   const moveUp = useCallback(() => {
-    setWindowCenterY((prev) => Math.max(120, prev - singleLinePx));
+    setWindowCenterY((prev) => Math.max(90, prev - singleLinePx));
   }, [singleLinePx]);
 
   const moveDown = useCallback(() => {
     if (typeof window !== 'undefined') {
-      setWindowCenterY((prev) => Math.min(window.innerHeight - 120, prev + singleLinePx));
+      setWindowCenterY((prev) => Math.min(window.innerHeight - 90, prev + singleLinePx));
     }
   }, [singleLinePx]);
 
@@ -42,7 +42,6 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
     if (mode === 'off') return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't intercept if user is typing in an input
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
         return;
       }
@@ -81,25 +80,25 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
           height: `${apertureHeight}px`,
         }}
       >
-        {/* Floating Line Focus Nav Buttons (Interactive) */}
-        <div className="pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1 rounded-full bg-neutral-900/80 p-1 text-white shadow-lg backdrop-blur-md">
+        {/* Floating Line Focus Nav Buttons (Interactive & Compact on Mobile) */}
+        <div className="pointer-events-auto absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1 rounded-full bg-neutral-900/85 p-0.5 sm:p-1 text-white shadow-xl backdrop-blur-md border border-white/10">
           <button
             type="button"
             onClick={moveUp}
             aria-label="Mover enfoque de línea hacia arriba"
-            className="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/20 active:scale-95"
+            className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full transition-colors hover:bg-white/20 active:scale-95"
             title="Subir línea (Alt + Flecha Arriba)"
           >
-            <ChevronUp className="h-5 w-5" />
+            <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
           <button
             type="button"
             onClick={moveDown}
             aria-label="Mover enfoque de línea hacia abajo"
-            className="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/20 active:scale-95"
+            className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full transition-colors hover:bg-white/20 active:scale-95"
             title="Bajar línea (Alt + Flecha Abajo)"
           >
-            <ChevronDown className="h-5 w-5" />
+            <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </div>
       </div>
