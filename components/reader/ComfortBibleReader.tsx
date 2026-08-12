@@ -334,7 +334,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     <div
       ref={containerRef}
       id="alethia-reader-container"
-      className={`relative min-h-[100dvh] flex flex-col w-full transition-colors duration-200 ${themeClass}`}
+      className={`relative h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between w-full transition-colors duration-200 ${themeClass}`}
       style={{
         backgroundColor: 'var(--reader-bg)',
         color: 'var(--reader-text)',
@@ -362,12 +362,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       />
 
       {/* 4. Main Reading Canvas (Discrete Paginated Layout + Bimodal TTS Active Verse Highlight) */}
-      <main
-        className="flex-1 flex flex-col justify-start items-center w-full px-2 sm:px-6 relative overflow-hidden"
-        style={{
-          minHeight: 'calc(100dvh - 120px)',
-        }}
-      >
+      <main className="flex-1 flex flex-col justify-start items-center w-full px-2 sm:px-6 relative overflow-hidden min-h-0">
         <ReadingCanvas
           data={data}
           settings={{ ...settings, theme: currentTheme }}

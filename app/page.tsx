@@ -244,7 +244,7 @@ export default function Home() {
 
   return (
     <div
-      className={`relative min-h-[100dvh] flex flex-col w-full transition-colors duration-200 ${themeClass}`}
+      className={`relative h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col w-full transition-colors duration-200 ${themeClass}`}
       style={{
         backgroundColor: 'var(--reader-bg)',
         color: 'var(--reader-text)',

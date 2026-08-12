@@ -80,11 +80,13 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     const effectiveCPL = Math.max(22, Math.min(58, Math.floor(availableWidthPx / charWidthPx)));
 
     // 2. Calculate effective reading height (discounting fixed header & footer clearance)
-    // On mobile, headers are slightly more compact
-    const verticalDeductionPx = isMobile ? 140 : 170;
-    const effectiveHeightPx = Math.max(220, viewportDimensions.height - verticalDeductionPx);
+    const headerHeight = settings.showToolbar ? (isMobile ? 52 : 56) : 0;
+    const footerHeight = settings.showToolbar ? (isMobile ? 65 : 70) : 24;
+    const canvasPaddings = isMobile ? 80 : 100;
+    const verticalDeductionPx = headerHeight + footerHeight + canvasPaddings;
+    const effectiveHeightPx = Math.max(160, viewportDimensions.height - verticalDeductionPx);
     const linePx = settings.fontSize * settings.lineHeight;
-    const linesPerPage = Math.max(5, Math.floor(effectiveHeightPx / linePx));
+    const linesPerPage = Math.max(3, Math.floor(effectiveHeightPx / linePx));
 
     // Base character capacity for standard page
     const baseCharsPerPage = linesPerPage * effectiveCPL;
@@ -98,10 +100,10 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
       const verse = data.verses[i];
       const isFirstPage = resultPages.length === 0;
 
-      // Page 1 has the larger chapter title (deduct approx 2.5 lines of capacity)
+      // Page 1 has the larger chapter title (deduct approx 2 lines of capacity)
       const pageCapacity = isFirstPage
-        ? Math.floor(baseCharsPerPage * 0.78)
-        : Math.floor(baseCharsPerPage * 0.96); // 4% safety margin against word-wrap overflow
+        ? Math.floor(baseCharsPerPage * 0.72)
+        : Math.floor(baseCharsPerPage * 0.90); // 10% safety margin against word-wrap overflow
 
       // Check if this verse has a section heading before it
       const hasSection = data.sections?.some(
@@ -132,6 +134,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     viewportDimensions.height,
     settings.fontSize,
     settings.lineHeight,
+    settings.showToolbar,
   ]);
 
   const totalPages = pages.length;

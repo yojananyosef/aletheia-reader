@@ -141,6 +141,14 @@ a:focus-visible,
   outline-offset: 2px !important;
 }
 
+/* Bloquear scroll vertical a nivel de html/body para un viewport estricto de lectura */
+html, body {
+  height: 100%;
+  max-height: 100dvh;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
 /* Prevenir Scroll Vertical en el lienzo del lector y optimizar toques táctiles */
 .eink-discrete-page-container {
   overflow: hidden !important;
