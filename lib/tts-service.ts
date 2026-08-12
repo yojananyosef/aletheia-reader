@@ -5,7 +5,6 @@ class BibleTTSService {
   private currentUtterance: SpeechSynthesisUtterance | null = null;
   private voices: SpeechSynthesisVoice[] = [];
   private onVoicesLoadedCallbacks: Array<() => void> = [];
-  private keepAliveInterval: NodeJS.Timeout | null = null;
 
   constructor() {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -90,24 +89,6 @@ class BibleTTSService {
       .trim();
   }
 
-  private startKeepAlive() {
-    this.stopKeepAlive();
-    // Previene que Chromium/WebKit pause la síntesis de voz en lecturas largas (>14s)
-    this.keepAliveInterval = setInterval(() => {
-      if (this.synth && this.synth.speaking && !this.synth.paused) {
-        this.synth.pause();
-        this.synth.resume();
-      }
-    }, 10000);
-  }
-
-  private stopKeepAlive() {
-    if (this.keepAliveInterval) {
-      clearInterval(this.keepAliveInterval);
-      this.keepAliveInterval = null;
-    }
-  }
-
   /**
    * Sintetiza la voz para un versículo específico de forma fluida y sincronizada
    */
@@ -125,10 +106,6 @@ class BibleTTSService {
       options.onError?.(new Error('SpeechSynthesis no está disponible en este navegador'));
       return;
     }
-
-    // Cancel previous speech and stop keep-alive
-    this.stopKeepAlive();
-    this.synth.cancel();
 
     const cleanText = this.cleanTextForSpeech(verse.text);
     if (!cleanText) {
@@ -177,42 +154,52 @@ class BibleTTSService {
       }
     }
 
+    let hasEnded = false;
+
     utterance.onstart = () => {
-      this.startKeepAlive();
       options.onStart?.();
     };
 
     utterance.onend = () => {
-      this.stopKeepAlive();
+      if (hasEnded) return;
+      hasEnded = true;
       this.currentUtterance = null;
       if (typeof window !== 'undefined') {
         (window as any)._activeBibleUtterance = null;
       }
-      options.onEnd?.();
+      // Small timeout allows mobile browser audio session to chain cleanly to next utterance
+      setTimeout(() => {
+        options.onEnd?.();
+      }, 30);
     };
 
     utterance.onerror = (e) => {
-      this.stopKeepAlive();
+      if (hasEnded) return;
+      hasEnded = true;
       this.currentUtterance = null;
       if (typeof window !== 'undefined') {
         (window as any)._activeBibleUtterance = null;
       }
-      // If manually canceled by user, don't trigger error
       if (e.error === 'canceled' || e.error === 'interrupted') {
         return;
       }
       options.onError?.(e);
     };
 
-    // Ensure synth is active
+    // Ensure synth is active before speaking
     if (this.synth.paused) {
       this.synth.resume();
     }
-    this.synth.speak(utterance);
+
+    // Trigger speak with safe tick to prevent mobile Chromium dropping consecutive calls
+    setTimeout(() => {
+      if (this.synth) {
+        this.synth.speak(utterance);
+      }
+    }, 10);
   }
 
   public pause() {
-    this.stopKeepAlive();
     if (this.synth && this.synth.speaking) {
       this.synth.pause();
     }
@@ -221,12 +208,10 @@ class BibleTTSService {
   public resume() {
     if (this.synth && this.synth.paused) {
       this.synth.resume();
-      this.startKeepAlive();
     }
   }
 
   public cancel() {
-    this.stopKeepAlive();
     if (this.synth) {
       this.synth.cancel();
       this.currentUtterance = null;

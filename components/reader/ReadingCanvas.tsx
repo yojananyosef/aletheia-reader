@@ -71,20 +71,20 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     const isTablet = viewportDimensions.width >= 640 && viewportDimensions.width < 1024;
 
     // 1. Calculate actual available width for text
-    const horizontalPadding = isMobile ? 32 : isTablet ? 48 : 64;
+    const horizontalPadding = isMobile ? 24 : isTablet ? 40 : 56;
     const availableWidthPx = Math.max(260, viewportDimensions.width - horizontalPadding);
     
     // Average character width for typical serif/sans fonts (em proportion)
-    const charWidthPx = settings.fontSize * 0.52;
+    const charWidthPx = settings.fontSize * 0.46;
     // Dynamic CPL (Characters Per Line) adapted to screen size
-    const effectiveCPL = Math.max(22, Math.min(58, Math.floor(availableWidthPx / charWidthPx)));
+    const effectiveCPL = Math.max(24, Math.min(62, Math.floor(availableWidthPx / charWidthPx)));
 
     // 2. Calculate effective reading height (discounting fixed header & footer clearance)
-    const headerHeight = settings.showToolbar ? (isMobile ? 52 : 56) : 0;
-    const footerHeight = settings.showToolbar ? (isMobile ? 65 : 70) : 24;
-    const canvasPaddings = isMobile ? 80 : 100;
+    const headerHeight = settings.showToolbar ? (isMobile ? 48 : 54) : 0;
+    const footerHeight = settings.showToolbar ? (isMobile ? 60 : 66) : 20;
+    const canvasPaddings = isMobile ? 54 : 76;
     const verticalDeductionPx = headerHeight + footerHeight + canvasPaddings;
-    const effectiveHeightPx = Math.max(160, viewportDimensions.height - verticalDeductionPx);
+    const effectiveHeightPx = Math.max(170, viewportDimensions.height - verticalDeductionPx);
     const linePx = settings.fontSize * settings.lineHeight;
     const linesPerPage = Math.max(3, Math.floor(effectiveHeightPx / linePx));
 
@@ -100,17 +100,17 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
       const verse = data.verses[i];
       const isFirstPage = resultPages.length === 0;
 
-      // Page 1 has the larger chapter title (deduct approx 2 lines of capacity)
+      // Page 1 has the larger chapter title (deduct approx 1.5 lines of capacity)
       const pageCapacity = isFirstPage
-        ? Math.floor(baseCharsPerPage * 0.72)
-        : Math.floor(baseCharsPerPage * 0.90); // 10% safety margin against word-wrap overflow
+        ? Math.floor(baseCharsPerPage * 0.80)
+        : Math.floor(baseCharsPerPage * 0.94); // 6% safety margin against word-wrap overflow
 
       // Check if this verse has a section heading before it
       const hasSection = data.sections?.some(
         (sec) => String(sec.beforeVerse) === String(verse.number)
       );
-      const sectionExtraChars = hasSection ? Math.floor(effectiveCPL * 1.8) : 0;
-      const verseChars = verse.text.length + 12 + sectionExtraChars;
+      const sectionExtraChars = hasSection ? Math.floor(effectiveCPL * 1.0) : 0;
+      const verseChars = verse.text.length + 8 + sectionExtraChars;
 
       if (currentChars + verseChars > pageCapacity && currentPageVerses.length > 0) {
         resultPages.push(currentPageVerses);

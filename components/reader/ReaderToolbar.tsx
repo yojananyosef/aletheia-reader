@@ -349,15 +349,21 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           </div>
 
           {/* 3. Font Size Slider */}
-          <div>
+          <Card className="p-4 bg-[var(--reader-hover)]">
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-bold uppercase tracking-wider opacity-80">
-                Tamaño de Fuente
-              </label>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold font-serif opacity-80">Aa</span>
+                <label className="text-xs font-bold uppercase tracking-wider">
+                  Tamaño de Fuente
+                </label>
+              </div>
               <Badge variant="secondary" className="font-mono text-xs font-bold">
                 {settings.fontSize} px
               </Badge>
             </div>
+            <p className="text-xs opacity-70 mb-2">
+              Ajusta la escala tipográfica según tu agudeza visual y distancia de lectura.
+            </p>
             <Slider
               min={16}
               max={28}
@@ -366,7 +372,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               onValueChange={(val) => onUpdateSettings({ fontSize: val })}
               label="Ajustar tamaño de fuente"
             />
-          </div>
+          </Card>
 
           {/* 4. Software PWM Dimming (Mitigación de Parpadeo) */}
           <Card className="p-4 bg-[var(--reader-hover)]">
