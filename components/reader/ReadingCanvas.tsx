@@ -141,6 +141,20 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     onPageChange(Math.min(currentPage, Math.max(1, totalPages)), totalPages);
   }, [totalPages, currentPage, onPageChange]);
 
+  // Sincronización determinista de página basada en la ubicación exacta del versículo que se está leyendo
+  useEffect(() => {
+    if (activeSpokenVerseNumber === null || activeSpokenVerseNumber === undefined || pages.length === 0) return;
+    const targetPageIndex = pages.findIndex((page) =>
+      page.some((v) => String(v.number) === String(activeSpokenVerseNumber))
+    );
+    if (targetPageIndex !== -1) {
+      const targetPage = targetPageIndex + 1;
+      if (targetPage !== currentPage) {
+        onPageChange(targetPage, pages.length);
+      }
+    }
+  }, [activeSpokenVerseNumber, pages, currentPage, onPageChange]);
+
   // Touch Swipe Gesture Detection
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);

@@ -150,15 +150,6 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         selectedVoiceURI: effectiveVoiceURI,
       }));
 
-      // Auto-paginate to page containing this verse
-      if (totalPages > 1) {
-        const estimatedPage = Math.max(
-          1,
-          Math.min(totalPages, Math.ceil(((index + 1) / data.verses.length) * totalPages))
-        );
-        setCurrentPage(estimatedPage);
-      }
-
       ttsService.speakVerse(verse, {
         voiceURI: effectiveVoiceURI,
         rate: effectiveRate,
