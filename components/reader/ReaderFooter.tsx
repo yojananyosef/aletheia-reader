@@ -109,11 +109,22 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.12, ease: 'easeInOut' }}
-            className="flex flex-col gap-1.5 overflow-hidden pt-0.5"
+            className="flex flex-col gap-1.5 pt-0.5 relative overflow-visible"
           >
+            {/* Click Outside Overlay for Popovers */}
+            {(showSpeedMenu || showVoiceMenu) && (
+              <div
+                className="fixed inset-0 z-30 bg-transparent"
+                onClick={() => {
+                  setShowSpeedMenu(false);
+                  setShowVoiceMenu(false);
+                }}
+              />
+            )}
+
             {/* When Audio Narrator is Active: Integrated Cohesive Media & Reading HUD */}
             {isNarratorOpen ? (
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 py-0.5">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 py-0.5 relative z-40">
                 {/* Left: Spoken Verse Info & Speed/Voice Popovers */}
                 <div className="flex items-center justify-between w-full sm:w-auto gap-2">
                   <div className="flex items-center gap-1.5 truncate max-w-[200px] xs:max-w-[240px]">
@@ -188,7 +199,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
 
                         {showVoiceMenu && (
                           <div
-                            className="absolute bottom-full right-0 mb-2 rounded-xl border border-[var(--reader-border)] bg-[var(--reader-bg)] p-1.5 shadow-2xl flex flex-col gap-1 max-h-52 overflow-y-auto w-56 sm:w-64 z-50 animate-in fade-in zoom-in-95 duration-100"
+                            className="absolute bottom-full right-0 mb-2 rounded-xl border border-[var(--reader-border)] bg-[var(--reader-bg)] p-1.5 shadow-2xl flex flex-col gap-1 max-h-52 overflow-y-auto custom-scrollbar w-56 sm:w-64 z-50 animate-in fade-in zoom-in-95 duration-100"
                           >
                             <span className="text-[10px] font-bold opacity-60 px-2 py-1 uppercase">Voces Disponibles</span>
                             {availableVoices.map((voice, idx) => {

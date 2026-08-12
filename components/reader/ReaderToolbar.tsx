@@ -13,12 +13,11 @@ import {
   Minimize,
   Keyboard,
   Settings,
-  ChevronLeft,
-  ChevronRight,
   ChevronDown,
   BookMarked,
   Volume2,
   Check,
+  Search,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -73,8 +72,8 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
         role="banner"
         className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-[var(--reader-border)] bg-[var(--reader-bg)] text-[var(--reader-text)] px-3 sm:px-5 py-2 backdrop-blur-md transition-colors duration-200 select-none shadow-2xs"
       >
-        {/* Left: Brand & Book/Chapter Selector Button */}
-        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0 max-w-[65%] sm:max-w-none">
+        {/* Left: Brand & Bible Explorer / Books Selector Button */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="flex items-center gap-2">
             <BookOpen className="h-4 w-4 text-reader-accent shrink-0" />
             <span className="font-bold tracking-wide uppercase text-xs hidden lg:inline opacity-80">
@@ -82,43 +81,19 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             </span>
           </div>
 
-          {/* Book and Chapter Switcher */}
-          <div className="flex items-center gap-1">
-            {onPrevChapter && (
-              <Button
-                variant="outline"
-                size="icon-sm"
-                onClick={onPrevChapter}
-                aria-label="Capítulo anterior"
-                title="Capítulo Anterior"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-            )}
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onOpenBookSelector}
-              className="max-w-[130px] xs:max-w-[170px] sm:max-w-none font-bold text-xs sm:text-sm"
-              aria-label="Abrir selector de libros y capítulos"
-            >
-              <span className="truncate">{bookTitle} {chapterNumber}</span>
-              <ChevronDown className="h-3.5 w-3.5 opacity-60 shrink-0" />
-            </Button>
-
-            {onNextChapter && (
-              <Button
-                variant="outline"
-                size="icon-sm"
-                onClick={onNextChapter}
-                aria-label="Capítulo siguiente"
-                title="Capítulo Siguiente"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
+          {/* Clean 'Libros' Selector Button */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onOpenBookSelector}
+            className="font-bold text-xs sm:text-sm gap-1.5"
+            aria-label="Explorar libros y capítulos de la Biblia"
+            title="Explorar libros y capítulos"
+          >
+            <Search className="h-3.5 w-3.5 opacity-70" />
+            <span>Libros</span>
+            <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+          </Button>
         </div>
 
         {/* Center: Quick Font Size & Theme Swatch for Medium/Desktop */}

@@ -212,6 +212,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   const handleSetRateTTS = (newRate: number) => {
     setTtsState((prev) => ({ ...prev, rate: newRate }));
     if (ttsState.status === 'playing') {
+      ttsService.cancel();
       speakVerseAtIndex(ttsState.currentVerseIndex, { rate: newRate });
     }
   };
@@ -219,6 +220,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   const handleSetVoiceTTS = (voiceURI: string) => {
     setTtsState((prev) => ({ ...prev, selectedVoiceURI: voiceURI }));
     if (ttsState.status === 'playing') {
+      ttsService.cancel();
       speakVerseAtIndex(ttsState.currentVerseIndex, { voiceURI });
     }
   };

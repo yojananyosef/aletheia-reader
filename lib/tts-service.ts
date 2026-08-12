@@ -115,8 +115,8 @@ class BibleTTSService {
       return;
     }
 
-    // Pronunciation of verse number prefix in a natural cadence
-    const speechText = `${verse.number}. ${cleanText}`;
+    // Locución bíblica natural y fluida sin interrupciones de numeración
+    const speechText = cleanText;
     const utterance = new SpeechSynthesisUtterance(speechText);
     this.currentUtterance = utterance;
 
