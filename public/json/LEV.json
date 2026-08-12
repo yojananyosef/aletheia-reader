@@ -1200,7 +1200,7 @@
         },
         {
           "number": "8",
-          "text": "Luego le puso el pectoral, y depositó el urim y tumim*Aparentemente una forma de suerte sagrada para conocer la voluntad de Dios mediante respuestas simples de «sí» o «no». dentro del pectoral."
+          "text": "Luego le puso el pectoral, y depositó el urim y tumim dentro del pectoral."
         },
         {
           "number": "9",
@@ -1309,6 +1309,13 @@
         {
           "number": "36",
           "text": "De esta manera cumplieron Aarón y sus hijos todo lo que el Señor le había ordenado a Moisés."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Aparentemente una forma de suerte sagrada para conocer la voluntad de Dios mediante respuestas simples de «sí» o «no».",
+          "reference": "8:8"
         }
       ]
     },

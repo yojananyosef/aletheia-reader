@@ -490,7 +490,7 @@
       "verses": [
         {
           "number": "1",
-          "text": "Y me dijo: ¡Ponte de pie, hombre mortal,*Hombre mortal: La expresión hombre mortal (lit. «hijo de hombre») se usa con frecuencia en este libro (unas 87 veces), cuando Dios se dirige a Ezequiel. Con esta expresión se quiere resaltar la pequeñez del ser humano frente la grandeza de Dios. Sin embargo, a pesar de esa fragilidad, Dios usa al profeta como su instrumento para llevar a cabo sus planes y dar esperanza al pueblo cautivo. que hablaré contigo!"
+          "text": "Y me dijo: ¡Ponte de pie, hombre mortal, que hablaré contigo!"
         },
         {
           "number": "2",
@@ -527,6 +527,13 @@
         {
           "number": "10",
           "text": "Él lo desenrolló, y entonces vi que estaba lleno de advertencias, lamentaciones y condenas."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Hombre mortal: La expresión hombre mortal (lit. «hijo de hombre») se usa con frecuencia en este libro (unas 87 veces), cuando Dios se dirige a Ezequiel. Con esta expresión se quiere resaltar la pequeñez del ser humano frente la grandeza de Dios. Sin embargo, a pesar de esa fragilidad, Dios usa al profeta como su instrumento para llevar a cabo sus planes y dar esperanza al pueblo cautivo.",
+          "reference": "2:1"
         }
       ]
     },

@@ -613,7 +613,7 @@
         },
         {
           "number": "3",
-          "text": "Nada se sabe acerca de Melquisedec: quienes hayan sido su padre o su madre*No se sabe si esto significa que Melquisedec era Cristo que le apareció a Abraham con forma humana, o si simplemente que no se sabe quiénes fueron sus padres ni cuándo nació y murió. o sus otros antepasados. No se sabe dónde nació ni dónde murió. Así, es semejante al Hijo de Dios y es sacerdote para siempre."
+          "text": "Nada se sabe acerca de Melquisedec: quienes hayan sido su padre o su madre o sus otros antepasados. No se sabe dónde nació ni dónde murió. Así, es semejante al Hijo de Dios y es sacerdote para siempre."
         },
         {
           "number": "4",
@@ -710,6 +710,13 @@
         {
           "number": "28",
           "text": "Porque la ley pone como sumos sacerdotes a hombres débiles; pero después de la ley vino el juramento que nos daría al Hijo como sumo sacerdote, hecho perfecto para siempre."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "No se sabe si esto significa que Melquisedec era Cristo que le apareció a Abraham con forma humana, o si simplemente que no se sabe quiénes fueron sus padres ni cuándo nació y murió.",
+          "reference": "7:3"
         }
       ]
     },

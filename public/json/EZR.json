@@ -117,7 +117,7 @@
       "verses": [
         {
           "number": "1",
-          "text": "Durante el primer año del reinado del rey Ciro, de Persia, el Señor hizo que el rey promulgara un decreto, tanto de forma oral como por escrito, permitiendo que los cautivos de Judá pudieran regresar a su tierra. De esa manera el Señor cumplió lo que había dicho por medio del profeta Jeremías.*Jeremías había predicho que los judíos permanecerían en cautiverio bajo los babilonios durante setenta años (Jeremías 25.12 y 29.10). Este decreto, que se dio a conocer en todo el imperio persa, decía:"
+          "text": "Durante el primer año del reinado del rey Ciro, de Persia, el Señor hizo que el rey promulgara un decreto, tanto de forma oral como por escrito, permitiendo que los cautivos de Judá pudieran regresar a su tierra. De esa manera el Señor cumplió lo que había dicho por medio del profeta Jeremías. Este decreto, que se dio a conocer en todo el imperio persa, decía:"
         },
         {
           "number": "2",
@@ -158,6 +158,13 @@
         {
           "number": "11",
           "text": "En total fueron cinco mil cuatrocientos sesenta y nueve los utensilios de oro y plata que fueron entregados a Sesbasar, para que los llevara a Jerusalén."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Jeremías había predicho que los judíos permanecerían en cautiverio bajo los babilonios durante setenta años (",
+          "reference": "1:1"
         }
       ]
     },

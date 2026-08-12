@@ -414,7 +414,7 @@
       "verses": [
         {
           "number": "1",
-          "text": "Antes que nada existiera, ya existía la Palabra,*Literalmente, «el Verbo», término que significa Cristo, la sabiduría y el poder de Dios, la primera causa de todas las cosas y la manifestación personal de Dios ante los hombres, la segunda Persona de la Trinidad. y la Palabra estaba con Dios porque aquel que es la Palabra era Dios."
+          "text": "Antes que nada existiera, ya existía la Palabra, y la Palabra estaba con Dios porque aquel que es la Palabra era Dios."
         },
         {
           "number": "2",
@@ -611,6 +611,13 @@
         {
           "number": "51",
           "text": "―Les aseguro que ustedes verán abrirse el cielo, y a los ángeles de Dios subir y bajar sobre el Hijo del hombre."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Literalmente, «el Verbo», término que significa Cristo, la sabiduría y el poder de Dios, la primera causa de todas las cosas y la manifestación personal de Dios ante los hombres, la segunda Persona de la Trinidad.",
+          "reference": "1:1"
         }
       ]
     },
@@ -3741,7 +3748,7 @@
         },
         {
           "number": "5",
-          "text": "Ellos contestaron: ―A Jesús de Nazaret. ―Yo soy.*Vea Éxodo 3.14. YO SOY es la traducción de la palabra hebrea YHVH que es el nombre de Dios. Judas, el que lo traicionaba, estaba con ellos."
+          "text": "Ellos contestaron: ―A Jesús de Nazaret. ―Yo soy. Judas, el que lo traicionaba, estaba con ellos."
         },
         {
           "number": "6",
@@ -3882,6 +3889,13 @@
         {
           "number": "40",
           "text": "Ellos volvieron a gritar: ―¡No! ¡No sueltes a este, suelta a Barrabás! Y Barrabás era un bandido."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Vea Éxodo 3.14. YO SOY es la traducción de la palabra hebrea YHVH que es el nombre de Dios.",
+          "reference": "18:5"
         }
       ]
     },

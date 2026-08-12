@@ -6,7 +6,9 @@ export interface Verse {
 export interface Footnote {
   id: string;
   verseNumber: string | number;
+  marker?: string;
   note: string;
+  reference?: string;
 }
 
 export interface SectionHeading {
@@ -32,6 +34,9 @@ export interface ComfortBibleReaderProps {
   onPrevChapter?: () => void;
   hasPrevChapter?: boolean;
   hasNextChapter?: boolean;
+  onOpenBookSelector?: () => void;
+  onOpenBookmarks?: () => void;
+  bookmarksCount?: number;
 }
 
 export type ThemeMode = 'pergamino' | 'noche' | 'sepia';

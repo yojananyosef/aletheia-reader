@@ -756,7 +756,7 @@
         },
         {
           "number": "6",
-          "text": "»“Y tú, Belén, que estás en Judá, no eres la menos importante de Judá, porque de ti saldrá un caudillo que guiará a mi pueblo Israel”».*Miqueas 5.2"
+          "text": "»“Y tú, Belén, que estás en Judá, no eres la menos importante de Judá, porque de ti saldrá un caudillo que guiará a mi pueblo Israel”»."
         },
         {
           "number": "7",
@@ -792,7 +792,7 @@
         },
         {
           "number": "15",
-          "text": "donde habrían de permanecer hasta la muerte del rey Herodes. Así se cumplió lo que había predicho el Señor por medio del profeta: «De Egipto llamé a mi Hijo».†Os. 11.1"
+          "text": "donde habrían de permanecer hasta la muerte del rey Herodes. Así se cumplió lo que había predicho el Señor por medio del profeta: «De Egipto llamé a mi Hijo»."
         },
         {
           "number": "16",
@@ -804,7 +804,7 @@
         },
         {
           "number": "18",
-          "text": "«Gritos de agonía y llanto incontenible se escuchan en Ramá; es Raquel que llora desconsolada la muerte de sus hijos».‡Jer. 31.15"
+          "text": "«Gritos de agonía y llanto incontenible se escuchan en Ramá; es Raquel que llora desconsolada la muerte de sus hijos»."
         },
         {
           "number": "19",
@@ -825,6 +825,23 @@
         {
           "number": "23",
           "text": "y se fueron a vivir a un lugar llamado Nazaret. Así se cumplieron las predicciones de los profetas que afirmaban que Jesús sería llamado nazareno."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Miqueas 5.2",
+          "reference": "2:6"
+        },
+        {
+          "marker": "†",
+          "text": "Os. 11.1",
+          "reference": "2:15"
+        },
+        {
+          "marker": "‡",
+          "text": "Jer. 31.15",
+          "reference": "2:18"
         }
       ]
     },
@@ -851,7 +868,7 @@
         },
         {
           "number": "3",
-          "text": "Siglos atrás, el profeta Isaías había hablado de Juan y lo describió así:*Isaías 40.3 «Una voz clama en el desierto: “Prepárenle el camino al Señor; que nada le estorbe a su paso”»."
+          "text": "Siglos atrás, el profeta Isaías había hablado de Juan y lo describió así: «Una voz clama en el desierto: “Prepárenle el camino al Señor; que nada le estorbe a su paso”»."
         },
         {
           "number": "4",
@@ -908,6 +925,13 @@
         {
           "number": "17",
           "text": "y una voz de los cielos dijo: «Este es mi Hijo amado, y en él me complazco»."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Isaías 40.3",
+          "reference": "3:3"
         }
       ]
     },
@@ -1670,7 +1694,7 @@
         },
         {
           "number": "17",
-          "text": "Así se cumplió la profecía de Isaías: «Él mismo tomó nuestras enfermedades y llevó nuestras dolencias».*Isaías 53.4"
+          "text": "Así se cumplió la profecía de Isaías: «Él mismo tomó nuestras enfermedades y llevó nuestras dolencias»."
         },
         {
           "number": "18",
@@ -1739,6 +1763,13 @@
         {
           "number": "34",
           "text": "y la ciudad entera vino al encuentro de Jesús y le suplicaron que se fuera de aquellos lugares."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Isaías 53.4",
+          "reference": "8:17"
         }
       ]
     },
@@ -2334,7 +2365,7 @@
         },
         {
           "number": "17",
-          "text": "Con esto se cumplió la profecía de Isaías*Isaías 42.1-4 que anunció:"
+          "text": "Con esto se cumplió la profecía de Isaías que anunció:"
         },
         {
           "number": "18",
@@ -2467,6 +2498,13 @@
         {
           "number": "50",
           "text": "¡El que obedece a mi Padre que está en los cielos, ese es mi hermano, mi hermana y mi madre!"
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Isaías 42.1-4",
+          "reference": "12:17"
         }
       ]
     },
@@ -2637,7 +2675,7 @@
         },
         {
           "number": "35",
-          "text": "Así se cumplió lo que el profeta había dicho: «Hablaré en parábolas y explicaré las cosas que han estado escondidas desde la fundación del mundo».*Salmo 78.2"
+          "text": "Así se cumplió lo que el profeta había dicho: «Hablaré en parábolas y explicaré las cosas que han estado escondidas desde la fundación del mundo»."
         },
         {
           "number": "36",
@@ -2730,6 +2768,13 @@
         {
           "number": "58",
           "text": "Por causa de la incredulidad de la gente no hizo allí muchos milagros."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Salmo 78.2",
+          "reference": "13:35"
         }
       ]
     },
@@ -3154,7 +3199,7 @@
         },
         {
           "number": "18",
-          "text": "Tú eres Pedro,*Pedro quiere decir «piedra».y sobre esta roca edificaré mi iglesia, y los poderes del infierno no prevalecerán contra ella."
+          "text": "Tú eres Pedro,y sobre esta roca edificaré mi iglesia, y los poderes del infierno no prevalecerán contra ella."
         },
         {
           "number": "19",
@@ -3195,6 +3240,13 @@
         {
           "number": "28",
           "text": "Y algunos de los que están aquí ahora mismo no morirán sin verme venir en mi reino."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Pedro quiere decir «piedra».",
+          "reference": "16:18"
         }
       ]
     },
@@ -4084,7 +4136,7 @@
         },
         {
           "number": "16",
-          "text": "Decidieron enviar a algunos de sus hombres, juntamente con algunos herodianos,*Los herodianos eran un partido político judío. a formularle algunas preguntas. ―Señor —le dijeron—, sabemos que amas la verdad y que la enseñas sin miedo a las consecuencias."
+          "text": "Decidieron enviar a algunos de sus hombres, juntamente con algunos herodianos, a formularle algunas preguntas. ―Señor —le dijeron—, sabemos que amas la verdad y que la enseñas sin miedo a las consecuencias."
         },
         {
           "number": "17",
@@ -4194,6 +4246,13 @@
           "number": "46",
           "text": "―No —le respondieron—. Y desde entonces nadie se atrevió a preguntarle nada."
         }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Los herodianos eran un partido político judío.",
+          "reference": "22:16"
+        }
       ]
     },
     {
@@ -4235,7 +4294,7 @@
         },
         {
           "number": "8",
-          "text": "No dejen que nadie los llame así. Sólo el Cristo es Rabí*Maestro.y todos los hombres están en el mismo nivel de hermanos."
+          "text": "No dejen que nadie los llame así. Sólo el Cristo es Rabíy todos los hombres están en el mismo nivel de hermanos."
         },
         {
           "number": "9",
@@ -4357,6 +4416,13 @@
           "number": "39",
           "text": "porque te aseguro que no me volverás a ver hasta que digas: “¡Bendito el que viene en el nombre del Señor!”»."
         }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Maestro.",
+          "reference": "23:8"
+        }
       ]
     },
     {
@@ -4430,7 +4496,7 @@
         },
         {
           "number": "15",
-          "text": "»Por lo tanto, cuando vean que aparece en el Lugar Santo la desoladora impureza de que habla el profeta Daniel*Daniel 9.27; 11.31; 12.11(¡preste atención el lector!),"
+          "text": "»Por lo tanto, cuando vean que aparece en el Lugar Santo la desoladora impureza de que habla el profeta Daniel(¡preste atención el lector!),"
         },
         {
           "number": "16",
@@ -4567,6 +4633,13 @@
         {
           "number": "51",
           "text": "los azotará severamente y los enviará al tormento de los hipócritas. Allí será el llorar y el crujir de dientes."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Daniel 9.27; 11.31; 12.11",
+          "reference": "24:15"
         }
       ]
     },
@@ -5251,7 +5324,7 @@
         },
         {
           "number": "32",
-          "text": "En el camino hallaron a un hombre de Cirene*África. llamado Simón, y lo obligaron a llevar la cruz que Jesús cargaba."
+          "text": "En el camino hallaron a un hombre de Cirene llamado Simón, y lo obligaron a llevar la cruz que Jesús cargaba."
         },
         {
           "number": "33",
@@ -5259,7 +5332,7 @@
         },
         {
           "number": "34",
-          "text": "los soldados le dieron a beber vino con hiel.†Narcótico que solían ofrecer a los condenados para aliviar sus sufrimientos. Tras probarlo, se negó a beberlo."
+          "text": "los soldados le dieron a beber vino con hiel. Tras probarlo, se negó a beberlo."
         },
         {
           "number": "35",
@@ -5388,6 +5461,18 @@
         {
           "number": "66",
           "text": "Entonces fueron, sellaron la roca y dejaron a los soldados de guardia."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "África.",
+          "reference": "27:32"
+        },
+        {
+          "marker": "†",
+          "text": "Narcótico que solían ofrecer a los condenados para aliviar sus sufrimientos.",
+          "reference": "27:34"
         }
       ]
     },

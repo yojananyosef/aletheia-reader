@@ -387,7 +387,7 @@
       "verses": [
         {
           "number": "1",
-          "text": "Distinguido Teófilo: En mi primera carta*El evangelio según San Lucas. te hablé de todo lo que Jesús empezó a hacer y enseñar"
+          "text": "Distinguido Teófilo: En mi primera carta te hablé de todo lo que Jesús empezó a hacer y enseñar"
         },
         {
           "number": "2",
@@ -484,6 +484,13 @@
         {
           "number": "26",
           "text": "Y a continuación echaron suertes y la suerte cayó sobre Matías. Desde entonces, Matías se sumó a los once apóstoles."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "El evangelio según San Lucas.",
+          "reference": "1:1"
         }
       ]
     },
@@ -3250,7 +3257,7 @@
         },
         {
           "number": "18",
-          "text": "Pablo permaneció en la ciudad muchos días más y luego se despidió de los hermanos para zarpar hacia las costas de Siria en compañía de Priscila y Aquila. En Cencreas, se afeitó la cabeza según la costumbre judía, porque tenía hecho voto.*Probablemente un voto de hacer sacrificio en Jerusalén en acción de gracias: La cabeza se rapaba 30 días antes de presentarse en el templo con las ofrendas."
+          "text": "Pablo permaneció en la ciudad muchos días más y luego se despidió de los hermanos para zarpar hacia las costas de Siria en compañía de Priscila y Aquila. En Cencreas, se afeitó la cabeza según la costumbre judía, porque tenía hecho voto."
         },
         {
           "number": "19",
@@ -3291,6 +3298,13 @@
         {
           "number": "28",
           "text": "porque él refutaba ardientemente y en público a los judíos, y demostraba por medio de las Escrituras que Jesús era el Mesías."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Probablemente un voto de hacer sacrificio en Jerusalén en acción de gracias: La cabeza se rapaba 30 días antes de presentarse en el templo con las ofrendas.",
+          "reference": "18:18"
         }
       ]
     },

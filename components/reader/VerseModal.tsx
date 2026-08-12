@@ -54,9 +54,12 @@ export const VerseModal: React.FC<VerseModalProps> = ({
   const citation = `${bookName} ${chapterNumber}:${verse.number}`;
   const fullText = `«${verse.text}» (${citation})`;
 
-  const relevantFootnotes = footnotes.filter(
-    (fn) => String(fn.verseNumber) === String(verse.number)
-  );
+  // Filter footnotes matching this verse
+  const relevantFootnotes = footnotes.filter((fn) => {
+    const fnRef = String(fn.verseNumber).trim();
+    const vNum = String(verse.number).trim();
+    return fnRef === vNum || vNum.split('-').includes(fnRef);
+  });
 
   const handleCopy = async () => {
     try {
@@ -120,12 +123,14 @@ export const VerseModal: React.FC<VerseModalProps> = ({
           <div className="my-4 rounded-xl p-3.5 border text-sm" style={{ backgroundColor: 'var(--reader-hover)', borderColor: 'var(--reader-border)' }}>
             <div className="flex items-center gap-1.5 font-semibold text-xs uppercase tracking-wider mb-2" style={{ color: 'var(--reader-accent)' }}>
               <BookOpen className="h-4 w-4" />
-              <span>Notas de Estudio</span>
+              <span>Nota al Pie Explicativa</span>
             </div>
             <ul className="space-y-2">
               {relevantFootnotes.map((fn) => (
-                <li key={fn.id} className="leading-relaxed opacity-90">
-                  <span className="font-semibold mr-1.5">Nota [v.{fn.verseNumber}]:</span>
+                <li key={fn.id} className="leading-relaxed opacity-95">
+                  <span className="font-bold mr-1.5 inline-flex items-center px-1.5 py-0.5 rounded bg-amber-600/10 text-amber-800 dark:text-amber-300 text-xs">
+                    [{fn.marker || '*'}] v.{fn.verseNumber}
+                  </span>
                   {fn.note}
                 </li>
               ))}

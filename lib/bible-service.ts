@@ -1,14 +1,21 @@
-import { BibleCatalog, BibleBookMeta, ChapterPayload, SectionHeading } from '@/types/bible';
+import { BibleCatalog, BibleBookMeta, ChapterPayload, Footnote, SectionHeading } from '@/types/bible';
 
 export interface RawVerse {
   number: string | number;
   text: string;
 }
 
+export interface RawFootnote {
+  marker?: string;
+  text: string;
+  reference?: string;
+}
+
 export interface RawChapter {
   chapter: number;
   sections?: SectionHeading[];
   verses: RawVerse[];
+  footnotes?: RawFootnote[];
 }
 
 export interface RawBookData {
@@ -96,6 +103,22 @@ export async function getChapterData(
     return null;
   }
 
+  // Parse footnotes from real JSON structure
+  const footnotes: Footnote[] = (chapter.footnotes || []).map((fn, idx) => {
+    let verseNumber: string | number = '';
+    if (fn.reference) {
+      const parts = fn.reference.split(':');
+      verseNumber = parts.length > 1 ? parts[1].trim() : fn.reference.trim();
+    }
+    return {
+      id: `fn-${bookData.id}-${chapter.chapter}-${idx}`,
+      verseNumber,
+      marker: fn.marker || '*',
+      note: fn.text,
+      reference: fn.reference,
+    };
+  });
+
   return {
     bookId: bookData.id,
     bookName: bookData.name,
@@ -105,6 +128,6 @@ export async function getChapterData(
       text: v.text,
     })),
     sections: chapter.sections || [],
-    footnotes: [],
+    footnotes,
   };
 }

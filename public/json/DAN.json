@@ -736,7 +736,7 @@
       "verses": [
         {
           "number": "1",
-          "text": "El rey Belsasar*Belsasar era el segundo bajo Nebonido su padre, quien estaba ausente en esta oportunidad. invitó a mil de los más importantes funcionarios suyos a una gran fiesta donde él y sus invitados bebieron mucho vino."
+          "text": "El rey Belsasar invitó a mil de los más importantes funcionarios suyos a una gran fiesta donde él y sus invitados bebieron mucho vino."
         },
         {
           "number": "2",
@@ -856,7 +856,19 @@
         },
         {
           "number": "31",
-          "text": "y Darío de Media†Este Darío no debe confundirse con Darío el persa mencionado en Esdras, Hageo y Zacarías ni con el de Nehemías 12.22. entró en la ciudad y comenzó a reinar a la edad de sesenta y dos años."
+          "text": "y Darío de Media entró en la ciudad y comenzó a reinar a la edad de sesenta y dos años."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Belsasar era el segundo bajo Nebonido su padre, quien estaba ausente en esta oportunidad.",
+          "reference": "5:1"
+        },
+        {
+          "marker": "†",
+          "text": "Este Darío no debe confundirse con Darío el persa mencionado en Esdras, Hageo y Zacarías ni con el de Nehemías 12.22.",
+          "reference": "5:31"
         }
       ]
     },
@@ -1701,7 +1713,7 @@
         },
         {
           "number": "11",
-          "text": "Desde el momento en que el sacrificio ritual diario que se realiza en el templo sea quitado y en su lugar se ponga la humillante abominación pasarán mil doscientos noventa días.*Tres años y medio más un mes."
+          "text": "Desde el momento en que el sacrificio ritual diario que se realiza en el templo sea quitado y en su lugar se ponga la humillante abominación pasarán mil doscientos noventa días."
         },
         {
           "number": "12",
@@ -1710,6 +1722,13 @@
         {
           "number": "13",
           "text": "Pero sigue ahora tú viviendo hasta el final de tus días y luego descansa en paz, que al final de los tiempos serás levantado de tu tumba para recibir tu recompensa”»."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Tres años y medio más un mes.",
+          "reference": "12:11"
         }
       ]
     }

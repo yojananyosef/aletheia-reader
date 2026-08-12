@@ -491,7 +491,7 @@
         },
         {
           "number": "22",
-          "text": "La gente quedó maravillada de su enseñanza, porque Jesús hablaba con autoridad, y no como los maestros de la ley.*Los escribas."
+          "text": "La gente quedó maravillada de su enseñanza, porque Jesús hablaba con autoridad, y no como los maestros de la ley."
         },
         {
           "number": "23",
@@ -584,6 +584,13 @@
         {
           "number": "45",
           "text": "Pero tan pronto salió de allí, comenzó a divulgar lo que le había sucedido. Como consecuencia de esto, Jesús ya no podía entrar abiertamente en ninguna ciudad. Tenía que quedarse en los lugares apartados; y aun así, de todas partes llegaban a él."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Los escribas.",
+          "reference": "1:22"
         }
       ]
     },
@@ -765,7 +772,7 @@
         },
         {
           "number": "6",
-          "text": "En cuanto salieron, los fariseos se reunieron con los herodianos*Partido político pro-romano. para urdir un plan con el propósito de matar a Jesús."
+          "text": "En cuanto salieron, los fariseos se reunieron con los herodianos para urdir un plan con el propósito de matar a Jesús."
         },
         {
           "number": "7",
@@ -882,6 +889,13 @@
         {
           "number": "35",
           "text": "Cualquiera que hace la voluntad de Dios es mi hermano, mi hermana y mi madre."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Partido político pro-romano.",
+          "reference": "3:6"
         }
       ]
     },
@@ -2524,7 +2538,7 @@
         },
         {
           "number": "13",
-          "text": "Enviaron luego a algunos de los fariseos y de los herodianos*Los herodianos eran un partido político judío. para hacer caer a Jesús en una trampa con sus mismas palabras."
+          "text": "Enviaron luego a algunos de los fariseos y de los herodianos para hacer caer a Jesús en una trampa con sus mismas palabras."
         },
         {
           "number": "14",
@@ -2650,6 +2664,13 @@
           "number": "44",
           "text": "Todos echaron de lo que les sobraba; pero ella, siendo tan pobre, dio todo lo que tenía para vivir»."
         }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Los herodianos eran un partido político judío.",
+          "reference": "12:13"
+        }
       ]
     },
     {
@@ -2719,7 +2740,7 @@
         },
         {
           "number": "14",
-          "text": "»Y cuando vean que “la terrible abominación” está donde no debe estar*Daniel 9.27; 11.31; 12.11(el que lee, que entienda), entonces los que estén en Judea, huyan a las montañas."
+          "text": "»Y cuando vean que “la terrible abominación” está donde no debe estar(el que lee, que entienda), entonces los que estén en Judea, huyan a las montañas."
         },
         {
           "number": "15",
@@ -2812,6 +2833,13 @@
         {
           "number": "37",
           "text": "Lo que les digo a ustedes, se lo digo a todos: ¡Manténganse vigilantes!»."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Daniel 9.27; 11.31; 12.11",
+          "reference": "13:14"
         }
       ]
     },
@@ -3297,7 +3325,7 @@
         },
         {
           "number": "34",
-          "text": "A esta hora Jesús gritó con fuerza: —Eloi, Eloi, ¿lama sabactani?*Hablaba en arameo. Muchos de los observadores, que hablaban griego y latín, no entendieron las dos primeras palabras y pensaron que llamaba al profeta Elías. (que significa: Dios mío, Dios mío, ¿por qué me has abandonado?)"
+          "text": "A esta hora Jesús gritó con fuerza: —Eloi, Eloi, ¿lama sabactani? (que significa: Dios mío, Dios mío, ¿por qué me has abandonado?)"
         },
         {
           "number": "35",
@@ -3350,6 +3378,13 @@
         {
           "number": "47",
           "text": "María Magdalena y María la madre de José vieron dónde pusieron el cuerpo de Jesús."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Hablaba en arameo. Muchos de los observadores, que hablaban griego y latín, no entendieron las dos primeras palabras y pensaron que llamaba al profeta Elías.",
+          "reference": "15:34"
         }
       ]
     },

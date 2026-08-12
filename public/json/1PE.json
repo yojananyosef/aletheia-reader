@@ -430,7 +430,7 @@
         },
         {
           "number": "6",
-          "text": "Por eso también se les predicó el evangelio aun a los muertos,*El sentido de esta frase desconcierta a todos los comentaristas. El plan de Dios para los impíos es el siguiente: «La paga del pecado es la muerte y después el juicio». La Biblia no enseña que después de la muerte haya otra oportunidad de oír y aceptar el evangelio. Por esta razón algunos opinan que sería más exacto interpretar el versículo seis de la siguiente manera: «Y por eso es que las Buenas Nuevas de salvación un día (en vida de ellos) fueron predicadas a los que ahora están muertos. Porque si las aceptaban, aun cuando murieran físicamente como todos los hombres, sus espíritus vivirían tal como Dios vive». para que, a pesar de haber sido juzgados en este mundo por lo que hicieron en vida, vivan conforme a Dios en el espíritu."
+          "text": "Por eso también se les predicó el evangelio aun a los muertos, para que, a pesar de haber sido juzgados en este mundo por lo que hicieron en vida, vivan conforme a Dios en el espíritu."
         },
         {
           "number": "7",
@@ -483,6 +483,13 @@
         {
           "number": "19",
           "text": "Así pues, los que sufren porque Dios así lo quiere, sigan haciendo el bien y entréguense a su Creador, porque él es fiel."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "El sentido de esta frase desconcierta a todos los comentaristas. El plan de Dios para los impíos es el siguiente: «La paga del pecado es la muerte y después el juicio». La Biblia no enseña que después de la muerte haya otra oportunidad de oír y aceptar el evangelio. Por esta razón algunos opinan que sería más exacto interpretar el versículo seis de la siguiente manera: «Y por eso es que las Buenas Nuevas de salvación un día (en vida de ellos) fueron predicadas a los que ahora están muertos. Porque si las aceptaban, aun cuando murieran físicamente como todos los hombres, sus espíritus vivirían tal como Dios vive».",
+          "reference": "4:6"
         }
       ]
     },
@@ -549,11 +556,18 @@
         },
         {
           "number": "13",
-          "text": "La que está en Babilonia,*Babilonia era el apodo que los cristianos habían puesto a Roma, y «la que está» muchos piensan que era la esposa de Pedro a la que se hace referencia en Mateo 8.14; 1 Corintios 9.5, etc. Otros piensan que debe traducirse: «La iglesia que está en Babilonia». les manda saludos. Igualmente los saluda mi hijo Marcos."
+          "text": "La que está en Babilonia, les manda saludos. Igualmente los saluda mi hijo Marcos."
         },
         {
           "number": "14",
           "text": "Abrácense unos a otros en amor cristiano. Que la paz esté con ustedes, los que están en Cristo."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Babilonia era el apodo que los cristianos habían puesto a Roma, y «la que está» muchos piensan que era la esposa de Pedro a la que se hace referencia en Mateo 8.14; 1 Corintios 9.5, etc. Otros piensan que debe traducirse: «La iglesia que está en Babilonia».",
+          "reference": "5:13"
         }
       ]
     }

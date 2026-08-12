@@ -7,11 +7,8 @@ import { ComfortBibleReader } from '@/components/reader/ComfortBibleReader';
 import {
   BookOpen,
   BookmarkCheck,
-  ChevronDown,
   Search,
   X,
-  ChevronLeft,
-  ChevronRight,
   BookMarked,
   Loader2,
 } from 'lucide-react';
@@ -180,89 +177,10 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col">
-      {/* Top Header & Bible Navigation Bar */}
-      <nav
-        aria-label="Barra de Navegación Bíblica"
-        className="w-full flex items-center justify-between px-4 py-2 border-b text-xs select-none backdrop-blur-xs z-30"
-        style={{
-          backgroundColor: 'var(--reader-bg, #FDFBF6)',
-          borderColor: 'var(--reader-border, rgba(0,0,0,0.1))',
-          color: 'var(--reader-text, #222222)',
-        }}
-      >
-        {/* Brand and Book Trigger */}
-        <div className="flex items-center gap-2">
-          <BookOpen className="h-4 w-4 text-amber-700 dark:text-amber-400" />
-          <span className="font-bold tracking-wide uppercase hidden sm:inline">Alethia Reader</span>
-        </div>
-
-        {/* Center: Book & Chapter Selector Button */}
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={handlePrevChapter}
-            aria-label="Capítulo anterior"
-            className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors hover:bg-neutral-500/10 active:scale-95"
-            style={{ borderColor: 'var(--reader-border, rgba(0,0,0,0.15))' }}
-            title="Capítulo Anterior"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setBrowsingBook(currentBookMeta || books[0]);
-              setShowBookSelector(true);
-            }}
-            className="flex min-h-[38px] items-center gap-2 rounded-xl border px-3.5 py-1.5 font-bold text-xs sm:text-sm transition-all hover:bg-neutral-500/10 active:scale-95"
-            style={{ borderColor: 'var(--reader-border, rgba(0,0,0,0.15))' }}
-            aria-expanded={showBookSelector}
-            aria-label="Abrir selector de libros y capítulos"
-          >
-            <span>
-              {chapterPayload?.bookName || currentBookMeta?.name || 'Cargando...'} {selectedChapter}
-            </span>
-            <ChevronDown className="h-4 w-4 opacity-60" />
-          </button>
-
-          <button
-            type="button"
-            onClick={handleNextChapter}
-            aria-label="Capítulo siguiente"
-            className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors hover:bg-neutral-500/10 active:scale-95"
-            style={{ borderColor: 'var(--reader-border, rgba(0,0,0,0.15))' }}
-            title="Capítulo Siguiente"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
-        </div>
-
-        {/* Right: Bookmarks Drawer Toggle */}
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setShowBookmarksDrawer(true)}
-            className="flex min-h-[36px] items-center gap-1.5 rounded-xl border px-3 py-1 text-xs font-semibold transition-colors hover:bg-neutral-500/10"
-            style={{ borderColor: 'var(--reader-border, rgba(0,0,0,0.15))' }}
-            aria-label="Ver versículos guardados"
-            title="Versículos Marcados"
-          >
-            <BookMarked className="h-3.5 w-3.5 text-amber-600" />
-            <span className="hidden sm:inline">Guardados</span>
-            {bookmarksList.length > 0 && (
-              <span className="flex h-4 min-w-[16px] items-center justify-center rounded-full bg-amber-600 px-1 text-[10px] font-bold text-white">
-                {bookmarksList.length}
-              </span>
-            )}
-          </button>
-        </div>
-      </nav>
-
-      {/* Main Content Area */}
+    <div className="relative min-h-screen flex flex-col w-full">
+      {/* Main ComfortBibleReader Component */}
       {loading && !chapterPayload ? (
-        <div className="flex-1 flex flex-col items-center justify-center p-12 space-y-3">
+        <div className="flex-1 flex flex-col items-center justify-center p-12 space-y-3 min-h-screen">
           <Loader2 className="h-8 w-8 animate-spin text-amber-700" />
           <p className="text-sm font-medium opacity-70">Cargando Sagradas Escrituras...</p>
         </div>
@@ -273,9 +191,15 @@ export default function Home() {
           onBookmarkVerse={handleBookmarkVerse}
           onNextChapter={handleNextChapter}
           onPrevChapter={handlePrevChapter}
+          onOpenBookSelector={() => {
+            setBrowsingBook(currentBookMeta || books[0]);
+            setShowBookSelector(true);
+          }}
+          onOpenBookmarks={() => setShowBookmarksDrawer(true)}
+          bookmarksCount={bookmarksList.length}
         />
       ) : (
-        <div className="flex-1 flex items-center justify-center p-8">
+        <div className="flex-1 flex items-center justify-center p-8 min-h-screen">
           <p>No se pudo cargar el capítulo seleccionado.</p>
         </div>
       )}

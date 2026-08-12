@@ -1869,7 +1869,7 @@
         },
         {
           "number": "32",
-          "text": "Pero le dejaré una tribu*Judá y Benjamín eran a veces contadas como una sola tribu. por amor a David mi siervo y por amor a Jerusalén, la que he escogido por sobre todas las otras ciudades de Israel."
+          "text": "Pero le dejaré una tribu por amor a David mi siervo y por amor a Jerusalén, la que he escogido por sobre todas las otras ciudades de Israel."
         },
         {
           "number": "33",
@@ -1914,6 +1914,13 @@
         {
           "number": "43",
           "text": "y cuando murió fue sepultado en la ciudad de su padre, y su hijo Roboán reinó en su lugar."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Judá y Benjamín eran a veces contadas como una sola tribu.",
+          "reference": "11:32"
         }
       ]
     },

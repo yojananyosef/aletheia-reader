@@ -1136,7 +1136,7 @@
         },
         {
           "number": "18",
-          "text": "Tengo mucho motivo para estar enojado. Observa a los niños recogiendo leña, a los padres haciendo fuego y a las mujeres amasando para hacer tortas como ofrenda para la Reina del Cielo*Nombre que se daba a Istar (Astarté) diosa del amor y la guerra entre los mesopotamios. y para los demás ídolos."
+          "text": "Tengo mucho motivo para estar enojado. Observa a los niños recogiendo leña, a los padres haciendo fuego y a las mujeres amasando para hacer tortas como ofrenda para la Reina del Cielo y para los demás ídolos."
         },
         {
           "number": "19",
@@ -1201,6 +1201,13 @@
         {
           "number": "34",
           "text": "Yo acabaré con la alegría y los cantos festivos en las calles de Jerusalén y en las ciudades de Judá, así como con la jubilosa voz de los recién casados, porque la desgracia llenará toda la ciudad y los hogares."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Nombre que se daba a Istar (Astarté) diosa del amor y la guerra entre los mesopotamios.",
+          "reference": "7:18"
         }
       ]
     },
@@ -3126,7 +3133,7 @@
       "verses": [
         {
           "number": "1",
-          "text": "Este mensaje del Señor recibió Jeremías al comienzo del reinado de Joacim,*Algunas versiones dicen «Sedequías». hijo de Josías, rey de Judá:"
+          "text": "Este mensaje del Señor recibió Jeremías al comienzo del reinado de Joacim, hijo de Josías, rey de Judá:"
         },
         {
           "number": "2",
@@ -3203,6 +3210,13 @@
         {
           "number": "22",
           "text": "todavía están por ser llevados a Babilonia y allá se quedarán hasta que yo los mande traer. Después los volveré a traer de regreso a Jerusalén."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Algunas versiones dicen «Sedequías».",
+          "reference": "27:1"
         }
       ]
     },

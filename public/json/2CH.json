@@ -2210,7 +2210,7 @@
       "verses": [
         {
           "number": "1",
-          "text": "Cuando Jorán murió, la gente de Jerusalén proclamó como rey a Ocozías,*O, Joacaz. el hijo menor de Jorán (porque las bandas árabes que habían asaltado a Jerusalén habían dado muerte a los hijos mayores del rey)."
+          "text": "Cuando Jorán murió, la gente de Jerusalén proclamó como rey a Ocozías, el hijo menor de Jorán (porque las bandas árabes que habían asaltado a Jerusalén habían dado muerte a los hijos mayores del rey)."
         },
         {
           "number": "2",
@@ -2255,6 +2255,13 @@
         {
           "number": "12",
           "text": "Joás permaneció escondido allí durante seis años, mientras Atalía reinaba en el país."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "O, Joacaz.",
+          "reference": "22:1"
         }
       ]
     },

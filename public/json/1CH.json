@@ -648,7 +648,7 @@
         },
         {
           "number": "34-35",
-          "text": "Sesán*Al parecer, se trata de un Sesán diferente al del versículo 31. no tuvo hijos sino hijas. Una de ellas fue concedida como esposa a Yarjá, esclavo suyo, procedente de Egipto. La esposa de Yarjá fue la madre de Atay."
+          "text": "Sesán no tuvo hijos sino hijas. Una de ellas fue concedida como esposa a Yarjá, esclavo suyo, procedente de Egipto. La esposa de Yarjá fue la madre de Atay."
         },
         {
           "number": "36",
@@ -726,6 +726,13 @@
           "number": "55",
           "text": "se incluía también a las familias de los escribas que vivían en Jabés, que fueron los tirateos, los simeateos y los sucateos. Todos estos fueron los quenitas que descendieron de Jamat, que fue el padre de la familia de Recab."
         }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Al parecer, se trata de un Sesán diferente al del versículo 31.",
+          "reference": "2:34-35"
+        }
       ]
     },
     {
@@ -759,7 +766,7 @@
         },
         {
           "number": "5",
-          "text": "Allí en Jerusalén le nacieron: Simá, Sobab, Natán y Salomón. Estos cuatro los tuvo con Betsabé,*O, «Betsúa». la hija de Amiel."
+          "text": "Allí en Jerusalén le nacieron: Simá, Sobab, Natán y Salomón. Estos cuatro los tuvo con Betsabé, la hija de Amiel."
         },
         {
           "number": "6-8",
@@ -771,15 +778,15 @@
         },
         {
           "number": "10-14",
-          "text": "Los siguientes son los descendientes del rey Salomón, que fueron reyes de Judá: Roboán, Abías, Asá, Josafat, Jorán,†O, «Jehoram». Ocozías, Joás, Amasías, Azarías,‡O, «Uzías». Jotán, Acaz, Ezequías, Manasés, Amón y Josías."
+          "text": "Los siguientes son los descendientes del rey Salomón, que fueron reyes de Judá: Roboán, Abías, Asá, Josafat, Jorán, Ocozías, Joás, Amasías, Azarías, Jotán, Acaz, Ezequías, Manasés, Amón y Josías."
         },
         {
           "number": "15",
-          "text": "Los hijos de Josías fueron: Johanán,§O, «Joacás». Joacim, Sedequías y Salún."
+          "text": "Los hijos de Josías fueron: Johanán, Joacim, Sedequías y Salún."
         },
         {
           "number": "16",
-          "text": "Los hijos de Joacim fueron Jeconías*Conocido también como Joaquín o Conías. y Sedequías."
+          "text": "Los hijos de Joacim fueron Jeconías y Sedequías."
         },
         {
           "number": "17-18",
@@ -800,6 +807,33 @@
         {
           "number": "24",
           "text": "Los siete hijos de Elihoenay fueron: Hodavías; Eliasib, Pelaías, Acub, Johanán, Delaías y Ananí."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "O, «Betsúa».",
+          "reference": "3:5"
+        },
+        {
+          "marker": "†",
+          "text": "O, «Jehoram».",
+          "reference": "3:10-14"
+        },
+        {
+          "marker": "‡",
+          "text": "O, «Uzías».",
+          "reference": "3:10-14"
+        },
+        {
+          "marker": "§",
+          "text": "O, «Joacás».",
+          "reference": "3:15"
+        },
+        {
+          "marker": "*",
+          "text": "Conocido también como Joaquín o Conías.",
+          "reference": "3:16"
         }
       ]
     },
@@ -3003,7 +3037,7 @@
         },
         {
           "number": "10-11",
-          "text": "Los hijos de Simí fueron: Yajat, el mayor, Ziza,*O, «Zina». el segundo; y luego Jeús y Beriá que se cuentan como una sola familia porque ambos tuvieron pocos hijos."
+          "text": "Los hijos de Simí fueron: Yajat, el mayor, Ziza, el segundo; y luego Jeús y Beriá que se cuentan como una sola familia porque ambos tuvieron pocos hijos."
         },
         {
           "number": "12",
@@ -3084,6 +3118,13 @@
         {
           "number": "32",
           "text": "Así que tenían a su cargo el cuidado del santuario, de la Tienda de reunión, y estaban bajo las órdenes de los sacerdotes, descendientes de Aarón."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "O, «Zina».",
+          "reference": "23:10-11"
         }
       ]
     },

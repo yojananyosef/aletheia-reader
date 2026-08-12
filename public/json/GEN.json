@@ -596,7 +596,7 @@
         },
         {
           "number": "23",
-          "text": "Al verla, el hombre exclamó: «¡Esta sí es hueso de mis huesos y carne de mi carne! Se llamará “mujer”*En el original la palabra «mujer» y «hombre» vienen de la misma raíz. porque fue sacada del hombre»."
+          "text": "Al verla, el hombre exclamó: «¡Esta sí es hueso de mis huesos y carne de mi carne! Se llamará “mujer” porque fue sacada del hombre»."
         },
         {
           "number": "24",
@@ -605,6 +605,13 @@
         {
           "number": "25",
           "text": "Aunque en ese tiempo el hombre y la mujer estaban desnudos, no se sentían avergonzados."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "En el original la palabra «mujer» y «hombre» vienen de la misma raíz.",
+          "reference": "2:23"
         }
       ]
     },
@@ -908,7 +915,7 @@
         },
         {
           "number": "2",
-          "text": "Entonces los hijos de Dios*Algunos comentaristas creen que la expresión «hijos de Dios» se refiere a seres del mundo espiritual; y otros, al «linaje piadoso de Set». se fijaron en la belleza de las mujeres y tomaron como mujeres a todas las que quisieron."
+          "text": "Entonces los hijos de Dios se fijaron en la belleza de las mujeres y tomaron como mujeres a todas las que quisieron."
         },
         {
           "number": "3",
@@ -973,6 +980,13 @@
         {
           "number": "22",
           "text": "Y Noé hizo todo lo que Dios le mandó."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Algunos comentaristas creen que la expresión «hijos de Dios» se refiere a seres del mundo espiritual; y otros, al «linaje piadoso de Set».",
+          "reference": "6:2"
         }
       ]
     },
@@ -1511,7 +1525,14 @@
         },
         {
           "number": "32",
-          "text": "Fue allí en Jarán donde murió Téraj, cuando tenía doscientos cinco años de edad.*El Pentateuco Samaritano dice que Téraj murió cuando tenía ciento cuarenta y cinco años, esto es, el año de la salida de Abram de Jarán."
+          "text": "Fue allí en Jarán donde murió Téraj, cuando tenía doscientos cinco años de edad."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "El Pentateuco Samaritano dice que Téraj murió cuando tenía ciento cuarenta y cinco años, esto es, el año de la salida de Abram de Jarán.",
+          "reference": "11:32"
         }
       ]
     },

@@ -1414,7 +1414,7 @@
         },
         {
           "number": "18-23",
-          "text": "Al día siguiente Natanael, hijo de Zuar, jefe de la tribu de Isacar, presentó sus dones y ofrendas. Eran estos exactamente iguales que los que había presentado Naasón el día anterior.*El texto original repite la lista de las ofrendas anotadas en los versículos 13-17."
+          "text": "Al día siguiente Natanael, hijo de Zuar, jefe de la tribu de Isacar, presentó sus dones y ofrendas. Eran estos exactamente iguales que los que había presentado Naasón el día anterior."
         },
         {
           "number": "24-29",
@@ -1471,6 +1471,13 @@
         {
           "number": "89",
           "text": "Cuando Moisés entraba en el santuario para hablar con Dios, oía la voz que le hablaba desde encima del propiciatorio que estaba sobre el cofre, entre los dos querubines."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "El texto original repite la lista de las ofrendas anotadas en los versículos 13-17.",
+          "reference": "7:18-23"
         }
       ]
     },

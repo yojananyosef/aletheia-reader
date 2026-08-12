@@ -21,6 +21,9 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   onBookmarkVerse,
   onNextChapter,
   onPrevChapter,
+  onOpenBookSelector,
+  onOpenBookmarks,
+  bookmarksCount = 0,
 }) => {
   // --- Core Reader Settings ---
   const [settings, setSettings] = useState<ReaderSettings>({
@@ -151,13 +154,18 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         lineHeight={settings.lineHeight}
       />
 
-      {/* 4. Accessible Toolbar / HUD */}
+      {/* 4. Accessible Unified Toolbar / HUD */}
       {settings.showToolbar && (
         <ReaderToolbar
           settings={settings}
           onUpdateSettings={updateSettings}
           bookTitle={data.bookName}
           chapterNumber={data.chapterNumber}
+          onNextChapter={onNextChapter}
+          onPrevChapter={onPrevChapter}
+          onOpenBookSelector={onOpenBookSelector}
+          onOpenBookmarks={onOpenBookmarks}
+          bookmarksCount={bookmarksCount}
         />
       )}
 
@@ -171,6 +179,8 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
           onSelectVerse={(verse) => setSelectedVerse(verse)}
           bookmarkedVerses={bookmarkedVerses}
           onToggleToolbar={() => updateSettings({ showToolbar: !settings.showToolbar })}
+          onNextChapter={onNextChapter}
+          onPrevChapter={onPrevChapter}
         />
       </main>
 

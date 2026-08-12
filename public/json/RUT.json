@@ -80,7 +80,7 @@
         },
         {
           "number": "11",
-          "text": "Pero Noemí replicó: ―Es mejor que regresen a su pueblo. Yo no voy a tener más hijos que puedan casarse con ustedes.*Los padres solían retener a la nuera viuda en la familia casándola con un hermano menor de su exmarido. Véase Deuteronomio 25.5-10."
+          "text": "Pero Noemí replicó: ―Es mejor que regresen a su pueblo. Yo no voy a tener más hijos que puedan casarse con ustedes."
         },
         {
           "number": "12",
@@ -125,6 +125,13 @@
         {
           "number": "22",
           "text": "El regreso de ellas de Moab y su llegada a Belén coincidió con el tiempo de la cosecha de la cebada."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Los padres solían retener a la nuera viuda en la familia casándola con un hermano menor de su exmarido. Véase",
+          "reference": "1:11"
         }
       ]
     },

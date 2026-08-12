@@ -2648,7 +2648,7 @@
         },
         {
           "number": "53",
-          "text": "Pero allí no quisieron recibirlo, porque sabían que se dirigía a Jerusalén.*Caso típico de discriminación. Los judíos llamaban mestizos a los samaritanos, y estos odiaban a los judíos (vea Juan 4.9)."
+          "text": "Pero allí no quisieron recibirlo, porque sabían que se dirigía a Jerusalén."
         },
         {
           "number": "54",
@@ -2685,6 +2685,13 @@
         {
           "number": "62",
           "text": "Jesús le respondió: ―El que pone la mano en el arado y vuelve la vista atrás no es útil para el reino de Dios."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Caso típico de discriminación. Los judíos llamaban mestizos a los samaritanos, y estos odiaban a los judíos (vea Juan 4.9).",
+          "reference": "9:53"
         }
       ]
     },
@@ -2914,7 +2921,7 @@
         },
         {
           "number": "4",
-          "text": "Y perdónanos nuestros pecados, porque también nosotros perdonamos a todos los que nos hacen mal. Y no nos metas en tentación».*Algunos manuscritos antiguos agregan aquí otra porción a la Oración del Señor, como se ve en Mateo 6.9-13."
+          "text": "Y perdónanos nuestros pecados, porque también nosotros perdonamos a todos los que nos hacen mal. Y no nos metas en tentación»."
         },
         {
           "number": "5",
@@ -3115,6 +3122,13 @@
         {
           "number": "54",
           "text": "Lo que hacían era ponerle trampas para que dijera algo por lo que pudieran acusarlo."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Algunos manuscritos antiguos agregan aquí otra porción a la Oración del Señor, como se ve en Mateo 6.9-13.",
+          "reference": "11:4"
         }
       ]
     },
@@ -4156,11 +4170,18 @@
         },
         {
           "number": "35-36",
-          "text": "Dos mujeres estarán moliendo juntas: una será llevada y la otra será dejada».*Algunos manuscritos añaden: Estarán dos hombres en el campo: uno será llevado y el otro será dejado."
+          "text": "Dos mujeres estarán moliendo juntas: una será llevada y la otra será dejada»."
         },
         {
           "number": "37",
           "text": "Le preguntaron: —¿Dónde ocurrirá eso, Señor? Él les respondió: ―Donde esté el cadáver, allí se juntarán los buitres."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Algunos manuscritos añaden: Estarán dos hombres en el campo: uno será llevado y el otro será dejado.",
+          "reference": "17:35-36"
         }
       ]
     },

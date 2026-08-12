@@ -96,7 +96,7 @@
         },
         {
           "number": "2",
-          "text": "y los demás hermanos que están conmigo, a las iglesias de Galacia.*Galacia era una ciudad en lo que ahora es Turquía."
+          "text": "y los demás hermanos que están conmigo, a las iglesias de Galacia."
         },
         {
           "number": "3",
@@ -185,6 +185,13 @@
         {
           "number": "24",
           "text": "Y glorificaban a Dios a causa de mí."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Galacia era una ciudad en lo que ahora es Turquía.",
+          "reference": "1:2"
         }
       ]
     },
@@ -481,7 +488,7 @@
         },
         {
           "number": "15",
-          "text": "¿Dónde está aquella alegría que experimentaban? Me consta que con gusto se habrían sacado los ojos para dármelos, si esto hubiera sido posible.*Según la tradición, Pablo sufría una enfermedad de los ojos."
+          "text": "¿Dónde está aquella alegría que experimentaban? Me consta que con gusto se habrían sacado los ojos para dármelos, si esto hubiera sido posible."
         },
         {
           "number": "16",
@@ -546,6 +553,13 @@
         {
           "number": "31",
           "text": "Así que, hermanos, ¡no somos hijos de la esclava, sino de la libre!"
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Según la tradición, Pablo sufría una enfermedad de los ojos.",
+          "reference": "4:15"
         }
       ]
     },

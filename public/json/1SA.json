@@ -282,7 +282,7 @@
         },
         {
           "number": "11",
-          "text": "E hizo este voto: «Oh Señor, Dios Todopoderoso, si miras mi dolor y respondes a mi oración dándome un hijo, yo te lo devolveré y será tuyo por toda su vida, y jamás será cortado su cabello».*Esta era una costumbre de los que se dedicaban completamente a Dios."
+          "text": "E hizo este voto: «Oh Señor, Dios Todopoderoso, si miras mi dolor y respondes a mi oración dándome un hijo, yo te lo devolveré y será tuyo por toda su vida, y jamás será cortado su cabello»."
         },
         {
           "number": "12-13",
@@ -343,6 +343,13 @@
         {
           "number": "28",
           "text": "Ahora lo traigo para entregarlo al Señor para toda la vida». Y adoraron allí al Señor."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Esta era una costumbre de los que se dedicaban completamente a Dios.",
+          "reference": "1:11"
         }
       ]
     },
@@ -659,7 +666,7 @@
         },
         {
           "number": "12",
-          "text": "Un hombre de la tribu de Benjamín corrió desde el campo de batalla y llegó a Siló el mismo día con sus ropas rasgadas y con polvo en la cabeza.*Señal de dolor, común en aquellos días."
+          "text": "Un hombre de la tribu de Benjamín corrió desde el campo de batalla y llegó a Siló el mismo día con sus ropas rasgadas y con polvo en la cabeza."
         },
         {
           "number": "13",
@@ -692,6 +699,13 @@
         {
           "number": "21-22",
           "text": "Luego murmuró: «Pónganle Icabod (No hay gloria), porque la gloria se ha apartado de Israel». Ella le puso este nombre porque el cofre de Dios había sido capturado y porque su marido y su suegro estaban muertos."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Señal de dolor, común en aquellos días.",
+          "reference": "4:12"
         }
       ]
     },
@@ -3431,7 +3445,7 @@
         },
         {
           "number": "6",
-          "text": "y consultó al Señor sobre lo que debía hacer. Pero el Señor no le contestó ni por sueños, ni por urim,*Aparentemente una forma de suerte sagrada para conocer la voluntad de Dios mediante respuestas simples de «sí» o «no». ni por profetas."
+          "text": "y consultó al Señor sobre lo que debía hacer. Pero el Señor no le contestó ni por sueños, ni por urim, ni por profetas."
         },
         {
           "number": "7",
@@ -3508,6 +3522,13 @@
         {
           "number": "25",
           "text": "Luego, trajo la comida al rey y a sus hombres, y ellos comieron. Y por la noche se fueron."
+        }
+      ],
+      "footnotes": [
+        {
+          "marker": "*",
+          "text": "Aparentemente una forma de suerte sagrada para conocer la voluntad de Dios mediante respuestas simples de «sí» o «no».",
+          "reference": "28:6"
         }
       ]
     },

@@ -13,6 +13,8 @@ interface ReadingCanvasProps {
   onSelectVerse: (verse: Verse) => void;
   bookmarkedVerses: (string | number)[];
   onToggleToolbar: () => void;
+  onNextChapter?: () => void;
+  onPrevChapter?: () => void;
 }
 
 export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
@@ -23,6 +25,8 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   onSelectVerse,
   bookmarkedVerses,
   onToggleToolbar,
+  onNextChapter,
+  onPrevChapter,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [viewportDimensions, setViewportDimensions] = useState<{ width: number; height: number }>({
@@ -62,7 +66,12 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
 
     for (let i = 0; i < data.verses.length; i++) {
       const verse = data.verses[i];
-      const verseChars = verse.text.length + 15;
+      // Check if this verse has a section heading before it
+      const hasSection = data.sections?.some(
+        (sec) => String(sec.beforeVerse) === String(verse.number)
+      );
+      const sectionExtraChars = hasSection ? 60 : 0;
+      const verseChars = verse.text.length + 15 + sectionExtraChars;
 
       if (currentChars + verseChars > charsPerPage && currentPageVerses.length > 0) {
         resultPages.push(currentPageVerses);
@@ -79,7 +88,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     }
 
     return resultPages;
-  }, [data.verses, viewportDimensions.height, settings.fontSize, settings.lineHeight]);
+  }, [data.verses, data.sections, viewportDimensions.height, settings.fontSize, settings.lineHeight]);
 
   const totalPages = pages.length;
 
@@ -103,17 +112,20 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
     const deltaY = e.changedTouches[0].clientY - touchStartY.current;
 
-    // Check if horizontal swipe exceeds vertical swipe and threshold
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
       if (deltaX < 0) {
-        // Swiped Left -> Next Page
+        // Swiped Left -> Next Page / Next Chapter
         if (currentPage < totalPages) {
           onPageChange(currentPage + 1, totalPages);
+        } else if (onNextChapter) {
+          onNextChapter();
         }
       } else {
-        // Swiped Right -> Prev Page
+        // Swiped Right -> Prev Page / Prev Chapter
         if (currentPage > 1) {
           onPageChange(currentPage - 1, totalPages);
+        } else if (onPrevChapter) {
+          onPrevChapter();
         }
       }
     }
@@ -133,18 +145,22 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
         e.preventDefault();
         if (currentPage < totalPages) {
           onPageChange(currentPage + 1, totalPages);
+        } else if (onNextChapter) {
+          onNextChapter();
         }
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) {
         e.preventDefault();
         if (currentPage > 1) {
           onPageChange(currentPage - 1, totalPages);
+        } else if (onPrevChapter) {
+          onPrevChapter();
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentPage, totalPages, onPageChange]);
+  }, [currentPage, totalPages, onPageChange, onNextChapter, onPrevChapter]);
 
   // Click Navigation Zones (Kindle standard: left 1/3 = prev, right 1/3 = next, middle = toggle toolbar)
   const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -163,10 +179,14 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     if (clickX < leftThreshold) {
       if (currentPage > 1) {
         onPageChange(currentPage - 1, totalPages);
+      } else if (onPrevChapter) {
+        onPrevChapter();
       }
     } else if (clickX > rightThreshold) {
       if (currentPage < totalPages) {
         onPageChange(currentPage + 1, totalPages);
+      } else if (onNextChapter) {
+        onNextChapter();
       }
     } else {
       onToggleToolbar();
@@ -232,73 +252,97 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
             )}
 
             {/* Continuous Biblical Paragraph Flow */}
-            <p className="m-0 p-0 text-left leading-[1.6em] tracking-normal inline">
+            <div className="m-0 p-0 text-left leading-[1.6em] tracking-normal">
               {activeVerses.map((verse) => {
                 const isBookmarked = bookmarkedVerses.some(
                   (bv) => String(bv) === String(verse.number)
                 );
-                const hasFootnote = data.footnotes?.some(
-                  (fn) => String(fn.verseNumber) === String(verse.number)
+
+                // Check for section headings before this verse
+                const section = data.sections?.find(
+                  (sec) => String(sec.beforeVerse) === String(verse.number)
                 );
 
+                // Check for footnotes matching this verse
+                const verseFootnotes = (data.footnotes || []).filter((fn) => {
+                  const fnRef = String(fn.verseNumber).trim();
+                  const vNum = String(verse.number).trim();
+                  return fnRef === vNum || vNum.split('-').includes(fnRef);
+                });
+
                 return (
-                  <span
-                    key={String(verse.number)}
-                    className={`inline relative rounded-md transition-colors ${
-                      isBookmarked ? 'bg-amber-500/10' : ''
-                    }`}
-                  >
-                    {/* Inline attenuated superscript verse number */}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onSelectVerse(verse);
-                      }}
-                      className="verse-super inline-flex items-center"
-                      aria-label={`Versículo ${verse.number}. Clic para ver opciones o notas`}
-                      title={`Versículo ${verse.number}`}
-                    >
-                      {verse.number}
-                      {isBookmarked && (
-                        <Bookmark className="inline h-2.5 w-2.5 ml-0.5 fill-amber-600 text-amber-600" />
-                      )}
-                    </button>
+                  <React.Fragment key={String(verse.number)}>
+                    {/* Section Subtitle / Perícope Heading */}
+                    {section && (
+                      <h3
+                        className="w-full text-base sm:text-lg font-bold tracking-tight my-4 pt-2 border-t opacity-90 block"
+                        style={{
+                          borderColor: 'var(--reader-border)',
+                          color: 'var(--reader-text)',
+                        }}
+                      >
+                        {section.title}
+                      </h3>
+                    )}
 
-                    {/* Verse Text Flow */}
                     <span
-                      onClick={(e) => {
-                        if (window.getSelection()?.toString().length === 0) {
-                          e.stopPropagation();
-                          onSelectVerse(verse);
-                        }
-                      }}
-                      className="cursor-pointer hover:bg-neutral-500/5 rounded px-0.5 transition-colors"
-                      title="Clic para opciones del versículo"
+                      className={`inline relative rounded-md transition-colors ${
+                        isBookmarked ? 'bg-amber-500/10' : ''
+                      }`}
                     >
-                      {verse.text}
-                    </span>
-
-                    {/* Footnote Indicator */}
-                    {hasFootnote && (
+                      {/* Inline attenuated superscript verse number */}
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           onSelectVerse(verse);
                         }}
-                        className="footnote-indicator"
-                        aria-label={`Nota al pie del versículo ${verse.number}`}
-                        title="Ver nota al pie"
+                        className="verse-super inline-flex items-center"
+                        aria-label={`Versículo ${verse.number}. Clic para ver opciones o notas`}
+                        title={`Versículo ${verse.number}`}
                       >
-                        [*]
+                        {verse.number}
+                        {isBookmarked && (
+                          <Bookmark className="inline h-2.5 w-2.5 ml-0.5 fill-amber-600 text-amber-600" />
+                        )}
                       </button>
-                    )}
-                    {' '}
-                  </span>
+
+                      {/* Verse Text Flow */}
+                      <span
+                        onClick={(e) => {
+                          if (window.getSelection()?.toString().length === 0) {
+                            e.stopPropagation();
+                            onSelectVerse(verse);
+                          }
+                        }}
+                        className="cursor-pointer hover:bg-neutral-500/5 rounded px-0.5 transition-colors"
+                        title="Clic para opciones del versículo"
+                      >
+                        {verse.text}
+                      </span>
+
+                      {/* Footnote Indicators */}
+                      {verseFootnotes.map((fn) => (
+                        <button
+                          key={fn.id}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSelectVerse(verse);
+                          }}
+                          className="footnote-indicator inline-flex items-center"
+                          aria-label={`Nota al pie del versículo ${verse.number}: ${fn.note}`}
+                          title={`Nota al pie: ${fn.note}`}
+                        >
+                          [{fn.marker || '*'}]
+                        </button>
+                      ))}
+                      {' '}
+                    </span>
+                  </React.Fragment>
                 );
               })}
-            </p>
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>
