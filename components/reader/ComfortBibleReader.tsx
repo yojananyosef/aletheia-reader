@@ -18,6 +18,13 @@ import { PwmDimmerOverlay } from './PwmDimmerOverlay';
 import { LineFocusOverlay } from './LineFocusOverlay';
 import { VerseModal } from './VerseModal';
 import { ttsService } from '@/lib/tts-service';
+import {
+  getStoredSettings,
+  saveStoredSettings,
+  getStoredTTSSettings,
+  saveStoredTTSSettings,
+  saveStoredReadingPosition,
+} from '@/lib/storage-service';
 
 export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   data,
@@ -32,22 +39,34 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   onOpenBookmarks,
   bookmarksCount = 0,
 }) => {
-  // --- Core Reader Settings ---
-  const [settings, setSettings] = useState<ReaderSettings>({
-    theme: theme,
-    font: 'bookerly',
-    fontSize: 18,
-    lineHeight: 1.6,
-    softwareBrightness: 1.0,
-    lineFocus: 'off',
-    showToolbar: true,
-    fontWeight: 400,
+  // --- Core Reader Settings (Restored from LocalStorage) ---
+  const [settings, setSettings] = useState<ReaderSettings>(() => {
+    const stored = getStoredSettings();
+    return { ...stored, theme: theme || stored.theme };
   });
+
+  // Load stored settings and TTS preferences on mount
+  useEffect(() => {
+    const stored = getStoredSettings();
+    setSettings((prev) => ({ ...prev, ...stored }));
+    if (stored.theme && onThemeChange && stored.theme !== theme) {
+      onThemeChange(stored.theme);
+    }
+
+    const storedTTS = getStoredTTSSettings();
+    if (storedTTS) {
+      setTtsState((prev) => ({
+        ...prev,
+        rate: storedTTS.rate || 1.0,
+        selectedVoiceURI: storedTTS.selectedVoiceURI || prev.selectedVoiceURI,
+      }));
+    }
+  }, []);
 
   // Effective active theme (prop takes precedence if provided)
   const currentTheme: ThemeMode = theme || settings.theme;
 
-  // Calculate initial page based on initialVerse if provided
+  // Calculate initial page based on initialVerse or stored page if provided
   const getInitialPage = useCallback(() => {
     if (!initialVerse || !data.verses || data.verses.length === 0) return 1;
     const verseIndex = data.verses.findIndex(
@@ -68,12 +87,15 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   // --- Audio Narrator (TTS Bimodal) State ---
   const [isNarratorOpen, setIsNarratorOpen] = useState<boolean>(false);
   const [availableVoices, setAvailableVoices] = useState<TTSVoiceOption[]>([]);
-  const [ttsState, setTtsState] = useState<TTSState>({
-    status: 'idle',
-    currentVerseIndex: 0,
-    currentVerseNumber: null,
-    rate: 1.0,
-    selectedVoiceURI: null,
+  const [ttsState, setTtsState] = useState<TTSState>(() => {
+    const storedTTS = getStoredTTSSettings();
+    return {
+      status: 'idle',
+      currentVerseIndex: 0,
+      currentVerseNumber: null,
+      rate: storedTTS?.rate || 1.0,
+      selectedVoiceURI: storedTTS?.selectedVoiceURI || null,
+    };
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -150,6 +172,13 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         selectedVoiceURI: effectiveVoiceURI,
       }));
 
+      // Persist reading position
+      saveStoredReadingPosition({
+        bookId: data.bookId,
+        chapterNumber: data.chapterNumber,
+        verseNumber: verse.number,
+      });
+
       ttsService.speakVerse(verse, {
         voiceURI: effectiveVoiceURI,
         rate: effectiveRate,
@@ -162,7 +191,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         },
       });
     },
-    [data.verses, ttsState.rate, ttsState.selectedVoiceURI, totalPages, onNextChapter]
+    [data.verses, data.bookId, data.chapterNumber, ttsState.rate, ttsState.selectedVoiceURI, onNextChapter]
   );
 
   // Play / Start Narrator
@@ -202,6 +231,10 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
   const handleSetRateTTS = (newRate: number) => {
     setTtsState((prev) => ({ ...prev, rate: newRate }));
+    saveStoredTTSSettings({
+      rate: newRate,
+      selectedVoiceURI: ttsState.selectedVoiceURI,
+    });
     if (ttsState.status === 'playing') {
       ttsService.cancel();
       speakVerseAtIndex(ttsState.currentVerseIndex, { rate: newRate });
@@ -210,6 +243,10 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
   const handleSetVoiceTTS = (voiceURI: string) => {
     setTtsState((prev) => ({ ...prev, selectedVoiceURI: voiceURI }));
+    saveStoredTTSSettings({
+      rate: ttsState.rate,
+      selectedVoiceURI: voiceURI,
+    });
     if (ttsState.status === 'playing') {
       ttsService.cancel();
       speakVerseAtIndex(ttsState.currentVerseIndex, { voiceURI });
@@ -241,6 +278,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     (updates: Partial<ReaderSettings>) => {
       setSettings((prev) => {
         const next = { ...prev, ...updates };
+        saveStoredSettings(next);
         return next;
       });
 
@@ -251,138 +289,126 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     [onThemeChange]
   );
 
-  // Handle Page Change notification
+  // Handle Page Change notification and persistence
   const handlePageChange = useCallback(
     (page: number, total: number) => {
       setCurrentPage(page);
       setTotalPages(total);
+      saveStoredReadingPosition({
+        bookId: data.bookId,
+        chapterNumber: data.chapterNumber,
+        page: page,
+      });
       if (onPageChange) {
         onPageChange(page, total);
       }
     },
-    [onPageChange]
+    [data.bookId, data.chapterNumber, onPageChange]
   );
 
-  // Handle Verse Bookmarking
-  const handleToggleBookmark = useCallback(
-    (verseNumber: string | number) => {
-      setBookmarkedVerses((prev) => {
-        const exists = prev.some((v) => String(v) === String(verseNumber));
-        const next = exists
-          ? prev.filter((v) => String(v) !== String(verseNumber))
-          : [...prev, verseNumber];
-        return next;
-      });
+  // Handle Verse Selection from Canvas
+  const handleSelectVerse = (verse: Verse) => {
+    setSelectedVerse(verse);
+  };
 
-      if (onBookmarkVerse) {
-        onBookmarkVerse(verseNumber);
-      }
-    },
-    [onBookmarkVerse]
-  );
-
-  // Reset page when chapter data changes
-  const prevChapterKey = useRef(`${data.bookId}-${data.chapterNumber}`);
-  useEffect(() => {
-    const key = `${data.bookId}-${data.chapterNumber}`;
-    if (prevChapterKey.current !== key) {
-      prevChapterKey.current = key;
-      setCurrentPage(getInitialPage());
-    }
-  }, [data.bookId, data.chapterNumber, getInitialPage]);
-
-  // Handle Footer Prev/Next with chapter transition support
-  const handleFooterPrev = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    } else if (onPrevChapter) {
-      onPrevChapter();
+  // Handle Bookmark Toggle
+  const handleToggleBookmark = (verseNumber: string | number) => {
+    setBookmarkedVerses((prev) =>
+      prev.includes(verseNumber)
+        ? prev.filter((v) => v !== verseNumber)
+        : [...prev, verseNumber]
+    );
+    if (onBookmarkVerse) {
+      onBookmarkVerse(verseNumber);
     }
   };
 
-  const handleFooterNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
-    } else if (onNextChapter) {
-      onNextChapter();
-    }
-  };
-
-  // Compute total approximate words for reading time
-  const totalWords = React.useMemo(() => {
-    return data.verses.reduce((acc, v) => acc + v.text.split(/\s+/).length, 0);
-  }, [data.verses]);
-
-  // Active settings with synced theme
-  const activeSettings = {
-    ...settings,
-    theme: currentTheme,
-  };
+  const themeClass =
+    currentTheme === 'pergamino'
+      ? 'theme-pergamino'
+      : currentTheme === 'noche'
+      ? 'theme-noche'
+      : 'theme-sepia';
 
   return (
     <div
       ref={containerRef}
-      className="relative flex min-h-screen w-full flex-col overflow-hidden transition-colors duration-200"
+      id="alethia-reader-container"
+      className={`relative min-h-[100dvh] flex flex-col w-full transition-colors duration-200 ${themeClass}`}
       style={{
         backgroundColor: 'var(--reader-bg)',
         color: 'var(--reader-text)',
       }}
     >
-      {/* 1. Procedural SVG Paper Texture Overlay */}
+      {/* 1. Paper Grain Texture Overlay (Mitigates blue-light glare and screen hardness) */}
       <PaperGrainOverlay theme={currentTheme} />
 
-      {/* 2. GPU Software Dimmer (PWM Flicker Mitigation) */}
+      {/* 2. Zero-Flicker Software PWM Dimmer Overlay */}
       <PwmDimmerOverlay brightness={settings.softwareBrightness} />
 
-      {/* 3. Line Focus Aperture (ADHD & Cognitive Accessibility) */}
+      {/* 3. Header Toolbar (Collapsible via Zero-Distraction Immersive Mode / Middle Click) */}
+      <ReaderToolbar
+        settings={{ ...settings, theme: currentTheme }}
+        onUpdateSettings={updateSettings}
+        bookTitle={data.bookName}
+        chapterNumber={data.chapterNumber}
+        onNextChapter={onNextChapter}
+        onPrevChapter={onPrevChapter}
+        onOpenBookSelector={onOpenBookSelector}
+        onOpenBookmarks={onOpenBookmarks}
+        bookmarksCount={bookmarksCount}
+        onToggleAudioNarrator={handleToggleNarrator}
+        isAudioNarratorActive={isNarratorOpen}
+      />
+
+      {/* 4. Main Reading Canvas (Discrete Paginated Layout + Bimodal TTS Active Verse Highlight) */}
+      <main
+        className="flex-1 flex flex-col justify-start items-center w-full px-2 sm:px-6 relative overflow-hidden"
+        style={{
+          minHeight: 'calc(100dvh - 120px)',
+        }}
+      >
+        <ReadingCanvas
+          data={data}
+          settings={{ ...settings, theme: currentTheme }}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          onSelectVerse={handleSelectVerse}
+          bookmarkedVerses={bookmarkedVerses}
+          activeSpokenVerseNumber={ttsState.status === 'playing' || ttsState.status === 'paused' ? ttsState.currentVerseNumber : null}
+          onNextChapter={onNextChapter}
+          onPrevChapter={onPrevChapter}
+          onToggleToolbar={() => updateSettings({ showToolbar: !settings.showToolbar })}
+        />
+      </main>
+
+      {/* 5. Line Focus Overlay (Assists users with Dyslexia / ADHD) */}
       <LineFocusOverlay
         mode={settings.lineFocus}
         fontSize={settings.fontSize}
         lineHeight={settings.lineHeight}
       />
 
-      {/* 4. Accessible Unified Toolbar / HUD */}
-      {settings.showToolbar && (
-        <ReaderToolbar
-          settings={activeSettings}
-          onUpdateSettings={updateSettings}
-          bookTitle={data.bookName}
-          chapterNumber={data.chapterNumber}
-          onNextChapter={onNextChapter}
-          onPrevChapter={onPrevChapter}
-          onOpenBookSelector={onOpenBookSelector}
-          onOpenBookmarks={onOpenBookmarks}
-          bookmarksCount={bookmarksCount}
-          onToggleAudioNarrator={handleToggleNarrator}
-          isAudioNarratorActive={isNarratorOpen}
-        />
-      )}
-
-      {/* 5. Discrete Horizontal Pagination Reading Canvas with TTS Highlighting */}
-      <main className="relative flex flex-1 flex-col justify-center items-center overflow-hidden">
-        <ReadingCanvas
-          data={data}
-          settings={activeSettings}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-          onSelectVerse={(verse) => setSelectedVerse(verse)}
-          bookmarkedVerses={bookmarkedVerses}
-          onToggleToolbar={() => updateSettings({ showToolbar: !settings.showToolbar })}
-          onNextChapter={onNextChapter}
-          onPrevChapter={onPrevChapter}
-          activeSpokenVerseNumber={ttsState.currentVerseNumber}
-        />
-      </main>
-
-      {/* 6. Cohesive Reading Progress & Audio Narrator Footer */}
+      {/* 6. Footer (Pagination + Integrated Ambient Progress & Audio Narrator Bar) */}
       <ReaderFooter
         currentPage={currentPage}
         totalPages={totalPages}
-        onPrevPage={handleFooterPrev}
-        onNextPage={handleFooterNext}
+        onPrevPage={() => {
+          if (currentPage > 1) {
+            handlePageChange(currentPage - 1, totalPages);
+          } else if (onPrevChapter) {
+            onPrevChapter();
+          }
+        }}
+        onNextPage={() => {
+          if (currentPage < totalPages) {
+            handlePageChange(currentPage + 1, totalPages);
+          } else if (onNextChapter) {
+            onNextChapter();
+          }
+        }}
         bookName={data.bookName}
         chapterNumber={data.chapterNumber}
-        totalWords={totalWords}
         showControls={settings.showToolbar}
         isNarratorOpen={isNarratorOpen}
         ttsStatus={ttsState.status}
@@ -397,30 +423,28 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         onPrevVerseTTS={handlePrevVerseTTS}
         onSetRateTTS={handleSetRateTTS}
         onSetVoiceTTS={handleSetVoiceTTS}
-        onCloseNarrator={() => {
-          handleStopTTS();
-          setIsNarratorOpen(false);
-        }}
+        onCloseNarrator={handleToggleNarrator}
       />
 
-      {/* 7. Non-invasive Verse Details & Footnotes Modal */}
+      {/* 7. Interactive Verse Action Modal (Bottom Sheet on Mobile / Centered on Desktop) */}
       <VerseModal
-        isOpen={!!selectedVerse}
+        isOpen={selectedVerse !== null}
         onClose={() => setSelectedVerse(null)}
         verse={selectedVerse}
         bookName={data.bookName}
         chapterNumber={data.chapterNumber}
         footnotes={data.footnotes || []}
         isBookmarked={
-          selectedVerse
-            ? bookmarkedVerses.some((bv) => String(bv) === String(selectedVerse.number))
-            : false
+          selectedVerse !== null && bookmarkedVerses.includes(selectedVerse.number)
         }
-        onToggleBookmark={handleToggleBookmark}
-        onPlayFromVerse={handlePlayFromVerse}
+        onToggleBookmark={(vNum) => {
+          handleToggleBookmark(vNum);
+        }}
+        onPlayFromVerse={(vNum) => {
+          handlePlayFromVerse(vNum);
+          setSelectedVerse(null);
+        }}
       />
     </div>
   );
 };
-
-export default ComfortBibleReader;

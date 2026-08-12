@@ -1,0 +1,166 @@
+import { ReaderSettings, ThemeMode } from '@/types/bible';
+
+const STORAGE_KEYS = {
+  SETTINGS: 'alethia_reader_settings',
+  POSITION: 'alethia_reading_position',
+  BOOKMARKS: 'alethia_bookmarks',
+  TTS: 'alethia_tts_settings',
+};
+
+export interface StoredReadingPosition {
+  bookId: string;
+  chapterNumber: number;
+  verseNumber?: string | number;
+  page?: number;
+  updatedAt: number;
+}
+
+export interface StoredBookmark {
+  bookId: string;
+  bookName: string;
+  chapter: number;
+  verse: string | number;
+  text?: string;
+  createdAt?: number;
+}
+
+export interface StoredTTSSettings {
+  rate: number;
+  selectedVoiceURI: string | null;
+}
+
+export const DEFAULT_SETTINGS: ReaderSettings = {
+  theme: 'pergamino',
+  font: 'bookerly',
+  fontSize: 18,
+  lineHeight: 1.6,
+  softwareBrightness: 1.0,
+  lineFocus: 'off',
+  showToolbar: true,
+  fontWeight: 400,
+};
+
+// Safe LocalStorage access
+function isStorageAvailable(): boolean {
+  return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+}
+
+/**
+ * Obtiene la configuración de lectura guardada (Tema, Fuente, Tamaño, Brillo, Line Focus)
+ */
+export function getStoredSettings(): ReaderSettings {
+  if (!isStorageAvailable()) return DEFAULT_SETTINGS;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+    if (!raw) return DEFAULT_SETTINGS;
+    const parsed = JSON.parse(raw);
+    return { ...DEFAULT_SETTINGS, ...parsed };
+  } catch (e) {
+    console.warn('Error leyendo alethia_reader_settings de localStorage:', e);
+    return DEFAULT_SETTINGS;
+  }
+}
+
+/**
+ * Guarda las preferencias de lectura en localStorage
+ */
+export function saveStoredSettings(settings: Partial<ReaderSettings>): void {
+  if (!isStorageAvailable()) return;
+  try {
+    const current = getStoredSettings();
+    const next = { ...current, ...settings };
+    localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(next));
+  } catch (e) {
+    console.warn('Error guardando alethia_reader_settings en localStorage:', e);
+  }
+}
+
+/**
+ * Obtiene la última posición de lectura (Libro, Capítulo, Versículo/Página)
+ */
+export function getStoredReadingPosition(): StoredReadingPosition | null {
+  if (!isStorageAvailable()) return null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.POSITION);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    console.warn('Error leyendo alethia_reading_position de localStorage:', e);
+    return null;
+  }
+}
+
+/**
+ * Guarda la posición de lectura actual en localStorage
+ */
+export function saveStoredReadingPosition(pos: {
+  bookId: string;
+  chapterNumber: number;
+  verseNumber?: string | number;
+  page?: number;
+}): void {
+  if (!isStorageAvailable()) return;
+  try {
+    const payload: StoredReadingPosition = {
+      ...pos,
+      updatedAt: Date.now(),
+    };
+    localStorage.setItem(STORAGE_KEYS.POSITION, JSON.stringify(payload));
+  } catch (e) {
+    console.warn('Error guardando alethia_reading_position en localStorage:', e);
+  }
+}
+
+/**
+ * Obtiene la lista de versículos guardados en marcadores
+ */
+export function getStoredBookmarks(): StoredBookmark[] {
+  if (!isStorageAvailable()) return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.BOOKMARKS);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch (e) {
+    console.warn('Error leyendo alethia_bookmarks de localStorage:', e);
+    return [];
+  }
+}
+
+/**
+ * Guarda la lista de marcadores en localStorage
+ */
+export function saveStoredBookmarks(bookmarks: StoredBookmark[]): void {
+  if (!isStorageAvailable()) return;
+  try {
+    localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(bookmarks));
+  } catch (e) {
+    console.warn('Error guardando alethia_bookmarks en localStorage:', e);
+  }
+}
+
+/**
+ * Obtiene las preferencias de síntesis de voz (Velocidad y Voz)
+ */
+export function getStoredTTSSettings(): StoredTTSSettings | null {
+  if (!isStorageAvailable()) return null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.TTS);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    console.warn('Error leyendo alethia_tts_settings de localStorage:', e);
+    return null;
+  }
+}
+
+/**
+ * Guarda las preferencias de síntesis de voz en localStorage
+ */
+export function saveStoredTTSSettings(settings: StoredTTSSettings): void {
+  if (!isStorageAvailable()) return;
+  try {
+    localStorage.setItem(STORAGE_KEYS.TTS, JSON.stringify(settings));
+  } catch (e) {
+    console.warn('Error guardando alethia_tts_settings en localStorage:', e);
+  }
+}

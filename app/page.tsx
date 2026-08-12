@@ -19,6 +19,15 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogHeader, DialogTitle, DialogContent } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
+import {
+  getStoredSettings,
+  saveStoredSettings,
+  getStoredReadingPosition,
+  saveStoredReadingPosition,
+  getStoredBookmarks,
+  saveStoredBookmarks,
+  StoredBookmark,
+} from '@/lib/storage-service';
 
 export default function Home() {
   const [books, setBooks] = useState<BibleBookMeta[]>([]);
@@ -38,21 +47,42 @@ export default function Home() {
   const [mobileSelectorStep, setMobileSelectorStep] = useState<'books' | 'chapters'>('books');
 
   // Bookmarks List
-  const [bookmarksList, setBookmarksList] = useState<
-    { bookId: string; bookName: string; chapter: number; verse: string | number; text?: string }[]
-  >([]);
+  const [bookmarksList, setBookmarksList] = useState<StoredBookmark[]>([]);
 
-  // Load Bible books catalog on mount
+  // Load Bible books catalog, stored position, stored theme and bookmarks on mount
   useEffect(() => {
     let isMounted = true;
+
+    const storedPos = getStoredReadingPosition();
+    const storedSettings = getStoredSettings();
+    const storedBookmarks = getStoredBookmarks();
+
+    if (storedSettings.theme) {
+      setTheme(storedSettings.theme);
+    }
+    if (storedBookmarks.length > 0) {
+      setBookmarksList(storedBookmarks);
+    }
+
     getBibleBooks()
       .then((loadedBooks) => {
         if (!isMounted) return;
         setBooks(loadedBooks);
         if (loadedBooks.length > 0) {
-          const firstBook = loadedBooks[0];
-          setSelectedBookId(firstBook.id);
-          setBrowsingBook(firstBook);
+          const targetBookId =
+            storedPos?.bookId && loadedBooks.some((b) => b.id === storedPos.bookId)
+              ? storedPos.bookId
+              : loadedBooks[0].id;
+          const targetChapter = storedPos?.chapterNumber || 1;
+
+          setSelectedBookId(targetBookId);
+          setSelectedChapter(targetChapter);
+          if (storedPos?.verseNumber) {
+            setInitialVerse(storedPos.verseNumber);
+          }
+
+          const current = loadedBooks.find((b) => b.id === targetBookId) || loadedBooks[0];
+          setBrowsingBook(current);
         }
       })
       .catch((err) => {
@@ -63,6 +93,17 @@ export default function Home() {
       isMounted = false;
     };
   }, []);
+
+  // Persist reading position when book or chapter changes
+  useEffect(() => {
+    if (selectedBookId && selectedChapter) {
+      saveStoredReadingPosition({
+        bookId: selectedBookId,
+        chapterNumber: selectedChapter,
+        verseNumber: initialVerse,
+      });
+    }
+  }, [selectedBookId, selectedChapter, initialVerse]);
 
   // Load chapter data when book or chapter changes
   useEffect(() => {
@@ -146,7 +187,7 @@ export default function Home() {
     }
   };
 
-  // Handle Verse Bookmarking
+  // Handle Verse Bookmarking with storage persistence
   const handleBookmarkVerse = (verseNumber: string | number) => {
     if (!chapterPayload) return;
 
@@ -161,8 +202,9 @@ export default function Home() {
           String(b.verse) === String(verseNumber)
       );
 
+      let next: StoredBookmark[];
       if (exists) {
-        return prev.filter(
+        next = prev.filter(
           (b) =>
             !(
               b.bookId === chapterPayload.bookId &&
@@ -170,19 +212,27 @@ export default function Home() {
               String(b.verse) === String(verseNumber)
             )
         );
+      } else {
+        next = [
+          ...prev,
+          {
+            bookId: chapterPayload.bookId,
+            bookName: chapterPayload.bookName,
+            chapter: chapterPayload.chapterNumber,
+            verse: verseNumber,
+            text: verseText,
+            createdAt: Date.now(),
+          },
+        ];
       }
-
-      return [
-        ...prev,
-        {
-          bookId: chapterPayload.bookId,
-          bookName: chapterPayload.bookName,
-          chapter: chapterPayload.chapterNumber,
-          verse: verseNumber,
-          text: verseText,
-        },
-      ];
+      saveStoredBookmarks(next);
+      return next;
     });
+  };
+
+  const handleThemeChange = (newTheme: ThemeMode) => {
+    setTheme(newTheme);
+    saveStoredSettings({ theme: newTheme });
   };
 
   const themeClass =
@@ -211,7 +261,7 @@ export default function Home() {
           data={chapterPayload}
           initialVerse={initialVerse}
           theme={theme}
-          onThemeChange={setTheme}
+          onThemeChange={handleThemeChange}
           onBookmarkVerse={handleBookmarkVerse}
           onNextChapter={handleNextChapter}
           onPrevChapter={handlePrevChapter}
@@ -386,6 +436,12 @@ export default function Home() {
                           setSelectedBookId(browsingBook.id);
                           setSelectedChapter(chapNum);
                           setInitialVerse(undefined);
+                          saveStoredReadingPosition({
+                            bookId: browsingBook.id,
+                            chapterNumber: chapNum,
+                            verseNumber: undefined,
+                            page: 1,
+                          });
                           setShowBookSelector(false);
                         }}
                         className={`min-h-[44px] font-bold text-sm ${isCurrentActive ? 'ring-2 ring-offset-2 ring-reader-accent' : ''}`}
@@ -449,6 +505,11 @@ export default function Home() {
                         setSelectedBookId(bm.bookId);
                         setSelectedChapter(bm.chapter);
                         setInitialVerse(bm.verse);
+                        saveStoredReadingPosition({
+                          bookId: bm.bookId,
+                          chapterNumber: bm.chapter,
+                          verseNumber: bm.verse,
+                        });
                         setShowBookmarksDrawer(false);
                       }}
                       className="text-xs font-semibold h-7 px-2.5"
