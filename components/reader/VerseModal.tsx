@@ -12,7 +12,7 @@ interface VerseModalProps {
   chapterNumber: number;
   footnotes: Footnote[];
   isBookmarked: boolean;
-  onToggleBookmark: (verseNumber: number) => void;
+  onToggleBookmark: (verseNumber: string | number) => void;
 }
 
 export const VerseModal: React.FC<VerseModalProps> = ({
@@ -54,7 +54,9 @@ export const VerseModal: React.FC<VerseModalProps> = ({
   const citation = `${bookName} ${chapterNumber}:${verse.number}`;
   const fullText = `«${verse.text}» (${citation})`;
 
-  const relevantFootnotes = footnotes.filter((fn) => fn.verseNumber === verse.number);
+  const relevantFootnotes = footnotes.filter(
+    (fn) => String(fn.verseNumber) === String(verse.number)
+  );
 
   const handleCopy = async () => {
     try {
@@ -87,8 +89,8 @@ export const VerseModal: React.FC<VerseModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between border-b pb-3 mb-4" style={{ borderColor: 'var(--reader-border)' }}>
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-600/10 font-bold text-amber-700 dark:text-amber-400 text-sm">
-              {verse.number}
+            <span className="flex h-8 px-2.5 items-center justify-center rounded-full bg-amber-600/10 font-bold text-amber-700 dark:text-amber-400 text-xs">
+              v.{verse.number}
             </span>
             <h2 id="verse-modal-title" className="text-lg font-bold">
               {citation}
@@ -118,7 +120,7 @@ export const VerseModal: React.FC<VerseModalProps> = ({
           <div className="my-4 rounded-xl p-3.5 border text-sm" style={{ backgroundColor: 'var(--reader-hover)', borderColor: 'var(--reader-border)' }}>
             <div className="flex items-center gap-1.5 font-semibold text-xs uppercase tracking-wider mb-2" style={{ color: 'var(--reader-accent)' }}>
               <BookOpen className="h-4 w-4" />
-              <span>Notas de Estudio y Filología</span>
+              <span>Notas de Estudio</span>
             </div>
             <ul className="space-y-2">
               {relevantFootnotes.map((fn) => (

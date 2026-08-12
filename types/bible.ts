@@ -1,12 +1,17 @@
 export interface Verse {
-  number: number;
+  number: string | number;
   text: string;
 }
 
 export interface Footnote {
   id: string;
-  verseNumber: number;
+  verseNumber: string | number;
   note: string;
+}
+
+export interface SectionHeading {
+  title: string;
+  beforeVerse: string | number;
 }
 
 export interface ChapterPayload {
@@ -15,13 +20,18 @@ export interface ChapterPayload {
   chapterNumber: number;
   verses: Verse[];
   footnotes?: Footnote[];
+  sections?: SectionHeading[];
 }
 
 export interface ComfortBibleReaderProps {
   data: ChapterPayload;
-  initialVerse?: number;
+  initialVerse?: string | number;
   onPageChange?: (page: number, totalPages: number) => void;
-  onBookmarkVerse?: (verseNumber: number) => void;
+  onBookmarkVerse?: (verseNumber: string | number) => void;
+  onNextChapter?: () => void;
+  onPrevChapter?: () => void;
+  hasPrevChapter?: boolean;
+  hasNextChapter?: boolean;
 }
 
 export type ThemeMode = 'pergamino' | 'noche' | 'sepia';
@@ -39,4 +49,27 @@ export interface ReaderSettings {
   lineFocus: LineFocusMode;
   showToolbar: boolean;
   fontWeight: number; // 400 to 700
+}
+
+export interface BibleBookMeta {
+  id: string;
+  name: string;
+  testament: 'AT' | 'NT';
+  totalChapters: number;
+  totalVerses: number;
+  file: string;
+}
+
+export interface BibleCatalog {
+  meta: {
+    translation: string;
+    translationId: string;
+    language: string;
+    languageName?: string;
+    copyright?: string;
+    totalBooks: number;
+    totalChapters: number;
+    totalVerses: number;
+  };
+  books: BibleBookMeta[];
 }

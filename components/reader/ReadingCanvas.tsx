@@ -11,7 +11,7 @@ interface ReadingCanvasProps {
   currentPage: number;
   onPageChange: (page: number, totalPages: number) => void;
   onSelectVerse: (verse: Verse) => void;
-  bookmarkedVerses: number[];
+  bookmarkedVerses: (string | number)[];
   onToggleToolbar: () => void;
 }
 
@@ -51,7 +51,6 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   const pages = useMemo<Verse[][]>(() => {
     if (!data.verses || data.verses.length === 0) return [[]];
 
-    // Estimate characters/words capacity per page based on font size and height
     const effectiveHeight = Math.max(300, viewportDimensions.height - 180);
     const linePx = settings.fontSize * settings.lineHeight;
     const linesPerPage = Math.max(6, Math.floor(effectiveHeight / linePx));
@@ -235,12 +234,16 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
             {/* Continuous Biblical Paragraph Flow */}
             <p className="m-0 p-0 text-left leading-[1.6em] tracking-normal inline">
               {activeVerses.map((verse) => {
-                const isBookmarked = bookmarkedVerses.includes(verse.number);
-                const hasFootnote = data.footnotes?.some((fn) => fn.verseNumber === verse.number);
+                const isBookmarked = bookmarkedVerses.some(
+                  (bv) => String(bv) === String(verse.number)
+                );
+                const hasFootnote = data.footnotes?.some(
+                  (fn) => String(fn.verseNumber) === String(verse.number)
+                );
 
                 return (
                   <span
-                    key={verse.number}
+                    key={String(verse.number)}
                     className={`inline relative rounded-md transition-colors ${
                       isBookmarked ? 'bg-amber-500/10' : ''
                     }`}

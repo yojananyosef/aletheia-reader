@@ -19,6 +19,8 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   initialVerse,
   onPageChange,
   onBookmarkVerse,
+  onNextChapter,
+  onPrevChapter,
 }) => {
   // --- Core Reader Settings ---
   const [settings, setSettings] = useState<ReaderSettings>({
@@ -35,7 +37,9 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   // Calculate initial page based on initialVerse if provided
   const getInitialPage = useCallback(() => {
     if (!initialVerse || !data.verses || data.verses.length === 0) return 1;
-    const verseIndex = data.verses.findIndex((v) => v.number === initialVerse);
+    const verseIndex = data.verses.findIndex(
+      (v) => String(v.number) === String(initialVerse)
+    );
     if (verseIndex <= 0) return 1;
     return Math.max(1, Math.ceil(((verseIndex + 1) / data.verses.length) * 4));
   }, [initialVerse, data.verses]);
@@ -45,7 +49,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   const [totalPages, setTotalPages] = useState<number>(1);
 
   // --- Bookmarking & Verse Interaction State ---
-  const [bookmarkedVerses, setBookmarkedVerses] = useState<number[]>([]);
+  const [bookmarkedVerses, setBookmarkedVerses] = useState<(string | number)[]>([]);
   const [selectedVerse, setSelectedVerse] = useState<Verse | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -69,10 +73,12 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
   // Handle Verse Bookmarking
   const handleToggleBookmark = useCallback(
-    (verseNumber: number) => {
+    (verseNumber: string | number) => {
       setBookmarkedVerses((prev) => {
-        const exists = prev.includes(verseNumber);
-        const next = exists ? prev.filter((v) => v !== verseNumber) : [...prev, verseNumber];
+        const exists = prev.some((v) => String(v) === String(verseNumber));
+        const next = exists
+          ? prev.filter((v) => String(v) !== String(verseNumber))
+          : [...prev, verseNumber];
         return next;
       });
 
@@ -92,6 +98,23 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       setCurrentPage(getInitialPage());
     }
   }, [data.bookId, data.chapterNumber, getInitialPage]);
+
+  // Handle Footer Prev/Next with chapter transition support
+  const handleFooterPrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    } else if (onPrevChapter) {
+      onPrevChapter();
+    }
+  };
+
+  const handleFooterNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    } else if (onNextChapter) {
+      onNextChapter();
+    }
+  };
 
   // Compute total approximate words for reading time
   const totalWords = React.useMemo(() => {
@@ -155,8 +178,8 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       <ReaderFooter
         currentPage={currentPage}
         totalPages={totalPages}
-        onPrevPage={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
-        onNextPage={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+        onPrevPage={handleFooterPrev}
+        onNextPage={handleFooterNext}
         bookName={data.bookName}
         chapterNumber={data.chapterNumber}
         totalWords={totalWords}
@@ -170,7 +193,11 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         bookName={data.bookName}
         chapterNumber={data.chapterNumber}
         footnotes={data.footnotes || []}
-        isBookmarked={selectedVerse ? bookmarkedVerses.includes(selectedVerse.number) : false}
+        isBookmarked={
+          selectedVerse
+            ? bookmarkedVerses.some((bv) => String(bv) === String(selectedVerse.number))
+            : false
+        }
         onToggleBookmark={handleToggleBookmark}
       />
     </div>
