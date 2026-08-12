@@ -1,0 +1,259 @@
+/* ==========================================================================
+   E-INK SIMULATION & ACCESSIBILITY DESIGN SYSTEM (CSS)
+   Version: 1.0.0
+   Author: Gemini Notebook / Spec por Johan Gutierrez (2025)
+   Description: Sistema de diseño CSS para la emulación física y cognitiva
+                de la lectura en tinta electrónica (Kindle) en pantallas emisivas,
+                cumpliendo con WCAG 2.2 AAA y estándares de Google/Microsoft.
+   ========================================================================== */
+
+:root {
+  /* --- 1. Fundamentos Cromáticos y de Luminancia (Contraste 12:1 - 15:1) --- */
+  --eink-bg-light: #FDFBF6;       /* Crema cálido pergamino (absorbe luz azul) */
+  --eink-text-light: #222222;     /* Gris carbón suave (evita deslumbramiento) */
+  --eink-bg-dark: #1A1A1A;        /* Negro mate profundo para modo noche */
+  --eink-text-dark: #E8E8E8;      /* Blanco suave desaturado */
+  
+  /* Colores de Enlace y Semánticos */
+  --eink-link: #0055B3;           /* Azul de alto contraste pero atenuado */
+  --eink-link-visited: #551A8B;   /* Púrpura de enlace visitado estándar */
+  --eink-focus-ring: #0055B3;     /* Indicador de foco */
+
+  /* --- 2. Tipografía y Ergonomía Visual (Mitigación de Hacinamiento) --- */
+  --eink-font-serif: "Bookerly", "Georgia", "Source Serif Pro", serif;
+  --eink-font-sans: "Atkinson Hyperlegible", "Atkinson Hyperlegible Next", "Segoe UI", -apple-system, sans-serif;
+  --eink-font-dyslexic: "OpenDyslexic", sans-serif;
+  
+  /* Configuración por Defecto (Baseline de Legibilidad) */
+  --eink-font-size-base: 16px;    /* Ángulo visual >= 0.3° a 45-60cm de distancia */
+  --eink-line-height: 1.6;        /* Mínimo 1.5x (WCAG 1.4.12) */
+  --eink-letter-spacing: 0.03em;  /* Ligero incremento para reducir el crowding */
+  --eink-word-spacing: 0.18em;    /* Proporcional al tracking (WCAG 1.4.12) */
+  --eink-paragraph-spacing: 1.6em;/* Aislamiento de bloques de texto */
+
+  /* --- 3. Maquetación y Proporciones --- */
+  --eink-max-width: 60ch;         /* Rango óptimo de 50-60 caracteres por línea (CPL) */
+  --eink-col-padding: 10%;        /* Márgenes de aislamiento lateral (10% a 15%) */
+
+  /* --- 4. Interfaces Táctiles y Accesibilidad Física (WCAG 2.2 AAA) --- */
+  --eink-target-size-aa: 24px;    /* Tamaño mínimo de objetivo táctil (SC 2.5.8) */
+  --eink-target-size-aaa: 44px;   /* Tamaño óptimo de objetivo táctil (SC 2.5.5) */
+  
+  /* --- 5. Atenuación de Brillo por Software (Mitigación de PWM) --- */
+  --eink-software-brightness: 1.0; /* Multiplicador lineal RGB (Controlado vía GPU) */
+}
+
+/* ==========================================================================
+   Estilos Base y Lienzo de Lectura (Theming & Texturizado)
+   ========================================================================== */
+
+body.eink-reader {
+  margin: 0;
+  padding: 0;
+  background-color: var(--eink-bg-light);
+  color: var(--eink-text-light);
+  font-family: var(--eink-font-serif);
+  font-size: var(--eink-font-size-base);
+  line-height: var(--eink-line-height);
+  letter-spacing: var(--eink-letter-spacing);
+  word-spacing: var(--eink-word-spacing);
+  text-align: left; /* Alineación obligatoria a la izquierda para evitar "ríos de blanco" */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* --- Emulación Procedimental de Grano de Papel (Ruido Fractal SVG) --- */
+body.eink-reader::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* No interfiere con clics o selección de texto */
+  z-index: 9999;
+  opacity: 0.12; /* Ajuste fino de roughness para evitar ruido molesto */
+  /* SVG procedural inline para ruido fractal de bajo costo computacional */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply; /* Rompe la emisión uniforme de subpíxeles */
+}
+
+/* --- Variación de Modo Noche (Inversión Estática de Polaridad) --- */
+body.eink-reader.dark-mode {
+  background-color: var(--eink-bg-dark);
+  color: var(--eink-text-dark);
+}
+
+body.eink-reader.dark-mode::before {
+  mix-blend-mode: screen; /* Inversión de mezcla para el grano de papel en fondo oscuro */
+  opacity: 0.06;
+}
+
+/* --- Filtro de Atenuación de Brillo por Software (GPU Filter) --- */
+/* Mantiene el brillo físico del dispositivo alto para evitar PWM mientras se reduce la luminosidad percibida */
+body.eink-reader.software-dimmed {
+  filter: brightness(var(--eink-software-brightness));
+}
+
+/* ==========================================================================
+   Maquetación Avanzada (Aislamiento y Lectura de Doble Columna)
+   ========================================================================== */
+
+.eink-container {
+  max-width: var(--eink-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3rem var(--eink-col-padding);
+}
+
+/* --- Modo Horizontal / Doble Columna (Emulación Libro Físico en Desktop) --- */
+@media (min-width: 1200px) {
+  .eink-container.two-columns {
+    max-width: 110ch;
+    column-count: 2;
+    column-gap: 8%;
+    column-rule: 1px solid rgba(0, 0, 0, 0.08);
+    text-align: justify; /* Justificado controlado solo si hay partición silábica activa */
+    hyphens: auto;
+  }
+  
+  body.eink-reader.dark-mode .eink-container.two-columns {
+    column-rule: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* ==========================================================================
+   Elementos Tipográficos y Estructura
+   ========================================================================== */
+
+h1, h2, h3, h4 {
+  font-family: var(--eink-font-sans);
+  color: inherit;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+  page-break-after: avoid;
+}
+
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.35rem; }
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--eink-paragraph-spacing);
+  orphans: 3;
+  widows: 3;
+}
+
+/* Enlaces Accesibles */
+a {
+  color: var(--eink-link);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.2s ease;
+}
+
+a:visited {
+  color: var(--eink-link-visited);
+}
+
+/* ==========================================================================
+   Pautas WCAG 2.2 AAA - Foco, Accesibilidad Táctil e Interacción
+   ========================================================================== */
+
+/* --- Criterio 2.4.13 Focus Appearance (AAA) & 2.4.12 Focus Not Obscured --- */
+*:focus-visible {
+  outline: 3px solid var(--eink-focus-ring) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 5px var(--eink-bg-light) !important;
+}
+
+body.dark-mode *:focus-visible {
+  box-shadow: 0 0 0 5px var(--eink-bg-dark) !important;
+}
+
+/* --- Criterio 2.5.5 Tamaño del Objetivo (AAA) --- */
+/* Garantiza que todo botón o control interactivo tenga un área de clic de mínimo 44x44px */
+.eink-button, 
+.eink-control, 
+button, 
+input[type="button"] {
+  min-width: var(--eink-target-size-aaa);
+  min-height: var(--eink-target-size-aaa);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--eink-font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 2px solid var(--eink-text-light);
+  background-color: transparent;
+  color: var(--eink-text-light);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+body.dark-mode .eink-button {
+  border-color: var(--eink-text-dark);
+  color: var(--eink-text-dark);
+}
+
+.eink-button:hover {
+  background-color: var(--eink-text-light);
+  color: var(--eink-bg-light);
+}
+
+body.dark-mode .eink-button:hover {
+  background-color: var(--eink-text-dark);
+  color: var(--eink-bg-dark);
+}
+
+/* ==========================================================================
+   Funciones Especiales de Enfoque Cognitivo (Line Focus - Edge Style)
+   ========================================================================== */
+
+/* Máscara de sombreado para Line Focus */
+.line-focus-overlay {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.45); /* Oscurece el resto de la página */
+  pointer-events: none;
+  z-index: 1000;
+  transition: top 0.2s ease, height 0.2s ease;
+}
+
+body.dark-mode .line-focus-overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Canal visual activo */
+.line-focus-active-window {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  z-index: 1001;
+  mix-blend-mode: normal;
+}
+
+/* ==========================================================================
+   Reducción de Movimiento y Animaciones (Biestabilidad Física)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

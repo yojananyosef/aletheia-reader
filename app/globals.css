@@ -1,26 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 @import "tailwindcss";
 
+/* OpenDyslexic Web Font */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff2/OpenDyslexic-Regular.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff/OpenDyslexic-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff2/OpenDyslexic-Bold.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff/OpenDyslexic-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff2/OpenDyslexic-Italic.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff/OpenDyslexic-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Modo Pergamino (Por Defecto) - Contraste 13.5:1 (Sin Blanco Puro) */
+  --bg-pergamino: #FDFBF6;
+  --text-pergamino: #222222;
+  --border-pergamino: rgba(34, 34, 34, 0.12);
+  --muted-pergamino: #666666;
+  --accent-pergamino: #7c4d25;
+  --hover-pergamino: rgba(34, 34, 34, 0.05);
+
+  /* Modo Noche Suave - Contraste Suave (Sin Negro Puro) */
+  --bg-noche: #1A1A1A;
+  --text-noche: #E8E8E8;
+  --border-noche: rgba(232, 232, 232, 0.15);
+  --muted-noche: #999999;
+  --accent-noche: #d4a373;
+  --hover-noche: rgba(232, 232, 232, 0.08);
+
+  /* Modo Sepia Académico - Calidez de Papel Antiguo */
+  --bg-sepia: #F5EFEB;
+  --text-sepia: #2B261F;
+  --border-sepia: rgba(43, 38, 31, 0.14);
+  --muted-sepia: #6e6457;
+  --accent-sepia: #8b5a2b;
+  --hover-sepia: rgba(43, 38, 31, 0.06);
+
+  /* Familias Tipográficas */
+  --font-serif-bookerly: "Literata", "Lora", "Bookerly", "Georgia", serif;
+  --font-sans-atkinson: "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-dyslexic-main: "OpenDyslexic", sans-serif;
+
+  /* Accesibilidad */
+  --target-min-size: 44px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Tema activo dinámico */
+.theme-pergamino {
+  --reader-bg: var(--bg-pergamino);
+  --reader-text: var(--text-pergamino);
+  --reader-border: var(--border-pergamino);
+  --reader-muted: var(--muted-pergamino);
+  --reader-accent: var(--accent-pergamino);
+  --reader-hover: var(--hover-pergamino);
+  background-color: var(--reader-bg);
+  color: var(--reader-text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.theme-noche {
+  --reader-bg: var(--bg-noche);
+  --reader-text: var(--text-noche);
+  --reader-border: var(--border-noche);
+  --reader-muted: var(--muted-noche);
+  --reader-accent: var(--accent-noche);
+  --reader-hover: var(--hover-noche);
+  background-color: var(--reader-bg);
+  color: var(--reader-text);
+}
+
+.theme-sepia {
+  --reader-bg: var(--bg-sepia);
+  --reader-text: var(--text-sepia);
+  --reader-border: var(--border-sepia);
+  --reader-muted: var(--muted-sepia);
+  --reader-accent: var(--accent-sepia);
+  --reader-hover: var(--hover-sepia);
+  background-color: var(--reader-bg);
+  color: var(--reader-text);
+}
+
+/* Clases de Tipografía */
+.font-bookerly {
+  font-family: var(--font-serif-bookerly) !important;
+}
+
+.font-atkinson {
+  font-family: var(--font-sans-atkinson) !important;
+}
+
+.font-opendyslexic {
+  font-family: var(--font-dyslexic-main) !important;
+}
+
+/* Texturizado Procedimental SVG de Grano de Papel */
+.paper-grain-multiply {
+  mix-blend-mode: multiply;
+}
+
+.paper-grain-screen {
+  mix-blend-mode: screen;
+}
+
+/* Enfoque Accesible (WCAG 2.2 AAA SC 2.4.13) */
+button:focus-visible, 
+input:focus-visible, 
+select:focus-visible, 
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--reader-accent, #7c4d25) !important;
+  outline-offset: 2px !important;
+}
+
+/* Prevenir Scroll Vertical en el lienzo del lector */
+.eink-discrete-page-container {
+  overflow: hidden !important;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Estilos de superíndice bíblico ergonómico */
+.verse-super {
+  font-size: 0.72em;
+  line-height: 0;
+  position: relative;
+  vertical-align: super;
+  font-weight: 700;
+  opacity: 0.55;
+  margin-right: 0.3em;
+  margin-left: 0.15em;
+  padding: 0.1em 0.25em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.verse-super:hover {
+  opacity: 1;
+  background-color: var(--reader-hover);
+}
+
+.footnote-indicator {
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: super;
+  opacity: 0.7;
+  color: var(--reader-accent);
+  cursor: pointer;
+  margin-left: 0.15em;
+  margin-right: 0.25em;
+  padding: 0 0.2em;
+  font-weight: 700;
+}
+
+/* Deshabilitar animaciones intrusivas si el usuario prefiere movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
