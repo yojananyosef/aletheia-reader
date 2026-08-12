@@ -122,14 +122,14 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
               />
             )}
 
-            {/* When Audio Narrator is Active: Integrated Cohesive Media & Reading HUD */}
+            {/* When Audio Narrator is Active: Single-row Compact Media HUD */}
             {isNarratorOpen ? (
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 py-0.5 relative z-40">
+              <div className="flex flex-row items-center justify-between gap-1.5 sm:gap-2 py-0.5 relative z-40 w-full">
                 {/* Left: Spoken Verse Info & Speed/Voice Popovers */}
-                <div className="flex items-center justify-between w-full sm:w-auto gap-2">
-                  <div className="flex items-center gap-1.5 truncate max-w-[200px] xs:max-w-[240px]">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <div className="flex items-center gap-1 truncate max-w-[110px] xs:max-w-[160px] sm:max-w-[220px]">
                     <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                    <Volume2 className="h-4 w-4 text-reader-accent shrink-0" />
+                    <Volume2 className="h-3.5 w-3.5 text-reader-accent shrink-0" />
                     <span className="text-xs font-bold truncate">
                       {bookName} {chapterNumber}:v.{currentVerseNumber || '1'}
                     </span>
@@ -147,7 +147,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                             setShowSpeedMenu(!showSpeedMenu);
                             setShowVoiceMenu(false);
                           }}
-                          className="h-8 px-2 font-mono font-bold text-[11px]"
+                          className="h-7 px-1.5 font-mono font-bold text-[11px]"
                           title="Velocidad de voz"
                         >
                           <Gauge className="h-3 w-3" />
@@ -156,7 +156,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
 
                         {showSpeedMenu && (
                           <div
-                            className="absolute bottom-full left-0 sm:left-auto sm:right-0 mb-2 rounded-xl border border-[var(--reader-border)] bg-[var(--reader-bg)] p-1 shadow-2xl flex flex-col gap-0.5 min-w-[90px] z-50 animate-in fade-in zoom-in-95 duration-100"
+                            className="absolute bottom-full left-0 mb-2 rounded-xl border border-[var(--reader-border)] bg-[var(--reader-bg)] p-1 shadow-2xl flex flex-col gap-0.5 min-w-[90px] z-50 animate-in fade-in zoom-in-95 duration-100"
                           >
                             <span className="text-[10px] font-bold opacity-60 px-2 py-1 uppercase">Velocidad</span>
                             {SPEED_OPTIONS.map((speed) => (
@@ -190,7 +190,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                             setShowVoiceMenu(!showVoiceMenu);
                             setShowSpeedMenu(false);
                           }}
-                          className="h-8 px-2 text-[11px]"
+                          className="h-7 px-1.5 text-[11px]"
                           title="Cambiar voz"
                         >
                           <UserCheck className="h-3 w-3" />
@@ -199,7 +199,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
 
                         {showVoiceMenu && (
                           <div
-                            className="absolute bottom-full right-0 mb-2 rounded-xl border border-[var(--reader-border)] bg-[var(--reader-bg)] p-1.5 shadow-2xl flex flex-col gap-1 max-h-52 overflow-y-auto custom-scrollbar w-56 sm:w-64 z-50 animate-in fade-in zoom-in-95 duration-100"
+                            className="absolute bottom-full left-0 sm:left-auto sm:right-0 mb-2 rounded-xl border border-[var(--reader-border)] bg-[var(--reader-bg)] p-1.5 shadow-2xl flex flex-col gap-1 max-h-52 overflow-y-auto custom-scrollbar w-56 sm:w-64 z-50 animate-in fade-in zoom-in-95 duration-100"
                           >
                             <span className="text-[10px] font-bold opacity-60 px-2 py-1 uppercase">Voces Disponibles</span>
                             {availableVoices.map((voice, idx) => {
@@ -230,12 +230,12 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                 </div>
 
                 {/* Center: Audio Playback Cluster (Play/Pause & Stop) */}
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-1.5 shrink-0">
                   <Button
                     variant="default"
                     size="icon"
                     onClick={isPlaying ? onPauseTTS : onPlayTTS}
-                    className="h-10 w-10 min-w-[40px] font-bold shadow-md"
+                    className="h-9 w-9 min-w-[36px] font-bold shadow-md"
                     aria-label={isPlaying ? 'Pausar locución' : 'Reproducir locución'}
                     title={isPlaying ? 'Pausar' : ttsStatus === 'paused' ? 'Reanudar' : 'Escuchar'}
                   >
@@ -253,15 +253,15 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                       onClick={onStopTTS}
                       title="Detener Audio"
                       aria-label="Detener audio"
-                      className="h-10 w-10 min-w-[40px]"
+                      className="h-9 w-9 min-w-[36px]"
                     >
-                      <Square className="h-4 w-4" />
+                      <Square className="h-3.5 w-3.5" />
                     </Button>
                   )}
                 </div>
 
                 {/* Right: Close Narrator Button */}
-                <div className="flex items-center justify-end w-full sm:w-auto">
+                <div className="flex items-center justify-end shrink-0">
                   {onCloseNarrator && (
                     <Button
                       variant="ghost"
@@ -269,7 +269,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                       onClick={onCloseNarrator}
                       title="Cerrar barra de audio"
                       aria-label="Cerrar narrador de audio"
-                      className="h-9 w-9 opacity-70 hover:opacity-100"
+                      className="h-8 w-8 opacity-70 hover:opacity-100"
                     >
                       <X className="h-4 w-4" />
                     </Button>
