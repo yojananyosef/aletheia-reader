@@ -234,20 +234,16 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
 
                   <Button
                     variant="default"
-                    size="default"
+                    size="icon"
                     onClick={isPlaying ? onPauseTTS : onPlayTTS}
-                    className="h-10 px-4 font-bold text-xs sm:text-sm shadow-md"
+                    className="h-10 w-10 min-w-[40px] font-bold shadow-md"
+                    aria-label={isPlaying ? 'Pausar locución' : 'Reproducir locución'}
+                    title={isPlaying ? 'Pausar' : ttsStatus === 'paused' ? 'Reanudar' : 'Escuchar'}
                   >
                     {isPlaying ? (
-                      <>
-                        <Pause className="h-4 w-4 fill-current" />
-                        <span>Pausar</span>
-                      </>
+                      <Pause className="h-4 w-4 fill-current" />
                     ) : (
-                      <>
-                        <Play className="h-4 w-4 fill-current" />
-                        <span>{ttsStatus === 'paused' ? 'Reanudar' : 'Escuchar'}</span>
-                      </>
+                      <Play className="h-4 w-4 fill-current ml-0.5" />
                     )}
                   </Button>
 

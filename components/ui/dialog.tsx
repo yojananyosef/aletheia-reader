@@ -116,7 +116,7 @@ export function DialogContent({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("p-4 sm:p-6 overflow-y-auto max-h-[75vh]", className)} {...props} />
+    <div className={cn("p-4 sm:p-6 overflow-y-auto max-h-[75vh] custom-scrollbar", className)} {...props} />
   )
 }
 

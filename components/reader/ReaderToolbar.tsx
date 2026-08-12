@@ -192,13 +192,12 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           {onToggleAudioNarrator && (
             <Button
               variant={isAudioNarratorActive ? "default" : "outline"}
-              size="sm"
+              size="icon-sm"
               onClick={onToggleAudioNarrator}
               aria-label={isAudioNarratorActive ? "Ocultar narrador de audio" : "Activar narrador de audio bíblico"}
               title="Narrador en Audio (TTS Bimodal)"
             >
               <Volume2 className={`h-4 w-4 ${isAudioNarratorActive ? 'animate-pulse' : 'text-reader-accent'}`} />
-              <span className="hidden md:inline">Audio</span>
             </Button>
           )}
 

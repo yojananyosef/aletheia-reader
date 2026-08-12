@@ -220,6 +220,54 @@ a:focus-visible,
   color: var(--reader-accent) !important;
 }
 
+/* Custom Sleek Accessible Scrollbar (Adapts to Active Theme) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--reader-border) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--reader-border);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--reader-accent);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--reader-border) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--reader-border);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--reader-accent);
+}
+
 /* Deshabilitar animaciones intrusivas si el usuario prefiere movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -229,3 +277,4 @@ a:focus-visible,
     scroll-behavior: auto !important;
   }
 }
+

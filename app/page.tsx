@@ -297,7 +297,7 @@ export default function Home() {
         <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-h-[320px]">
           {/* Left Column: Books List */}
           <div
-            className={`md:col-span-6 border-r border-[var(--reader-border)] overflow-y-auto p-2.5 sm:p-3 space-y-1 ${
+            className={`md:col-span-6 border-r border-[var(--reader-border)] overflow-y-auto custom-scrollbar p-2.5 sm:p-3 space-y-1 ${
               mobileSelectorStep === 'chapters' ? 'hidden md:block' : 'block'
             }`}
           >
@@ -338,7 +338,7 @@ export default function Home() {
 
           {/* Right Column: Chapter Grid */}
           <div
-            className={`md:col-span-6 overflow-y-auto p-3.5 sm:p-4 flex flex-col ${
+            className={`md:col-span-6 overflow-y-auto custom-scrollbar p-3.5 sm:p-4 flex flex-col ${
               mobileSelectorStep === 'books' ? 'hidden md:flex' : 'flex'
             }`}
           >
