@@ -114,12 +114,25 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     updateVoices();
   }, [ttsState.selectedVoiceURI]);
 
-  // Stop TTS on unmount or chapter change
-  const prevChapterRef = useRef(`${data.bookId}-${data.chapterNumber}`);
+  // Reset page and TTS on chapter change
+  const currentChapterKey = `${data.bookId}-${data.chapterNumber}`;
+  const prevChapterKeyRef = useRef(currentChapterKey);
+
   useEffect(() => {
-    const currentKey = `${data.bookId}-${data.chapterNumber}`;
-    if (prevChapterRef.current !== currentKey) {
-      prevChapterRef.current = currentKey;
+    if (prevChapterKeyRef.current !== currentChapterKey) {
+      prevChapterKeyRef.current = currentChapterKey;
+
+      // Calculate initial page for new chapter (defaults to Page 1 unless specific initialVerse requested)
+      let targetPage = 1;
+      if (initialVerse && data.verses && data.verses.length > 0) {
+        const verseIdx = data.verses.findIndex((v) => String(v.number) === String(initialVerse));
+        if (verseIdx > 0) {
+          targetPage = Math.max(1, Math.ceil(((verseIdx + 1) / data.verses.length) * 4));
+        }
+      }
+      setCurrentPage(targetPage);
+
+      // Stop and reset TTS
       ttsService.cancel();
       setTtsState((prev) => ({
         ...prev,
@@ -132,7 +145,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     return () => {
       ttsService.cancel();
     };
-  }, [data.bookId, data.chapterNumber]);
+  }, [currentChapterKey, initialVerse, data.verses]);
 
   // Function to speak verse at specific index
   const speakVerseAtIndex = useCallback(

@@ -277,51 +277,23 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                 </div>
               </div>
             ) : (
-              /* Standard Reading Progress Footer (When Audio is Closed) */
-              <div className="flex items-center justify-between overflow-hidden">
-                {/* Left: Previous Page Button & Book Chapter */}
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="icon-lg"
-                    onClick={onPrevPage}
-                    disabled={currentPage <= 1}
-                    aria-label="Ir a la página anterior"
-                    title="Página Anterior (Flecha Izquierda)"
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </Button>
-
-                  <span className="hidden md:inline text-xs opacity-70 font-medium font-sans truncate max-w-[200px]">
-                    {bookName} {chapterNumber} • ~{estimatedMinutes} min
-                  </span>
+              /* Standard Ambient Reading Progress Footer (Pure info, 0 navigation buttons) */
+              <div className="flex items-center justify-between py-1 text-xs select-none">
+                {/* Left: Book Name & Estimated Time */}
+                <div className="flex items-center gap-1.5 opacity-70 font-medium truncate max-w-[200px] xs:max-w-[260px]">
+                  <span>{bookName} {chapterNumber}</span>
+                  <span className="opacity-40">•</span>
+                  <span>~{estimatedMinutes} min</span>
                 </div>
 
-                {/* Center: Page Info (Responsive format) */}
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="sm:hidden text-xs font-mono font-bold tracking-wider" aria-live="polite">
+                {/* Right: Page Indicator & Percentage */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="font-mono font-bold tracking-wider" aria-live="polite">
                     Pág. {currentPage}/{totalPages}
                   </span>
-                  <span className="hidden sm:inline text-xs sm:text-sm font-mono font-bold tracking-wider" aria-live="polite">
-                    Página {currentPage} de {totalPages}
-                  </span>
-                  <Badge variant="secondary" className="font-mono text-[11px] sm:text-xs">
+                  <Badge variant="secondary" className="font-mono text-[11px]">
                     {percentage}%
                   </Badge>
-                </div>
-
-                {/* Right: Next Page Button */}
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="icon-lg"
-                    onClick={onNextPage}
-                    disabled={currentPage >= totalPages}
-                    aria-label="Ir a la página siguiente"
-                    title="Página Siguiente (Flecha Derecha)"
-                  >
-                    <ChevronRight className="h-5 w-5" />
-                  </Button>
                 </div>
               </div>
             )}
