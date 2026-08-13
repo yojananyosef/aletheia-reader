@@ -379,7 +379,6 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             <span>Página Siguiente / Capítulo Siguiente</span>
             <div className="flex gap-1 font-mono text-xs">
               <kbd className="rounded-md border border-[var(--reader-border)] px-2 py-1 bg-neutral-500/10">Flecha Derecha</kbd>
-              <kbd className="rounded-md border border-[var(--reader-border)] px-2 py-1 bg-neutral-500/10">Espacio</kbd>
             </div>
           </div>
 
@@ -391,9 +390,16 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           </div>
 
           <div className="flex items-center justify-between border-b border-[var(--reader-border)] py-2">
-            <span>Mover Enfoque de Línea (TDAH)</span>
+            <span>Enfoque TDAH (Fijar / Seguir ratón)</span>
             <div className="flex gap-1 font-mono text-xs">
-              <kbd className="rounded-md border border-[var(--reader-border)] px-2 py-1 bg-neutral-500/10">Alt + Arriba / Abajo</kbd>
+              <kbd className="rounded-md border border-[var(--reader-border)] px-2 py-1 bg-neutral-500/10">Espacio</kbd>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between border-b border-[var(--reader-border)] py-2">
+            <span>Subir / Bajar Enfoque de Línea Fija</span>
+            <div className="flex gap-1 font-mono text-xs">
+              <kbd className="rounded-md border border-[var(--reader-border)] px-2 py-1 bg-neutral-500/10">Arriba / Abajo</kbd>
             </div>
           </div>
 

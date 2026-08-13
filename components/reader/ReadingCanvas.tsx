@@ -213,14 +213,14 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
         return;
       }
 
-      if (e.key === 'ArrowRight' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
         e.preventDefault();
         if (currentPage < totalPages) {
           onPageChange(currentPage + 1, totalPages);
         } else if (nextChapterRef.current) {
           nextChapterRef.current();
         }
-      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) {
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
         e.preventDefault();
         if (currentPage > 1) {
           onPageChange(currentPage - 1, totalPages);
