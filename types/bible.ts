@@ -58,6 +58,12 @@ export interface ComfortBibleReaderProps {
   bookmarksCount?: number;
 }
 
+export interface BookmarkRef {
+  bookId: string;
+  chapter: number;
+  verse: string | number;
+}
+
 export interface BibleBookMeta {
   id: string;
   name: string;

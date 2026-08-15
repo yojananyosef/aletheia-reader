@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { ChapterPayload, Verse, ReaderSettings } from '@/types/bible';
+import React, { useState, useEffect, useRef, useMemo, useLayoutEffect } from 'react';
+import { ChapterPayload, Verse, ReaderSettings, BookmarkRef } from '@/types/bible';
 import { Bookmark } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -11,7 +11,8 @@ interface ReadingCanvasProps {
   currentPage: number;
   onPageChange: (page: number, totalPages: number) => void;
   onSelectVerse: (verse: Verse) => void;
-  bookmarkedVerses: (string | number)[];
+  bookmarkedVerses: BookmarkRef[];
+  scrollToVerse?: string | number | null;
   onToggleToolbar: () => void;
   onNextChapter?: () => void;
   onPrevChapter?: () => void;
@@ -25,6 +26,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   onPageChange,
   onSelectVerse,
   bookmarkedVerses,
+  scrollToVerse,
   onToggleToolbar,
   onNextChapter,
   onPrevChapter,
@@ -143,6 +145,28 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   useEffect(() => {
     onPageChange(Math.min(currentPage, Math.max(1, totalPages)), totalPages);
   }, [totalPages, currentPage, onPageChange]);
+
+  // Precise jump to the page containing the requested verse (e.g. bookmark navigation).
+  // Runs before paint to avoid flashing page 1. The consumed key ref prevents
+  // re-jumping on every re-render; it resets when no verse is requested.
+  const consumedScrollRef = useRef<string | null>(null);
+
+  useLayoutEffect(() => {
+    if (scrollToVerse === null || scrollToVerse === undefined) {
+      consumedScrollRef.current = null;
+      return;
+    }
+    if (pages.length === 0) return;
+    const scrollKey = `${data.bookId}-${data.chapterNumber}-${String(scrollToVerse)}`;
+    if (consumedScrollRef.current === scrollKey) return;
+    const targetPageIndex = pages.findIndex((page) =>
+      page.some((v) => String(v.number) === String(scrollToVerse))
+    );
+    if (targetPageIndex !== -1 && targetPageIndex + 1 !== currentPage) {
+      onPageChange(targetPageIndex + 1, pages.length);
+    }
+    consumedScrollRef.current = scrollKey;
+  }, [scrollToVerse, pages, currentPage, onPageChange, data.bookId, data.chapterNumber]);
 
   // Sincronización determinista de página basada en la ubicación exacta del versículo que se está leyendo
   useEffect(() => {
@@ -339,7 +363,10 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
             <div className="m-0 p-0 text-left leading-[1.6em] tracking-normal">
               {activeVerses.map((verse, idx) => {
                 const isBookmarked = bookmarkedVerses.some(
-                  (bv) => String(bv) === String(verse.number)
+                  (bv) =>
+                    bv.bookId === data.bookId &&
+                    bv.chapter === data.chapterNumber &&
+                    String(bv.verse) === String(verse.number)
                 );
                 const isSpoken =
                   activeSpokenVerseNumber !== null &&

@@ -20,7 +20,7 @@ export const PwmDimmerOverlay: React.FC<PwmDimmerOverlayProps> = ({ brightness }
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-50 transition-opacity duration-150"
+      className="pointer-events-none fixed inset-0 z-[70] transition-opacity duration-150"
       style={{
         backgroundColor: '#000000',
         opacity: dimOpacity,

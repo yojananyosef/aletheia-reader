@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { LineFocusMode } from '@/types/bible';
 import { ChevronUp, ChevronDown, Lock, MousePointer } from 'lucide-react';
 
@@ -8,12 +8,16 @@ interface LineFocusOverlayProps {
   mode: LineFocusMode;
   fontSize: number;
   lineHeight: number;
+  onSwipePrev?: () => void;
+  onSwipeNext?: () => void;
 }
 
 export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   mode,
   fontSize,
   lineHeight,
+  onSwipePrev,
+  onSwipeNext,
 }) => {
   const [windowCenterY, setWindowCenterY] = useState<number>(() => {
     if (typeof window !== 'undefined') {
@@ -41,6 +45,16 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
     }
   }, [singleLinePx]);
 
+  // Clamp the aperture center to keep it fully visible on screen
+  const clampY = useCallback(
+    (y: number) => {
+      const minY = Math.max(50, apertureHeight / 2);
+      const maxY = Math.max(minY, (window.innerHeight || 800) - apertureHeight / 2 - 50);
+      return Math.max(minY, Math.min(maxY, y));
+    },
+    [apertureHeight]
+  );
+
   // Follow mouse position when not locked
   useEffect(() => {
     if (mode === 'off' || isLocked) return;
@@ -49,10 +63,7 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
     const handleMouseMove = (e: MouseEvent) => {
       if (rafId !== null) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
-        const minY = Math.max(50, apertureHeight / 2);
-        const maxY = Math.max(minY, (window.innerHeight || 800) - apertureHeight / 2 - 50);
-        const clampedY = Math.max(minY, Math.min(maxY, e.clientY));
-        setWindowCenterY(clampedY);
+        setWindowCenterY(clampY(e.clientY));
       });
     };
 
@@ -61,7 +72,102 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
       window.removeEventListener('mousemove', handleMouseMove);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
-  }, [mode, isLocked, apertureHeight]);
+  }, [mode, isLocked, clampY]);
+
+  // --- Touch Drag Support (Mobile / Coarse Pointers) ---
+  // Press and hold with the thumb anywhere on the screen to guide the focus
+  // line; vertical movement moves the aperture, a horizontal flick turns pages.
+  const rootRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const touchStartTime = useRef<number>(0);
+  const touchActive = useRef<boolean>(false);
+  const touchRafId = useRef<number | null>(null);
+
+  const forwardPointerEvent = useCallback((clientX: number, clientY: number, type: 'click') => {
+    const layer = rootRef.current;
+    if (!layer) return;
+    const prevPointerEvents = layer.style.pointerEvents;
+    layer.style.pointerEvents = 'none';
+    const el = document.elementFromPoint(clientX, clientY);
+    layer.style.pointerEvents = prevPointerEvents;
+    if (el && el !== layer) {
+      el.dispatchEvent(
+        new MouseEvent(type, {
+          bubbles: true,
+          cancelable: true,
+          clientX,
+          clientY,
+        })
+      );
+    }
+  }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('button')) return;
+    const t = e.touches[0];
+    touchStartX.current = t.clientX;
+    touchStartY.current = t.clientY;
+    touchStartTime.current = Date.now();
+    touchActive.current = true;
+    setIsLocked(true);
+    setWindowCenterY(clampY(t.clientY));
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchActive.current) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    if (touchRafId.current !== null) cancelAnimationFrame(touchRafId.current);
+    touchRafId.current = requestAnimationFrame(() => {
+      setWindowCenterY(clampY(t.clientY));
+    });
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchActive.current) return;
+    touchActive.current = false;
+    // Suppress the browser's native synthesized click: we forward our own
+    // synthetic click below when the touch was a tap.
+    e.preventDefault();
+    if (touchRafId.current !== null) {
+      cancelAnimationFrame(touchRafId.current);
+      touchRafId.current = null;
+    }
+    const startX = touchStartX.current;
+    const startY = touchStartY.current;
+    const t = e.changedTouches[0];
+    touchStartX.current = null;
+    touchStartY.current = null;
+    if (startX === null || startY === null) return;
+
+    const deltaX = t.clientX - startX;
+    const deltaY = t.clientY - startY;
+    const deltaTime = Date.now() - touchStartTime.current;
+
+    // Horizontal flick -> page turn (kept working while Line Focus is active)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 35 && deltaTime < 600) {
+      if (deltaX < 0) {
+        onSwipeNext?.();
+      } else {
+        onSwipePrev?.();
+      }
+      return;
+    }
+
+    // Tap (no movement) -> forward a synthetic click to the reading canvas
+    // so verse selection and tap zones keep working below the overlay.
+    if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500) {
+      forwardPointerEvent(t.clientX, t.clientY, 'click');
+    }
+  };
+
+  // Forward mouse clicks on coarse-pointer (touch) devices to the content below
+  const handleClick = (e: React.MouseEvent) => {
+    if (e.target !== e.currentTarget) return;
+    forwardPointerEvent(e.clientX, e.clientY, 'click');
+  };
 
   // Keyboard navigation & locking toggle (Space = toggle lock, ArrowUp/ArrowDown = move line when locked or auto-lock)
   useEffect(() => {
@@ -108,7 +214,14 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   const transitionClass = isLocked ? 'transition-all duration-150 ease-out' : 'transition-none';
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-30 overflow-hidden">
+    <div
+      ref={rootRef}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onClick={handleClick}
+      className="pointer-events-none pointer-coarse:pointer-events-auto fixed inset-0 z-30 touch-none overflow-hidden"
+    >
       {/* Top Mask */}
       <div
         className={`absolute left-0 right-0 top-0 bg-black/65 backdrop-blur-[0.5px] ${transitionClass}`}

@@ -9,6 +9,7 @@ import {
   TTSStatus,
   TTSVoiceOption,
   TTSState,
+  BookmarkRef,
 } from '@/types/bible';
 import { ReaderToolbar } from './ReaderToolbar';
 import { ReaderFooter } from './ReaderFooter';
@@ -23,6 +24,7 @@ import {
   saveStoredSettings,
   getStoredTTSSettings,
   saveStoredTTSSettings,
+  getStoredBookmarks,
   saveStoredReadingPosition,
 } from '@/lib/storage-service';
 
@@ -66,22 +68,22 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   // Effective active theme (prop takes precedence if provided)
   const currentTheme: ThemeMode = theme || settings.theme;
 
-  // Calculate initial page based on initialVerse or stored page if provided
-  const getInitialPage = useCallback(() => {
-    if (!initialVerse || !data.verses || data.verses.length === 0) return 1;
-    const verseIndex = data.verses.findIndex(
-      (v) => String(v.number) === String(initialVerse)
-    );
-    if (verseIndex <= 0) return 1;
-    return Math.max(1, Math.ceil(((verseIndex + 1) / data.verses.length) * 4));
-  }, [initialVerse, data.verses]);
-
   // --- Pagination State ---
-  const [currentPage, setCurrentPage] = useState<number>(getInitialPage);
+  // Page 1 is the default; precise jumps to a verse's page are handled by
+  // ReadingCanvas via the scrollToVerse prop (no heuristic needed here).
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
   // --- Bookmarking & Verse Interaction State ---
-  const [bookmarkedVerses, setBookmarkedVerses] = useState<(string | number)[]>([]);
+  // Bookmarks are identified by (bookId, chapter, verse) to avoid marking
+  // equal verse numbers across different books/chapters.
+  const [bookmarkedVerses, setBookmarkedVerses] = useState<BookmarkRef[]>(() =>
+    getStoredBookmarks().map((b) => ({
+      bookId: b.bookId,
+      chapter: b.chapter,
+      verse: b.verse,
+    }))
+  );
   const [selectedVerse, setSelectedVerse] = useState<Verse | null>(null);
 
   // --- Audio Narrator (TTS Bimodal) State ---
@@ -122,15 +124,9 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     if (prevChapterKeyRef.current !== currentChapterKey) {
       prevChapterKeyRef.current = currentChapterKey;
 
-      // Calculate initial page for new chapter (defaults to Page 1 unless specific initialVerse requested)
-      let targetPage = 1;
-      if (initialVerse && data.verses && data.verses.length > 0) {
-        const verseIdx = data.verses.findIndex((v) => String(v.number) === String(initialVerse));
-        if (verseIdx > 0) {
-          targetPage = Math.max(1, Math.ceil(((verseIdx + 1) / data.verses.length) * 4));
-        }
-      }
-      setCurrentPage(targetPage);
+      // Reset to Page 1; ReadingCanvas will jump to the exact verse page if
+      // an initialVerse was requested (e.g. navigation from a bookmark).
+      setCurrentPage(1);
 
       // Stop and reset TTS
       ttsService.cancel();
@@ -145,7 +141,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     return () => {
       ttsService.cancel();
     };
-  }, [currentChapterKey, initialVerse, data.verses]);
+  }, [currentChapterKey, data.verses]);
 
   // Function to speak verse at specific index
   const speakVerseAtIndex = useCallback(
@@ -324,12 +320,29 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     setSelectedVerse(verse);
   };
 
-  // Handle Bookmark Toggle
+  // Handle Bookmark Toggle (identity = bookId + chapter + verse)
   const handleToggleBookmark = (verseNumber: string | number) => {
+    const ref: BookmarkRef = {
+      bookId: data.bookId,
+      chapter: data.chapterNumber,
+      verse: verseNumber,
+    };
     setBookmarkedVerses((prev) =>
-      prev.includes(verseNumber)
-        ? prev.filter((v) => v !== verseNumber)
-        : [...prev, verseNumber]
+      prev.some(
+        (b) =>
+          b.bookId === ref.bookId &&
+          b.chapter === ref.chapter &&
+          String(b.verse) === String(ref.verse)
+      )
+        ? prev.filter(
+            (b) =>
+              !(
+                b.bookId === ref.bookId &&
+                b.chapter === ref.chapter &&
+                String(b.verse) === String(ref.verse)
+              )
+          )
+        : [...prev, ref]
     );
     if (onBookmarkVerse) {
       onBookmarkVerse(verseNumber);
@@ -383,6 +396,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
           onPageChange={handlePageChange}
           onSelectVerse={handleSelectVerse}
           bookmarkedVerses={bookmarkedVerses}
+          scrollToVerse={initialVerse}
           activeSpokenVerseNumber={ttsState.status === 'playing' || ttsState.status === 'paused' ? ttsState.currentVerseNumber : null}
           onNextChapter={onNextChapter}
           onPrevChapter={onPrevChapter}
@@ -395,6 +409,20 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         mode={settings.lineFocus}
         fontSize={settings.fontSize}
         lineHeight={settings.lineHeight}
+        onSwipePrev={() => {
+          if (currentPage > 1) {
+            handlePageChange(currentPage - 1, totalPages);
+          } else if (onPrevChapter) {
+            onPrevChapter();
+          }
+        }}
+        onSwipeNext={() => {
+          if (currentPage < totalPages) {
+            handlePageChange(currentPage + 1, totalPages);
+          } else if (onNextChapter) {
+            onNextChapter();
+          }
+        }}
       />
 
       {/* 6. Footer (Pagination + Integrated Ambient Progress & Audio Narrator Bar) */}
@@ -443,7 +471,13 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         chapterNumber={data.chapterNumber}
         footnotes={data.footnotes || []}
         isBookmarked={
-          selectedVerse !== null && bookmarkedVerses.includes(selectedVerse.number)
+          selectedVerse !== null &&
+          bookmarkedVerses.some(
+            (b) =>
+              b.bookId === data.bookId &&
+              b.chapter === data.chapterNumber &&
+              String(b.verse) === String(selectedVerse.number)
+          )
         }
         onToggleBookmark={(vNum) => {
           handleToggleBookmark(vNum);

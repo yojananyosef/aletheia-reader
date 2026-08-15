@@ -135,18 +135,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             </Button>
           )}
 
-          {/* Keyboard shortcut icon only on sm+ */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setShowShortcutsModal(true)}
-            aria-label="Ver atajos de teclado y ayuda"
-            className="hidden sm:flex"
-            title="Atajos de teclado"
-          >
-            <Keyboard className="h-4.5 w-4.5 opacity-80" />
-          </Button>
-
+          {/* Fullscreen */}
           <Button
             variant="ghost"
             size="icon"
@@ -335,29 +324,46 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           </Card>
 
           {/* 5. Line Focus Mode (ADHD & Cognitive Ease) */}
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <Focus className="h-4 w-4 text-reader-accent" />
-              <label className="text-xs font-bold uppercase tracking-wider opacity-80">
-                Modo Enfoque de Líneas (TDAH)
-              </label>
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Focus className="h-4 w-4 text-reader-accent" />
+                <label className="text-xs font-bold uppercase tracking-wider opacity-80">
+                  Modo Enfoque de Líneas (TDAH)
+                </label>
+              </div>
+              <div className="grid grid-cols-4 gap-2">
+                {(['off', '1-line', '3-line', '5-line'] as LineFocusMode[]).map((mode) => (
+                  <Button
+                    key={mode}
+                    variant={settings.lineFocus === mode ? "default" : "outline"}
+                    size="default"
+                    onClick={() => onUpdateSettings({ lineFocus: mode })}
+                    className={settings.lineFocus === mode ? "font-bold shadow-xs" : ""}
+                  >
+                    {mode === 'off' ? 'Apagado' : mode.replace('-line', ' L')}
+                  </Button>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-4 gap-2">
-              {(['off', '1-line', '3-line', '5-line'] as LineFocusMode[]).map((mode) => (
-                <Button
-                  key={mode}
-                  variant={settings.lineFocus === mode ? "default" : "outline"}
-                  size="default"
-                  onClick={() => onUpdateSettings({ lineFocus: mode })}
-                  className={settings.lineFocus === mode ? "font-bold shadow-xs" : ""}
-                >
-                  {mode === 'off' ? 'Apagado' : mode.replace('-line', ' L')}
-                </Button>
-              ))}
+
+            {/* 6. Keyboard Shortcuts & Accessibility Guide */}
+            <div className="pt-3 border-t border-[var(--reader-border)]">
+              <Button
+                variant="outline"
+                size="default"
+                className="w-full justify-center gap-2"
+                onClick={() => {
+                  setShowSettingsDrawer(false);
+                  setShowShortcutsModal(true);
+                }}
+                aria-label="Ver atajos de teclado y ayuda"
+              >
+                <Keyboard className="h-4 w-4 text-reader-accent" />
+                <span>Atajos de teclado y ayuda</span>
+              </Button>
             </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+          </DialogContent>
+        </Dialog>
 
       {/* Keyboard Shortcuts & Accessibility Guide Modal */}
       <Dialog
