@@ -30,7 +30,7 @@ import {
 
 export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   data,
-  initialVerse,
+  scrollToTarget,
   theme = 'pergamino',
   onThemeChange,
   onPageChange,
@@ -124,9 +124,8 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     if (prevChapterKeyRef.current !== currentChapterKey) {
       prevChapterKeyRef.current = currentChapterKey;
 
-      // Reset to Page 1; ReadingCanvas will jump to the exact verse page if
-      // an initialVerse was requested (e.g. navigation from a bookmark).
-      setCurrentPage(1);
+      // The starting page (1, or the requested verse's exact page) is reported
+      // by ReadingCanvas, which knows the real pagination. No page reset here.
 
       // Stop and reset TTS
       ttsService.cancel();
@@ -396,7 +395,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
           onPageChange={handlePageChange}
           onSelectVerse={handleSelectVerse}
           bookmarkedVerses={bookmarkedVerses}
-          scrollToVerse={initialVerse}
+          scrollToTarget={scrollToTarget}
           activeSpokenVerseNumber={ttsState.status === 'playing' || ttsState.status === 'paused' ? ttsState.currentVerseNumber : null}
           onNextChapter={onNextChapter}
           onPrevChapter={onPrevChapter}

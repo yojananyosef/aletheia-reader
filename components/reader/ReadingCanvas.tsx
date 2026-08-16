@@ -12,7 +12,7 @@ interface ReadingCanvasProps {
   onPageChange: (page: number, totalPages: number) => void;
   onSelectVerse: (verse: Verse) => void;
   bookmarkedVerses: BookmarkRef[];
-  scrollToVerse?: string | number | null;
+  scrollToTarget?: BookmarkRef | null;
   onToggleToolbar: () => void;
   onNextChapter?: () => void;
   onPrevChapter?: () => void;
@@ -26,7 +26,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   onPageChange,
   onSelectVerse,
   bookmarkedVerses,
-  scrollToVerse,
+  scrollToTarget,
   onToggleToolbar,
   onNextChapter,
   onPrevChapter,
@@ -141,32 +141,78 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
 
   const totalPages = pages.length;
 
-  // Sync total pages with parent
-  useEffect(() => {
-    onPageChange(Math.min(currentPage, Math.max(1, totalPages)), totalPages);
-  }, [totalPages, currentPage, onPageChange]);
-
-  // Precise jump to the page containing the requested verse (e.g. bookmark navigation).
-  // Runs before paint to avoid flashing page 1. The consumed key ref prevents
-  // re-jumping on every re-render; it resets when no verse is requested.
+  // --- Authoritative page control ---
+  // Single source of truth for the page reported to the parent. It:
+  //   1. Starts a freshly loaded chapter on page 1 (or the requested verse's page).
+  //   2. Jumps to the exact page of a requested verse (bookmark navigation /
+  //      restored reading position), taking the real pagination into account
+  //      (font size, line height, viewport).
+  //   3. Re-clamps the current page and reports the new total when pagination
+  //      changes (resize, font size, line height).
+  // Previously this logic was split across several effects that raced each
+  // other on chapter changes, so the verse jump was often lost.
+  const chapterKeyRef = useRef<string>(`${data.bookId}-${data.chapterNumber}`);
+  // Starts as null so the first render always reports the real page count up.
+  const totalPagesRef = useRef<number | null>(null);
   const consumedScrollRef = useRef<string | null>(null);
 
   useLayoutEffect(() => {
-    if (scrollToVerse === null || scrollToVerse === undefined) {
+    const chapterKey = `${data.bookId}-${data.chapterNumber}`;
+    const chapterChanged = chapterKeyRef.current !== chapterKey;
+    const totalChanged = totalPagesRef.current !== totalPages;
+    // Only honor the target when it belongs to the currently loaded chapter
+    // (avoids jumping on stale data while a new chapter is being fetched).
+    const scrollToVerse =
+      scrollToTarget &&
+      scrollToTarget.bookId === data.bookId &&
+      scrollToTarget.chapter === data.chapterNumber
+        ? scrollToTarget.verse
+        : null;
+    const scrollKey =
+      scrollToVerse !== null && scrollToVerse !== undefined
+        ? `${chapterKey}-${String(scrollToVerse)}`
+        : null;
+
+    if (scrollKey === null) {
       consumedScrollRef.current = null;
-      return;
+      if (!chapterChanged && !totalChanged) return;
     }
-    if (pages.length === 0) return;
-    const scrollKey = `${data.bookId}-${data.chapterNumber}-${String(scrollToVerse)}`;
-    if (consumedScrollRef.current === scrollKey) return;
-    const targetPageIndex = pages.findIndex((page) =>
-      page.some((v) => String(v.number) === String(scrollToVerse))
-    );
-    if (targetPageIndex !== -1 && targetPageIndex + 1 !== currentPage) {
-      onPageChange(targetPageIndex + 1, pages.length);
+
+    if (chapterChanged) chapterKeyRef.current = chapterKey;
+    if (totalChanged) totalPagesRef.current = totalPages;
+
+    let nextPage: number | null = null;
+
+    if (chapterChanged) {
+      // Fresh chapter: start on the requested verse's page, otherwise page 1.
+      if (scrollKey !== null) {
+        const idx = pages.findIndex((page) =>
+          page.some((v) => String(v.number) === String(scrollToVerse))
+        );
+        nextPage = idx !== -1 ? idx + 1 : 1;
+        if (idx !== -1) consumedScrollRef.current = scrollKey;
+      } else {
+        nextPage = 1;
+      }
+    } else if (scrollKey !== null && scrollKey !== consumedScrollRef.current) {
+      // Same chapter, new verse target (e.g. selecting a bookmark in the
+      // chapter that is currently displayed).
+      const idx = pages.findIndex((page) =>
+        page.some((v) => String(v.number) === String(scrollToVerse))
+      );
+      if (idx !== -1) {
+        nextPage = idx + 1;
+        consumedScrollRef.current = scrollKey;
+      }
+    } else if (totalChanged) {
+      // Pagination changed without a chapter change: clamp the current page.
+      nextPage = Math.min(currentPage, Math.max(1, totalPages));
     }
-    consumedScrollRef.current = scrollKey;
-  }, [scrollToVerse, pages, currentPage, onPageChange, data.bookId, data.chapterNumber]);
+
+    if (nextPage !== null && (nextPage !== currentPage || chapterChanged || totalChanged)) {
+      onPageChange(nextPage, totalPages);
+    }
+  }, [scrollToTarget, pages, totalPages, currentPage, onPageChange, data.bookId, data.chapterNumber]);
 
   // Sincronización determinista de página basada en la ubicación exacta del versículo que se está leyendo
   useEffect(() => {

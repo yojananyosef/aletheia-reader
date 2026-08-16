@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { BibleBookMeta, ChapterPayload, ThemeMode } from '@/types/bible';
+import { BibleBookMeta, ChapterPayload, ThemeMode, BookmarkRef } from '@/types/bible';
 import { getBibleBooks, getChapterData } from '@/lib/bible-service';
 import { ComfortBibleReader } from '@/components/reader/ComfortBibleReader';
 import {
@@ -33,7 +33,9 @@ export default function Home() {
   const [books, setBooks] = useState<BibleBookMeta[]>([]);
   const [selectedBookId, setSelectedBookId] = useState<string>('GEN');
   const [selectedChapter, setSelectedChapter] = useState<number>(1);
-  const [initialVerse, setInitialVerse] = useState<string | number | undefined>(undefined);
+  // Full target (book + chapter + verse) for a precise page jump. The reader
+  // only honors it once the loaded chapter matches, so stale data is never jumped.
+  const [scrollToTarget, setScrollToTarget] = useState<BookmarkRef | null>(null);
   const [chapterPayload, setChapterPayload] = useState<ChapterPayload | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [theme, setTheme] = useState<ThemeMode>('pergamino');
@@ -78,7 +80,11 @@ export default function Home() {
           setSelectedBookId(targetBookId);
           setSelectedChapter(targetChapter);
           if (storedPos?.verseNumber) {
-            setInitialVerse(storedPos.verseNumber);
+            setScrollToTarget({
+              bookId: storedPos.bookId,
+              chapter: storedPos.chapterNumber,
+              verse: storedPos.verseNumber,
+            });
           }
 
           const current = loadedBooks.find((b) => b.id === targetBookId) || loadedBooks[0];
@@ -100,10 +106,10 @@ export default function Home() {
       saveStoredReadingPosition({
         bookId: selectedBookId,
         chapterNumber: selectedChapter,
-        verseNumber: initialVerse,
+        verseNumber: scrollToTarget?.verse,
       });
     }
-  }, [selectedBookId, selectedChapter, initialVerse]);
+  }, [selectedBookId, selectedChapter, scrollToTarget]);
 
   // Load chapter data when book or chapter changes
   useEffect(() => {
@@ -156,7 +162,7 @@ export default function Home() {
     if (selectedChapter < currentBookMeta.totalChapters) {
       setLoading(true);
       setSelectedChapter((prev) => prev + 1);
-      setInitialVerse(undefined);
+      setScrollToTarget(null);
     } else {
       const currentIndex = books.findIndex((b) => b.id === selectedBookId);
       if (currentIndex !== -1 && currentIndex < books.length - 1) {
@@ -164,7 +170,7 @@ export default function Home() {
         setLoading(true);
         setSelectedBookId(nextBook.id);
         setSelectedChapter(1);
-        setInitialVerse(undefined);
+        setScrollToTarget(null);
       }
     }
   };
@@ -174,7 +180,7 @@ export default function Home() {
     if (selectedChapter > 1) {
       setLoading(true);
       setSelectedChapter((prev) => prev - 1);
-      setInitialVerse(undefined);
+      setScrollToTarget(null);
     } else {
       const currentIndex = books.findIndex((b) => b.id === selectedBookId);
       if (currentIndex > 0) {
@@ -182,7 +188,7 @@ export default function Home() {
         setLoading(true);
         setSelectedBookId(prevBook.id);
         setSelectedChapter(prevBook.totalChapters);
-        setInitialVerse(undefined);
+        setScrollToTarget(null);
       }
     }
   };
@@ -259,7 +265,7 @@ export default function Home() {
       ) : chapterPayload ? (
         <ComfortBibleReader
           data={chapterPayload}
-          initialVerse={initialVerse}
+          scrollToTarget={scrollToTarget}
           theme={theme}
           onThemeChange={handleThemeChange}
           onBookmarkVerse={handleBookmarkVerse}
@@ -435,7 +441,7 @@ export default function Home() {
                           setLoading(true);
                           setSelectedBookId(browsingBook.id);
                           setSelectedChapter(chapNum);
-                          setInitialVerse(undefined);
+                          setScrollToTarget(null);
                           saveStoredReadingPosition({
                             bookId: browsingBook.id,
                             chapterNumber: chapNum,
@@ -504,7 +510,11 @@ export default function Home() {
                         setLoading(true);
                         setSelectedBookId(bm.bookId);
                         setSelectedChapter(bm.chapter);
-                        setInitialVerse(bm.verse);
+                        setScrollToTarget({
+                          bookId: bm.bookId,
+                          chapter: bm.chapter,
+                          verse: bm.verse,
+                        });
                         saveStoredReadingPosition({
                           bookId: bm.bookId,
                           chapterNumber: bm.chapter,

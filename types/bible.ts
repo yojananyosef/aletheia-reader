@@ -44,7 +44,7 @@ export interface ReaderSettings {
 
 export interface ComfortBibleReaderProps {
   data: ChapterPayload;
-  initialVerse?: string | number;
+  scrollToTarget?: BookmarkRef | null;
   theme?: ThemeMode;
   onThemeChange?: (theme: ThemeMode) => void;
   onPageChange?: (page: number, totalPages: number) => void;
