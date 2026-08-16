@@ -229,8 +229,21 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                   </div>
                 </div>
 
-                {/* Center: Audio Playback Cluster (Play/Pause & Stop) */}
+                {/* Center: Audio Playback Cluster (SkipBack / Play-Pause / Stop / SkipForward) */}
                 <div className="flex items-center justify-center gap-1.5 shrink-0">
+                  {onPrevVerseTTS && (
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={onPrevVerseTTS}
+                      title="Versículo anterior"
+                      aria-label="Escuchar versículo anterior"
+                      className="h-8 w-8 min-w-[32px]"
+                    >
+                      <SkipBack className="h-3.5 w-3.5" />
+                    </Button>
+                  )}
+
                   <Button
                     variant="default"
                     size="icon"
@@ -256,6 +269,19 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                       className="h-9 w-9 min-w-[36px]"
                     >
                       <Square className="h-3.5 w-3.5" />
+                    </Button>
+                  )}
+
+                  {onNextVerseTTS && (
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={onNextVerseTTS}
+                      title="Versículo siguiente"
+                      aria-label="Escuchar versículo siguiente"
+                      className="h-8 w-8 min-w-[32px]"
+                    >
+                      <SkipForward className="h-3.5 w-3.5" />
                     </Button>
                   )}
                 </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo, useLayoutEffect } from 'react';
-import { ChapterPayload, Verse, ReaderSettings, BookmarkRef } from '@/types/bible';
+import { ChapterPayload, Verse, ReaderSettings, BookmarkRef, ReaderTarget } from '@/types/bible';
 import { Bookmark } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -12,7 +12,7 @@ interface ReadingCanvasProps {
   onPageChange: (page: number, totalPages: number) => void;
   onSelectVerse: (verse: Verse) => void;
   bookmarkedVerses: BookmarkRef[];
-  scrollToTarget?: BookmarkRef | null;
+  readerTarget?: ReaderTarget | null;
   onToggleToolbar: () => void;
   onNextChapter?: () => void;
   onPrevChapter?: () => void;
@@ -26,7 +26,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   onPageChange,
   onSelectVerse,
   bookmarkedVerses,
-  scrollToTarget,
+  readerTarget,
   onToggleToolbar,
   onNextChapter,
   onPrevChapter,
@@ -162,18 +162,22 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     const totalChanged = totalPagesRef.current !== totalPages;
     // Only honor the target when it belongs to the currently loaded chapter
     // (avoids jumping on stale data while a new chapter is being fetched).
-    const scrollToVerse =
-      scrollToTarget &&
-      scrollToTarget.bookId === data.bookId &&
-      scrollToTarget.chapter === data.chapterNumber
-        ? scrollToTarget.verse
-        : null;
-    const scrollKey =
-      scrollToVerse !== null && scrollToVerse !== undefined
-        ? `${chapterKey}-${String(scrollToVerse)}`
-        : null;
+    const targetMatches =
+      readerTarget !== null &&
+      readerTarget !== undefined &&
+      readerTarget.bookId === data.bookId &&
+      readerTarget.chapter === data.chapterNumber;
+    // The key includes requestId so re-requesting the same verse/chapter
+    // (e.g. re-selecting the same bookmark) always re-triggers the jump.
+    const targetKey = targetMatches
+      ? readerTarget.kind === 'verse'
+        ? `v:${readerTarget.bookId}:${readerTarget.chapter}:${String(readerTarget.verse)}:${readerTarget.requestId}`
+        : `l:${readerTarget.bookId}:${readerTarget.chapter}:${readerTarget.requestId}`
+      : null;
+    const targetVerse =
+      targetMatches && readerTarget.kind === 'verse' ? readerTarget.verse : null;
 
-    if (scrollKey === null) {
+    if (targetKey === null) {
       consumedScrollRef.current = null;
       if (!chapterChanged && !totalChanged) return;
     }
@@ -184,25 +188,34 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     let nextPage: number | null = null;
 
     if (chapterChanged) {
-      // Fresh chapter: start on the requested verse's page, otherwise page 1.
-      if (scrollKey !== null) {
+      // Fresh chapter: requested verse's page, last page (backward
+      // navigation, book-like), or page 1.
+      if (targetVerse !== null) {
         const idx = pages.findIndex((page) =>
-          page.some((v) => String(v.number) === String(scrollToVerse))
+          page.some((v) => String(v.number) === String(targetVerse))
         );
         nextPage = idx !== -1 ? idx + 1 : 1;
-        if (idx !== -1) consumedScrollRef.current = scrollKey;
+        if (idx !== -1) consumedScrollRef.current = targetKey;
+      } else if (targetKey !== null) {
+        nextPage = Math.max(1, totalPages);
+        consumedScrollRef.current = targetKey;
       } else {
         nextPage = 1;
       }
-    } else if (scrollKey !== null && scrollKey !== consumedScrollRef.current) {
-      // Same chapter, new verse target (e.g. selecting a bookmark in the
-      // chapter that is currently displayed).
-      const idx = pages.findIndex((page) =>
-        page.some((v) => String(v.number) === String(scrollToVerse))
-      );
-      if (idx !== -1) {
-        nextPage = idx + 1;
-        consumedScrollRef.current = scrollKey;
+    } else if (targetKey !== null && targetKey !== consumedScrollRef.current) {
+      // Same chapter, new target request (re-selecting a bookmark in the
+      // currently displayed chapter, or a last-page request).
+      if (targetVerse !== null) {
+        const idx = pages.findIndex((page) =>
+          page.some((v) => String(v.number) === String(targetVerse))
+        );
+        if (idx !== -1) {
+          nextPage = idx + 1;
+          consumedScrollRef.current = targetKey;
+        }
+      } else {
+        nextPage = Math.max(1, totalPages);
+        consumedScrollRef.current = targetKey;
       }
     } else if (totalChanged) {
       // Pagination changed without a chapter change: clamp the current page.
@@ -212,7 +225,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     if (nextPage !== null && (nextPage !== currentPage || chapterChanged || totalChanged)) {
       onPageChange(nextPage, totalPages);
     }
-  }, [scrollToTarget, pages, totalPages, currentPage, onPageChange, data.bookId, data.chapterNumber]);
+  }, [readerTarget, pages, totalPages, currentPage, onPageChange, data.bookId, data.chapterNumber]);
 
   // Sincronización determinista de página basada en la ubicación exacta del versículo que se está leyendo
   useEffect(() => {

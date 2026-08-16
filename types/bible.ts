@@ -44,7 +44,7 @@ export interface ReaderSettings {
 
 export interface ComfortBibleReaderProps {
   data: ChapterPayload;
-  scrollToTarget?: BookmarkRef | null;
+  readerTarget?: ReaderTarget | null;
   theme?: ThemeMode;
   onThemeChange?: (theme: ThemeMode) => void;
   onPageChange?: (page: number, totalPages: number) => void;
@@ -62,6 +62,21 @@ export interface BookmarkRef {
   bookId: string;
   chapter: number;
   verse: string | number;
+}
+
+/**
+ * Intent de navegación del lector hacia una posición concreta.
+ * - 'verse': saltar a la página del versículo indicado.
+ * - 'lastPage': comenzar en la última página del capítulo (navegación hacia atrás, imitando un libro).
+ * requestId es un nonce creciente para que re-seleccionar el mismo objetivo
+ * (p. ej. el mismo marcador) siempre re-dispare el salto.
+ */
+export interface ReaderTarget {
+  kind: 'verse' | 'lastPage';
+  bookId: string;
+  chapter: number;
+  verse?: string | number;
+  requestId: number;
 }
 
 export interface BibleBookMeta {

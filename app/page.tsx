@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { BibleBookMeta, ChapterPayload, ThemeMode, BookmarkRef } from '@/types/bible';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { BibleBookMeta, ChapterPayload, ThemeMode, ReaderTarget } from '@/types/bible';
 import { getBibleBooks, getChapterData } from '@/lib/bible-service';
 import { ComfortBibleReader } from '@/components/reader/ComfortBibleReader';
 import {
@@ -33,9 +33,10 @@ export default function Home() {
   const [books, setBooks] = useState<BibleBookMeta[]>([]);
   const [selectedBookId, setSelectedBookId] = useState<string>('GEN');
   const [selectedChapter, setSelectedChapter] = useState<number>(1);
-  // Full target (book + chapter + verse) for a precise page jump. The reader
-  // only honors it once the loaded chapter matches, so stale data is never jumped.
-  const [scrollToTarget, setScrollToTarget] = useState<BookmarkRef | null>(null);
+  // Intento de navegación preciso (versículo concreto o última página de un
+  // capítulo). El lector solo lo honra cuando el capítulo cargado coincide.
+  const [readerTarget, setReaderTarget] = useState<ReaderTarget | null>(null);
+  const targetRequestRef = useRef(0);
   const [chapterPayload, setChapterPayload] = useState<ChapterPayload | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [theme, setTheme] = useState<ThemeMode>('pergamino');
@@ -80,10 +81,12 @@ export default function Home() {
           setSelectedBookId(targetBookId);
           setSelectedChapter(targetChapter);
           if (storedPos?.verseNumber) {
-            setScrollToTarget({
+            setReaderTarget({
+              kind: 'verse',
               bookId: storedPos.bookId,
               chapter: storedPos.chapterNumber,
               verse: storedPos.verseNumber,
+              requestId: ++targetRequestRef.current,
             });
           }
 
@@ -106,10 +109,10 @@ export default function Home() {
       saveStoredReadingPosition({
         bookId: selectedBookId,
         chapterNumber: selectedChapter,
-        verseNumber: scrollToTarget?.verse,
+        verseNumber: readerTarget?.kind === 'verse' ? readerTarget.verse : undefined,
       });
     }
-  }, [selectedBookId, selectedChapter, scrollToTarget]);
+  }, [selectedBookId, selectedChapter, readerTarget]);
 
   // Load chapter data when book or chapter changes
   useEffect(() => {
@@ -162,7 +165,7 @@ export default function Home() {
     if (selectedChapter < currentBookMeta.totalChapters) {
       setLoading(true);
       setSelectedChapter((prev) => prev + 1);
-      setScrollToTarget(null);
+      setReaderTarget(null);
     } else {
       const currentIndex = books.findIndex((b) => b.id === selectedBookId);
       if (currentIndex !== -1 && currentIndex < books.length - 1) {
@@ -170,17 +173,23 @@ export default function Home() {
         setLoading(true);
         setSelectedBookId(nextBook.id);
         setSelectedChapter(1);
-        setScrollToTarget(null);
+        setReaderTarget(null);
       }
     }
   };
 
-  // Navigate to Previous Chapter across books
+  // Navigate to Previous Chapter across books, landing on its LAST page
+  // (book-like backward navigation)
   const handlePrevChapter = () => {
     if (selectedChapter > 1) {
       setLoading(true);
       setSelectedChapter((prev) => prev - 1);
-      setScrollToTarget(null);
+      setReaderTarget({
+        kind: 'lastPage',
+        bookId: selectedBookId,
+        chapter: selectedChapter - 1,
+        requestId: ++targetRequestRef.current,
+      });
     } else {
       const currentIndex = books.findIndex((b) => b.id === selectedBookId);
       if (currentIndex > 0) {
@@ -188,7 +197,12 @@ export default function Home() {
         setLoading(true);
         setSelectedBookId(prevBook.id);
         setSelectedChapter(prevBook.totalChapters);
-        setScrollToTarget(null);
+        setReaderTarget({
+          kind: 'lastPage',
+          bookId: prevBook.id,
+          chapter: prevBook.totalChapters,
+          requestId: ++targetRequestRef.current,
+        });
       }
     }
   };
@@ -265,7 +279,7 @@ export default function Home() {
       ) : chapterPayload ? (
         <ComfortBibleReader
           data={chapterPayload}
-          scrollToTarget={scrollToTarget}
+          readerTarget={readerTarget}
           theme={theme}
           onThemeChange={handleThemeChange}
           onBookmarkVerse={handleBookmarkVerse}
@@ -441,7 +455,7 @@ export default function Home() {
                           setLoading(true);
                           setSelectedBookId(browsingBook.id);
                           setSelectedChapter(chapNum);
-                          setScrollToTarget(null);
+                          setReaderTarget(null);
                           saveStoredReadingPosition({
                             bookId: browsingBook.id,
                             chapterNumber: chapNum,
@@ -510,10 +524,12 @@ export default function Home() {
                         setLoading(true);
                         setSelectedBookId(bm.bookId);
                         setSelectedChapter(bm.chapter);
-                        setScrollToTarget({
+                        setReaderTarget({
+                          kind: 'verse',
                           bookId: bm.bookId,
                           chapter: bm.chapter,
                           verse: bm.verse,
+                          requestId: ++targetRequestRef.current,
                         });
                         saveStoredReadingPosition({
                           bookId: bm.bookId,

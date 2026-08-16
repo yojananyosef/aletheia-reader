@@ -30,7 +30,7 @@ import {
 
 export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   data,
-  scrollToTarget,
+  readerTarget,
   theme = 'pergamino',
   onThemeChange,
   onPageChange,
@@ -101,6 +101,10 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Cuando el narrador retrocede más allá del primer versículo, se cruza al
+  // capítulo anterior y debe continuar desde su último versículo al cargarse.
+  const pendingTTSLastVerseRef = useRef<boolean>(false);
 
   // Load Spanish voices on mount
   useEffect(() => {
@@ -202,6 +206,15 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     [data.verses, data.bookId, data.chapterNumber, ttsState.rate, ttsState.selectedVoiceURI, onNextChapter]
   );
 
+  // Narración retroactiva tipo libro: al cruzar hacia atrás al capítulo
+  // anterior, continúa locutando desde su último versículo una vez cargado.
+  useEffect(() => {
+    if (!pendingTTSLastVerseRef.current) return;
+    if (!data.verses || data.verses.length === 0) return;
+    pendingTTSLastVerseRef.current = false;
+    speakVerseAtIndex(data.verses.length - 1);
+  }, [data.bookId, data.chapterNumber, data.verses, speakVerseAtIndex]);
+
   // Play / Start Narrator
   const handlePlayTTS = () => {
     setIsNarratorOpen(true);
@@ -234,7 +247,27 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
   const handlePrevVerseTTS = () => {
     ttsService.cancel();
-    speakVerseAtIndex(Math.max(0, ttsState.currentVerseIndex - 1));
+    if (ttsState.currentVerseIndex <= 0) {
+      if (ttsState.status === 'idle') {
+        // Narrador detenido: comenzar desde el primer versículo.
+        speakVerseAtIndex(0);
+        return;
+      }
+      // Cruce hacia atrás: ir al capítulo anterior y, al cargarse, continuar
+      // narrando desde su último versículo (página final, imitando un libro).
+      if (onPrevChapter) {
+        setTtsState((prev) => ({
+          ...prev,
+          status: 'idle',
+          currentVerseIndex: 0,
+          currentVerseNumber: null,
+        }));
+        onPrevChapter();
+        pendingTTSLastVerseRef.current = true;
+      }
+    } else {
+      speakVerseAtIndex(ttsState.currentVerseIndex - 1);
+    }
   };
 
   const handleSetRateTTS = (newRate: number) => {
@@ -395,7 +428,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
           onPageChange={handlePageChange}
           onSelectVerse={handleSelectVerse}
           bookmarkedVerses={bookmarkedVerses}
-          scrollToTarget={scrollToTarget}
+          readerTarget={readerTarget}
           activeSpokenVerseNumber={ttsState.status === 'playing' || ttsState.status === 'paused' ? ttsState.currentVerseNumber : null}
           onNextChapter={onNextChapter}
           onPrevChapter={onPrevChapter}
