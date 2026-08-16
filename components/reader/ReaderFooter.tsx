@@ -7,8 +7,6 @@ import {
   Play,
   Pause,
   Square,
-  SkipBack,
-  SkipForward,
   Volume2,
   X,
   Gauge,
@@ -65,8 +63,6 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
   onPlayTTS,
   onPauseTTS,
   onStopTTS,
-  onNextVerseTTS,
-  onPrevVerseTTS,
   onSetRateTTS,
   onSetVoiceTTS,
   onCloseNarrator,
@@ -199,7 +195,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
 
                         {showVoiceMenu && (
                           <div
-                            className="absolute bottom-full left-0 sm:left-auto sm:right-0 mb-2 rounded-xl border border-[var(--reader-border)] bg-[var(--reader-bg)] p-1.5 shadow-2xl flex flex-col gap-1 max-h-52 overflow-y-auto custom-scrollbar w-56 sm:w-64 z-50 animate-in fade-in zoom-in-95 duration-100"
+                            className="absolute bottom-full left-0 mb-2 rounded-2xl border border-[var(--reader-border)] bg-[var(--reader-bg)]/90 backdrop-blur-md p-1.5 shadow-2xl flex flex-col gap-1 max-h-52 overflow-y-auto custom-scrollbar w-64 sm:w-72 max-w-[calc(100vw-24px)] z-50 animate-in fade-in zoom-in-95 duration-100"
                           >
                             <span className="text-[10px] font-bold opacity-60 px-2 py-1 uppercase">Voces Disponibles</span>
                             {availableVoices.map((voice, idx) => {
@@ -229,21 +225,8 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                   </div>
                 </div>
 
-                {/* Center: Audio Playback Cluster (SkipBack / Play-Pause / Stop / SkipForward) */}
+                {/* Center: Audio Playback Cluster (Play/Pause & Stop) */}
                 <div className="flex items-center justify-center gap-1.5 shrink-0">
-                  {onPrevVerseTTS && (
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={onPrevVerseTTS}
-                      title="Versículo anterior"
-                      aria-label="Escuchar versículo anterior"
-                      className="h-8 w-8 min-w-[32px]"
-                    >
-                      <SkipBack className="h-3.5 w-3.5" />
-                    </Button>
-                  )}
-
                   <Button
                     variant="default"
                     size="icon"
@@ -269,19 +252,6 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                       className="h-9 w-9 min-w-[36px]"
                     >
                       <Square className="h-3.5 w-3.5" />
-                    </Button>
-                  )}
-
-                  {onNextVerseTTS && (
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={onNextVerseTTS}
-                      title="Versículo siguiente"
-                      aria-label="Escuchar versículo siguiente"
-                      className="h-8 w-8 min-w-[32px]"
-                    >
-                      <SkipForward className="h-3.5 w-3.5" />
                     </Button>
                   )}
                 </div>
