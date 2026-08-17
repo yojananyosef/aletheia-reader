@@ -35,11 +35,14 @@ export interface ReaderSettings {
   theme: ThemeMode;
   font: FontOption;
   fontSize: number; // 16px to 28px
-  lineHeight: number; // 1.4 to 2.0
+  lineHeight: number; // 1.2 to 2.5
+  letterSpacing: number; // 0.0 to 0.1 em
   softwareBrightness: number; // 0.3 to 1.0
   lineFocus: LineFocusMode;
   showToolbar: boolean;
   fontWeight: number; // 400 to 700
+  bionicReading: boolean;
+  phoneticDots: boolean;
 }
 
 export interface ComfortBibleReaderProps {

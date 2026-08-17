@@ -34,10 +34,13 @@ export const DEFAULT_SETTINGS: ReaderSettings = {
   font: 'bookerly',
   fontSize: 18,
   lineHeight: 1.6,
+  letterSpacing: 0.02,
   softwareBrightness: 1.0,
   lineFocus: 'off',
   showToolbar: true,
   fontWeight: 400,
+  bionicReading: false,
+  phoneticDots: false,
 };
 
 // Safe LocalStorage access
@@ -163,4 +166,23 @@ export function saveStoredTTSSettings(settings: StoredTTSSettings): void {
   } catch (e) {
     console.warn('Error guardando alethia_tts_settings en localStorage:', e);
   }
+}
+
+/**
+ * Restablece solo la configuración tipográfica a los valores recomendados.
+ * No afecta tema, fuente, brillo por software ni enfoque de líneas.
+ */
+export function resetTypographySettings(): ReaderSettings {
+  const current = getStoredSettings();
+  const reset: ReaderSettings = {
+    ...current,
+    fontSize: 18,
+    lineHeight: 1.6,
+    letterSpacing: 0.02,
+    fontWeight: 400,
+    bionicReading: false,
+    phoneticDots: false,
+  };
+  saveStoredSettings(reset);
+  return reset;
 }

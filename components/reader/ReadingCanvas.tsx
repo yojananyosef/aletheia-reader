@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useMemo, useLayoutEffect } from 're
 import { ChapterPayload, Verse, ReaderSettings, BookmarkRef, ReaderTarget } from '@/types/bible';
 import { Bookmark } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { applyBionicReading, applySyllablePoints } from '@/lib/text-transforms';
 
 interface ReadingCanvasProps {
   data: ChapterPayload;
@@ -77,7 +78,9 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     const availableWidthPx = Math.max(260, viewportDimensions.width - horizontalPadding);
     
     // Average character width for typical serif/sans fonts (em proportion)
-    const charWidthPx = settings.fontSize * 0.46;
+    // Include letter-spacing effect: each character gets extra letterSpacing * fontSize
+    const letterSpacingPx = (settings.letterSpacing ?? 0.02) * settings.fontSize;
+    const charWidthPx = settings.fontSize * 0.46 + letterSpacingPx;
     // Dynamic CPL (Characters Per Line) adapted to screen size
     const effectiveCPL = Math.max(24, Math.min(62, Math.floor(availableWidthPx / charWidthPx)));
 
@@ -136,7 +139,10 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     viewportDimensions.height,
     settings.fontSize,
     settings.lineHeight,
+    settings.letterSpacing,
     settings.showToolbar,
+    settings.bionicReading,
+    settings.phoneticDots,
   ]);
 
   const totalPages = pages.length;
@@ -382,6 +388,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
           fontSize: `${settings.fontSize}px`,
           lineHeight: settings.lineHeight,
           fontWeight: settings.fontWeight,
+          letterSpacing: `${settings.letterSpacing ?? 0.02}em`,
         }}
       >
         {/* Fixed Height Header Container (Guarantees zero layout shift on page flips) */}
@@ -419,7 +426,13 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
             className="flex-1"
           >
             {/* Continuous Biblical Paragraph Flow */}
-            <div className="m-0 p-0 text-left leading-[1.6em] tracking-normal">
+            <div
+              className="m-0 p-0 text-left"
+              style={{
+                lineHeight: settings.lineHeight,
+                letterSpacing: `${settings.letterSpacing ?? 0.02}em`,
+              }}
+            >
               {activeVerses.map((verse, idx) => {
                 const isBookmarked = bookmarkedVerses.some(
                   (bv) =>
@@ -498,9 +511,19 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                         }}
                         className="cursor-pointer hover:bg-neutral-500/5 rounded px-0.5 transition-colors"
                         title="Clic para opciones del versículo"
-                      >
-                        {verse.text}
-                      </span>
+                        dangerouslySetInnerHTML={{
+                          __html: (() => {
+                            let text = verse.text;
+                            if (settings.bionicReading) {
+                              text = applyBionicReading(text);
+                            }
+                            if (settings.phoneticDots) {
+                              text = applySyllablePoints(text);
+                            }
+                            return text;
+                          })(),
+                        }}
+                      />
 
                       {/* Footnote Indicators */}
                       {verseFootnotes.map((fn) => (

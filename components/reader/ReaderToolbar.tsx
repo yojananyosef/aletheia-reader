@@ -18,6 +18,10 @@ import {
   Volume2,
   Check,
   Search,
+  MoveHorizontal,
+  AlignJustify,
+  Type,
+  RotateCcw,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -297,6 +301,136 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             />
           </Card>
 
+          {/* 3b. Line Height Slider */}
+          <Card className="p-4 bg-[var(--reader-hover)]">
+            <div className="flex justify-between items-center mb-1">
+              <div className="flex items-center gap-2">
+                <AlignJustify className="h-4 w-4 text-reader-accent" />
+                <label className="text-xs font-bold uppercase tracking-wider">
+                  Interlineado
+                </label>
+              </div>
+              <Badge variant="secondary" className="font-mono text-xs font-bold">
+                {settings.lineHeight}
+              </Badge>
+            </div>
+            <p className="text-xs opacity-70 mb-2">
+              Espacio entre líneas. Valores mayores mejoran la legibilidad para dislexia.
+            </p>
+            <Slider
+              min={1.2}
+              max={2.5}
+              step={0.1}
+              value={settings.lineHeight}
+              onValueChange={(val) => onUpdateSettings({ lineHeight: val })}
+              label="Ajustar interlineado"
+            />
+          </Card>
+
+          {/* 3c. Letter Spacing Slider */}
+          <Card className="p-4 bg-[var(--reader-hover)]">
+            <div className="flex justify-between items-center mb-1">
+              <div className="flex items-center gap-2">
+                <MoveHorizontal className="h-4 w-4 text-reader-accent" />
+                <label className="text-xs font-bold uppercase tracking-wider">
+                  Espaciado
+                </label>
+              </div>
+              <Badge variant="secondary" className="font-mono text-xs font-bold">
+                {settings.letterSpacing?.toFixed(2) ?? '0.02'} em
+              </Badge>
+            </div>
+            <p className="text-xs opacity-70 mb-2">
+              Espacio entre letras. Incrementar ayuda a separar caracteres confundidos.
+            </p>
+            <Slider
+              min={0}
+              max={0.1}
+              step={0.01}
+              value={settings.letterSpacing ?? 0.02}
+              onValueChange={(val) => onUpdateSettings({ letterSpacing: val })}
+              label="Ajustar espaciado entre letras"
+            />
+          </Card>
+
+          {/* 3d. Dyslexia Reading Aids */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 mb-1">
+              <Type className="h-4 w-4 text-reader-accent" />
+              <label className="text-xs font-bold uppercase tracking-wider opacity-80">
+                Herramientas Neurocognitivas
+              </label>
+            </div>
+
+            {/* Bionic Reading Toggle */}
+            <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--reader-border)] bg-[var(--reader-hover)]">
+              <div className="flex items-center gap-3">
+                <Type className="w-5 h-5 opacity-60" />
+                <div className="flex flex-col">
+                  <span className="font-medium text-sm">Lectura Biónica</span>
+                  <span className="text-[10px] opacity-60">Resalta puntos de fijación sacádica</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={settings.bionicReading ?? false}
+                onClick={() => onUpdateSettings({ bionicReading: !(settings.bionicReading ?? false) })}
+                className="w-11 h-6 rounded-full transition-all duration-200 relative shadow-inner cursor-pointer"
+                style={{
+                  backgroundColor: settings.bionicReading
+                    ? 'var(--reader-accent)'
+                    : 'color-mix(in srgb, var(--reader-text), transparent 75%)',
+                  boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2)',
+                }}
+              >
+                <div
+                  className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full shadow-md transition-all duration-200 ${
+                    settings.bionicReading ? 'left-[22px]' : 'left-0.5'
+                  }`}
+                  style={{
+                    backgroundColor: 'var(--reader-bg)',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                  }}
+                />
+              </button>
+            </div>
+
+            {/* Syllable Points Toggle */}
+            <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--reader-border)] bg-[var(--reader-hover)]">
+              <div className="flex items-center gap-3">
+                <AlignJustify className="w-5 h-5 opacity-60" />
+                <div className="flex flex-col">
+                  <span className="font-medium text-sm">Puntos Silábicos</span>
+                  <span className="text-[10px] opacity-60">Facilita decodificación fonológica</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={settings.phoneticDots ?? false}
+                onClick={() => onUpdateSettings({ phoneticDots: !(settings.phoneticDots ?? false) })}
+                className="w-11 h-6 rounded-full transition-all duration-200 relative shadow-inner cursor-pointer"
+                style={{
+                  backgroundColor: settings.phoneticDots
+                    ? 'var(--reader-accent)'
+                    : 'color-mix(in srgb, var(--reader-text), transparent 75%)',
+                  boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2)',
+                }}
+              >
+                <div
+                  className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full shadow-md transition-all duration-200 ${
+                    settings.phoneticDots ? 'left-[22px]' : 'left-0.5'
+                  }`}
+                  style={{
+                    backgroundColor: 'var(--reader-bg)',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                  }}
+                />
+              </button>
+            </div>
+          </div>
+
           {/* 4. Software PWM Dimming (Mitigación de Parpadeo) */}
           <Card className="p-4 bg-[var(--reader-hover)]">
             <div className="flex items-center justify-between mb-1">
@@ -346,7 +480,28 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               </div>
             </div>
 
-            {/* 6. Keyboard Shortcuts & Accessibility Guide */}
+            {/* 6. Restore Defaults Button */}
+            <div className="pt-3 border-t border-[var(--reader-border)]">
+              <Button
+                variant="outline"
+                size="default"
+                className="w-full justify-center gap-2"
+                onClick={() => onUpdateSettings({
+                  fontSize: 18,
+                  lineHeight: 1.6,
+                  letterSpacing: 0.02,
+                  fontWeight: 400,
+                  bionicReading: false,
+                  phoneticDots: false,
+                })}
+                aria-label="Restablecer valores tipográficos recomendados"
+              >
+                <RotateCcw className="h-4 w-4 text-reader-accent" />
+                <span>Restaurar valores</span>
+              </Button>
+            </div>
+
+            {/* 7. Keyboard Shortcuts & Accessibility Guide */}
             <div className="pt-3 border-t border-[var(--reader-border)]">
               <Button
                 variant="outline"
