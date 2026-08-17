@@ -6,7 +6,9 @@ const SAFARI_RATE_FACTOR = 0.55;
 const isSafari = (() => {
   if (typeof navigator === 'undefined') return false;
   const ua = navigator.userAgent;
-  return /^((?!chrome|android).)*safari/i.test(ua) || /webkit/i.test(ua) && /mobile/i.test(ua);
+  // Safari explicitly says "Safari" but NOT "Chrome" and NOT "Android"
+  // Android Chrome has WebKit/Mobile but is NOT Safari
+  return /^((?!chrome|android).)*safari/i.test(ua);
 })();
 
 // Android keepalive interval: reanuda el synth cada 10s para evitar que Chrome lo pause
