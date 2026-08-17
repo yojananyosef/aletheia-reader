@@ -236,9 +236,9 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   const handlePlayTTS = () => {
     setIsNarratorOpen(true);
     if (ttsState.status === 'paused') {
-      ttsService.resume();
-      wakeLockService.request();
-      setTtsState((prev) => ({ ...prev, status: 'playing' }));
+      // On mobile, resume() is unreliable — re-speak the current verse instead
+      ttsService.cancel();
+      speakVerseAtIndex(ttsState.currentVerseIndex);
     } else {
       speakVerseAtIndex(ttsState.currentVerseIndex);
     }
