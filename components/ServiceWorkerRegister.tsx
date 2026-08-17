@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Serwist } from '@serwist/window';
 
 export function ServiceWorkerRegister() {
   useEffect(() => {
@@ -10,10 +9,9 @@ export function ServiceWorkerRegister() {
       'serviceWorker' in navigator &&
       process.env.NODE_ENV === 'production'
     ) {
-      const serwist = new Serwist('/sw.js', {
-        scope: '/',
+      navigator.serviceWorker.register('/sw.js').catch(() => {
+        // SW registration failed silently
       });
-      serwist.register();
     }
   }, []);
 

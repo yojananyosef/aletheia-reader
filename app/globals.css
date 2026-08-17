@@ -4,8 +4,8 @@
 /* OpenDyslexic Web Font */
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff2/OpenDyslexic-Regular.woff2') format('woff2'),
-       url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff/OpenDyslexic-Regular.woff') format('woff');
+  src: url('/fonts/OpenDyslexic-Regular.woff2') format('woff2'),
+       url('/fonts/OpenDyslexic-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -13,8 +13,8 @@
 
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff2/OpenDyslexic-Bold.woff2') format('woff2'),
-       url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff/OpenDyslexic-Bold.woff') format('woff');
+  src: url('/fonts/OpenDyslexic-Bold.woff2') format('woff2'),
+       url('/fonts/OpenDyslexic-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -22,8 +22,8 @@
 
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff2/OpenDyslexic-Italic.woff2') format('woff2'),
-       url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/woff/OpenDyslexic-Italic.woff') format('woff');
+  src: url('/fonts/OpenDyslexic-Regular.woff2') format('woff2'),
+       url('/fonts/OpenDyslexic-Regular.woff') format('woff');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
