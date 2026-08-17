@@ -1,10 +1,27 @@
 import { TTSVoiceOption, Verse } from '@/types/bible';
 
+// Safari/iOS rate correction factor: WebKit internally doubles/triples the rate
+// so we divide by ~1.8 to get natural-sounding output.
+const SAFARI_RATE_FACTOR = 0.55;
+const isSafari = (() => {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent;
+  return /^((?!chrome|android).)*safari/i.test(ua) || /webkit/i.test(ua) && /mobile/i.test(ua);
+})();
+
+// Android keepalive interval: reanuda el synth cada 10s para evitar que Chrome lo pause
+const KEEPALIVE_INTERVAL_MS = 10_000;
+
 class BibleTTSService {
   private synth: SpeechSynthesis | null = null;
   private currentUtterance: SpeechSynthesisUtterance | null = null;
   private voices: SpeechSynthesisVoice[] = [];
   private onVoicesLoadedCallbacks: Array<() => void> = [];
+  private keepaliveTimer: ReturnType<typeof setInterval> | null = null;
+
+  // Callbacks for prev/next verse (used by Media Session)
+  private onPrevVerseCallback: (() => void) | null = null;
+  private onNextVerseCallback: (() => void) | null = null;
 
   constructor() {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -90,6 +107,63 @@ class BibleTTSService {
   }
 
   /**
+   * Apply Safari/iOS rate correction to compensate for WebKit bug
+   */
+  private correctRate(rate: number): number {
+    return isSafari ? rate * SAFARI_RATE_FACTOR : rate;
+  }
+
+  // --- Keepalive Heartbeat (Android Chrome) ---
+
+  private startKeepalive() {
+    this.stopKeepalive();
+    this.keepaliveTimer = setInterval(() => {
+      if (this.synth && this.synth.speaking && !this.synth.paused) {
+        this.synth.resume();
+      } else {
+        this.stopKeepalive();
+      }
+    }, KEEPALIVE_INTERVAL_MS);
+  }
+
+  private stopKeepalive() {
+    if (this.keepaliveTimer !== null) {
+      clearInterval(this.keepaliveTimer);
+      this.keepaliveTimer = null;
+    }
+  }
+
+  // --- Media Session ---
+
+  private updateMediaSession(verse: Verse, bookName?: string, chapterNumber?: number) {
+    if (typeof navigator === 'undefined' || !('mediaSession' in navigator)) return;
+
+    const verseLabel = bookName && chapterNumber
+      ? `${bookName} ${chapterNumber}:${verse.number}`
+      : `Versículo ${verse.number}`;
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: verseLabel,
+      artist: 'Alethia Reader',
+      album: 'Nueva Biblia Viva',
+    });
+
+    navigator.mediaSession.setActionHandler('play', () => this.resume());
+    navigator.mediaSession.setActionHandler('pause', () => this.pause());
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      this.onPrevVerseCallback?.();
+    });
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      this.onNextVerseCallback?.();
+    });
+  }
+
+  public setMediaSessionCallbacks(onPrev: () => void, onNext: () => void) {
+    this.onPrevVerseCallback = onPrev;
+    this.onNextVerseCallback = onNext;
+  }
+
+  /**
    * Sintetiza la voz para un versículo específico de forma fluida y sincronizada
    */
   public speakVerse(
@@ -100,6 +174,8 @@ class BibleTTSService {
       onStart?: () => void;
       onEnd?: () => void;
       onError?: (err: any) => void;
+      bookName?: string;
+      chapterNumber?: number;
     }
   ) {
     if (!this.synth) {
@@ -122,7 +198,9 @@ class BibleTTSService {
       (window as any)._activeBibleUtterance = utterance;
     }
 
-    utterance.rate = options.rate || 1.0;
+    // Apply Safari rate correction
+    const requestedRate = options.rate || 1.0;
+    utterance.rate = this.correctRate(requestedRate);
     utterance.pitch = 1.0;
     utterance.lang = 'es-ES';
 
@@ -157,6 +235,8 @@ class BibleTTSService {
     let hasEnded = false;
 
     utterance.onstart = () => {
+      // Update Media Session with verse info
+      this.updateMediaSession(verse, options.bookName, options.chapterNumber);
       options.onStart?.();
     };
 
@@ -164,8 +244,12 @@ class BibleTTSService {
       if (hasEnded) return;
       hasEnded = true;
       this.currentUtterance = null;
+      this.stopKeepalive();
       if (typeof window !== 'undefined') {
         (window as any)._activeBibleUtterance = null;
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.playbackState = 'none';
+        }
       }
       // Small timeout allows mobile browser audio session to chain cleanly to next utterance
       setTimeout(() => {
@@ -177,8 +261,12 @@ class BibleTTSService {
       if (hasEnded) return;
       hasEnded = true;
       this.currentUtterance = null;
+      this.stopKeepalive();
       if (typeof window !== 'undefined') {
         (window as any)._activeBibleUtterance = null;
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.playbackState = 'none';
+        }
       }
       if (e.error === 'canceled' || e.error === 'interrupted') {
         return;
@@ -195,6 +283,11 @@ class BibleTTSService {
     setTimeout(() => {
       if (this.synth) {
         this.synth.speak(utterance);
+        // Start keepalive heartbeat for Android Chrome
+        this.startKeepalive();
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.playbackState = 'playing';
+        }
       }
     }, 10);
   }
@@ -202,12 +295,20 @@ class BibleTTSService {
   public pause() {
     if (this.synth && this.synth.speaking) {
       this.synth.pause();
+      this.stopKeepalive();
+      if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'paused';
+      }
     }
   }
 
   public resume() {
     if (this.synth && this.synth.paused) {
       this.synth.resume();
+      this.startKeepalive();
+      if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'playing';
+      }
     }
   }
 
@@ -215,8 +316,16 @@ class BibleTTSService {
     if (this.synth) {
       this.synth.cancel();
       this.currentUtterance = null;
+      this.stopKeepalive();
       if (typeof window !== 'undefined') {
         (window as any)._activeBibleUtterance = null;
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.playbackState = 'none';
+          navigator.mediaSession.setActionHandler('play', null);
+          navigator.mediaSession.setActionHandler('pause', null);
+          navigator.mediaSession.setActionHandler('previoustrack', null);
+          navigator.mediaSession.setActionHandler('nexttrack', null);
+        }
       }
     }
   }

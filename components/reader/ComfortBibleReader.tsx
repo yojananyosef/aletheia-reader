@@ -19,6 +19,7 @@ import { PwmDimmerOverlay } from './PwmDimmerOverlay';
 import { LineFocusOverlay } from './LineFocusOverlay';
 import { VerseModal } from './VerseModal';
 import { ttsService } from '@/lib/tts-service';
+import { wakeLockService } from '@/lib/wake-lock-service';
 import {
   getStoredSettings,
   saveStoredSettings,
@@ -120,6 +121,14 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     updateVoices();
   }, [ttsState.selectedVoiceURI]);
 
+  // Set up Media Session callbacks for lock screen / notification controls
+  useEffect(() => {
+    ttsService.setMediaSessionCallbacks(
+      handlePrevVerseTTS,
+      handleNextVerseTTS
+    );
+  });
+
   // Reset page and TTS on chapter change
   const currentChapterKey = `${data.bookId}-${data.chapterNumber}`;
   const prevChapterKeyRef = useRef(currentChapterKey);
@@ -133,6 +142,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
       // Stop and reset TTS
       ttsService.cancel();
+      wakeLockService.release();
       setTtsState((prev) => ({
         ...prev,
         status: 'idle',
@@ -143,6 +153,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
     return () => {
       ttsService.cancel();
+      wakeLockService.release();
     };
   }, [currentChapterKey, data.verses]);
 
@@ -191,14 +202,20 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         verseNumber: verse.number,
       });
 
+      // Acquire wake lock to keep screen on during TTS
+      wakeLockService.request();
+
       ttsService.speakVerse(verse, {
         voiceURI: effectiveVoiceURI,
         rate: effectiveRate,
+        bookName: data.bookName,
+        chapterNumber: data.chapterNumber,
         onEnd: () => {
           speakVerseAtIndex(index + 1, { rate: effectiveRate, voiceURI: effectiveVoiceURI });
         },
         onError: (err) => {
           console.warn('TTS playback error:', err);
+          wakeLockService.release();
           setTtsState((prev) => ({ ...prev, status: 'idle', currentVerseNumber: null }));
         },
       });
@@ -220,6 +237,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     setIsNarratorOpen(true);
     if (ttsState.status === 'paused') {
       ttsService.resume();
+      wakeLockService.request();
       setTtsState((prev) => ({ ...prev, status: 'playing' }));
     } else {
       speakVerseAtIndex(ttsState.currentVerseIndex);
@@ -228,11 +246,13 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
   const handlePauseTTS = () => {
     ttsService.pause();
+    wakeLockService.release();
     setTtsState((prev) => ({ ...prev, status: 'paused' }));
   };
 
   const handleStopTTS = () => {
     ttsService.cancel();
+    wakeLockService.release();
     setTtsState((prev) => ({
       ...prev,
       status: 'idle',

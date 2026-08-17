@@ -27,8 +27,10 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   });
 
   // State to track whether line is fixed (locked) or actively following the mouse
-  // Default: follows mouse (isLocked = false)
   const [isLocked, setIsLocked] = useState<boolean>(false);
+
+  // Track active touch drag — disables CSS transitions for instant movement
+  const isDragging = useRef<boolean>(false);
 
   // Determine aperture height in pixels based on mode (1, 3, or 5 lines)
   const lineMultiplier = mode === '1-line' ? 1 : mode === '3-line' ? 3 : mode === '5-line' ? 5 : 0;
@@ -75,32 +77,35 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   }, [mode, isLocked, clampY]);
 
   // --- Touch Drag Support (Mobile / Coarse Pointers) ---
-  // Press and hold with the thumb anywhere on the screen to guide the focus
-  // line; vertical movement moves the aperture, a horizontal flick turns pages.
   const rootRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
   const touchStartTime = useRef<number>(0);
   const touchActive = useRef<boolean>(false);
   const touchRafId = useRef<number | null>(null);
+  const lastRafTime = useRef<number>(0);
+  const forwardDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const forwardPointerEvent = useCallback((clientX: number, clientY: number, type: 'click') => {
-    const layer = rootRef.current;
-    if (!layer) return;
-    const prevPointerEvents = layer.style.pointerEvents;
-    layer.style.pointerEvents = 'none';
-    const el = document.elementFromPoint(clientX, clientY);
-    layer.style.pointerEvents = prevPointerEvents;
-    if (el && el !== layer) {
-      el.dispatchEvent(
-        new MouseEvent(type, {
-          bubbles: true,
-          cancelable: true,
-          clientX,
-          clientY,
-        })
-      );
-    }
+    if (forwardDebounceRef.current) clearTimeout(forwardDebounceRef.current);
+    forwardDebounceRef.current = setTimeout(() => {
+      const layer = rootRef.current;
+      if (!layer) return;
+      const prevPointerEvents = layer.style.pointerEvents;
+      layer.style.pointerEvents = 'none';
+      const el = document.elementFromPoint(clientX, clientY);
+      layer.style.pointerEvents = prevPointerEvents;
+      if (el && el !== layer) {
+        el.dispatchEvent(
+          new MouseEvent(type, {
+            bubbles: true,
+            cancelable: true,
+            clientX,
+            clientY,
+          })
+        );
+      }
+    }, 16);
   }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -111,7 +116,8 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
     touchStartY.current = t.clientY;
     touchStartTime.current = Date.now();
     touchActive.current = true;
-    setIsLocked(true);
+    isDragging.current = false;
+    // Position immediately on touch, but don't lock yet — wait for movement threshold
     setWindowCenterY(clampY(t.clientY));
   };
 
@@ -119,8 +125,28 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
     if (!touchActive.current) return;
     e.preventDefault();
     const t = e.touches[0];
+    const startX = touchStartX.current;
+    const startY = touchStartY.current;
+    if (startX === null || startY === null) return;
+
+    const deltaY = Math.abs(t.clientY - startY);
+    const deltaX = Math.abs(t.clientX - startX);
+
+    // Only activate vertical drag after 8px of vertical movement (avoids conflict with taps/horizontal swipe)
+    if (!isDragging.current && deltaY > 8 && deltaY > deltaX * 1.5) {
+      isDragging.current = true;
+      setIsLocked(true);
+    }
+
+    if (!isDragging.current) return;
+
+    // Throttle RAF to max once per 16ms (~60fps) for smooth but efficient updates
+    const now = Date.now();
+    if (touchRafId.current !== null && now - lastRafTime.current < 16) return;
+
     if (touchRafId.current !== null) cancelAnimationFrame(touchRafId.current);
     touchRafId.current = requestAnimationFrame(() => {
+      lastRafTime.current = Date.now();
       setWindowCenterY(clampY(t.clientY));
     });
   };
@@ -128,25 +154,31 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchActive.current) return;
     touchActive.current = false;
-    // Suppress the browser's native synthesized click: we forward our own
-    // synthetic click below when the touch was a tap.
-    e.preventDefault();
+
     if (touchRafId.current !== null) {
       cancelAnimationFrame(touchRafId.current);
       touchRafId.current = null;
     }
+
     const startX = touchStartX.current;
     const startY = touchStartY.current;
     const t = e.changedTouches[0];
     touchStartX.current = null;
     touchStartY.current = null;
+
     if (startX === null || startY === null) return;
 
     const deltaX = t.clientX - startX;
     const deltaY = t.clientY - startY;
     const deltaTime = Date.now() - touchStartTime.current;
 
-    // Horizontal flick -> page turn (kept working while Line Focus is active)
+    // If we were dragging, just end — don't forward anything
+    if (isDragging.current) {
+      isDragging.current = false;
+      return;
+    }
+
+    // Horizontal flick -> page turn
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 35 && deltaTime < 600) {
       if (deltaX < 0) {
         onSwipeNext?.();
@@ -156,9 +188,9 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
       return;
     }
 
-    // Tap (no movement) -> forward a synthetic click to the reading canvas
-    // so verse selection and tap zones keep working below the overlay.
-    if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500) {
+    // Tap (minimal movement, short time) -> forward click to content below
+    if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8 && deltaTime < 300) {
+      e.preventDefault();
       forwardPointerEvent(t.clientX, t.clientY, 'click');
     }
   };
@@ -169,7 +201,7 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
     forwardPointerEvent(e.clientX, e.clientY, 'click');
   };
 
-  // Keyboard navigation & locking toggle (Space = toggle lock, ArrowUp/ArrowDown = move line when locked or auto-lock)
+  // Keyboard navigation & locking toggle
   useEffect(() => {
     if (mode === 'off') return;
 
@@ -182,14 +214,12 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
         return;
       }
 
-      // Spacebar: Toggle between fixed (locked) mode and mouse follow mode
       if (e.key === ' ' || e.code === 'Space') {
         e.preventDefault();
         setIsLocked((prev) => !prev);
         return;
       }
 
-      // Arrow navigation for line focus (Up / Down with or without Alt)
       if (e.key === 'ArrowUp') {
         e.preventDefault();
         setIsLocked(true);
@@ -210,8 +240,12 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   const topMaskHeight = Math.max(0, windowCenterY - apertureHeight / 2);
   const bottomMaskTop = windowCenterY + apertureHeight / 2;
 
-  // Use instant movement when following mouse, and smooth transition when fixed/stepping with keys
-  const transitionClass = isLocked ? 'transition-all duration-150 ease-out' : 'transition-none';
+  // No transitions during active drag — instant position update
+  const transitionClass = isDragging.current
+    ? 'transition-none'
+    : isLocked
+    ? 'transition-all duration-150 ease-out'
+    : 'transition-none';
 
   return (
     <div
@@ -236,7 +270,7 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
           height: `${apertureHeight}px`,
         }}
       >
-        {/* Floating Line Focus Nav & Lock Buttons (Interactive & Compact on Mobile) */}
+        {/* Floating Line Focus Nav & Lock Buttons */}
         <div className="pointer-events-auto absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-1 rounded-full bg-neutral-900/85 p-0.5 sm:p-1 text-white shadow-xl backdrop-blur-md border border-white/10">
           <button
             type="button"
@@ -251,7 +285,6 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
             <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
 
-          {/* Mode toggle button (Mouse Follow vs Fixed) */}
           <button
             type="button"
             onClick={() => setIsLocked((prev) => !prev)}
