@@ -5,7 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Play,
-  Pause,
   Square,
   Volume2,
   X,
@@ -34,7 +33,6 @@ interface ReaderFooterProps {
   availableVoices?: TTSVoiceOption[];
   selectedVoiceURI?: string | null;
   onPlayTTS?: () => void;
-  onPauseTTS?: () => void;
   onStopTTS?: () => void;
   onNextVerseTTS?: () => void;
   onPrevVerseTTS?: () => void;
@@ -61,7 +59,6 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
   availableVoices = [],
   selectedVoiceURI = null,
   onPlayTTS,
-  onPauseTTS,
   onStopTTS,
   onSetRateTTS,
   onSetVoiceTTS,
@@ -225,35 +222,22 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                   </div>
                 </div>
 
-                {/* Center: Audio Playback Cluster (Play/Pause & Stop) */}
+                {/* Center: Audio Playback Cluster (Play / Stop Toggle) */}
                 <div className="flex items-center justify-center gap-1.5 shrink-0">
                   <Button
                     variant="default"
                     size="icon"
-                    onClick={isPlaying ? onPauseTTS : onPlayTTS}
+                    onClick={isPlaying ? onStopTTS : onPlayTTS}
                     className="h-9 w-9 min-w-[36px] font-bold shadow-md"
-                    aria-label={isPlaying ? 'Pausar locución' : 'Reproducir locución'}
-                    title={isPlaying ? 'Pausar' : ttsStatus === 'paused' ? 'Reanudar' : 'Escuchar'}
+                    aria-label={isPlaying ? 'Detener locución' : 'Reproducir locución'}
+                    title={isPlaying ? 'Detener' : 'Escuchar'}
                   >
                     {isPlaying ? (
-                      <Pause className="h-4 w-4 fill-current" />
+                      <Square className="h-4 w-4 fill-current" />
                     ) : (
                       <Play className="h-4 w-4 fill-current ml-0.5" />
                     )}
                   </Button>
-
-                  {onStopTTS && (
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={onStopTTS}
-                      title="Detener Audio"
-                      aria-label="Detener audio"
-                      className="h-9 w-9 min-w-[36px]"
-                    >
-                      <Square className="h-3.5 w-3.5" />
-                    </Button>
-                  )}
                 </div>
 
                 {/* Right: Close Narrator Button */}

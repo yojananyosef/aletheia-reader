@@ -235,19 +235,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   // Play / Start Narrator
   const handlePlayTTS = () => {
     setIsNarratorOpen(true);
-    if (ttsState.status === 'paused') {
-      // On mobile, resume() is unreliable — re-speak the current verse instead
-      ttsService.cancel();
-      speakVerseAtIndex(ttsState.currentVerseIndex);
-    } else {
-      speakVerseAtIndex(ttsState.currentVerseIndex);
-    }
-  };
-
-  const handlePauseTTS = () => {
-    ttsService.pause();
-    wakeLockService.release();
-    setTtsState((prev) => ({ ...prev, status: 'paused' }));
+    speakVerseAtIndex(ttsState.currentVerseIndex);
   };
 
   const handleStopTTS = () => {
@@ -505,7 +493,6 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         availableVoices={availableVoices}
         selectedVoiceURI={ttsState.selectedVoiceURI}
         onPlayTTS={handlePlayTTS}
-        onPauseTTS={handlePauseTTS}
         onStopTTS={handleStopTTS}
         onNextVerseTTS={handleNextVerseTTS}
         onPrevVerseTTS={handlePrevVerseTTS}

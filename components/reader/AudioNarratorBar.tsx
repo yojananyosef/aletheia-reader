@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Play,
-  Pause,
   Square,
   SkipBack,
   SkipForward,
@@ -25,7 +24,6 @@ interface AudioNarratorBarProps {
   availableVoices: TTSVoiceOption[];
   selectedVoiceURI: string | null;
   onPlay: () => void;
-  onPause: () => void;
   onStop: () => void;
   onNextVerse: () => void;
   onPrevVerse: () => void;
@@ -45,7 +43,6 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
   availableVoices,
   selectedVoiceURI,
   onPlay,
-  onPause,
   onStop,
   onNextVerse,
   onPrevVerse,
@@ -123,13 +120,13 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                onPause();
+                onStop();
               }}
               className="flex h-7 w-7 items-center justify-center rounded-full bg-reader-accent text-white shadow-xs ml-1"
-              aria-label="Pausar audio"
-              title="Pausar"
+              aria-label="Detener audio"
+              title="Detener"
             >
-              <Pause className="h-3 w-3 fill-current" />
+              <Square className="h-3 w-3 fill-current" />
             </button>
 
             <button
@@ -305,36 +302,24 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
                 <SkipBack className="h-4 w-4" />
               </button>
 
-              {/* Center: Play / Pause Large Accessible Action */}
+              {/* Center: Play / Stop Toggle */}
               <button
                 type="button"
-                onClick={isPlaying ? onPause : onPlay}
+                onClick={isPlaying ? onStop : onPlay}
                 className="flex-1 min-h-[44px] flex items-center justify-center gap-2 rounded-xl bg-reader-accent font-bold text-sm shadow-md transition-all active:scale-98 hover:opacity-95"
-                aria-label={isPlaying ? 'Pausar narración' : 'Reproducir narración'}
+                aria-label={isPlaying ? 'Detener narración' : 'Reproducir narración'}
               >
                 {isPlaying ? (
                   <>
-                    <Pause className="h-4 w-4 fill-current" />
-                    <span>Pausar</span>
+                    <Square className="h-4 w-4 fill-current" />
+                    <span>Detener</span>
                   </>
                 ) : (
                   <>
                     <Play className="h-4 w-4 fill-current" />
-                    <span>{status === 'paused' ? 'Reanudar' : 'Escuchar'}</span>
+                    <span>Escuchar</span>
                   </>
                 )}
-              </button>
-
-              {/* Stop Button */}
-              <button
-                type="button"
-                onClick={onStop}
-                className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                style={{ borderColor: 'var(--reader-border)' }}
-                aria-label="Detener narración"
-                title="Detener"
-              >
-                <Square className="h-4 w-4" />
               </button>
 
               {/* Next Verse */}
