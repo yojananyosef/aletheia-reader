@@ -111,11 +111,11 @@ function buildPagination(
         if (rest.length > 0) queue.unshift({ number: item.number, text: rest, _continuation: true });
       } else if (itemHeight > availableHeight) {
         const fitWords = Math.max(3, Math.min(itemWords - 1, Math.floor(itemWords * 0.7)));
-        const [first, rest] = splitAtWord(item.text, fitWords);
-        result[curPage].push({ number: item.number, text: first, _continuation: item._continuation });
-        curHeight = measureHeight(first);
-        curWords = countWords(first);
-        if (rest.length > 0) queue.unshift({ number: item.number, text: rest, _continuation: true });
+        const [firstPart, restPart] = splitAtWord(item.text, fitWords);
+        result[curPage].push({ number: item.number, text: firstPart, _continuation: item._continuation });
+        curHeight = measureHeight(firstPart);
+        curWords = countWords(firstPart);
+        if (restPart.length > 0) queue.unshift({ number: item.number, text: restPart, _continuation: true });
       } else {
         result[curPage].push(item);
         curHeight = itemHeight;
