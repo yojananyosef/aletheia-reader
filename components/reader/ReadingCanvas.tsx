@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useLayoutEffect, useCallback } from 'react';
 import { ChapterPayload, Verse, ReaderSettings, BookmarkRef, ReaderTarget } from '@/types/bible';
 import { Bookmark } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -24,36 +24,130 @@ interface PaginationResult {
   pages: (Verse & { _continuation?: boolean })[][];
 }
 
-function buildPagination(
-  verses: Verse[],
-  availableHeight: number,
+let measureContainer: HTMLDivElement | null = null;
+
+function getMeasureContainer(
   containerWidth: number,
   fontSize: number,
   lineHeight: number,
   fontWeight: number,
   letterSpacing: number,
-): PaginationResult {
-  const MAX_WORDS = 50;
+  fontFamily: string,
+): HTMLDivElement {
+  if (typeof document === 'undefined') {
+    throw new Error('DOM measurement is only available on client');
+  }
 
+  if (!measureContainer || !measureContainer.isConnected) {
+    measureContainer = document.createElement('div');
+    measureContainer.setAttribute('aria-hidden', 'true');
+    measureContainer.style.cssText = `
+      position: absolute;
+      top: -99999px;
+      left: -99999px;
+      visibility: hidden;
+      pointer-events: none;
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    `;
+    document.body.appendChild(measureContainer);
+  }
+
+  measureContainer.style.width = `${containerWidth}px`;
+  measureContainer.style.maxWidth = '60ch';
+  measureContainer.style.fontSize = `${fontSize}px`;
+  measureContainer.style.lineHeight = `${lineHeight}`;
+  measureContainer.style.fontWeight = `${fontWeight}`;
+  measureContainer.style.letterSpacing = `${letterSpacing}em`;
+  measureContainer.style.fontFamily = fontFamily;
+
+  return measureContainer;
+}
+
+function renderVerseHtmlForMeasurement(
+  verse: Verse & { _continuation?: boolean },
+  isFirstVerseOnPage: boolean,
+  isFirstPage: boolean,
+  sections?: { beforeVerse: string | number; title: string }[],
+  settings?: ReaderSettings,
+): string {
+  const section = sections?.find((sec) => String(sec.beforeVerse) === String(verse.number));
+  const continued = !!verse._continuation;
+
+  let sectionHtml = '';
+  if (section && !continued) {
+    const headingClass =
+      isFirstVerseOnPage && isFirstPage
+        ? 'font-sans font-bold text-xs sm:text-base my-2 sm:my-2.5 opacity-80'
+        : 'font-sans font-bold text-sm sm:text-lg my-3 sm:my-4 pt-1 opacity-90';
+    sectionHtml = `<h3 class="${headingClass}" style="display:block;margin-top:0.6rem;margin-bottom:0.4rem;font-weight:bold;">${section.title}</h3>`;
+  }
+
+  let text = verse.text;
+  if (settings?.bionicReading) {
+    text = applyBionicReading(text);
+  }
+  if (settings?.phoneticDots) {
+    text = applySyllablePoints(text);
+  }
+
+  const superHtml = !continued
+    ? `<span class="verse-super" style="font-size:0.72em;vertical-align:super;font-weight:700;margin-right:0.3em;margin-left:0.15em;display:inline;">${verse.number}</span>`
+    : '';
+
+  return `${sectionHtml}<span class="inline" style="display:inline;">${superHtml}<span>${text}</span> </span>`;
+}
+
+function measurePageHeight(
+  verses: (Verse & { _continuation?: boolean })[],
+  isFirstPage: boolean,
+  containerWidth: number,
+  settings: ReaderSettings,
+  sections?: { beforeVerse: string | number; title: string }[],
+): number {
+  if (verses.length === 0) return 0;
+
+  const fontFamily =
+    settings.font === 'bookerly'
+      ? 'var(--font-serif-bookerly, "Literata", "Lora", serif)'
+      : settings.font === 'atkinson'
+      ? 'var(--font-sans-atkinson, "Atkinson Hyperlegible", sans-serif)'
+      : 'var(--font-dyslexic-main, "OpenDyslexic", sans-serif)';
+
+  const container = getMeasureContainer(
+    containerWidth,
+    settings.fontSize,
+    settings.lineHeight,
+    settings.fontWeight,
+    settings.letterSpacing ?? 0.02,
+    fontFamily,
+  );
+
+  const html = verses
+    .map((v, idx) => renderVerseHtmlForMeasurement(v, idx === 0, isFirstPage, sections, settings))
+    .join('');
+
+  container.innerHTML = html;
+  return container.scrollHeight;
+}
+
+function buildPagination(
+  verses: Verse[],
+  availableHeight: number,
+  containerWidth: number,
+  settings: ReaderSettings,
+  sections?: { beforeVerse: string | number; title: string }[],
+): PaginationResult {
   if (verses.length === 0 || availableHeight <= 0 || containerWidth <= 0) {
     return { pages: [verses] };
   }
 
-  const measureHeight = (text: string): number => {
-    const m = document.createElement('div');
-    m.style.cssText = `
-      visibility:hidden;position:absolute;top:0;left:0;
-      width:${containerWidth}px;max-width:60ch;
-      font-size:${fontSize}px;line-height:${lineHeight};
-      font-weight:${fontWeight};letter-spacing:${letterSpacing}em;
-      box-sizing:border-box;padding:0;margin:0;text-align:left;
-    `;
-    m.textContent = text;
-    document.body.appendChild(m);
-    const h = m.scrollHeight;
-    document.body.removeChild(m);
-    return h;
-  };
+  const MAX_WORDS = 70;
+  // Safety buffer to prevent sub-pixel antialiasing/wrapping errors from causing 1px overflow
+  const safetyBuffer = Math.min(16, Math.max(8, settings.fontSize * 0.4));
+  const effectiveAvailableHeight = Math.max(60, availableHeight - safetyBuffer);
 
   const countWords = (text: string): number => text.split(/\s+/).filter(Boolean).length;
 
@@ -72,118 +166,92 @@ function buildPagination(
     return [text.slice(0, splitIdx), text.slice(splitIdx).trimStart()];
   };
 
-  // Phase 1: Build pages using queue-based approach
-  const result: (Verse & { _continuation?: boolean })[][] = [[]];
-  let curPage = 0;
-  let curHeight = 0;
-  let curWords = 0;
-
-  const startNewPage = () => {
-    result.push([]);
-    curPage++;
-    curHeight = 0;
-    curWords = 0;
-  };
-
   const queue: { number: string | number; text: string; _continuation?: boolean }[] =
     verses.map(v => ({ number: v.number, text: v.text }));
+
+  const pages: (Verse & { _continuation?: boolean })[][] = [];
+  let currentPageVerses: (Verse & { _continuation?: boolean })[] = [];
+  let currentWordsOnPage = 0;
 
   while (queue.length > 0) {
     const item = queue.shift()!;
     const itemWords = countWords(item.text);
-    const itemHeight = measureHeight(item.text);
+    const isFirstPage = pages.length === 0;
 
-    // Fits on current page
-    if (curHeight + itemHeight <= availableHeight && curWords + itemWords <= MAX_WORDS) {
-      result[curPage].push(item);
-      curHeight += itemHeight;
-      curWords += itemWords;
+    // Check if adding the whole verse fits on the current page
+    const candidatePage = [...currentPageVerses, item];
+    const candidateWords = currentWordsOnPage + itemWords;
+    const candidateHeight = measurePageHeight(candidatePage, isFirstPage, containerWidth, settings, sections);
+
+    if (candidateHeight <= effectiveAvailableHeight && (currentPageVerses.length === 0 || candidateWords <= MAX_WORDS)) {
+      currentPageVerses.push(item);
+      currentWordsOnPage += itemWords;
       continue;
     }
 
-    // Empty page — must place something
-    if (result[curPage].length === 0) {
-      if (itemWords > MAX_WORDS) {
-        const [first, rest] = splitAtWord(item.text, MAX_WORDS);
-        result[curPage].push({ number: item.number, text: first, _continuation: item._continuation });
-        curHeight = measureHeight(first);
-        curWords = countWords(first);
-        if (rest.length > 0) queue.unshift({ number: item.number, text: rest, _continuation: true });
-      } else if (itemHeight > availableHeight) {
-        const fitWords = Math.max(3, Math.min(itemWords - 1, Math.floor(itemWords * 0.7)));
-        const [firstPart, restPart] = splitAtWord(item.text, fitWords);
-        result[curPage].push({ number: item.number, text: firstPart, _continuation: item._continuation });
-        curHeight = measureHeight(firstPart);
-        curWords = countWords(firstPart);
-        if (restPart.length > 0) queue.unshift({ number: item.number, text: restPart, _continuation: true });
+    // Verse does not fit completely on current page.
+    // Try to binary search the max number of words from `item` that fit on this page.
+    let low = 1;
+    let high = itemWords - 1;
+    let bestFitWords = 0;
+
+    if (currentPageVerses.length > 0) {
+      const remainingWordsAllowed = MAX_WORDS - currentWordsOnPage;
+      if (remainingWordsAllowed < high) {
+        high = Math.max(0, remainingWordsAllowed);
+      }
+    }
+
+    while (low <= high) {
+      const mid = Math.floor((low + high) / 2);
+      const [firstPart] = splitAtWord(item.text, mid);
+      const testItem = { number: item.number, text: firstPart, _continuation: item._continuation };
+      const testPage = [...currentPageVerses, testItem];
+      const testHeight = measurePageHeight(testPage, isFirstPage, containerWidth, settings, sections);
+
+      if (testHeight <= effectiveAvailableHeight) {
+        bestFitWords = mid;
+        low = mid + 1; // Try fitting more words
       } else {
-        result[curPage].push(item);
-        curHeight = itemHeight;
-        curWords = itemWords;
-      }
-      continue;
-    }
-
-    // Page has content — try to split verse to fill remaining space
-    const remainingWords = MAX_WORDS - curWords;
-    const remainingHeight = availableHeight - curHeight;
-
-    if (remainingWords > 5 && itemWords > remainingWords) {
-      const [first, rest] = splitAtWord(item.text, remainingWords);
-      const firstH = measureHeight(first);
-      if (curHeight + firstH <= availableHeight) {
-        result[curPage].push({ number: item.number, text: first, _continuation: item._continuation });
-        curHeight += firstH;
-        curWords += countWords(first);
-        if (rest.length > 0) queue.unshift({ number: item.number, text: rest, _continuation: true });
-        continue;
+        high = mid - 1; // Too tall, try fewer words
       }
     }
 
-    if (itemHeight > remainingHeight && remainingHeight > 20) {
-      const fitWords = Math.max(3, Math.min(itemWords - 1, Math.floor(itemWords * (remainingHeight / itemHeight) * 0.8)));
-      const [first, rest] = splitAtWord(item.text, fitWords);
-      const firstH = measureHeight(first);
-      if (curHeight + firstH <= availableHeight && rest.length > 0) {
-        result[curPage].push({ number: item.number, text: first, _continuation: item._continuation });
-        curHeight += firstH;
-        curWords += countWords(first);
-        queue.unshift({ number: item.number, text: rest, _continuation: true });
-        continue;
+    if (bestFitWords > 0) {
+      const [firstPart, restPart] = splitAtWord(item.text, bestFitWords);
+      currentPageVerses.push({ number: item.number, text: firstPart, _continuation: item._continuation });
+
+      pages.push(currentPageVerses);
+      currentPageVerses = [];
+      currentWordsOnPage = 0;
+
+      if (restPart.length > 0) {
+        queue.unshift({ number: item.number, text: restPart, _continuation: true });
+      }
+    } else {
+      // 0 words fit on this page
+      if (currentPageVerses.length > 0) {
+        // Close current page and retry on a fresh page
+        pages.push(currentPageVerses);
+        currentPageVerses = [];
+        currentWordsOnPage = 0;
+        queue.unshift(item);
+      } else {
+        // Extreme edge case: empty page and even 1 word exceeded height. Place 1 word to avoid infinite loop.
+        const [firstPart, restPart] = splitAtWord(item.text, 1);
+        pages.push([{ number: item.number, text: firstPart, _continuation: item._continuation }]);
+        if (restPart.length > 0) {
+          queue.unshift({ number: item.number, text: restPart, _continuation: true });
+        }
       }
     }
-
-    // Can't fit — new page
-    startNewPage();
-    queue.unshift(item);
   }
 
-  const pages = result.filter(p => p.length > 0);
-
-  // Phase 2: Post-verify — split any pages that still overflow
-  for (let iter = 0; iter < 5; iter++) {
-    let fixed = false;
-    for (let pi = 0; pi < pages.length; pi++) {
-      const pageText = pages[pi].map(v => v.text).join(' ');
-      const h = measureHeight(pageText);
-      if (h <= availableHeight) continue;
-
-      const last = pages[pi][pages[pi].length - 1];
-      const lastWords = countWords(last.text);
-      if (lastWords <= 3) continue; // can't split further
-
-      const fitWords = Math.max(3, Math.floor(lastWords * (availableHeight / h) * 0.75));
-      const [first, rest] = splitAtWord(last.text, fitWords);
-      if (rest.length > 0 && countWords(first) > 0) {
-        pages[pi][pages[pi].length - 1] = { number: last.number, text: first };
-        pages.splice(pi + 1, 0, [{ number: last.number, text: rest }]);
-        fixed = true;
-      }
-    }
-    if (!fixed) break;
+  if (currentPageVerses.length > 0) {
+    pages.push(currentPageVerses);
   }
 
-  return { pages };
+  return { pages: pages.length > 0 ? pages : [verses] };
 }
 
 export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
@@ -200,64 +268,127 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   activeSpokenVerseNumber,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [pagination, setPagination] = useState<PaginationResult | null>(null);
 
-  // Compute available dimensions
-  const getAvailableDimensions = () => {
+  // Compute available dimensions directly from DOM
+  const getAvailableDimensions = useCallback(() => {
     const vh = window.visualViewport?.height || window.innerHeight;
     const vw = window.visualViewport?.width || window.innerWidth;
     const isMobile = vw < 640;
-    const headerDeduction = isMobile ? 130 : 140;
-    const availableHeight = vh - headerDeduction;
 
-    // Get container width for text measurement
     const containerEl = containerRef.current;
-    const contentEl = contentRef.current;
-    const availableWidth = (contentEl?.clientWidth || containerEl?.clientWidth || vw - (isMobile ? 24 : 56));
+    const headerEl = headerRef.current;
 
-    return { availableHeight, availableWidth };
-  };
+    let availableHeight: number;
+    let availableWidth: number;
 
-  // Build pages whenever data or settings change
-  useEffect(() => {
+    if (containerEl) {
+      const containerRect = containerEl.getBoundingClientRect();
+      const computedStyle = window.getComputedStyle(containerEl);
+      const paddingTop = parseFloat(computedStyle.paddingTop) || 0;
+      const paddingBottom = parseFloat(computedStyle.paddingBottom) || 0;
+
+      let headerH = isMobile ? 70 : 88;
+      if (headerEl) {
+        const headerRect = headerEl.getBoundingClientRect();
+        const headerStyle = window.getComputedStyle(headerEl);
+        const headerMarginBottom = parseFloat(headerStyle.marginBottom) || 0;
+        headerH = headerRect.height + headerMarginBottom;
+      }
+
+      availableHeight = containerRect.height - paddingTop - paddingBottom - headerH;
+
+      const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+      const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+      availableWidth = containerRect.width - paddingLeft - paddingRight;
+    } else {
+      // Precise fallback if DOM container is not yet mounted/laid out
+      const toolbarHeight = settings.showToolbar ? (isMobile ? 48 : 52) : 0;
+      const footerHeight = settings.showToolbar ? (isMobile ? 68 : 56) : (isMobile ? 28 : 24);
+      const canvasPadding = isMobile ? 24 : 44;
+      const headerTotal = isMobile ? 70 : 88;
+      availableHeight = vh - toolbarHeight - footerHeight - canvasPadding - headerTotal;
+      availableWidth = vw - (isMobile ? 28 : 64);
+    }
+
+    return {
+      availableHeight: Math.max(0, availableHeight),
+      availableWidth: Math.max(0, availableWidth),
+    };
+  }, [settings.showToolbar]);
+
+  const recomputePagination = useCallback(() => {
     if (!data.verses || data.verses.length === 0) {
       setPagination(null);
       return;
     }
 
+    const { availableHeight, availableWidth } = getAvailableDimensions();
+
+    if (availableHeight <= 0 || availableWidth <= 0) {
+      setPagination(null);
+      return;
+    }
+
+    const result = buildPagination(
+      data.verses,
+      availableHeight,
+      availableWidth,
+      settings,
+      data.sections,
+    );
+
+    setPagination(result);
+  }, [
+    data.verses,
+    data.sections,
+    getAvailableDimensions,
+    settings,
+  ]);
+
+  // Build pages whenever data, settings, or dimensions change
+  useEffect(() => {
     const rafId = requestAnimationFrame(() => {
-      const { availableHeight, availableWidth } = getAvailableDimensions();
-
-      if (availableHeight <= 0 || availableWidth <= 0) {
-        setPagination(null);
-        return;
-      }
-
-      const result = buildPagination(
-        data.verses,
-        availableHeight,
-        availableWidth,
-        settings.fontSize,
-        settings.lineHeight,
-        settings.fontWeight,
-        settings.letterSpacing ?? 0.02,
-      );
-
-      setPagination(result);
+      recomputePagination();
     });
-
     return () => cancelAnimationFrame(rafId);
   }, [
     data.bookId,
     data.chapterNumber,
     data.verses,
+    data.sections,
     settings.fontSize,
     settings.lineHeight,
     settings.fontWeight,
     settings.letterSpacing,
+    settings.font,
+    settings.bionicReading,
+    settings.phoneticDots,
     settings.showToolbar,
+    recomputePagination,
   ]);
+
+  // Observe container size changes (e.g. toolbar toggle animation, rotation, window resize)
+  useEffect(() => {
+    const containerEl = containerRef.current;
+    if (!containerEl || typeof ResizeObserver === 'undefined') return;
+
+    let rafId: number;
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        recomputePagination();
+      });
+    });
+
+    observer.observe(containerEl);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(rafId);
+    };
+  }, [recomputePagination]);
 
   const pages = pagination?.pages || [data.verses || []] as (Verse & { _continuation?: boolean })[][];
   const totalPages = pages.length;
@@ -486,6 +617,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
       >
         {/* Fixed Height Header Container */}
         <div
+          ref={headerRef}
           className="w-full h-[58px] sm:h-[68px] mb-3 sm:mb-5 flex flex-col justify-end border-b pb-2 select-none transition-colors"
           style={{ borderColor: 'var(--reader-border)' }}
         >
