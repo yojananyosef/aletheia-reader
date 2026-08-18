@@ -20,6 +20,172 @@ interface ReadingCanvasProps {
   activeSpokenVerseNumber?: string | number | null;
 }
 
+interface PaginationResult {
+  pages: (Verse & { _continuation?: boolean })[][];
+}
+
+function buildPagination(
+  verses: Verse[],
+  availableHeight: number,
+  containerWidth: number,
+  fontSize: number,
+  lineHeight: number,
+  fontWeight: number,
+  letterSpacing: number,
+): PaginationResult {
+  const MAX_WORDS = 50;
+
+  if (verses.length === 0 || availableHeight <= 0 || containerWidth <= 0) {
+    return { pages: [verses] };
+  }
+
+  const measureHeight = (text: string): number => {
+    const m = document.createElement('div');
+    m.style.cssText = `
+      visibility:hidden;position:absolute;top:0;left:0;
+      width:${containerWidth}px;max-width:60ch;
+      font-size:${fontSize}px;line-height:${lineHeight};
+      font-weight:${fontWeight};letter-spacing:${letterSpacing}em;
+      box-sizing:border-box;padding:0;margin:0;text-align:left;
+    `;
+    m.textContent = text;
+    document.body.appendChild(m);
+    const h = m.scrollHeight;
+    document.body.removeChild(m);
+    return h;
+  };
+
+  const countWords = (text: string): number => text.split(/\s+/).filter(Boolean).length;
+
+  const splitAtWord = (text: string, maxWords: number): [string, string] => {
+    const words = text.split(/(\s+)/);
+    let count = 0;
+    let splitIdx = 0;
+    for (let i = 0; i < words.length; i += 2) {
+      count++;
+      if (count > maxWords) {
+        splitIdx = words.slice(0, i).join('').length;
+        break;
+      }
+    }
+    if (splitIdx === 0) splitIdx = text.length;
+    return [text.slice(0, splitIdx), text.slice(splitIdx).trimStart()];
+  };
+
+  // Phase 1: Build pages using queue-based approach
+  const result: (Verse & { _continuation?: boolean })[][] = [[]];
+  let curPage = 0;
+  let curHeight = 0;
+  let curWords = 0;
+
+  const startNewPage = () => {
+    result.push([]);
+    curPage++;
+    curHeight = 0;
+    curWords = 0;
+  };
+
+  const queue: { number: string | number; text: string; _continuation?: boolean }[] =
+    verses.map(v => ({ number: v.number, text: v.text }));
+
+  while (queue.length > 0) {
+    const item = queue.shift()!;
+    const itemWords = countWords(item.text);
+    const itemHeight = measureHeight(item.text);
+
+    // Fits on current page
+    if (curHeight + itemHeight <= availableHeight && curWords + itemWords <= MAX_WORDS) {
+      result[curPage].push(item);
+      curHeight += itemHeight;
+      curWords += itemWords;
+      continue;
+    }
+
+    // Empty page — must place something
+    if (result[curPage].length === 0) {
+      if (itemWords > MAX_WORDS) {
+        const [first, rest] = splitAtWord(item.text, MAX_WORDS);
+        result[curPage].push({ number: item.number, text: first, _continuation: item._continuation });
+        curHeight = measureHeight(first);
+        curWords = countWords(first);
+        if (rest.length > 0) queue.unshift({ number: item.number, text: rest, _continuation: true });
+      } else if (itemHeight > availableHeight) {
+        const fitWords = Math.max(3, Math.min(itemWords - 1, Math.floor(itemWords * 0.7)));
+        const [first, rest] = splitAtWord(item.text, fitWords);
+        result[curPage].push({ number: item.number, text: first, _continuation: item._continuation });
+        curHeight = measureHeight(first);
+        curWords = countWords(first);
+        if (rest.length > 0) queue.unshift({ number: item.number, text: rest, _continuation: true });
+      } else {
+        result[curPage].push(item);
+        curHeight = itemHeight;
+        curWords = itemWords;
+      }
+      continue;
+    }
+
+    // Page has content — try to split verse to fill remaining space
+    const remainingWords = MAX_WORDS - curWords;
+    const remainingHeight = availableHeight - curHeight;
+
+    if (remainingWords > 5 && itemWords > remainingWords) {
+      const [first, rest] = splitAtWord(item.text, remainingWords);
+      const firstH = measureHeight(first);
+      if (curHeight + firstH <= availableHeight) {
+        result[curPage].push({ number: item.number, text: first, _continuation: item._continuation });
+        curHeight += firstH;
+        curWords += countWords(first);
+        if (rest.length > 0) queue.unshift({ number: item.number, text: rest, _continuation: true });
+        continue;
+      }
+    }
+
+    if (itemHeight > remainingHeight && remainingHeight > 20) {
+      const fitWords = Math.max(3, Math.min(itemWords - 1, Math.floor(itemWords * (remainingHeight / itemHeight) * 0.8)));
+      const [first, rest] = splitAtWord(item.text, fitWords);
+      const firstH = measureHeight(first);
+      if (curHeight + firstH <= availableHeight && rest.length > 0) {
+        result[curPage].push({ number: item.number, text: first, _continuation: item._continuation });
+        curHeight += firstH;
+        curWords += countWords(first);
+        queue.unshift({ number: item.number, text: rest, _continuation: true });
+        continue;
+      }
+    }
+
+    // Can't fit — new page
+    startNewPage();
+    queue.unshift(item);
+  }
+
+  const pages = result.filter(p => p.length > 0);
+
+  // Phase 2: Post-verify — split any pages that still overflow
+  for (let iter = 0; iter < 5; iter++) {
+    let fixed = false;
+    for (let pi = 0; pi < pages.length; pi++) {
+      const pageText = pages[pi].map(v => v.text).join(' ');
+      const h = measureHeight(pageText);
+      if (h <= availableHeight) continue;
+
+      const last = pages[pi][pages[pi].length - 1];
+      const lastWords = countWords(last.text);
+      if (lastWords <= 3) continue; // can't split further
+
+      const fitWords = Math.max(3, Math.floor(lastWords * (availableHeight / h) * 0.75));
+      const [first, rest] = splitAtWord(last.text, fitWords);
+      if (rest.length > 0 && countWords(first) > 0) {
+        pages[pi][pages[pi].length - 1] = { number: last.number, text: first };
+        pages.splice(pi + 1, 0, [{ number: last.number, text: rest }]);
+        fixed = true;
+      }
+    }
+    if (!fixed) break;
+  }
+
+  return { pages };
+}
+
 export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   data,
   settings,
@@ -34,131 +200,70 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   activeSpokenVerseNumber,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [viewportDimensions, setViewportDimensions] = useState<{ width: number; height: number }>({
-    width: typeof window !== 'undefined' ? window.innerWidth : 800,
-    height: typeof window !== 'undefined' ? window.innerHeight : 600,
-  });
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [pagination, setPagination] = useState<PaginationResult | null>(null);
 
-  // Track window & container resize dynamically
+  // Compute available dimensions
+  const getAvailableDimensions = () => {
+    const vh = window.visualViewport?.height || window.innerHeight;
+    const vw = window.visualViewport?.width || window.innerWidth;
+    const isMobile = vw < 640;
+    const headerDeduction = isMobile ? 130 : 140;
+    const availableHeight = vh - headerDeduction;
+
+    // Get container width for text measurement
+    const containerEl = containerRef.current;
+    const contentEl = contentRef.current;
+    const availableWidth = (contentEl?.clientWidth || containerEl?.clientWidth || vw - (isMobile ? 24 : 56));
+
+    return { availableHeight, availableWidth };
+  };
+
+  // Build pages whenever data or settings change
   useEffect(() => {
-    const handleResize = () => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setViewportDimensions({
-          width: rect.width || window.innerWidth,
-          height: rect.height || (window.visualViewport?.height || window.innerHeight),
-        });
-      } else {
-        setViewportDimensions({
-          width: window.innerWidth,
-          height: window.visualViewport?.height || window.innerHeight,
-        });
+    if (!data.verses || data.verses.length === 0) {
+      setPagination(null);
+      return;
+    }
+
+    const rafId = requestAnimationFrame(() => {
+      const { availableHeight, availableWidth } = getAvailableDimensions();
+
+      if (availableHeight <= 0 || availableWidth <= 0) {
+        setPagination(null);
+        return;
       }
-    };
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    window.visualViewport?.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.visualViewport?.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  // Compute pages dynamically based on viewport width, height, font size, and text length
-  const pages = useMemo<Verse[][]>(() => {
-    if (!data.verses || data.verses.length === 0) return [[]];
-
-    const isMobile = viewportDimensions.width < 640;
-    const isTablet = viewportDimensions.width >= 640 && viewportDimensions.width < 1024;
-
-    // 1. Calculate actual available width for text
-    const horizontalPadding = isMobile ? 24 : isTablet ? 40 : 56;
-    const availableWidthPx = Math.max(260, viewportDimensions.width - horizontalPadding);
-    
-    // Average character width for typical serif/sans fonts (em proportion)
-    // Include letter-spacing effect: each character gets extra letterSpacing * fontSize
-    const letterSpacingPx = (settings.letterSpacing ?? 0.02) * settings.fontSize;
-    const charWidthPx = settings.fontSize * 0.46 + letterSpacingPx;
-    // Dynamic CPL (Characters Per Line) adapted to screen size
-    const effectiveCPL = Math.max(24, Math.min(62, Math.floor(availableWidthPx / charWidthPx)));
-
-    // 2. Calculate effective reading height (discounting fixed header & footer clearance)
-    const headerHeight = settings.showToolbar ? (isMobile ? 48 : 54) : 0;
-    const footerHeight = settings.showToolbar ? (isMobile ? 60 : 66) : 20;
-    const canvasPaddings = isMobile ? 54 : 76;
-    const verticalDeductionPx = headerHeight + footerHeight + canvasPaddings;
-    const effectiveHeightPx = Math.max(170, viewportDimensions.height - verticalDeductionPx);
-    const linePx = settings.fontSize * settings.lineHeight;
-    const linesPerPage = Math.max(3, Math.floor(effectiveHeightPx / linePx));
-
-    // Base character capacity for standard page
-    const baseCharsPerPage = linesPerPage * effectiveCPL;
-
-    // 3. Page partition algorithm with safe headroom
-    const resultPages: Verse[][] = [];
-    let currentPageVerses: Verse[] = [];
-    let currentChars = 0;
-
-    for (let i = 0; i < data.verses.length; i++) {
-      const verse = data.verses[i];
-      const isFirstPage = resultPages.length === 0;
-
-      // Page 1 has the larger chapter title (deduct approx 1.5 lines of capacity)
-      const pageCapacity = isFirstPage
-        ? Math.floor(baseCharsPerPage * 0.80)
-        : Math.floor(baseCharsPerPage * 0.94); // 6% safety margin against word-wrap overflow
-
-      // Check if this verse has a section heading before it
-      const hasSection = data.sections?.some(
-        (sec) => String(sec.beforeVerse) === String(verse.number)
+      const result = buildPagination(
+        data.verses,
+        availableHeight,
+        availableWidth,
+        settings.fontSize,
+        settings.lineHeight,
+        settings.fontWeight,
+        settings.letterSpacing ?? 0.02,
       );
-      const sectionExtraChars = hasSection ? Math.floor(effectiveCPL * 1.0) : 0;
-      const verseChars = verse.text.length + 8 + sectionExtraChars;
 
-      if (currentChars + verseChars > pageCapacity && currentPageVerses.length > 0) {
-        resultPages.push(currentPageVerses);
-        currentPageVerses = [verse];
-        currentChars = verseChars;
-      } else {
-        currentPageVerses.push(verse);
-        currentChars += verseChars;
-      }
-    }
+      setPagination(result);
+    });
 
-    if (currentPageVerses.length > 0) {
-      resultPages.push(currentPageVerses);
-    }
-
-    return resultPages;
+    return () => cancelAnimationFrame(rafId);
   }, [
+    data.bookId,
+    data.chapterNumber,
     data.verses,
-    data.sections,
-    viewportDimensions.width,
-    viewportDimensions.height,
     settings.fontSize,
     settings.lineHeight,
+    settings.fontWeight,
     settings.letterSpacing,
     settings.showToolbar,
-    settings.bionicReading,
-    settings.phoneticDots,
   ]);
 
+  const pages = pagination?.pages || [data.verses || []] as (Verse & { _continuation?: boolean })[][];
   const totalPages = pages.length;
 
   // --- Authoritative page control ---
-  // Single source of truth for the page reported to the parent. It:
-  //   1. Starts a freshly loaded chapter on page 1 (or the requested verse's page).
-  //   2. Jumps to the exact page of a requested verse (bookmark navigation /
-  //      restored reading position), taking the real pagination into account
-  //      (font size, line height, viewport).
-  //   3. Re-clamps the current page and reports the new total when pagination
-  //      changes (resize, font size, line height).
-  // Previously this logic was split across several effects that raced each
-  // other on chapter changes, so the verse jump was often lost.
   const chapterKeyRef = useRef<string>(`${data.bookId}-${data.chapterNumber}`);
-  // Starts as null so the first render always reports the real page count up.
   const totalPagesRef = useRef<number | null>(null);
   const consumedScrollRef = useRef<string | null>(null);
 
@@ -166,15 +271,11 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     const chapterKey = `${data.bookId}-${data.chapterNumber}`;
     const chapterChanged = chapterKeyRef.current !== chapterKey;
     const totalChanged = totalPagesRef.current !== totalPages;
-    // Only honor the target when it belongs to the currently loaded chapter
-    // (avoids jumping on stale data while a new chapter is being fetched).
     const targetMatches =
       readerTarget !== null &&
       readerTarget !== undefined &&
       readerTarget.bookId === data.bookId &&
       readerTarget.chapter === data.chapterNumber;
-    // The key includes requestId so re-requesting the same verse/chapter
-    // (e.g. re-selecting the same bookmark) always re-triggers the jump.
     const targetKey = targetMatches
       ? readerTarget.kind === 'verse'
         ? `v:${readerTarget.bookId}:${readerTarget.chapter}:${String(readerTarget.verse)}:${readerTarget.requestId}`
@@ -194,8 +295,6 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     let nextPage: number | null = null;
 
     if (chapterChanged) {
-      // Fresh chapter: requested verse's page, last page (backward
-      // navigation, book-like), or page 1.
       if (targetVerse !== null) {
         const idx = pages.findIndex((page) =>
           page.some((v) => String(v.number) === String(targetVerse))
@@ -209,8 +308,6 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
         nextPage = 1;
       }
     } else if (targetKey !== null && targetKey !== consumedScrollRef.current) {
-      // Same chapter, new target request (re-selecting a bookmark in the
-      // currently displayed chapter, or a last-page request).
       if (targetVerse !== null) {
         const idx = pages.findIndex((page) =>
           page.some((v) => String(v.number) === String(targetVerse))
@@ -224,7 +321,6 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
         consumedScrollRef.current = targetKey;
       }
     } else if (totalChanged) {
-      // Pagination changed without a chapter change: clamp the current page.
       nextPage = Math.min(currentPage, Math.max(1, totalPages));
     }
 
@@ -233,7 +329,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     }
   }, [readerTarget, pages, totalPages, currentPage, onPageChange, data.bookId, data.chapterNumber]);
 
-  // Sincronización determinista de página basada en la ubicación exacta del versículo que se está leyendo
+  // TTS page sync
   useEffect(() => {
     if (activeSpokenVerseNumber === null || activeSpokenVerseNumber === undefined || pages.length === 0) return;
     const targetPageIndex = pages.findIndex((page) =>
@@ -265,17 +361,14 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     const deltaY = e.changedTouches[0].clientY - touchStartY.current;
     const deltaTime = Date.now() - touchStartTime.current;
 
-    // Fast flick or clear horizontal swipe (> 35px in under 500ms)
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 35 && deltaTime < 600) {
       if (deltaX < 0) {
-        // Swiped Left -> Next Page / Next Chapter
         if (currentPage < totalPages) {
           onPageChange(currentPage + 1, totalPages);
         } else if (onNextChapter) {
           onNextChapter();
         }
       } else {
-        // Swiped Right -> Prev Page / Prev Chapter
         if (currentPage > 1) {
           onPageChange(currentPage - 1, totalPages);
         } else if (onPrevChapter) {
@@ -288,7 +381,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     touchStartY.current = null;
   };
 
-  // Keyboard navigation (SC 2.1.1 Keyboard Accessible)
+  // Keyboard navigation
   const nextChapterRef = useRef(onNextChapter);
   const prevChapterRef = useRef(onPrevChapter);
   useEffect(() => {
@@ -323,7 +416,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentPage, totalPages, onPageChange]);
 
-  // Click Navigation Zones (Kindle standard: left 1/3 = prev, right 1/3 = next, middle = toggle toolbar)
+  // Click Navigation Zones
   const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target.closest('button') || target.closest('.verse-super') || target.closest('.footnote-indicator')) {
@@ -355,7 +448,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   };
 
   // Active page content
-  const activeVerses = pages[currentPage - 1] || [];
+  const activeVerses = useMemo(() => pages[currentPage - 1] || [], [pages, currentPage]);
 
   const fontClass =
     settings.font === 'bookerly'
@@ -381,7 +474,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
         {`${data.bookName} Capítulo ${data.chapterNumber}, Página ${currentPage} de ${totalPages}`}
       </div>
 
-      {/* Discrete Page Content Block (Strictly 50-60 CPL max, left aligned, line-height 1.6, top-anchored) */}
+      {/* Discrete Page Content Block */}
       <div
         className="w-full max-w-[60ch] flex-1 flex flex-col justify-start text-left"
         style={{
@@ -391,13 +484,12 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
           letterSpacing: `${settings.letterSpacing ?? 0.02}em`,
         }}
       >
-        {/* Fixed Height Header Container (Guarantees zero layout shift on page flips) */}
+        {/* Fixed Height Header Container */}
         <div
           className="w-full h-[58px] sm:h-[68px] mb-3 sm:mb-5 flex flex-col justify-end border-b pb-2 select-none transition-colors"
           style={{ borderColor: 'var(--reader-border)' }}
         >
           {currentPage === 1 ? (
-            /* Page 1 Chapter Heading */
             <div className="flex flex-col justify-end">
               <span className="text-[10px] sm:text-[11px] uppercase tracking-widest opacity-60 font-semibold block font-sans leading-none mb-1">
                 {data.bookName}
@@ -407,7 +499,6 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
               </h2>
             </div>
           ) : (
-            /* Pages 2+ Stable Running Head */
             <div className="w-full flex items-center justify-between opacity-50 text-xs font-semibold uppercase tracking-widest font-sans leading-none">
               <span className="truncate max-w-[200px]">{data.bookName} {data.chapterNumber}</span>
               <span className="text-[10px] font-mono shrink-0">Pág. {currentPage}/{totalPages}</span>
@@ -427,6 +518,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
           >
             {/* Continuous Biblical Paragraph Flow */}
             <div
+              ref={contentRef}
               className="m-0 p-0 text-left"
               style={{
                 lineHeight: settings.lineHeight,
@@ -445,22 +537,21 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                   activeSpokenVerseNumber !== undefined &&
                   String(activeSpokenVerseNumber) === String(verse.number);
 
-                // Check for section headings before this verse
                 const section = data.sections?.find(
                   (sec) => String(sec.beforeVerse) === String(verse.number)
                 );
 
-                // Check for footnotes matching this verse
                 const verseFootnotes = (data.footnotes || []).filter((fn) => {
                   const fnRef = String(fn.verseNumber).trim();
                   const vNum = String(verse.number).trim();
                   return fnRef === vNum || vNum.split('-').includes(fnRef);
                 });
 
+                const continued = !!verse._continuation;
+
                 return (
-                  <React.Fragment key={String(verse.number)}>
-                    {/* Section Subtitle / Perícope Heading */}
-                    {section && (
+                  <React.Fragment key={`${verse.number}-${currentPage}-${idx}`}>
+                    {section && !continued && (
                       <h3
                         className={`w-full font-bold tracking-tight opacity-90 block font-sans ${
                           idx === 0 && currentPage === 1
@@ -484,24 +575,24 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                           : ''
                       }`}
                     >
-                      {/* Inline attenuated superscript verse number */}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onSelectVerse(verse);
-                        }}
-                        className="verse-super inline-flex items-center"
-                        aria-label={`Versículo ${verse.number}. Clic para ver opciones o notas`}
-                        title={`Versículo ${verse.number}`}
-                      >
-                        {verse.number}
-                        {isBookmarked && (
-                          <Bookmark className="inline h-2.5 w-2.5 ml-0.5 fill-current text-reader-accent" />
-                        )}
-                      </button>
+                      {!continued && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSelectVerse(verse);
+                          }}
+                          className="verse-super inline-flex items-center"
+                          aria-label={`Versículo ${verse.number}. Clic para ver opciones o notas`}
+                          title={`Versículo ${verse.number}`}
+                        >
+                          {verse.number}
+                          {isBookmarked && (
+                            <Bookmark className="inline h-2.5 w-2.5 ml-0.5 fill-current text-reader-accent" />
+                          )}
+                        </button>
+                      )}
 
-                      {/* Verse Text Flow */}
                       <span
                         onClick={(e) => {
                           if (window.getSelection()?.toString().length === 0) {
@@ -525,8 +616,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                         }}
                       />
 
-                      {/* Footnote Indicators */}
-                      {verseFootnotes.map((fn) => (
+                      {!continued && verseFootnotes.map((fn) => (
                         <button
                           key={fn.id}
                           type="button"
