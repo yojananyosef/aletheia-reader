@@ -174,6 +174,7 @@ class BibleTTSService {
       voiceURI?: string | null;
       rate?: number;
       onStart?: () => void;
+      onBoundary?: (charIndex: number, text: string) => void;
       onEnd?: () => void;
       onError?: (err: any) => void;
       bookName?: string;
@@ -191,7 +192,11 @@ class BibleTTSService {
       return;
     }
 
-    // Locución bíblica natural y fluida sin interrupciones de numeración
+    // Clean up any previous speech state before starting
+    try {
+      this.synth.cancel();
+    } catch (_) {}
+
     const utterance = new SpeechSynthesisUtterance(cleanText);
     this.currentUtterance = utterance;
 
@@ -234,13 +239,25 @@ class BibleTTSService {
       }
     }
 
+    let hasStarted = false;
     let hasEnded = false;
+    let startTime = 0;
 
     utterance.onstart = () => {
+      hasStarted = true;
+      startTime = Date.now();
       // Update Media Session with verse info
       this.updateMediaSession(verse, options.bookName, options.chapterNumber);
       options.onStart?.();
     };
+
+    if (options.onBoundary) {
+      utterance.onboundary = (e: SpeechSynthesisEvent) => {
+        if (e.charIndex !== undefined) {
+          options.onBoundary?.(e.charIndex, cleanText);
+        }
+      };
+    }
 
     utterance.onend = () => {
       if (hasEnded) return;
@@ -253,10 +270,14 @@ class BibleTTSService {
           navigator.mediaSession.playbackState = 'none';
         }
       }
-      // Small timeout allows mobile browser audio session to chain cleanly to next utterance
-      setTimeout(() => {
-        options.onEnd?.();
-      }, 30);
+
+      // Phantom onend guard: if onend fires before onstart or in < 50ms for real text, ignore phantom loop
+      if (!hasStarted && cleanText.length > 5) {
+        console.warn('TTS onend fired before onstart, ignoring phantom cascade');
+        return;
+      }
+
+      options.onEnd?.();
     };
 
     utterance.onerror = (e) => {
@@ -281,17 +302,15 @@ class BibleTTSService {
       this.synth.resume();
     }
 
-    // Trigger speak with safe tick to prevent mobile Chromium dropping consecutive calls
-    setTimeout(() => {
-      if (this.synth) {
-        this.synth.speak(utterance);
-        // Start keepalive heartbeat for Android Chrome
-        this.startKeepalive();
-        if ('mediaSession' in navigator) {
-          navigator.mediaSession.playbackState = 'playing';
-        }
+    try {
+      this.synth.speak(utterance);
+      this.startKeepalive();
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'playing';
       }
-    }, 10);
+    } catch (err) {
+      options.onError?.(err);
+    }
   }
 
   public pause() {

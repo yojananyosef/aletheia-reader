@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import {
   ComfortBibleReaderProps,
   ReaderSettings,
@@ -70,14 +70,15 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   const currentTheme: ThemeMode = theme || settings.theme;
 
   // --- Pagination State ---
-  // Page 1 is the default; precise jumps to a verse's page are handled by
-  // ReadingCanvas via the scrollToVerse prop (no heuristic needed here).
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
+  // Track paginated page layout for split verse TTS synchronization
+  const [paginatedPages, setPaginatedPages] = useState<(Verse & { _continuation?: boolean })[][]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pendingTTSLastVerseRef = useRef<boolean>(false);
+
   // --- Bookmarking & Verse Interaction State ---
-  // Bookmarks are identified by (bookId, chapter, verse) to avoid marking
-  // equal verse numbers across different books/chapters.
   const [bookmarkedVerses, setBookmarkedVerses] = useState<BookmarkRef[]>(() =>
     getStoredBookmarks().map((b) => ({
       bookId: b.bookId,
@@ -101,66 +102,43 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     };
   });
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Cuando el narrador retrocede más allá del primer versículo, se cruza al
-  // capítulo anterior y debe continuar desde su último versículo al cargarse.
-  const pendingTTSLastVerseRef = useRef<boolean>(false);
-
-  // Load Spanish voices on mount
-  useEffect(() => {
-    const updateVoices = () => {
-      const voices = ttsService.getSpanishVoices();
-      setAvailableVoices(voices);
-      if (voices.length > 0 && !ttsState.selectedVoiceURI) {
-        setTtsState((prev) => ({ ...prev, selectedVoiceURI: voices[0].voiceURI }));
+  // Handle Page Change notification and persistence
+  const handlePageChange = useCallback(
+    (page: number, total: number) => {
+      setCurrentPage(page);
+      setTotalPages(total);
+      saveStoredReadingPosition({
+        bookId: data.bookId,
+        chapterNumber: data.chapterNumber,
+        page: page,
+      });
+      if (onPageChange) {
+        onPageChange(page, total);
       }
-    };
+    },
+    [data.bookId, data.chapterNumber, onPageChange]
+  );
 
-    ttsService.onVoicesLoaded(updateVoices);
-    updateVoices();
-  }, [ttsState.selectedVoiceURI]);
+  // State and Playback Nonce Refs to guarantee 0 race conditions and stable callback closures
+  const activePlaybackIdRef = useRef<number>(0);
+  const currentPageRef = useRef<number>(currentPage);
+  const totalPagesRef = useRef<number>(totalPages);
+  const paginatedPagesRef = useRef(paginatedPages);
+  const ttsStateRef = useRef(ttsState);
 
-  // Set up Media Session callbacks for lock screen / notification controls
   useEffect(() => {
-    ttsService.setMediaSessionCallbacks(
-      handlePrevVerseTTS,
-      handleNextVerseTTS
-    );
+    currentPageRef.current = currentPage;
+    totalPagesRef.current = totalPages;
+    paginatedPagesRef.current = paginatedPages;
+    ttsStateRef.current = ttsState;
   });
 
-  // Reset page and TTS on chapter change
-  const currentChapterKey = `${data.bookId}-${data.chapterNumber}`;
-  const prevChapterKeyRef = useRef(currentChapterKey);
-
-  useEffect(() => {
-    if (prevChapterKeyRef.current !== currentChapterKey) {
-      prevChapterKeyRef.current = currentChapterKey;
-
-      // The starting page (1, or the requested verse's exact page) is reported
-      // by ReadingCanvas, which knows the real pagination. No page reset here.
-
-      // Stop and reset TTS
-      ttsService.cancel();
-      wakeLockService.release();
-      setTtsState((prev) => ({
-        ...prev,
-        status: 'idle',
-        currentVerseIndex: 0,
-        currentVerseNumber: null,
-      }));
-    }
-
-    return () => {
-      ttsService.cancel();
-      wakeLockService.release();
-    };
-  }, [currentChapterKey, data.verses]);
-
-  // Function to speak verse at specific index
+  // Function to speak verse at specific index (Full natural verse utterance with stable closure)
   const speakVerseAtIndex = useCallback(
     (index: number, optionsOverride?: { rate?: number; voiceURI?: string | null }) => {
       if (!data.verses || data.verses.length === 0) return;
+
+      const playbackId = ++activePlaybackIdRef.current;
 
       // When finishing the chapter
       if (index >= data.verses.length) {
@@ -180,11 +158,12 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       if (index < 0) index = 0;
 
       const verse = data.verses[index];
-      const effectiveRate = optionsOverride?.rate !== undefined ? optionsOverride.rate : ttsState.rate;
+      const effectiveRate =
+        optionsOverride?.rate !== undefined ? optionsOverride.rate : ttsStateRef.current.rate;
       const effectiveVoiceURI =
         optionsOverride?.voiceURI !== undefined
           ? optionsOverride.voiceURI
-          : ttsState.selectedVoiceURI;
+          : ttsStateRef.current.selectedVoiceURI;
 
       setTtsState((prev) => ({
         ...prev,
@@ -195,14 +174,25 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         selectedVoiceURI: effectiveVoiceURI,
       }));
 
-      // Persist reading position
+      // Find the first page containing this verse in paginatedPages
+      const currentPages = paginatedPagesRef.current;
+      const targetPageIndex = currentPages.findIndex((page) =>
+        page.some((v) => String(v.number) === String(verse.number))
+      );
+
+      if (targetPageIndex !== -1) {
+        const targetPage = targetPageIndex + 1;
+        if (currentPageRef.current !== targetPage) {
+          handlePageChange(targetPage, totalPagesRef.current);
+        }
+      }
+
       saveStoredReadingPosition({
         bookId: data.bookId,
         chapterNumber: data.chapterNumber,
         verseNumber: verse.number,
       });
 
-      // Acquire wake lock to keep screen on during TTS
       wakeLockService.request();
 
       ttsService.speakVerse(verse, {
@@ -210,35 +200,102 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         rate: effectiveRate,
         bookName: data.bookName,
         chapterNumber: data.chapterNumber,
+        onBoundary: (charIndex) => {
+          if (activePlaybackIdRef.current !== playbackId) return;
+          const pgs = paginatedPagesRef.current;
+          let acc = 0;
+          for (let p = 0; p < pgs.length; p++) {
+            const vFrag = pgs[p].find((v) => String(v.number) === String(verse.number));
+            if (vFrag) {
+              const fragLen = (vFrag.text || '').length;
+              if (charIndex >= acc && charIndex < acc + fragLen) {
+                const targetPg = p + 1;
+                if (currentPageRef.current !== targetPg) {
+                  handlePageChange(targetPg, totalPagesRef.current);
+                }
+                break;
+              }
+              acc += fragLen;
+            }
+          }
+        },
         onEnd: () => {
+          if (activePlaybackIdRef.current !== playbackId) return;
           speakVerseAtIndex(index + 1, { rate: effectiveRate, voiceURI: effectiveVoiceURI });
         },
         onError: (err) => {
+          if (activePlaybackIdRef.current !== playbackId) return;
           console.warn('TTS playback error:', err);
           wakeLockService.release();
           setTtsState((prev) => ({ ...prev, status: 'idle', currentVerseNumber: null }));
         },
       });
     },
-    [data.verses, data.bookId, data.chapterNumber, ttsState.rate, ttsState.selectedVoiceURI, onNextChapter]
+    [data.verses, data.bookId, data.chapterNumber, data.bookName, handlePageChange, onNextChapter]
   );
 
-  // Narración retroactiva tipo libro: al cruzar hacia atrás al capítulo
-  // anterior, continúa locutando desde su último versículo una vez cargado.
+  // Load Spanish voices on mount
+  useEffect(() => {
+    const updateVoices = () => {
+      const voices = ttsService.getSpanishVoices();
+      setAvailableVoices(voices);
+      if (voices.length > 0 && !ttsState.selectedVoiceURI) {
+        setTtsState((prev) => ({ ...prev, selectedVoiceURI: voices[0].voiceURI }));
+      }
+    };
+
+    ttsService.onVoicesLoaded(updateVoices);
+    updateVoices();
+  }, [ttsState.selectedVoiceURI]);
+
+  // Reset page and TTS on chapter change
+  const currentChapterKey = `${data.bookId}-${data.chapterNumber}`;
+  const prevChapterKeyRef = useRef(currentChapterKey);
+
+  useEffect(() => {
+    if (prevChapterKeyRef.current !== currentChapterKey) {
+      prevChapterKeyRef.current = currentChapterKey;
+      activePlaybackIdRef.current++;
+
+      ttsService.cancel();
+      wakeLockService.release();
+      setTtsState((prev) => ({
+        ...prev,
+        status: 'idle',
+        currentVerseIndex: 0,
+        currentVerseNumber: null,
+      }));
+    }
+
+    return () => {
+      activePlaybackIdRef.current++;
+      ttsService.cancel();
+      wakeLockService.release();
+    };
+  }, [currentChapterKey]);
+
+  // Retroactive TTS backwards chapter navigation
   useEffect(() => {
     if (!pendingTTSLastVerseRef.current) return;
     if (!data.verses || data.verses.length === 0) return;
     pendingTTSLastVerseRef.current = false;
     speakVerseAtIndex(data.verses.length - 1);
-  }, [data.bookId, data.chapterNumber, data.verses, speakVerseAtIndex]);
+  }, [data.verses, speakVerseAtIndex]);
 
   // Play / Start Narrator
   const handlePlayTTS = () => {
     setIsNarratorOpen(true);
-    speakVerseAtIndex(ttsState.currentVerseIndex);
+    const currentPageVerses = paginatedPagesRef.current[currentPageRef.current - 1] || [];
+    const firstVerseOnPage = currentPageVerses[0]?.number;
+    const startIdx =
+      firstVerseOnPage !== undefined
+        ? data.verses.findIndex((v) => String(v.number) === String(firstVerseOnPage))
+        : ttsStateRef.current.currentVerseIndex;
+    speakVerseAtIndex(startIdx !== -1 ? startIdx : 0);
   };
 
   const handleStopTTS = () => {
+    activePlaybackIdRef.current++;
     ttsService.cancel();
     wakeLockService.release();
     setTtsState((prev) => ({
@@ -249,20 +306,19 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   };
 
   const handleNextVerseTTS = () => {
+    activePlaybackIdRef.current++;
     ttsService.cancel();
-    speakVerseAtIndex(ttsState.currentVerseIndex + 1);
+    speakVerseAtIndex(ttsStateRef.current.currentVerseIndex + 1);
   };
 
   const handlePrevVerseTTS = () => {
+    activePlaybackIdRef.current++;
     ttsService.cancel();
-    if (ttsState.currentVerseIndex <= 0) {
-      if (ttsState.status === 'idle') {
-        // Narrador detenido: comenzar desde el primer versículo.
+    if (ttsStateRef.current.currentVerseIndex <= 0) {
+      if (ttsStateRef.current.status === 'idle') {
         speakVerseAtIndex(0);
         return;
       }
-      // Cruce hacia atrás: ir al capítulo anterior y, al cargarse, continuar
-      // narrando desde su último versículo (página final, imitando un libro).
       if (onPrevChapter) {
         setTtsState((prev) => ({
           ...prev,
@@ -274,31 +330,37 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         pendingTTSLastVerseRef.current = true;
       }
     } else {
-      speakVerseAtIndex(ttsState.currentVerseIndex - 1);
+      speakVerseAtIndex(ttsStateRef.current.currentVerseIndex - 1);
     }
   };
+
+  // Set up Media Session callbacks
+  useEffect(() => {
+    ttsService.setMediaSessionCallbacks(
+      handlePrevVerseTTS,
+      handleNextVerseTTS
+    );
+  });
 
   const handleSetRateTTS = (newRate: number) => {
     setTtsState((prev) => ({ ...prev, rate: newRate }));
     saveStoredTTSSettings({
       rate: newRate,
-      selectedVoiceURI: ttsState.selectedVoiceURI,
+      selectedVoiceURI: ttsStateRef.current.selectedVoiceURI,
     });
-    if (ttsState.status === 'playing') {
-      ttsService.cancel();
-      speakVerseAtIndex(ttsState.currentVerseIndex, { rate: newRate });
+    if (ttsStateRef.current.status === 'playing') {
+      speakVerseAtIndex(ttsStateRef.current.currentVerseIndex, { rate: newRate });
     }
   };
 
   const handleSetVoiceTTS = (voiceURI: string) => {
     setTtsState((prev) => ({ ...prev, selectedVoiceURI: voiceURI }));
     saveStoredTTSSettings({
-      rate: ttsState.rate,
+      rate: ttsStateRef.current.rate,
       selectedVoiceURI: voiceURI,
     });
-    if (ttsState.status === 'playing') {
-      ttsService.cancel();
-      speakVerseAtIndex(ttsState.currentVerseIndex, { voiceURI });
+    if (ttsStateRef.current.status === 'playing') {
+      speakVerseAtIndex(ttsStateRef.current.currentVerseIndex, { voiceURI });
     }
   };
 
@@ -312,7 +374,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
   const handleToggleNarrator = () => {
     if (isNarratorOpen) {
-      if (ttsState.status === 'playing') {
+      if (ttsStateRef.current.status === 'playing') {
         handleStopTTS();
       }
       setIsNarratorOpen(false);
@@ -322,7 +384,6 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     }
   };
 
-  // Apply theme class and CSS properties to container
   const updateSettings = useCallback(
     (updates: Partial<ReaderSettings>) => {
       setSettings((prev) => {
@@ -338,29 +399,6 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     [onThemeChange]
   );
 
-  // Handle Page Change notification and persistence
-  const handlePageChange = useCallback(
-    (page: number, total: number) => {
-      setCurrentPage(page);
-      setTotalPages(total);
-      saveStoredReadingPosition({
-        bookId: data.bookId,
-        chapterNumber: data.chapterNumber,
-        page: page,
-      });
-      if (onPageChange) {
-        onPageChange(page, total);
-      }
-    },
-    [data.bookId, data.chapterNumber, onPageChange]
-  );
-
-  // Handle Verse Selection from Canvas
-  const handleSelectVerse = (verse: Verse) => {
-    setSelectedVerse(verse);
-  };
-
-  // Handle Bookmark Toggle (identity = bookId + chapter + verse)
   const handleToggleBookmark = (verseNumber: string | number) => {
     const ref: BookmarkRef = {
       bookId: data.bookId,
@@ -389,6 +427,42 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     }
   };
 
+  const handlePagesComputed = useCallback((newPages: (Verse & { _continuation?: boolean })[][]) => {
+    setPaginatedPages((prev) => {
+      if (prev === newPages) return prev;
+      if (prev.length === newPages.length) {
+        let isIdentical = true;
+        for (let i = 0; i < prev.length; i++) {
+          if (prev[i].length !== newPages[i].length) {
+            isIdentical = false;
+            break;
+          }
+          for (let j = 0; j < prev[i].length; j++) {
+            if (
+              prev[i][j].number !== newPages[i][j].number ||
+              prev[i][j].text !== newPages[i][j].text ||
+              prev[i][j]._continuation !== newPages[i][j]._continuation
+            ) {
+              isIdentical = false;
+              break;
+            }
+          }
+          if (!isIdentical) break;
+        }
+        if (isIdentical) return prev;
+      }
+      return newPages;
+    });
+  }, []);
+
+  const mergedSettings = useMemo<ReaderSettings>(
+    () => ({
+      ...settings,
+      theme: currentTheme,
+    }),
+    [settings, currentTheme]
+  );
+
   const themeClass =
     currentTheme === 'pergamino'
       ? 'theme-pergamino'
@@ -406,15 +480,11 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         color: 'var(--reader-text)',
       }}
     >
-      {/* 1. Paper Grain Texture Overlay (Mitigates blue-light glare and screen hardness) */}
       <PaperGrainOverlay theme={currentTheme} />
-
-      {/* 2. Zero-Flicker Software PWM Dimmer Overlay */}
       <PwmDimmerOverlay brightness={settings.softwareBrightness} />
 
-      {/* 3. Header Toolbar (Collapsible via Zero-Distraction Immersive Mode / Middle Click) */}
       <ReaderToolbar
-        settings={{ ...settings, theme: currentTheme }}
+        settings={mergedSettings}
         onUpdateSettings={updateSettings}
         bookTitle={data.bookName}
         chapterNumber={data.chapterNumber}
@@ -427,24 +497,23 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         isAudioNarratorActive={isNarratorOpen}
       />
 
-      {/* 4. Main Reading Canvas (Discrete Paginated Layout + Bimodal TTS Active Verse Highlight) */}
       <main className="flex-1 flex flex-col justify-start items-center w-full px-2 sm:px-6 relative overflow-hidden min-h-0">
         <ReadingCanvas
           data={data}
-          settings={{ ...settings, theme: currentTheme }}
+          settings={mergedSettings}
           currentPage={currentPage}
           onPageChange={handlePageChange}
-          onSelectVerse={handleSelectVerse}
+          onSelectVerse={setSelectedVerse}
           bookmarkedVerses={bookmarkedVerses}
           readerTarget={readerTarget}
           activeSpokenVerseNumber={ttsState.status === 'playing' || ttsState.status === 'paused' ? ttsState.currentVerseNumber : null}
           onNextChapter={onNextChapter}
           onPrevChapter={onPrevChapter}
           onToggleToolbar={() => updateSettings({ showToolbar: !settings.showToolbar })}
+          onPagesComputed={handlePagesComputed}
         />
       </main>
 
-      {/* 5. Line Focus Overlay (Assists users with Dyslexia / ADHD) */}
       <LineFocusOverlay
         mode={settings.lineFocus}
         fontSize={settings.fontSize}
@@ -465,7 +534,6 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         }}
       />
 
-      {/* 6. Footer (Pagination + Integrated Ambient Progress & Audio Narrator Bar) */}
       <ReaderFooter
         currentPage={currentPage}
         totalPages={totalPages}
@@ -501,7 +569,6 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         onCloseNarrator={handleToggleNarrator}
       />
 
-      {/* 7. Interactive Verse Action Modal (Bottom Sheet on Mobile / Centered on Desktop) */}
       <VerseModal
         isOpen={selectedVerse !== null}
         onClose={() => setSelectedVerse(null)}

@@ -18,6 +18,7 @@ interface ReadingCanvasProps {
   onNextChapter?: () => void;
   onPrevChapter?: () => void;
   activeSpokenVerseNumber?: string | number | null;
+  onPagesComputed?: (pages: (Verse & { _continuation?: boolean })[][]) => void;
 }
 
 interface PaginationResult {
@@ -267,6 +268,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   onNextChapter,
   onPrevChapter,
   activeSpokenVerseNumber,
+  onPagesComputed,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -372,10 +374,30 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     data.chapterNumber,
     data.verses,
     data.sections,
-    settings,
+    settings.fontSize,
+    settings.lineHeight,
+    settings.fontWeight,
+    settings.letterSpacing,
+    settings.font,
+    settings.bionicReading,
+    settings.phoneticDots,
+    settings.showToolbar,
     getAvailableDimensions,
     resizeRevision,
   ]);
+
+  // Report paginated pages to parent for fragment-level TTS synchronization with fingerprint guard
+  const lastReportedFingerprintRef = useRef<string>('');
+  useEffect(() => {
+    if (!onPagesComputed || !pagination.pages) return;
+    const fingerprint = `${pagination.chapterKey}-${pagination.pages.length}-${pagination.pages
+      .map((p) => `${p.length}:${p[0]?.number}:${p[0]?.text?.length}`)
+      .join(',')}`;
+    if (lastReportedFingerprintRef.current !== fingerprint) {
+      lastReportedFingerprintRef.current = fingerprint;
+      onPagesComputed(pagination.pages);
+    }
+  }, [pagination, onPagesComputed]);
 
   const currentChapterKey = `${data.bookId}-${data.chapterNumber}`;
   const pages = pagination.pages;
@@ -447,20 +469,6 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     data.bookId,
     data.chapterNumber,
   ]);
-
-  // TTS page sync
-  useEffect(() => {
-    if (activeSpokenVerseNumber === null || activeSpokenVerseNumber === undefined || pages.length === 0) return;
-    const targetPageIndex = pages.findIndex((page) =>
-      page.some((v) => String(v.number) === String(activeSpokenVerseNumber))
-    );
-    if (targetPageIndex !== -1) {
-      const targetPage = targetPageIndex + 1;
-      if (targetPage !== currentPage) {
-        onPageChange(targetPage, pages.length);
-      }
-    }
-  }, [activeSpokenVerseNumber, pages, currentPage, onPageChange]);
 
   // Touch Swipe Gesture Detection
   const touchStartX = useRef<number | null>(null);
