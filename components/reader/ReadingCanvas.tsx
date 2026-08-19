@@ -21,6 +21,7 @@ interface ReadingCanvasProps {
 }
 
 interface PaginationResult {
+  chapterKey: string;
   pages: (Verse & { _continuation?: boolean })[][];
 }
 
@@ -139,7 +140,7 @@ function buildPagination(
   containerWidth: number,
   settings: ReaderSettings,
   sections?: { beforeVerse: string | number; title: string }[],
-): PaginationResult {
+): { pages: (Verse & { _continuation?: boolean })[][] } {
   if (verses.length === 0 || availableHeight <= 0 || containerWidth <= 0) {
     return { pages: [verses] };
   }
@@ -270,10 +271,13 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [pagination, setPagination] = useState<PaginationResult | null>(null);
 
   // Compute available dimensions directly from DOM
   const getAvailableDimensions = useCallback(() => {
+    if (typeof window === 'undefined') {
+      return { availableHeight: 500, availableWidth: 350 };
+    }
+
     const vh = window.visualViewport?.height || window.innerHeight;
     const vw = window.visualViewport?.width || window.innerWidth;
     const isMobile = vw < 640;
@@ -314,23 +318,42 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     }
 
     return {
-      availableHeight: Math.max(0, availableHeight),
-      availableWidth: Math.max(0, availableWidth),
+      availableHeight: Math.max(60, availableHeight),
+      availableWidth: Math.max(60, availableWidth),
     };
   }, [settings.showToolbar]);
 
-  const recomputePagination = useCallback(() => {
-    if (!data.verses || data.verses.length === 0) {
-      setPagination(null);
-      return;
+  // Track resize events to recompute pagination when container size changes
+  const [resizeRevision, setResizeRevision] = useState(0);
+
+  // Observe container size changes (e.g. orientation change or toolbar animation)
+  useEffect(() => {
+    const containerEl = containerRef.current;
+    if (!containerEl || typeof ResizeObserver === 'undefined') return;
+
+    let rafId: number;
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setResizeRevision((r) => r + 1);
+      });
+    });
+
+    observer.observe(containerEl);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  // Compute pagination synchronously on render — zero unpaginated flash or layout shift
+  const pagination = useMemo<PaginationResult>(() => {
+    const currentChapterKey = `${data.bookId}-${data.chapterNumber}`;
+    if (typeof window === 'undefined' || !data.verses || data.verses.length === 0) {
+      return { chapterKey: currentChapterKey, pages: [data.verses || []] };
     }
 
     const { availableHeight, availableWidth } = getAvailableDimensions();
-
-    if (availableHeight <= 0 || availableWidth <= 0) {
-      setPagination(null);
-      return;
-    }
 
     const result = buildPagination(
       data.verses,
@@ -340,117 +363,73 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
       data.sections,
     );
 
-    setPagination(result);
-  }, [
-    data.verses,
-    data.sections,
-    getAvailableDimensions,
-    settings,
-  ]);
-
-  // Build pages whenever data, settings, or dimensions change
-  useEffect(() => {
-    const rafId = requestAnimationFrame(() => {
-      recomputePagination();
-    });
-    return () => cancelAnimationFrame(rafId);
+    return {
+      chapterKey: currentChapterKey,
+      pages: result.pages,
+    };
   }, [
     data.bookId,
     data.chapterNumber,
     data.verses,
     data.sections,
-    settings.fontSize,
-    settings.lineHeight,
-    settings.fontWeight,
-    settings.letterSpacing,
-    settings.font,
-    settings.bionicReading,
-    settings.phoneticDots,
-    settings.showToolbar,
-    recomputePagination,
+    settings,
+    getAvailableDimensions,
+    resizeRevision,
   ]);
 
-  // Observe container size changes (e.g. toolbar toggle animation, rotation, window resize)
-  useEffect(() => {
-    const containerEl = containerRef.current;
-    if (!containerEl || typeof ResizeObserver === 'undefined') return;
-
-    let rafId: number;
-    const observer = new ResizeObserver(() => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        recomputePagination();
-      });
-    });
-
-    observer.observe(containerEl);
-    return () => {
-      observer.disconnect();
-      cancelAnimationFrame(rafId);
-    };
-  }, [recomputePagination]);
-
-  const pages = pagination?.pages || [data.verses || []] as (Verse & { _continuation?: boolean })[][];
+  const currentChapterKey = `${data.bookId}-${data.chapterNumber}`;
+  const pages = pagination.pages;
   const totalPages = pages.length;
 
   // --- Authoritative page control ---
-  const chapterKeyRef = useRef<string>(`${data.bookId}-${data.chapterNumber}`);
+  const chapterKeyRef = useRef<string>(currentChapterKey);
   const totalPagesRef = useRef<number | null>(null);
-  const consumedScrollRef = useRef<string | null>(null);
+  const consumedTargetRef = useRef<string | null>(null);
 
   useLayoutEffect(() => {
-    const chapterKey = `${data.bookId}-${data.chapterNumber}`;
-    const chapterChanged = chapterKeyRef.current !== chapterKey;
+    if (pages.length === 0) return;
+
+    const chapterChanged = chapterKeyRef.current !== currentChapterKey;
     const totalChanged = totalPagesRef.current !== totalPages;
+
     const targetMatches =
       readerTarget !== null &&
       readerTarget !== undefined &&
       readerTarget.bookId === data.bookId &&
       readerTarget.chapter === data.chapterNumber;
+
     const targetKey = targetMatches
       ? readerTarget.kind === 'verse'
         ? `v:${readerTarget.bookId}:${readerTarget.chapter}:${String(readerTarget.verse)}:${readerTarget.requestId}`
         : `l:${readerTarget.bookId}:${readerTarget.chapter}:${readerTarget.requestId}`
       : null;
+
     const targetVerse =
       targetMatches && readerTarget.kind === 'verse' ? readerTarget.verse : null;
 
-    if (targetKey === null) {
-      consumedScrollRef.current = null;
-      if (!chapterChanged && !totalChanged) return;
+    if (chapterChanged) {
+      chapterKeyRef.current = currentChapterKey;
     }
-
-    if (chapterChanged) chapterKeyRef.current = chapterKey;
-    if (totalChanged) totalPagesRef.current = totalPages;
+    if (totalChanged) {
+      totalPagesRef.current = totalPages;
+    }
 
     let nextPage: number | null = null;
 
-    if (chapterChanged) {
-      if (targetVerse !== null) {
+    if (targetKey !== null && targetKey !== consumedTargetRef.current) {
+      consumedTargetRef.current = targetKey;
+      if (readerTarget?.kind === 'lastPage') {
+        nextPage = totalPages;
+      } else if (targetVerse !== null) {
         const idx = pages.findIndex((page) =>
           page.some((v) => String(v.number) === String(targetVerse))
         );
         nextPage = idx !== -1 ? idx + 1 : 1;
-        if (idx !== -1) consumedScrollRef.current = targetKey;
-      } else if (targetKey !== null) {
-        nextPage = Math.max(1, totalPages);
-        consumedScrollRef.current = targetKey;
       } else {
         nextPage = 1;
       }
-    } else if (targetKey !== null && targetKey !== consumedScrollRef.current) {
-      if (targetVerse !== null) {
-        const idx = pages.findIndex((page) =>
-          page.some((v) => String(v.number) === String(targetVerse))
-        );
-        if (idx !== -1) {
-          nextPage = idx + 1;
-          consumedScrollRef.current = targetKey;
-        }
-      } else {
-        nextPage = Math.max(1, totalPages);
-        consumedScrollRef.current = targetKey;
-      }
+    } else if (chapterChanged) {
+      nextPage = 1;
     } else if (totalChanged) {
       nextPage = Math.min(currentPage, Math.max(1, totalPages));
     }
@@ -458,7 +437,16 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     if (nextPage !== null && (nextPage !== currentPage || chapterChanged || totalChanged)) {
       onPageChange(nextPage, totalPages);
     }
-  }, [readerTarget, pages, totalPages, currentPage, onPageChange, data.bookId, data.chapterNumber]);
+  }, [
+    currentChapterKey,
+    pages,
+    totalPages,
+    readerTarget,
+    currentPage,
+    onPageChange,
+    data.bookId,
+    data.chapterNumber,
+  ]);
 
   // TTS page sync
   useEffect(() => {
