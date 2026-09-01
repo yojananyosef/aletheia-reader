@@ -122,7 +122,7 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!touchActive.current) return;
-    e.preventDefault();
+    // touch-none ya evita scroll; no llamar preventDefault para no disparar warning passive
     const t = e.touches[0];
     const startX = touchStartX.current;
     const startY = touchStartY.current;
@@ -189,7 +189,6 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
 
     // Tap (minimal movement, short time) -> forward click to content below
     if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8 && deltaTime < 300) {
-      e.preventDefault();
       forwardPointerEvent(t.clientX, t.clientY, 'click');
     }
   };
