@@ -1,0 +1,542 @@
+{
+  "meta": {
+    "translation": "Reina Valera 1909",
+    "translationId": "RV1909",
+    "language": "es",
+    "languageName": "Español",
+    "copyright": "Dominio Público",
+    "totalBooks": 66,
+    "totalChapters": 1189,
+    "totalVerses": 31102
+  },
+  "books": [
+    {
+      "id": "GEN",
+      "name": "Génesis",
+      "testament": "AT",
+      "totalChapters": 50,
+      "totalVerses": 1533,
+      "file": "GEN.json"
+    },
+    {
+      "id": "EXO",
+      "name": "Éxodo",
+      "testament": "AT",
+      "totalChapters": 40,
+      "totalVerses": 1213,
+      "file": "EXO.json"
+    },
+    {
+      "id": "LEV",
+      "name": "Levítico",
+      "testament": "AT",
+      "totalChapters": 27,
+      "totalVerses": 859,
+      "file": "LEV.json"
+    },
+    {
+      "id": "NUM",
+      "name": "Números",
+      "testament": "AT",
+      "totalChapters": 36,
+      "totalVerses": 1288,
+      "file": "NUM.json"
+    },
+    {
+      "id": "DEU",
+      "name": "Deuteronomio",
+      "testament": "AT",
+      "totalChapters": 34,
+      "totalVerses": 959,
+      "file": "DEU.json"
+    },
+    {
+      "id": "JOS",
+      "name": "Josué",
+      "testament": "AT",
+      "totalChapters": 24,
+      "totalVerses": 658,
+      "file": "JOS.json"
+    },
+    {
+      "id": "JDG",
+      "name": "Jueces",
+      "testament": "AT",
+      "totalChapters": 21,
+      "totalVerses": 618,
+      "file": "JDG.json"
+    },
+    {
+      "id": "RUT",
+      "name": "Rut",
+      "testament": "AT",
+      "totalChapters": 4,
+      "totalVerses": 85,
+      "file": "RUT.json"
+    },
+    {
+      "id": "1SA",
+      "name": "1 Samuel",
+      "testament": "AT",
+      "totalChapters": 31,
+      "totalVerses": 810,
+      "file": "1SA.json"
+    },
+    {
+      "id": "2SA",
+      "name": "2 Samuel",
+      "testament": "AT",
+      "totalChapters": 24,
+      "totalVerses": 695,
+      "file": "2SA.json"
+    },
+    {
+      "id": "1KI",
+      "name": "1 Reyes",
+      "testament": "AT",
+      "totalChapters": 22,
+      "totalVerses": 816,
+      "file": "1KI.json"
+    },
+    {
+      "id": "2KI",
+      "name": "2 Reyes",
+      "testament": "AT",
+      "totalChapters": 25,
+      "totalVerses": 719,
+      "file": "2KI.json"
+    },
+    {
+      "id": "1CH",
+      "name": "1 Crónicas",
+      "testament": "AT",
+      "totalChapters": 29,
+      "totalVerses": 942,
+      "file": "1CH.json"
+    },
+    {
+      "id": "2CH",
+      "name": "2 Crónicas",
+      "testament": "AT",
+      "totalChapters": 36,
+      "totalVerses": 822,
+      "file": "2CH.json"
+    },
+    {
+      "id": "EZR",
+      "name": "Esdras",
+      "testament": "AT",
+      "totalChapters": 10,
+      "totalVerses": 280,
+      "file": "EZR.json"
+    },
+    {
+      "id": "NEH",
+      "name": "Nehemías",
+      "testament": "AT",
+      "totalChapters": 13,
+      "totalVerses": 406,
+      "file": "NEH.json"
+    },
+    {
+      "id": "EST",
+      "name": "Ester",
+      "testament": "AT",
+      "totalChapters": 10,
+      "totalVerses": 167,
+      "file": "EST.json"
+    },
+    {
+      "id": "JOB",
+      "name": "Job",
+      "testament": "AT",
+      "totalChapters": 42,
+      "totalVerses": 1070,
+      "file": "JOB.json"
+    },
+    {
+      "id": "PSA",
+      "name": "Salmos",
+      "testament": "AT",
+      "totalChapters": 150,
+      "totalVerses": 2461,
+      "file": "PSA.json"
+    },
+    {
+      "id": "PRO",
+      "name": "Proverbios",
+      "testament": "AT",
+      "totalChapters": 31,
+      "totalVerses": 915,
+      "file": "PRO.json"
+    },
+    {
+      "id": "ECC",
+      "name": "Eclesiastés",
+      "testament": "AT",
+      "totalChapters": 12,
+      "totalVerses": 222,
+      "file": "ECC.json"
+    },
+    {
+      "id": "SNG",
+      "name": "Cantares",
+      "testament": "AT",
+      "totalChapters": 8,
+      "totalVerses": 117,
+      "file": "SNG.json"
+    },
+    {
+      "id": "ISA",
+      "name": "Isaías",
+      "testament": "AT",
+      "totalChapters": 66,
+      "totalVerses": 1292,
+      "file": "ISA.json"
+    },
+    {
+      "id": "JER",
+      "name": "Jeremías",
+      "testament": "AT",
+      "totalChapters": 52,
+      "totalVerses": 1364,
+      "file": "JER.json"
+    },
+    {
+      "id": "LAM",
+      "name": "Lamentaciones",
+      "testament": "AT",
+      "totalChapters": 5,
+      "totalVerses": 154,
+      "file": "LAM.json"
+    },
+    {
+      "id": "EZK",
+      "name": "Ezequiel",
+      "testament": "AT",
+      "totalChapters": 48,
+      "totalVerses": 1273,
+      "file": "EZK.json"
+    },
+    {
+      "id": "DAN",
+      "name": "Daniel",
+      "testament": "AT",
+      "totalChapters": 12,
+      "totalVerses": 357,
+      "file": "DAN.json"
+    },
+    {
+      "id": "HOS",
+      "name": "Oseas",
+      "testament": "AT",
+      "totalChapters": 14,
+      "totalVerses": 197,
+      "file": "HOS.json"
+    },
+    {
+      "id": "JOL",
+      "name": "Joel",
+      "testament": "AT",
+      "totalChapters": 3,
+      "totalVerses": 73,
+      "file": "JOL.json"
+    },
+    {
+      "id": "AMO",
+      "name": "Amós",
+      "testament": "AT",
+      "totalChapters": 9,
+      "totalVerses": 146,
+      "file": "AMO.json"
+    },
+    {
+      "id": "OBA",
+      "name": "Abdías",
+      "testament": "AT",
+      "totalChapters": 1,
+      "totalVerses": 21,
+      "file": "OBA.json"
+    },
+    {
+      "id": "JON",
+      "name": "Jonás",
+      "testament": "AT",
+      "totalChapters": 4,
+      "totalVerses": 48,
+      "file": "JON.json"
+    },
+    {
+      "id": "MIC",
+      "name": "Miqueas",
+      "testament": "AT",
+      "totalChapters": 7,
+      "totalVerses": 105,
+      "file": "MIC.json"
+    },
+    {
+      "id": "NAM",
+      "name": "Nahúm",
+      "testament": "AT",
+      "totalChapters": 3,
+      "totalVerses": 47,
+      "file": "NAM.json"
+    },
+    {
+      "id": "HAB",
+      "name": "Habacuc",
+      "testament": "AT",
+      "totalChapters": 3,
+      "totalVerses": 56,
+      "file": "HAB.json"
+    },
+    {
+      "id": "ZEP",
+      "name": "Sofonías",
+      "testament": "AT",
+      "totalChapters": 3,
+      "totalVerses": 53,
+      "file": "ZEP.json"
+    },
+    {
+      "id": "HAG",
+      "name": "Hageo",
+      "testament": "AT",
+      "totalChapters": 2,
+      "totalVerses": 38,
+      "file": "HAG.json"
+    },
+    {
+      "id": "ZEC",
+      "name": "Zacarías",
+      "testament": "AT",
+      "totalChapters": 14,
+      "totalVerses": 211,
+      "file": "ZEC.json"
+    },
+    {
+      "id": "MAL",
+      "name": "Malaquías",
+      "testament": "AT",
+      "totalChapters": 4,
+      "totalVerses": 55,
+      "file": "MAL.json"
+    },
+    {
+      "id": "MAT",
+      "name": "Mateo",
+      "testament": "NT",
+      "totalChapters": 28,
+      "totalVerses": 1071,
+      "file": "MAT.json"
+    },
+    {
+      "id": "MRK",
+      "name": "Marcos",
+      "testament": "NT",
+      "totalChapters": 16,
+      "totalVerses": 678,
+      "file": "MRK.json"
+    },
+    {
+      "id": "LUK",
+      "name": "Lucas",
+      "testament": "NT",
+      "totalChapters": 24,
+      "totalVerses": 1151,
+      "file": "LUK.json"
+    },
+    {
+      "id": "JHN",
+      "name": "Juan",
+      "testament": "NT",
+      "totalChapters": 21,
+      "totalVerses": 879,
+      "file": "JHN.json"
+    },
+    {
+      "id": "ACT",
+      "name": "Hechos",
+      "testament": "NT",
+      "totalChapters": 28,
+      "totalVerses": 1007,
+      "file": "ACT.json"
+    },
+    {
+      "id": "ROM",
+      "name": "Romanos",
+      "testament": "NT",
+      "totalChapters": 16,
+      "totalVerses": 433,
+      "file": "ROM.json"
+    },
+    {
+      "id": "1CO",
+      "name": "1 Corintios",
+      "testament": "NT",
+      "totalChapters": 16,
+      "totalVerses": 437,
+      "file": "1CO.json"
+    },
+    {
+      "id": "2CO",
+      "name": "2 Corintios",
+      "testament": "NT",
+      "totalChapters": 13,
+      "totalVerses": 257,
+      "file": "2CO.json"
+    },
+    {
+      "id": "GAL",
+      "name": "Gálatas",
+      "testament": "NT",
+      "totalChapters": 6,
+      "totalVerses": 149,
+      "file": "GAL.json"
+    },
+    {
+      "id": "EPH",
+      "name": "Efesios",
+      "testament": "NT",
+      "totalChapters": 6,
+      "totalVerses": 155,
+      "file": "EPH.json"
+    },
+    {
+      "id": "PHP",
+      "name": "Filipenses",
+      "testament": "NT",
+      "totalChapters": 4,
+      "totalVerses": 104,
+      "file": "PHP.json"
+    },
+    {
+      "id": "COL",
+      "name": "Colosenses",
+      "testament": "NT",
+      "totalChapters": 4,
+      "totalVerses": 95,
+      "file": "COL.json"
+    },
+    {
+      "id": "1TH",
+      "name": "1 Tesalonicenses",
+      "testament": "NT",
+      "totalChapters": 5,
+      "totalVerses": 89,
+      "file": "1TH.json"
+    },
+    {
+      "id": "2TH",
+      "name": "2 Tesalonicenses",
+      "testament": "NT",
+      "totalChapters": 3,
+      "totalVerses": 47,
+      "file": "2TH.json"
+    },
+    {
+      "id": "1TI",
+      "name": "1 Timoteo",
+      "testament": "NT",
+      "totalChapters": 6,
+      "totalVerses": 113,
+      "file": "1TI.json"
+    },
+    {
+      "id": "2TI",
+      "name": "2 Timoteo",
+      "testament": "NT",
+      "totalChapters": 4,
+      "totalVerses": 83,
+      "file": "2TI.json"
+    },
+    {
+      "id": "TIT",
+      "name": "Tito",
+      "testament": "NT",
+      "totalChapters": 3,
+      "totalVerses": 46,
+      "file": "TIT.json"
+    },
+    {
+      "id": "PHM",
+      "name": "Filemón",
+      "testament": "NT",
+      "totalChapters": 1,
+      "totalVerses": 25,
+      "file": "PHM.json"
+    },
+    {
+      "id": "HEB",
+      "name": "Hebreos",
+      "testament": "NT",
+      "totalChapters": 13,
+      "totalVerses": 303,
+      "file": "HEB.json"
+    },
+    {
+      "id": "JAS",
+      "name": "Santiago",
+      "testament": "NT",
+      "totalChapters": 5,
+      "totalVerses": 108,
+      "file": "JAS.json"
+    },
+    {
+      "id": "1PE",
+      "name": "1 Pedro",
+      "testament": "NT",
+      "totalChapters": 5,
+      "totalVerses": 105,
+      "file": "1PE.json"
+    },
+    {
+      "id": "2PE",
+      "name": "2 Pedro",
+      "testament": "NT",
+      "totalChapters": 3,
+      "totalVerses": 61,
+      "file": "2PE.json"
+    },
+    {
+      "id": "1JN",
+      "name": "1 Juan",
+      "testament": "NT",
+      "totalChapters": 5,
+      "totalVerses": 105,
+      "file": "1JN.json"
+    },
+    {
+      "id": "2JN",
+      "name": "2 Juan",
+      "testament": "NT",
+      "totalChapters": 1,
+      "totalVerses": 13,
+      "file": "2JN.json"
+    },
+    {
+      "id": "3JN",
+      "name": "3 Juan",
+      "testament": "NT",
+      "totalChapters": 1,
+      "totalVerses": 14,
+      "file": "3JN.json"
+    },
+    {
+      "id": "JUD",
+      "name": "Judas",
+      "testament": "NT",
+      "totalChapters": 1,
+      "totalVerses": 25,
+      "file": "JUD.json"
+    },
+    {
+      "id": "REV",
+      "name": "Apocalipsis",
+      "testament": "NT",
+      "totalChapters": 22,
+      "totalVerses": 404,
+      "file": "REV.json"
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "versionId": "BLM",
+  "bookCode": "MAL",
+  "bookName": "Malaquías",
+  "testament": "AT",
+  "chapters": {
+    "1": {
+      "chapter": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Una revelación, la palabra de Yahvé dirigida a Israel por medio de Malaquías.",
+          "footnotes": [
+            {
+              "id": "FN1",
+              "caller": "*",
+              "text": "«Yahvé» es el nombre propio de Dios, a veces traducido como «SEÑOR» (en mayúsculas) en otras traducciones."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "«Os he amado», dice Yahvé. Sin embargo, decís: «¿En qué nos has amado?». «¿No era Esaú hermano de Jacob?», dice Yahvé. «Sin embargo, amé a Jacob;"
+        },
+        {
+          "number": 3,
+          "text": "y a Esaú lo aborrecí, convertí sus montes en desolación y entregué su heredad a los chacales del desierto»."
+        },
+        {
+          "number": 4,
+          "text": "Mientras que Edom dice: «Hemos sido derribados, pero volveremos y edificaremos las ruinas», Yahvé de los Ejércitos dice: “Ellos edificarán, pero yo los derribaré; y los hombres los llamarán ‘Territorio de Impiedad’, el pueblo contra el cual Yahvé está indignado para siempre”."
+        },
+        {
+          "number": 5,
+          "text": "Vuestros ojos lo verán y diréis: «¡Engrandecido sea Yahvé, incluso más allá de las fronteras de Israel!»."
+        },
+        {
+          "number": 6,
+          "text": "«El hijo honra a su padre, y el siervo a su señor. Pues si yo soy padre, ¿dónde está mi honor? Y si soy señor, ¿dónde está el respeto que se me debe?», dice el Señor de los Ejércitos a vosotros, sacerdotes, que menospreciáis mi nombre. “Pero vosotros decís: ‘¿En qué hemos menospreciado tu nombre?’."
+        },
+        {
+          "number": 7,
+          "text": "Ofrecéis pan inmundo sobre mi altar. Y decís: ‘¿En qué te hemos deshonrado?’. En que decís: ‘La mesa de Yahvé es despreciable’."
+        },
+        {
+          "number": 8,
+          "text": "Y cuando ofrecéis un animal ciego para el sacrificio, ¿no es malo? Y cuando ofrecéis el cojo y el enfermo, ¿no es malo? Presentadlo, pues, a vuestro gobernador. ¿Se agradará de vosotros o os aceptará con benevolencia?”, dice el Señor de los Ejércitos."
+        },
+        {
+          "number": 9,
+          "text": "“Ahora pues, implorad el favor de Dios, para que tenga piedad de nosotros. Puesto que esto ha salido de vuestras manos, ¿aceptará él a alguno de vosotros?”, dice Yahvé de los Ejércitos.",
+          "footnotes": [
+            {
+              "id": "FN2",
+              "caller": "†",
+              "text": "La palabra hebrea traducida como «Dios» es «אֱלֹהִ֑ים» (Elohim)."
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "«¡Oh, si hubiera entre vosotros quien cerrara las puertas, para que no encendierais en vano el fuego de mi altar! No me complazco en vosotros — dice el Señor de los Ejércitos —, ni aceptaré ofrenda de vuestras manos."
+        },
+        {
+          "number": 11,
+          "text": "Porque desde la salida del sol hasta su ocaso, mi nombre es grande entre las naciones; y en todo lugar se ofrece incienso a mi nombre, y ofrenda pura; porque grande es mi nombre entre las naciones», dice el Señor de los Ejércitos."
+        },
+        {
+          "number": 12,
+          "text": "“Pero vosotros lo profanáis cuando decís: ‘La mesa de Yahvé está contaminada, y su fruto, su alimento, es despreciable’."
+        },
+        {
+          "number": 13,
+          "text": "También decís: ‘¡Ay, qué fastidio es esto!’, y lo despreciáis”, dice el Señor de los Ejércitos; «y traéis lo robado, lo cojo y lo enfermo, y lo presentáis como ofrenda. ¿Aceptaré yo eso de vuestras manos?», dice Yahvé.",
+          "footnotes": [
+            {
+              "id": "FN3",
+              "caller": "‡",
+              "text": "«He aquí», de «הִנֵּה», significa mirar, fijarse, observar, ver o contemplar. Se utiliza a menudo como interjección."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "“Maldito sea el engañador que, teniendo un macho en su rebaño, lo promete y luego sacrifica al Señor un animal defectuoso; porque yo soy un gran Rey — dice el Señor de los Ejércitos —, y mi nombre es temible entre las naciones”.",
+          "footnotes": [
+            {
+              "id": "FN4",
+              "caller": "§",
+              "text": "La palabra traducida «Señor» es «Adonai»."
+            }
+          ]
+        }
+      ]
+    },
+    "2": {
+      "chapter": 2,
+      "verses": [
+        {
+          "number": 1,
+          "text": "«Ahora, sacerdotes, este mandamiento es para vosotros."
+        },
+        {
+          "number": 2,
+          "text": "Si no escucháis, y si no lo tomáis a pecho para dar gloria a mi nombre — dice el Señor de los Ejércitos —, entonces enviaré la maldición sobre vosotros, y maldeciré vuestras bendiciones. De hecho, ya las he maldecido, porque no os lo tomáis a pecho."
+        },
+        {
+          "number": 3,
+          "text": "He aquí que reprenderé a vuestra descendencia, y esparciré estiércol sobre vuestros rostros, el estiércol de vuestras fiestas, y seréis llevados con él.",
+          "footnotes": [
+            {
+              "id": "FN1",
+              "caller": "*",
+              "text": "o, semilla"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "text": "Y sabréis que os he enviado este mandamiento, para que mi pacto sea con Leví», dice el Señor de los Ejércitos."
+        },
+        {
+          "number": 5,
+          "text": "«Mi pacto con él fue de vida y de paz, y se las di para que me reverenciara; y él me reverenció, y guardó temor ante mi nombre."
+        },
+        {
+          "number": 6,
+          "text": "La ley de la verdad estaba en su boca, y la injusticia no se hallaba en sus labios. Anduvo conmigo en paz y rectitud, y apartó a muchos de la iniquidad."
+        },
+        {
+          "number": 7,
+          "text": "Porque los labios del sacerdote deben guardar el conocimiento, y de su boca el pueblo debe buscar la ley; porque él es el mensajero de Yahvé de los Ejércitos."
+        },
+        {
+          "number": 8,
+          "text": "Pero vosotros os habéis apartado del camino. Habéis hecho tropezar a muchos en la ley. Habéis corrompido el pacto de Leví», dice el Señor de los Ejércitos."
+        },
+        {
+          "number": 9,
+          "text": "«Por eso también yo os he hecho despreciables y viles ante todo el pueblo, por cuanto no habéis guardado mis caminos, sino que habéis hecho acepción de personas al aplicar la ley»."
+        },
+        {
+          "number": 10,
+          "text": "¿No tenemos todos un solo Padre? ¿No nos ha creado un solo Dios? ¿Por qué, entonces, somos desleales unos con otros, profanando el pacto de nuestros padres?"
+        },
+        {
+          "number": 11,
+          "text": "Judá ha actuado con traición, y se ha cometido una abominación en Israel y en Jerusalén; porque Judá ha profanado el santuario de Yahvé, el cual él ama, y se ha casado con la hija de un dios extranjero."
+        },
+        {
+          "number": 12,
+          "text": "Que Yahvé corte de las tiendas de Jacob al hombre que haga esto, al que vela y al que responde, y al que ofrece ofrenda a Yahvé de los Ejércitos."
+        },
+        {
+          "number": 13,
+          "text": "“Y esta otra cosa hacéis: cubrís el altar de Yahvé con lágrimas, con llantos y con suspiros, porque él ya no mira la ofrenda ni la recibe con agrado de vuestras manos."
+        },
+        {
+          "number": 14,
+          "text": "Pero vosotros decís: ‘¿Por qué?’. Porque Yahvé ha sido testigo entre tú y la esposa de tu juventud, contra la cual has actuado con deslealtad, aunque ella es tu compañera y la esposa de tu pacto."
+        },
+        {
+          "number": 15,
+          "text": "¿Acaso no os hizo uno solo, teniendo él abundancia del Espíritu? ¿Y por qué uno? Porque buscaba una descendencia piadosa. Por lo tanto, tened cuidado de vuestro espíritu, y que ninguno sea desleal a la mujer de su juventud."
+        },
+        {
+          "number": 16,
+          "text": "Porque el que la odia y se divorcia — dice Yahvé, el Dios de Israel — cubre su manto con violencia”, dice Yahvé de los Ejércitos. «Por eso, prestad atención a vuestro espíritu, para que no seáis infieles»."
+        },
+        {
+          "number": 17,
+          "text": "Vosotros habéis cansado a Yahvé con vuestras palabras. Y sin embargo, decís: «¿En qué lo hemos cansado?». En que decís: «Cualquiera que hace el mal es bueno a los ojos de Yahvé, y él se complace en ellos»; o al decir: «¿Dónde está el Dios de justicia?»."
+        }
+      ]
+    },
+    "3": {
+      "chapter": 3,
+      "verses": [
+        {
+          "number": 1,
+          "text": "«¡He aquí que envío a mi mensajero, y él preparará el camino delante de mí! Y el Señor, a quien vosotros buscáis, vendrá repentinamente a su templo. He aquí que viene el mensajero del pacto, a quien vosotros deseáis», dice el Señor de los Ejércitos."
+        },
+        {
+          "number": 2,
+          "text": "«Pero, ¿quién podrá soportar el día de su venida? ¿Y quién se mantendrá en pie cuando él aparezca? Porque él es como el fuego del refinador, y como la lejía de los lavanderos;"
+        },
+        {
+          "number": 3,
+          "text": "y se sentará como refinador y purificador de plata, y purificará a los hijos de Leví, y los refinará como el oro y la plata; y ofrecerán a Yahvé ofrendas en justicia."
+        },
+        {
+          "number": 4,
+          "text": "Entonces la ofrenda de Judá y de Jerusalén será agradable a Yahvé como en los días pasados y como en los años antiguos."
+        },
+        {
+          "number": 5,
+          "text": "Me acercaré a vosotros para juzgaros. Seré un testigo veloz contra los hechiceros, contra los adúlteros, contra los que juran en falso, y contra los que oprimen al jornalero en su salario, a la viuda y al huérfano, y contra los que privan al extranjero de su derecho, y no me temen», dice el Señor de los Ejércitos."
+        },
+        {
+          "number": 6,
+          "text": "«Porque yo, Yahvé, no cambio; por eso vosotros, hijos de Jacob, no habéis sido consumidos."
+        },
+        {
+          "number": 7,
+          "text": "Desde los días de vuestros padres os habéis apartado de mis ordenanzas y no las habéis guardado. Volved a mí, y yo volveré a vosotros», dice el Señor de los Ejércitos. “Pero vosotros decís: ‘¿En qué hemos de volver?’."
+        },
+        {
+          "number": 8,
+          "text": "¿Robará un hombre a Dios? ¡Sin embargo, vosotros me robáis a mí! Pero decís: ‘¿En qué te hemos robado?’. En los diezmos y en las ofrendas."
+        },
+        {
+          "number": 9,
+          "text": "Malditos sois con maldición; porque me robáis, vosotros, toda esta nación."
+        },
+        {
+          "number": 10,
+          "text": "Traed todo el diezmo al alfolí, para que haya alimento en mi casa, y probadme ahora en esto — dice el Señor de los Ejércitos —, a ver si no os abro las ventanas de los cielos y derramo sobre vosotros una bendición hasta que sobreabunde."
+        },
+        {
+          "number": 11,
+          "text": "Reprenderé por vosotros al devorador, y no destruirá los frutos de vuestra tierra; ni vuestra vid perderá su fruto antes de tiempo en el campo”, dice el Señor de los Ejércitos."
+        },
+        {
+          "number": 12,
+          "text": "«Y todas las naciones os llamarán bienaventurados, porque seréis una tierra deseable», dice el Señor de los Ejércitos."
+        },
+        {
+          "number": 13,
+          "text": "«Vuestras palabras han sido duras contra mí», dice Yahvé. “Sin embargo, vosotros decís: ‘¿Qué hemos hablado contra ti?’."
+        },
+        {
+          "number": 14,
+          "text": "Vosotros habéis dicho: ‘Es en vano servir a Dios’, y ‘¿De qué sirve que hayamos guardado sus ordenanzas y que hayamos andado de luto delante de Yahvé de los Ejércitos?"
+        },
+        {
+          "number": 15,
+          "text": "Ahora llamamos dichosos a los soberbios; sí, los que obran maldad prosperan; sí, tientan a Dios y escapan’ ”."
+        },
+        {
+          "number": 16,
+          "text": "Entonces los que temían a Yahvé hablaron entre sí; y Yahvé prestó atención y escuchó, y fue escrito un libro de memorias delante de él para los que temían a Yahvé y honraban su nombre."
+        },
+        {
+          "number": 17,
+          "text": "«Ellos serán míos — dice el Señor de los Ejércitos —, mi especial tesoro en el día en que yo actúe. Y me compadeceré de ellos, como un hombre se compadece de su propio hijo que le sirve."
+        },
+        {
+          "number": 18,
+          "text": "Entonces volveréis y discerniréis entre el justo y el impío, entre el que sirve a Dios y el que no le sirve»."
+        }
+      ]
+    },
+    "4": {
+      "chapter": 4,
+      "verses": [
+        {
+          "number": 1,
+          "text": "«Porque he aquí que llega el día, ardiente como un horno, en que todos los soberbios y todos los que obran la maldad serán como rastrojo. El día que viene los quemará», dice el Señor de los Ejércitos, «de modo que no les dejará ni raíz ni rama."
+        },
+        {
+          "number": 2,
+          "text": "Pero para vosotros, los que teméis mi nombre, nacerá el sol de justicia con la sanidad en sus alas. Saldréis y saltaréis como terneros del establo."
+        },
+        {
+          "number": 3,
+          "text": "Aplastaréis a los impíos, porque serán ceniza bajo las plantas de vuestros pies en el día en que yo actúe», dice el Señor de los Ejércitos."
+        },
+        {
+          "number": 4,
+          "text": "«Acordaos de la ley de Moisés, mi siervo, la cual le ordené en Horeb para todo Israel, con sus estatutos y ordenanzas."
+        },
+        {
+          "number": 5,
+          "text": "He aquí que yo os envío al profeta Elías antes de que llegue el día grande y terrible de Yahvé."
+        },
+        {
+          "number": 6,
+          "text": "Él hará volver el corazón de los padres hacia los hijos, y el corazón de los hijos hacia los padres, no sea que yo venga y hiera la tierra con maldición»."
+        }
+      ]
+    }
+  }
+}

@@ -1,10 +1,11 @@
-import { ReaderSettings, ThemeMode } from '@/types/bible';
+import { ReaderSettings, TranslationId, DEFAULT_TRANSLATION_ID } from '@/types/bible';
 
 const STORAGE_KEYS = {
   SETTINGS: 'alethia_reader_settings',
   POSITION: 'alethia_reading_position',
   BOOKMARKS: 'alethia_bookmarks',
   TTS: 'alethia_tts_settings',
+  SELECTED_VERSION: 'alethia_selected_version',
 };
 
 export interface StoredReadingPosition {
@@ -13,6 +14,7 @@ export interface StoredReadingPosition {
   verseNumber?: string | number;
   page?: number;
   updatedAt: number;
+  versionId?: TranslationId;
 }
 
 export interface StoredBookmark {
@@ -22,6 +24,7 @@ export interface StoredBookmark {
   verse: string | number;
   text?: string;
   createdAt?: number;
+  versionId?: TranslationId;
 }
 
 export interface StoredTTSSettings {
@@ -46,6 +49,52 @@ export const DEFAULT_SETTINGS: ReaderSettings = {
 // Safe LocalStorage access
 function isStorageAvailable(): boolean {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+}
+
+function normalizeVersionId(id?: string | null): TranslationId {
+  if (!id) return DEFAULT_TRANSLATION_ID;
+  const u = id.toUpperCase();
+  if (u === 'SPAONBV') return 'ONBV';
+  const MAP: Record<string, TranslationId> = {
+    RV1909: 'RV1909',
+    BES: 'BES',
+    VBL: 'VBL',
+    PDDPT: 'PDDPT',
+    ONBV: 'ONBV',
+    BLL: 'BLL',
+    BLM: 'BLM',
+    SPAPLATENSE: 'SpaPlatense',
+    PLATENSE: 'SpaPlatense',
+    SPARVG: 'SpaRVG',
+    RVG: 'SpaRVG',
+  };
+  return MAP[u] ?? DEFAULT_TRANSLATION_ID;
+}
+
+// ---------------------------------------------------------------------------
+// Version selection
+// ---------------------------------------------------------------------------
+
+export function getStoredVersionId(): TranslationId {
+  if (!isStorageAvailable()) return DEFAULT_TRANSLATION_ID;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.SELECTED_VERSION);
+    if (!raw) return DEFAULT_TRANSLATION_ID;
+    // Stored as plain string or JSON string
+    const parsed = raw.startsWith('"') ? JSON.parse(raw) : raw;
+    return normalizeVersionId(parsed);
+  } catch {
+    return DEFAULT_TRANSLATION_ID;
+  }
+}
+
+export function saveStoredVersionId(versionId: TranslationId): void {
+  if (!isStorageAvailable()) return;
+  try {
+    localStorage.setItem(STORAGE_KEYS.SELECTED_VERSION, versionId);
+  } catch (e) {
+    console.warn('Error guardando alethia_selected_version:', e);
+  }
 }
 
 /**
@@ -79,14 +128,21 @@ export function saveStoredSettings(settings: Partial<ReaderSettings>): void {
 }
 
 /**
- * Obtiene la última posición de lectura (Libro, Capítulo, Versículo/Página)
+ * Obtiene la última posición de lectura (Libro, Capítulo, Versículo/Página) — version-aware con migración legacy.
  */
 export function getStoredReadingPosition(): StoredReadingPosition | null {
   if (!isStorageAvailable()) return null;
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.POSITION);
     if (!raw) return null;
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // Migration: legacy without versionId → ONBV
+    if (parsed && !parsed.versionId) {
+      parsed.versionId = DEFAULT_TRANSLATION_ID;
+    } else if (parsed?.versionId) {
+      parsed.versionId = normalizeVersionId(parsed.versionId);
+    }
+    return parsed as StoredReadingPosition;
   } catch (e) {
     console.warn('Error leyendo alethia_reading_position de localStorage:', e);
     return null;
@@ -94,18 +150,23 @@ export function getStoredReadingPosition(): StoredReadingPosition | null {
 }
 
 /**
- * Guarda la posición de lectura actual en localStorage
+ * Guarda la posición de lectura actual en localStorage (version-aware).
  */
 export function saveStoredReadingPosition(pos: {
   bookId: string;
   chapterNumber: number;
   verseNumber?: string | number;
   page?: number;
+  versionId?: TranslationId;
 }): void {
   if (!isStorageAvailable()) return;
   try {
     const payload: StoredReadingPosition = {
-      ...pos,
+      bookId: pos.bookId,
+      chapterNumber: pos.chapterNumber,
+      verseNumber: pos.verseNumber,
+      page: pos.page,
+      versionId: pos.versionId ? normalizeVersionId(pos.versionId) : getStoredVersionId(),
       updatedAt: Date.now(),
     };
     localStorage.setItem(STORAGE_KEYS.POSITION, JSON.stringify(payload));
@@ -115,14 +176,18 @@ export function saveStoredReadingPosition(pos: {
 }
 
 /**
- * Obtiene la lista de versículos guardados en marcadores
+ * Obtiene la lista de versículos guardados en marcadores — con migración versionId.
  */
 export function getStoredBookmarks(): StoredBookmark[] {
   if (!isStorageAvailable()) return [];
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.BOOKMARKS);
     if (!raw) return [];
-    return JSON.parse(raw);
+    const parsed: StoredBookmark[] = JSON.parse(raw);
+    return parsed.map((b) => ({
+      ...b,
+      versionId: b.versionId ? normalizeVersionId(b.versionId) : DEFAULT_TRANSLATION_ID,
+    }));
   } catch (e) {
     console.warn('Error leyendo alethia_bookmarks de localStorage:', e);
     return [];
@@ -135,7 +200,11 @@ export function getStoredBookmarks(): StoredBookmark[] {
 export function saveStoredBookmarks(bookmarks: StoredBookmark[]): void {
   if (!isStorageAvailable()) return;
   try {
-    localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(bookmarks));
+    const normalized = bookmarks.map((b) => ({
+      ...b,
+      versionId: b.versionId ? normalizeVersionId(b.versionId) : getStoredVersionId(),
+    }));
+    localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(normalized));
   } catch (e) {
     console.warn('Error guardando alethia_bookmarks en localStorage:', e);
   }

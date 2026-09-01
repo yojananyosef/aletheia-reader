@@ -10,6 +10,7 @@ import {
   TTSVoiceOption,
   TTSState,
   BookmarkRef,
+  TranslationId,
 } from '@/types/bible';
 import { ReaderToolbar } from './ReaderToolbar';
 import { ReaderFooter } from './ReaderFooter';
@@ -41,6 +42,8 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   onOpenBookSelector,
   onOpenBookmarks,
   bookmarksCount = 0,
+  selectedVersionId,
+  onSelectVersion,
 }) => {
   // --- Core Reader Settings (Restored from LocalStorage) ---
   const [settings, setSettings] = useState<ReaderSettings>(() => {
@@ -84,12 +87,14 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       bookId: b.bookId,
       chapter: b.chapter,
       verse: b.verse,
+      versionId: b.versionId,
     }))
   );
   const [selectedVerse, setSelectedVerse] = useState<Verse | null>(null);
 
   // --- Audio Narrator (TTS Bimodal) State ---
   const [isNarratorOpen, setIsNarratorOpen] = useState<boolean>(false);
+  const [kokoroLoading, setKokoroLoading] = useState<boolean>(false);
   const [availableVoices, setAvailableVoices] = useState<TTSVoiceOption[]>([]);
   const [ttsState, setTtsState] = useState<TTSState>(() => {
     const storedTTS = getStoredTTSSettings();
@@ -111,12 +116,13 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         bookId: data.bookId,
         chapterNumber: data.chapterNumber,
         page: page,
+        versionId: data.versionId,
       });
       if (onPageChange) {
         onPageChange(page, total);
       }
     },
-    [data.bookId, data.chapterNumber, onPageChange]
+    [data.bookId, data.chapterNumber, data.versionId, onPageChange]
   );
 
   // State and Playback Nonce Refs to guarantee 0 race conditions and stable callback closures
@@ -191,6 +197,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         bookId: data.bookId,
         chapterNumber: data.chapterNumber,
         verseNumber: verse.number,
+        versionId: data.versionId,
       });
 
       wakeLockService.request();
@@ -225,7 +232,8 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         },
         onError: (err) => {
           if (activePlaybackIdRef.current !== playbackId) return;
-          console.warn('TTS playback error:', err);
+          // Log once, but don't spam sudo pacman — fallback to English is already attempted
+          console.warn('TTS playback error:', err?.message || err);
           wakeLockService.release();
           setTtsState((prev) => ({ ...prev, status: 'idle', currentVerseNumber: null }));
         },
@@ -234,7 +242,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     [data.verses, data.bookId, data.chapterNumber, data.bookName, handlePageChange, onNextChapter]
   );
 
-  // Load Spanish voices on mount
+  // Load Spanish voices on mount + Kokoro loading feedback
   useEffect(() => {
     const updateVoices = () => {
       const voices = ttsService.getSpanishVoices();
@@ -246,6 +254,16 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
     ttsService.onVoicesLoaded(updateVoices);
     updateVoices();
+
+    const onKokoro = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      setKokoroLoading(!!detail);
+      if (detail) {
+        setTtsState((prev) => ({ ...prev, status: 'playing' as const, currentVerseNumber: prev.currentVerseNumber }));
+      }
+    };
+    window.addEventListener('kokoro-loading', onKokoro as EventListener);
+    return () => window.removeEventListener('kokoro-loading', onKokoro as EventListener);
   }, [ttsState.selectedVoiceURI]);
 
   // Reset page and TTS on chapter change
@@ -404,6 +422,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       bookId: data.bookId,
       chapter: data.chapterNumber,
       verse: verseNumber,
+      versionId: data.versionId as TranslationId,
     };
     setBookmarkedVerses((prev) =>
       prev.some(
@@ -495,6 +514,8 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         bookmarksCount={bookmarksCount}
         onToggleAudioNarrator={handleToggleNarrator}
         isAudioNarratorActive={isNarratorOpen}
+        selectedVersionId={selectedVersionId}
+        onSelectVersion={onSelectVersion}
       />
 
       <main className="flex-1 flex flex-col justify-start items-center w-full px-2 sm:px-6 relative overflow-hidden min-h-0">
@@ -534,6 +555,13 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         }}
       />
 
+      {kokoroLoading && (
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-neutral-900 text-white text-xs font-medium px-4 py-2 rounded-full shadow-xl flex items-center gap-2 animate-pulse">
+          <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
+          Cargando voz... Por favor espera.
+        </div>
+      )}
+
       <ReaderFooter
         currentPage={currentPage}
         totalPages={totalPages}
@@ -555,7 +583,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         chapterNumber={data.chapterNumber}
         showControls={settings.showToolbar}
         isNarratorOpen={isNarratorOpen}
-        ttsStatus={ttsState.status}
+        ttsStatus={kokoroLoading ? 'playing' : ttsState.status}
         currentVerseNumber={ttsState.currentVerseNumber}
         rate={ttsState.rate}
         availableVoices={availableVoices}

@@ -1,0 +1,4333 @@
+{
+  "versionId": "SpaPlatense",
+  "bookCode": "MRK",
+  "bookName": "Marcos",
+  "testament": "NT",
+  "chapters": {
+    "1": {
+      "chapter": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Comienzo del Evangelio de Jesucristo, Hijo de Dios.",
+          "headings": [
+            "I. SAN JUAN BAUTISTA",
+            "Predicación de Juan Bautista"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Según lo que está escrito en Isaías, el profeta: “Mira que envío delante de Ti a mi mensajero, el cual preparará tu camino”.",
+          "footnotes": [
+            {
+              "id": "FN1",
+              "caller": "*",
+              "text": "Véase Mal. 3, 1; Is. 40, 3; Mt. 3, 1 ss.; Lc. 3, 2 ss. La voz de Juan es como el trueno que conmueve los desiertos (S. Ambrosio); y sin embargo, Israel no escuchó su mensaje ni preparó el camino. De ahí lo que dice Jesús en Mt. 17, 11-13."
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "text": "“Voz de uno que clama en el desierto: Preparad el camino del Señor, enderezad sus sendas”."
+        },
+        {
+          "number": 4,
+          "text": "Estuvo Juan el Bautista bautizando en el desierto, y predicando el bautismo del arrepentimiento para perdón de pecados.",
+          "footnotes": [
+            {
+              "id": "FN2",
+              "caller": "*",
+              "text": "El desierto en que San Juan predicaba y bautizaba se hallaba a tres o cuatro leguas al este de Jerusalén, entre esta ciudad y el Mar Muerto. Su nombre geográfico es “desierto de Judea”. Acerca del carácter del bautismo de Juan véase Mt. 3, 6 y nota. Cf. v. 3; Mt. 3, 1; Lc. 3, 2."
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "text": "Y todos iban a él de toda la tierra de Judea y de Jerusalén y se hacían bautizar por él en el río Jordán, confesando sus pecados."
+        },
+        {
+          "number": 6,
+          "text": "Juan estaba vestido de pelos de camello y llevaba un ceñidor de cuero alrededor de sus lomos. Su alimento eran langostas y miel silvestre."
+        },
+        {
+          "number": 7,
+          "text": "Y predicaba así: “Viene en pos de mí el que es más poderoso que yo, delante del cual yo no soy digno ni aun de inclinarme para desatar la correa de sus sandalias.",
+          "footnotes": [
+            {
+              "id": "FN3",
+              "caller": "*",
+              "text": "La conmoción que el Bautista con su predicación de penitencia y su modo de vivir produjo, fue tan grande, que muchos creyeron que él fuese el “Mesías” prometido. Para evitar este engaño, Juan acentúa su misión de “precursor” señalando con su dedo hacia Jesús: En pos de mí, viene uno... “Así como la aurora es el fin de la noche y el principio del día, Juan Bautista es la aurora del día del Evangelio, y el término de la noche de la Ley” (Tertuliano). Véase Juan 3, 30 y nota."
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "text": "Yo os he bautizado con agua, pero Él os bautizará con Espíritu Santo”."
+        },
+        {
+          "number": 9,
+          "text": "Y sucedió que en aquellos días Jesús vino de Nazaret de Galilea, y se hizo bautizar por Juan en el Jordán.",
+          "headings": [
+            "Bautismo y tentación de Jesús"
+          ]
+        },
+        {
+          "number": 10,
+          "text": "Y al momento de salir del agua, vio entreabrirse los cielos, y al Espíritu que, en forma de paloma, descendía sobre Él."
+        },
+        {
+          "number": 11,
+          "text": "Y sonó una voz del cielo: “Tú eres el Hijo mío amado, en Ti me complazco”."
+        },
+        {
+          "number": 12,
+          "text": "Y en seguida el Espíritu lo llevó al desierto."
+        },
+        {
+          "number": 13,
+          "text": "Y se quedó en el desierto cuarenta días, siendo tentado por Satanás; y estaba entre las fieras, y los ángeles le servían.",
+          "footnotes": [
+            {
+              "id": "FN4",
+              "caller": "*",
+              "text": "Entre las fieras del desierto de Judea: chacales, lobos, zorras, etc. Detalle exclusivo de Marcos."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "Después que Juan hubo sido encarcelado, fue Jesús a Galilea, predicando la buena nueva de Dios,",
+          "headings": [
+            "II. JESÚS EN GALILEA"
+          ]
+        },
+        {
+          "number": 15,
+          "text": "y diciendo: “El tiempo se ha cumplido, y se ha acercado el reino de Dios. Arrepentíos y creed en el Evangelio”.",
+          "footnotes": [
+            {
+              "id": "FN5",
+              "caller": "*",
+              "text": "Arrepentíos y creed: Esta expresión sintetiza todo el mensaje de Jesucristo. Todo hombre debe confesarse pecador y creer en la buena nueva de que Dios es un Padre que perdona (1 Jn. 1, 8 ss.; Lc. 13, 1 ss. y nota). El rechazo de este mensaje por parte del pueblo llevó a Jesús a la Cruz."
+            }
+          ]
+        },
+        {
+          "number": 16,
+          "text": "Pasando a lo largo del mar de Galilea, vio a Simón y a Andrés, hermano de Simón, que echaban la red en el mar, pues eran pescadores.",
+          "headings": [
+            "Los primeros discípulos"
+          ],
+          "footnotes": [
+            {
+              "id": "FN6",
+              "caller": "*",
+              "text": "Cf. Mt. 4, 18 ss.; Lc. 5, 2 ss.; Jn. 1, 40 ss."
+            }
+          ]
+        },
+        {
+          "number": 17,
+          "text": "Díjoles Jesús: “Venid, seguidme, y Yo os haré pescadores de hombres”."
+        },
+        {
+          "number": 18,
+          "text": "Y en seguida, dejando sus redes, lo siguieron."
+        },
+        {
+          "number": 19,
+          "text": "Yendo un poco más adelante, vio a Santiago, hijo de Zebedeo, y a Juan su hermano, que estaban también en la barca, arreglando sus redes."
+        },
+        {
+          "number": 20,
+          "text": "Al punto los llamó; y ellos dejando a Zebedeo, su padre, en la barca con los jornaleros, lo siguieron.",
+          "footnotes": [
+            {
+              "id": "FN7",
+              "caller": "*",
+              "text": "Santiago y Juan pertenecían a la clase media, como se deduce del hecho de que su padre Zebedeo ocupaba jornaleros. Es, pues, un error considerar a los discípulos del Señor como gentes que nada tenían que perder y por eso seguían a Jesús (cf. 2, 14; Lc. 5, 27-29). Abrazaron la pobreza espontáneamente, atraídos, en la sinceridad de sus corazones, por el irresistible sello de bondad que ofrecía el divino Maestro a todos los que no tenían doblez."
+            }
+          ]
+        },
+        {
+          "number": 21,
+          "text": "Entraron a Cafarnaúm; y luego, el día de sábado, entró en la sinagoga y se puso a enseñar."
+        },
+        {
+          "number": 22,
+          "text": "Y estaban asombrados por su doctrina; pues les enseñaba como quien tiene autoridad, y no como los escribas."
+        },
+        {
+          "number": 23,
+          "text": "Se encontraba en las sinagogas de ellos un hombre poseído por un espíritu inmundo, el cual gritó:",
+          "headings": [
+            "Primeros milagros de Jesús"
+          ],
+          "footnotes": [
+            {
+              "id": "FN8",
+              "caller": "*",
+              "text": "Véase Lc. 4, 31 ss.; El Santo de Dios: el Mesías (Lc. 1, 35; Dn. 9, 24)."
+            }
+          ]
+        },
+        {
+          "number": 24,
+          "text": "“¿Qué tenemos que ver contigo, Jesús de Nazaret? ¿Has venido a perdernos? Te conozco quién eres: El Santo de Dios”."
+        },
+        {
+          "number": 25,
+          "text": "Mas Jesús lo increpó diciendo: “¡Cállate y sal de él!”"
+        },
+        {
+          "number": 26,
+          "text": "Entonces el espíritu inmundo, zamarreándolo y gritando muy fuerte salió de él."
+        },
+        {
+          "number": 27,
+          "text": "Y todos quedaron llenos de estupor, tanto que discutían entre sí y decían: “¿Qué es esto? ¡Una doctrina nueva e impartida con autoridad! ¡Aun a los espíritus inmundos manda, y le obedecen!”"
+        },
+        {
+          "number": 28,
+          "text": "Y pronto se extendió su fama por doquier, en todos los confines de Galilea."
+        },
+        {
+          "number": 29,
+          "text": "Luego que salieron de la sinagoga, vinieron a casa de Simón y Andrés, con Santiago y Juan.",
+          "footnotes": [
+            {
+              "id": "FN9",
+              "caller": "*",
+              "text": "Véase Mt. 8, 14-16; Lc. 4, 38-41."
+            }
+          ]
+        },
+        {
+          "number": 30,
+          "text": "Y estaba la suegra de Simón en cama, con fiebre y al punto le hablaron de ella."
+        },
+        {
+          "number": 31,
+          "text": "Entonces fue a ella, y tomándola de la mano, la levantó, y la dejó la fiebre, y se puso a servirles."
+        },
+        {
+          "number": 32,
+          "text": "Llegada la tarde, cuando el sol se hubo puesto, le trajeron todos los enfermos y los endemoniados."
+        },
+        {
+          "number": 33,
+          "text": "Y toda la ciudad estaba agolpada a la puerta."
+        },
+        {
+          "number": 34,
+          "text": "Sanó a muchos enfermos afligidos de diversas enfermedades y expulsó muchos demonios; pero no dejaba a los demonios hablar, porque sabían quién era Él."
+        },
+        {
+          "number": 35,
+          "text": "En la madrugada, siendo aún muy de noche, se levantó, salió y fue a un lugar desierto, y se puso allí a orar.",
+          "footnotes": [
+            {
+              "id": "FN10",
+              "caller": "*",
+              "text": "El retiro de Jesús a la oración, después de trabajar todo el día y gran parte de la noche, nos enseña que la oración es tan indispensable como el trabajo. Cf. 14, 38; Mt. 14, 23 y nota."
+            }
+          ]
+        },
+        {
+          "number": 36,
+          "text": "Mas Simón partió en su busca con sus compañeros."
+        },
+        {
+          "number": 37,
+          "text": "Cuando lo encontraron, le dijeron: “Todos te buscan”."
+        },
+        {
+          "number": 38,
+          "text": "Respondioles: “Vamos a otra parte, a las aldeas vecinas, para que predique allí también. Porque a eso salí”."
+        },
+        {
+          "number": 39,
+          "text": "Y anduvo predicando en sus sinagogas, por toda la Galilea y expulsando a los demonios."
+        },
+        {
+          "number": 40,
+          "text": "Vino a Él un leproso, le suplicó y arrodillándose, le dijo: “Si quieres, puedes limpiarme”."
+        },
+        {
+          "number": 41,
+          "text": "Entonces, Jesús, movido a compasión, alargó la mano, lo tocó y le dijo: “Quiero, sé sano”."
+        },
+        {
+          "number": 42,
+          "text": "Al punto lo dejó la lepra, y quedó sano."
+        },
+        {
+          "number": 43,
+          "text": "Y amonestándolo, le despidió luego,"
+        },
+        {
+          "number": 44,
+          "text": "y le dijo: “¡Mira! No digas nada a nadie; mas anda a mostrarte al sacerdote, y presenta, por tu curación, la ofrenda que prescribió Moisés, para que les sirva de testimonio”.",
+          "footnotes": [
+            {
+              "id": "FN11",
+              "caller": "*",
+              "text": "La Ley de Moisés prescribía que el leproso curado se presentara a los sacerdotes y ofreciera un sacrificio (Lv. 14, 2-32; Mt. 8, 2- 4; Lc. 5, 12-14). Así Jesús enseñaba a cumplir la Ley de Israel y respetar a sus sacerdotes sin perjuicio de conminarlos terriblemente cuando debía defender a las almas contra su hipocresía. Véase el gran discurso del Templo (Mt. 23, 1 ss.; Lc. 11, 46 ss.; 20, 45 ss.)."
+            }
+          ]
+        },
+        {
+          "number": 45,
+          "text": "Pero él se fue y comenzó a publicar muchas cosas y a difundir la noticia, de modo que (Jesús) no podía ya entrar ostensiblemente en una ciudad, sino que se quedaba fuera, en lugares despoblados; y acudían a Él de todas partes."
+        }
+      ]
+    },
+    "2": {
+      "chapter": 2,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Entró de nuevo en Cafarnaúm al cabo de cierto tiempo, y oyeron las gentes que estaba en casa.",
+          "headings": [
+            "Jesús sana a un paralítico"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Y se juntaron allí tantos que ya no cabían ni delante de la puerta; y les predicaba la palabra."
+        },
+        {
+          "number": 3,
+          "text": "Le trajeron, entonces, un paralítico, llevado por cuatro."
+        },
+        {
+          "number": 4,
+          "text": "Y como no podían llegar hasta Él, a causa de la muchedumbre, levantaron el techo encima del lugar donde Él estaba, y haciendo una abertura descolgaron la camilla en que yacía el paralítico.",
+          "footnotes": [
+            {
+              "id": "FN12",
+              "caller": "*",
+              "text": "Véase Mt. 9, 2 ss.; Lc. 5, 18 ss. Las casas judías estaban provistas de una escalera exterior, que aprovecharon los que llevaban al enfermo, para subir y abrir el techo."
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "text": "Al ver la fe de ellos, dilo Jesús al paralítico: “Hijo mío, tus pecados te son perdonados”."
+        },
+        {
+          "number": 6,
+          "text": "Mas estaban allí sentados algunos escribas, que pensaron en sus corazones:"
+        },
+        {
+          "number": 7,
+          "text": "“¿Cómo habla Este así? Blasfema. ¿Quién puede perdonar los pecados sino solo Dios?”"
+        },
+        {
+          "number": 8,
+          "text": "Al punto Jesús, conociendo en su espíritu que ellos tenían estos pensamientos dentro de sí, les dijo: “¿Por qué discurrís así en vuestros corazones?"
+        },
+        {
+          "number": 9,
+          "text": "¿Qué es más fácil, decir al paralítico: “Tus pecados te son perdonados”, o decirle: “Levántate, toma tu camilla y anda?”"
+        },
+        {
+          "number": 10,
+          "text": "¡Pues bien! para que sepáis que el Hijo del hombre tiene el poder de remitir los pecados, sobre la tierra,"
+        },
+        {
+          "number": 11,
+          "text": "—dijo al paralítico—: “te lo digo, levántate, toma tu camilla y vuélvete a tu casa”."
+        },
+        {
+          "number": 12,
+          "text": "Se levantó, tomó en seguida su camilla y se fue de allí, a la vista de todos, de modo que todos se quedaron asombrados y glorificaban a Dios diciendo “¡No hemos visto jamás nada semejante!”.",
+          "footnotes": [
+            {
+              "id": "FN13",
+              "caller": "*",
+              "text": "Cf. Lc. 7, 16."
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "Salió otra vez a la orilla del mar, y todo el pueblo venía a Él, y les enseñaba.",
+          "headings": [
+            "Vocación de Mateo"
+          ],
+          "footnotes": [
+            {
+              "id": "FN14",
+              "caller": "*",
+              "text": "El Mar de Galilea, o lago de Genesaret o de Tiberíades."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "Al pasar vio a Leví, hijo de Alfeo, sentado en la recaudación de impuestos, y le dijo: “Sígueme”. Y, levantándose, lo siguió.",
+          "footnotes": [
+            {
+              "id": "FN15",
+              "caller": "*",
+              "text": "Leví, esto es, Mateo (Mt. 9, 9; Lc. 5, 29), nos da un ejemplo de la eficacia de la vocación. Una sola palabra de la boca del Señor, una sola mirada basta para convertirlo de un publicano en un fervoroso apóstol. Su vocación es consecuencia de la elección (Jn. 15, 16; Rm. 8, 29 ss.). “Dios nos previene para llamarnos, y nos acompaña para glorificamos” (San Agustín). Cf. 1, 20 y nota."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "Y sucedió que cuando Jesús estaba sentado a la mesa en casa de él, muchos publicanos y pecadores se hallaban también (allí) con Él y sus discípulos, porque eran numerosos los que lo habían seguido."
+        },
+        {
+          "number": 16,
+          "text": "Los escribas de entre los fariseos, empero, viendo que comía con los pecadores y publicanos, dijeron a sus discípulos: “¿Por qué come con los publicanos y los pecadores?”"
+        },
+        {
+          "number": 17,
+          "text": "Mas Jesús, oyéndolo, les dijo: “No necesitan de médico los sanos, sino los que están enfermos. No vine a llamar a justos, sino a pecadores”.",
+          "footnotes": [
+            {
+              "id": "FN16",
+              "caller": "*",
+              "text": "Es una de las muchas verdades con aspecto de paradoja en boca de Jesús (cf. Lc. 7, 23 y nota) que nos descubre el fondo de su Corazón misericordioso y encierra una divina regla pastoral: buscar a la oveja perdida (Lc. 15, 1 ss.). El que se cree sano y justo no puede aprovechar la Redención de Cristo. Cf. Lc. 5, 32."
+            }
+          ]
+        },
+        {
+          "number": 18,
+          "text": "Un día ayunaban los discípulos de Juan y también los fariseos y vinieron a preguntarle: “¿Por qué, mientras los discípulos de Juan y los de los fariseos ayunan, tus discípulos no ayunan?”",
+          "headings": [
+            "Discusión sobre el ayuno y el sábado"
+          ]
+        },
+        {
+          "number": 19,
+          "text": "Respondioles Jesús: “¿Pueden acaso ayunar los compañeros del esposo mientras el esposo está con ellos? En tanto que el esposo está con ellos no pueden ayunar."
+        },
+        {
+          "number": 20,
+          "text": "Pero tiempo vendrá en que el esposo les será quitado, y entonces en aquel tiempo, ayunarán.",
+          "footnotes": [
+            {
+              "id": "FN17",
+              "caller": "*",
+              "text": "Jesucristo es el Esposo que aspira a ganar el amor de todas y cada una de las almas (Mt. 9, 15; Jn. 3, 29; 2 Co. 11, 2 y nota)."
+            }
+          ]
+        },
+        {
+          "number": 21,
+          "text": "Nadie zurce remiendo de paño nuevo en vestido viejo; pues de lo contrario, el remiendo tira de él: lo nuevo de lo viejo, y la rotura, se hace peor."
+        },
+        {
+          "number": 22,
+          "text": "Nadie tampoco echa vino nuevo en cueros viejos, pues de lo contrario, el vino hará reventar los cueros, y se pierde el vino lo mismo que los cueros; sino que se ha de poner el vino nuevo en cueros nuevos”.",
+          "footnotes": [
+            {
+              "id": "FN18",
+              "caller": "*",
+              "text": "El Evangelio, al que San Agustín llama vino, tiene una inmensa fuerza espiritual y rompe los moldes que quieren someter a nuestra pobre razón los misterios del insondable amor de Dios (2 Co. 10, 5). Cf. Mt. 9, 16 ss. y notas."
+            }
+          ]
+        },
+        {
+          "number": 23,
+          "text": "Sucedió que, un día de sábado, Él iba atravesando los sembrados, y sus discípulos, mientras caminaban, se pusieron a arrancar espigas."
+        },
+        {
+          "number": 24,
+          "text": "Entonces los fariseos le dijeron: “¿Ves?” ¿Por qué hacen, en día de sábado, lo que no es lícito?”"
+        },
+        {
+          "number": 25,
+          "text": "Respondioles: “¿Nunca leísteis lo que hizo David cuando tuvo necesidad y sintió hambre, él y sus compañeros,"
+        },
+        {
+          "number": 26,
+          "text": "cómo entró en la casa de Dios, en tiempo del sumo sacerdote Abiatar y comió de los panes de la proposición, los cuales no es lícito comer sino a los sacerdotes y dio también a sus compañeros?”.",
+          "footnotes": [
+            {
+              "id": "FN19",
+              "caller": "*",
+              "text": "En 1 Sam. 21, 1 ss. se llama Aquimelec, padre de Abiatar, el cual le ayudaba. Cf. Mt. 12, 1 ss."
+            }
+          ]
+        },
+        {
+          "number": 27,
+          "text": "Y les dijo: “El sábado se hizo por causa del hombre, y no el hombre por causa del sábado;",
+          "footnotes": [
+            {
+              "id": "FN20",
+              "caller": "*",
+              "text": "¡Qué caridad tan divina refleja esta sentencia! Jesús condena aquí definitivamente todo ritualismo formulista (véase Jn. 4, 23 ss.)."
+            }
+          ]
+        },
+        {
+          "number": 28,
+          "text": "de manera que el Hijo del hombre es dueño también del sábado”."
+        }
+      ]
+    },
+    "3": {
+      "chapter": 3,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Entró de nuevo en la sinagoga, y había allí un hombre que tenía seca la mano.",
+          "headings": [
+            "Nuevo encuentro de Jesús con los fariseos"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Y lo observaban, para ver si lo curaría en día de sábado, a fin de poder acusarlo."
+        },
+        {
+          "number": 3,
+          "text": "Entonces dijo al hombre que tenía la mano seca: “Ponte de pie en medio”."
+        },
+        {
+          "number": 4,
+          "text": "Después les dijo: “¿Es lícito, en día de sábado, hacer bien o hacer mal, salvar una vida o matar?” Pero ellos callaban."
+        },
+        {
+          "number": 5,
+          "text": "Mas Él mirándolos en derredor con ira, contristado por el endurecimiento de sus corazones, dijo al hombre: “Alarga la mano”. Y la alargó, y la mano quedó sana."
+        },
+        {
+          "number": 6,
+          "text": "Y salieron los fariseos en seguida y deliberaron con los herodianos sobre cómo hacerlo morir.",
+          "footnotes": [
+            {
+              "id": "FN21",
+              "caller": "*",
+              "text": "Los herodianos o partidarios del rey Herodes eran amigos de los romanos y, por consiguiente, enemigos de los fariseos, eminentemente nacionalistas. Si los dos partidos, tan opuestos, se juntaron, solo fue por odio, para librarse de Jesús."
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "text": "Jesús Se retiró con sus discípulos hacia el mar, y mucha gente de Galilea lo fue siguiendo. Y vino también a Él de Judea,",
+          "headings": [
+            "Mucha gente acude a Jesús"
+          ]
+        },
+        {
+          "number": 8,
+          "text": "de Jerusalén, de Idumea, de Transjordania y de la región de Tiro y de Sidón, una gran multitud que había oído lo que Él hacía."
+        },
+        {
+          "number": 9,
+          "text": "Y recomendó a sus discípulos que le tuviesen pronta una barca, a causa del gentío, para que no lo atropellasen."
+        },
+        {
+          "number": 10,
+          "text": "Porque había sanado a muchos, de suerte que todos cuantos tenían dolencias se precipitaron sobre El para tocarlo."
+        },
+        {
+          "number": 11,
+          "text": "Y los espíritus inmundos, al verlo, se prosternaban delante de Él y gritaban: “Tú eres el Hijo de Dios”."
+        },
+        {
+          "number": 12,
+          "text": "Pero Él les mandaba rigurosamente que no lo diesen a conocer."
+        },
+        {
+          "number": 13,
+          "text": "Y subió a la montaña, y llamó a los que Él quiso, y vinieron a Él.",
+          "headings": [
+            "Elección de los Doce"
+          ],
+          "footnotes": [
+            {
+              "id": "FN22",
+              "caller": "*",
+              "text": "A los que Él quiso: Nótese la libre elección divina: “No me elegisteis vosotros, sino que Yo os elegí” (Jn. 15, 16). Cf. Rm. 8, 28 ss.; 9, 15 ss.; Ef. 2, 10; 2 Tm. 1, 9."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "Y constituyó a doce para que fuesen sus compañeros y para enviarlos a predicar,"
+        },
+        {
+          "number": 15,
+          "text": "y para que tuvieran poder de expulsar los demonios."
+        },
+        {
+          "number": 16,
+          "text": "Designó, pues, a los Doce; y puso a Simón el nombre de Pedro;"
+        },
+        {
+          "number": 17,
+          "text": "a Jacobo, hijo de Zebedeo, y a Juan, hermano de Santiago —a los que puso el nombre de Boanerges, es decir, hijos del trueno—,",
+          "footnotes": [
+            {
+              "id": "FN23",
+              "caller": "*",
+              "text": "Véase Mt. 10, 2-4. El apodo de Boanerges, que significa “hijos del trueno”, demuestra que Juan estaba lejos de ser un sentimental, como lo representa a veces el arte, con menoscabo de la sólida piedad. Véase Lc. 9, 53 y nota."
+            }
+          ]
+        },
+        {
+          "number": 18,
+          "text": "a Andrés, a Felipe, a Bartolomé, a Mateo, a Tomás, a Santiago hijo de Alfeo, a Tadeo, a Simón el Cananeo,"
+        },
+        {
+          "number": 19,
+          "text": "y a Judas Iscariote, el que lo entregó."
+        },
+        {
+          "number": 20,
+          "text": "Volvió a casa, y la muchedumbre se juntó nuevamente allí, de suerte que ni siquiera podían comer pan.",
+          "headings": [
+            "El pecado contra el Espíritu Santo"
+          ]
+        },
+        {
+          "number": 21,
+          "text": "Al oírlo los suyos, salieron para apoderarse de Él, porque decían: “Ha perdido el juicio”.",
+          "footnotes": [
+            {
+              "id": "FN24",
+              "caller": "*",
+              "text": "Ha perdido el juicio: No porque el oído se horrorice de la frase, deja esta de ser histórica (Maldonado). Véase Lc. 14, 26 y nota. La incomprensión de los parientes de Jesús, confirmada en Jn. 7, 5, es una advertencia para los que hemos de ser sus discípulos; pues Él nos anunció que correríamos igual suerte. Cf. Mt. 10, 35 ss.; 13, 57 y nota."
+            }
+          ]
+        },
+        {
+          "number": 22,
+          "text": "Pero los escribas, venidos de Jerusalén, decían: “Tiene a Beelzebul y por el jefe de los demonios expulsa a los demonios”.",
+          "footnotes": [
+            {
+              "id": "FN25",
+              "caller": "*",
+              "text": "Sobre Beelzebul véase Mt. 10, 25 y nota. Este fue el pecado que cometieron los jefes de la nación judía: el atribuir a Satanás lo que era obra del Espíritu Santo. Jesús hace ostentación de mansedumbre al detenerse a demostrar lo absurdo de tan blasfemas aseveraciones. Cf. Mt. 12, 24-28; Lc. 11, 15-20; Cf. Jn. 10, 20; 16, 9 y nota."
+            }
+          ]
+        },
+        {
+          "number": 23,
+          "text": "Mas Él los llamó y les dijo en parábolas: “Cómo puede Satanás expulsar a Satanás?"
+        },
+        {
+          "number": 24,
+          "text": "Y si dentro de un reino hay divisiones, ese reino no puede sostenerse."
+        },
+        {
+          "number": 25,
+          "text": "Y si hay divisiones dentro de una casa, esa casa no podrá subsistir."
+        },
+        {
+          "number": 26,
+          "text": "Si, pues, Satanás se levanta contra sí mismo y se divide, no puede subsistir, y llegó su fin."
+        },
+        {
+          "number": 27,
+          "text": "Porque nadie puede entrar en la casa del hombre fuerte y quitarle sus bienes, si primero no ata al fuerte; y solo entonces sí saqueará su casa."
+        },
+        {
+          "number": 28,
+          "text": "En verdad, os digo, todos los pecados serán perdonados a los hombres, y cuantas blasfemias dijeren;"
+        },
+        {
+          "number": 29,
+          "text": "pero quien blasfemare contra el Espíritu Santo, no tendrá jamás perdón y es reo de eterno pecado”.",
+          "footnotes": [
+            {
+              "id": "FN26",
+              "caller": "*",
+              "text": "La blasfemia contra el Espíritu Santo se caracteriza por la malicia y endurecimiento del pecador. De ahí la imposibilidad de que sea perdonada. La misericordia no puede concederse al que no quiere aceptarla."
+            }
+          ]
+        },
+        {
+          "number": 30,
+          "text": "Porque decían: “Tiene espíritu inmundo”."
+        },
+        {
+          "number": 31,
+          "text": "Llegaron su madre y sus hermanos, y quedándose de pie afuera, le enviaron recado, llamándolo.",
+          "headings": [
+            "La verdadera familia de Jesús"
+          ],
+          "footnotes": [
+            {
+              "id": "FN27",
+              "caller": "*",
+              "text": "Admiremos la modestia en esta actitud de la Virgen Madre, concordante con la conducta silenciosa y oculta que siempre le vemos observar frente a la vida pública de Jesús."
+            }
+          ]
+        },
+        {
+          "number": 32,
+          "text": "Estaba sentada la gente alrededor de Él y le dijeron: “Tu madre y tus hermanos están fuera buscándote”.",
+          "footnotes": [
+            {
+              "id": "FN28",
+              "caller": "*",
+              "text": "Tus hermanos: Véase la nota a Mt. 12, 46."
+            }
+          ]
+        },
+        {
+          "number": 33,
+          "text": "Mas Él les respondió y dijo: “¿Quién es mi madre y quiénes son mis hermanos?”"
+        },
+        {
+          "number": 34,
+          "text": "Y dando una mirada en torno sobre los que estaban sentados a su alrededor, dijo: “He aquí mi madre y mis hermanos.",
+          "footnotes": [
+            {
+              "id": "FN29",
+              "caller": "*",
+              "text": "Jesús no desprecia los lazos de la sangre; pero les antepone siempre la comunidad espiritual (Lc. 11, 28 y nota). María es la bendita, más porque creía en Cristo que por haberlo dado a luz (S. Agustín)."
+            }
+          ]
+        },
+        {
+          "number": 35,
+          "text": "Porque quien hiciere la voluntad de Dios, ese es mi hermano, hermana y madre”."
+        }
+      ]
+    },
+    "4": {
+      "chapter": 4,
+      "verses": [
+        {
+          "number": 1,
+          "text": "De nuevo se puso a enseñar, a la orilla del mar, y vino a Él una multitud inmensa, de manera que Él subió a una barca y se sentó en ella, dentro del mar, mientras que toda la multitud se quedó en tierra, a lo largo del mar.",
+          "headings": [
+            "La parábola del sembrador"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Y les enseñó en parábolas muchas cosas; y en su enseñanza les dijo:"
+        },
+        {
+          "number": 3,
+          "text": "“¡Escuchad! He aquí que el sembrador salió a sembrar."
+        },
+        {
+          "number": 4,
+          "text": "Y sucedió que al sembrar una semilla cayó a lo largo del camino, y los pájaros vinieron y la comieron."
+        },
+        {
+          "number": 5,
+          "text": "Otra cayó en terreno pedregoso, donde no había mucha tierra, y brotó en seguida, por falta de profundidad de la tierra.",
+          "footnotes": [
+            {
+              "id": "FN30",
+              "caller": "*",
+              "text": "Brotó en seguida: Es de admirar la elocuencia de esta imagen: la semilla en el estéril pedregal brota más rápidamente que en la tierra buena. Jesús nos enseña a ver en esto una prueba de falta de profundidad (v. 17). Debemos, pues, desconfiar de los primeros entusiasmos, tanto en nosotros como en los demás. De ahí el consejo que San Pablo da a Timoteo sobre los neófitos (1 Tm 3, 6)."
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "text": "Mas al subir el sol, se abrasó, y no teniendo raíz, se secó."
+        },
+        {
+          "number": 7,
+          "text": "Otra parte cayó entre abrojos, y los abrojos crecieron y la ahogaron, y no dio fruto."
+        },
+        {
+          "number": 8,
+          "text": "Y otra cayó en buena tierra; brotando y creciendo dio fruto, y produjo treinta, sesenta y ciento por uno”.",
+          "footnotes": [
+            {
+              "id": "FN31",
+              "caller": "*",
+              "text": "La buena tierra es el corazón sin doblez. Para creer y “crecer en la ciencia de Dios” (Col. 1, 10) no se requiere gran talento (Mt. 11, 25), sino rectitud de intención; hacerse pequeño para recibir las lecciones de Jesús. Sobre esta parábola véase Mt. 13, 1 ss., y sus notas; Lc. 8, 4 ss."
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "text": "Y agregó: “¡Quien tiene oídos para oír, oiga!”"
+        },
+        {
+          "number": 10,
+          "text": "Cuando estuvo solo, preguntáronle los que lo rodeaban con los Doce, (el sentido de) estas parábolas."
+        },
+        {
+          "number": 11,
+          "text": "Entonces les dijo: “A vosotros es dado el misterio del reino de Dios; en cuanto a los de afuera, todo les llega en parábolas,"
+        },
+        {
+          "number": 12,
+          "text": "para que mirando no vean, oyendo no entiendan, no sea que se conviertan y se les perdone”.",
+          "footnotes": [
+            {
+              "id": "FN32",
+              "caller": "*",
+              "text": "Cf. Is. 6, 9 s.; Jn. 12, 40; Hch. 28, 26; Rm. 11, 8. Dios no es causa de la ceguedad espiritual, pero la permite en los que no corresponden a la gracia. Véase 2 Ts. 2, 10 ss. y nota."
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "Y añadió: “¿No comprendéis esta parábola? Entonces, ¿cómo entenderéis todas las parábolas?",
+          "footnotes": [
+            {
+              "id": "FN33",
+              "caller": "*",
+              "text": "Estas palabras, exclusivas de San Marcos, muestran la enorme importancia que tiene la parábola del sembrador en la predicación de Jesús, como verdaderamente básica en el plan divino de la salvación, ya que esta procede de la fe, y la fe viene del modo cómo se escucha la palabra de Dios (Rm. 10, 17)."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "El sembrador es el que siembra la palabra."
+        },
+        {
+          "number": 15,
+          "text": "Los de junto al camino son aquellos en quienes es sembrada la palabra; mas apenas la han oído, viene Satanás y se lleva la palabra sembrada en ellos."
+        },
+        {
+          "number": 16,
+          "text": "De semejante manera, los sembrados en pedregal son aquellos que al oír la palabra, al momento la reciben con gozo,"
+        },
+        {
+          "number": 17,
+          "text": "pero no tienen raíz en sí mismos, y son tornadizos. Apenas sobreviene una tribulación o una persecución a causa de la palabra, se escandalizan en seguida."
+        },
+        {
+          "number": 18,
+          "text": "Otros son los sembrados entre abrojos; estos son los que escuchan la palabra,"
+        },
+        {
+          "number": 19,
+          "text": "pero los afanes del mundo, el engaño de las riquezas y las demás concupiscencias invaden y ahogan la palabra, la cual queda infructuosa."
+        },
+        {
+          "number": 20,
+          "text": "Aquellos, en fin, que han sido sembrados en buena tierra, son: quienes escuchan la palabra, la reciben y llevan fruto, treinta, sesenta y ciento por uno”."
+        },
+        {
+          "number": 21,
+          "text": "Les dijo también: “Acaso se trae la luz para ponerla debajo del celemín o debajo de la cama? ¿No es acaso para ponerla en el candelero?",
+          "headings": [
+            "La luz sobre el candelero"
+          ]
+        },
+        {
+          "number": 22,
+          "text": "Nada hay oculto que no haya de manifestarse, ni ha sido escondido sino para que sea sacado a luz.",
+          "footnotes": [
+            {
+              "id": "FN34",
+              "caller": "*",
+              "text": "Jesús insiste en que su predicación no tiene nada de secreto ni de esotérico. El grado de penetración de su luminosa doctrina depende del grado de atención que prestamos a sus palabras, como lo dice en el v. 24, en el cual promete a los que las oyen bien, una recompensa sobreabundante. Cf. Lc. 12, 1 ss. y nota."
+            }
+          ]
+        },
+        {
+          "number": 23,
+          "text": "Si alguien tiene oídos para oír, ¡oiga!”"
+        },
+        {
+          "number": 24,
+          "text": "Díjoles además: “Prestad atención a lo que oís: con la medida con que medís, se medirá para vosotros; y más todavía os será dado a vosotros los que oís;",
+          "footnotes": [
+            {
+              "id": "FN35",
+              "caller": "*",
+              "text": "Véase en Mateo 7, 2 y nota la explicación de este pasaje. San Marcos añade aquí, en las palabras finales, un nuevo rasgo de esa divina misericordia que se excede siempre en darnos más de lo que merecemos. El Papa San Pío V condenó, entre los errores de Miguel Bayo, la proposición según la cual en el día del juicio las buenas obras de los justos, no recibirán mayor recompensa que la que merezcan según la mera justicia (Denz. 1014)."
+            }
+          ]
+        },
+        {
+          "number": 25,
+          "text": "porque a quien tiene se le dará, y a quien no tiene, aun lo que tiene le será quitado”."
+        },
+        {
+          "number": 26,
+          "text": "Y dijo también: “Sucede con el reino de Dios lo que sucede cuando un hombre arroja la simiente en tierra.",
+          "headings": [
+            "La simiente que crece por sí sola"
+          ],
+          "footnotes": [
+            {
+              "id": "FN36",
+              "caller": "*",
+              "text": "Esta pequeña y deliciosa parábola, exclusiva de Marcos, muestra la eficacia propia que por acción divina tiene la Palabra de Dios, con solo dejarla obrar en nuestra alma sin ponerle obstáculos. Cf. Jn. 17, 17 y nota."
+            }
+          ]
+        },
+        {
+          "number": 27,
+          "text": "Ya sea que duerma o esté despierto, de noche, y de día, la simiente germina y crece, y él no sabe cómo."
+        },
+        {
+          "number": 28,
+          "text": "Por sí misma la tierra produce primero el tallo, después la espiga, y luego el grano lleno en la espiga."
+        },
+        {
+          "number": 29,
+          "text": "Y cuando el fruto está maduro, echa pronto la hoz, porque la mies está a punto”.",
+          "footnotes": [
+            {
+              "id": "FN37",
+              "caller": "*",
+              "text": "Muy apropiada es esta parábola para suprimir en los ministros del Evangelio la vanagloria; al mismo tiempo les inspira confianza, puesto que el éxito no depende de ellos sino de la gracia divina (Simón Prado). Véase 1 Co. 3, 7."
+            }
+          ]
+        },
+        {
+          "number": 30,
+          "text": "Dijo además: “¿Qué comparación haremos del reino de Dios, y en qué parábola lo pondremos?.",
+          "headings": [
+            "El grano de mostaza"
+          ],
+          "footnotes": [
+            {
+              "id": "FN38",
+              "caller": "*",
+              "text": "Véase Mat. 13, 31 s.; Lc. 13, 18 s."
+            }
+          ]
+        },
+        {
+          "number": 31,
+          "text": "Es como el grano de mostaza, el cual, cuando es sembrado en tierra, es la menor de todas las semillas de la tierra."
+        },
+        {
+          "number": 32,
+          "text": "Con todo, una vez sembrado, sube y se hace mayor que todas las hortalizas, y echa grandes ramas, de modo que los pájaros del cielo pueden anidar bajo su sombra”."
+        },
+        {
+          "number": 33,
+          "text": "Con numerosas parábolas como estas les presentaba su doctrina, según eran capaces de entender,"
+        },
+        {
+          "number": 34,
+          "text": "y no les hablaba sin parábolas, pero en particular, se lo explicaba todo a los discípulos que eran suyos."
+        },
+        {
+          "number": 35,
+          "text": "Y les dijo en aquel día, llegada la tarde: “Pasemos a la otra orilla”.",
+          "headings": [
+            "Jesús calma la tempestad"
+          ]
+        },
+        {
+          "number": 36,
+          "text": "Entonces ellos, dejando a la multitud, lo tomaron consigo tal como estaba en la barca; y otras barcas lo acompañaban."
+        },
+        {
+          "number": 37,
+          "text": "Ahora bien, sobrevino una gran borrasca, y las olas se lanzaron sobre la barca, hasta el punto de que ella estaba ya por llenarse."
+        },
+        {
+          "number": 38,
+          "text": "Mas Él estaba en la popa, dormido sobre un cabezal. Lo despertaron diciéndole: “Maestro, ¿no te importa que perezcamos?”."
+        },
+        {
+          "number": 39,
+          "text": "Entonces Él se levantó, increpó al viento y dijo al mar: “¡Calla; sosiégate!” Y se apaciguó el viento y fue hecha gran bonanza."
+        },
+        {
+          "number": 40,
+          "text": "Después les dijo: “¿Por qué sois tan miedosos? ¿Cómo es que no tenéis fe?”. Y ellos temían con un miedo grande, y se decían unos a otros: “¿Quién es, entonces, Este, que aun el viento y el mar le obedecen?”.",
+          "footnotes": [
+            {
+              "id": "FN39",
+              "caller": "*",
+              "text": "Véase Mt. 8, 23 ss.; Lc. 8, 22 ss. La barca abandonada a las olas es una imagen de la Iglesia, que sin cesar tiene que luchar contra toda clase de tormentas; mas Cristo está en la barca para conducirla a través del “tiempo de nuestra peregrinación” (1 Pe. 1, 17) “en este siglo malo” (Ga. 1, 4). Tengamos, pues, confianza."
+            },
+            {
+              "id": "FN40",
+              "caller": "†",
+              "text": "¿Quién es entonces?: Vemos por esta expresión la incertidumbre en que aún estaban estos discípulos respecto de Jesús, no obstante la admirable confesión de Natanael en Jn. 1, 49."
+            }
+          ]
+        }
+      ]
+    },
+    "5": {
+      "chapter": 5,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Llegaron a la otra orilla del mar, al país de los gerasenos.",
+          "headings": [
+            "El endemoniado de Gerasa"
+          ],
+          "footnotes": [
+            {
+              "id": "FN41",
+              "caller": "*",
+              "text": "Véase Mt. 8, 28 ss.; Lc. 8, 26 ss. S. Mateo habla de dos endemoniados. Marcos menciona uno solo, probablemente porque este desempeñaba el papel principal. Sobre Gerasa véase Mt. 8, 28 y nota."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Apenas desembarcó, saliole al encuentro desde los sepulcros un hombre poseído de un espíritu inmundo,"
+        },
+        {
+          "number": 3,
+          "text": "el cual tenía su morada en los sepulcros; y ni con cadenas podía ya nadie amarrarlo,"
+        },
+        {
+          "number": 4,
+          "text": "pues muchas veces lo habían amarrado con grillos y cadenas, pero él había roto las cadenas y hecho pedazos los grillos, y nadie era capaz de sujetarlo."
+        },
+        {
+          "number": 5,
+          "text": "Y todo el tiempo, de noche y de día, se estaba en los sepulcros y en las montañas, gritando e hiriéndose con piedras."
+        },
+        {
+          "number": 6,
+          "text": "Divisando a Jesús de lejos, vino corriendo, se prosternó delante de Él"
+        },
+        {
+          "number": 7,
+          "text": "y gritando a gran voz dijo: “¿Qué tengo que ver contigo, Jesús, Hijo del Dios altísimo? Te conjuro por Dios, no me atormentes”."
+        },
+        {
+          "number": 8,
+          "text": "Porque Él le estaba diciendo: “Sal de este hombre inmundo espíritu”."
+        },
+        {
+          "number": 9,
+          "text": "Y le preguntó: “¿Cuál es tu nombre?” Respondiole: “Mi nombre es Legión, porque somos muchos”."
+        },
+        {
+          "number": 10,
+          "text": "Y le rogó con ahínco que no los echara fuera del país."
+        },
+        {
+          "number": 11,
+          "text": "Ahora bien, había allí junto a la montaña una gran piara de puercos paciendo."
+        },
+        {
+          "number": 12,
+          "text": "Le suplicaron diciendo: “Envíanos a los puercos, para que entremos en ellos”."
+        },
+        {
+          "number": 13,
+          "text": "Se lo permitió. Entonces los espíritus inmundos salieron y entraron en los puercos; y la piara, como unos dos mil, se despeñó precipitadamente en el mar y se ahogaron en el agua."
+        },
+        {
+          "number": 14,
+          "text": "Los porqueros huyeron a toda prisa y llevaron la nueva a la ciudad y a las granjas; y vino la gente a cerciorarse de lo que había pasado."
+        },
+        {
+          "number": 15,
+          "text": "Mas llegados a Jesús vieron al endemoniado, sentado, vestido y en su sano juicio: al mismo que había estado poseído por la legión, y quedaron espantados."
+        },
+        {
+          "number": 16,
+          "text": "Y los que habían presenciado el hecho, les explicaron cómo había sucedido con el endemoniado y con los puercos."
+        },
+        {
+          "number": 17,
+          "text": "Entonces comenzaron a rogarle que se retirase de su territorio.",
+          "footnotes": [
+            {
+              "id": "FN42",
+              "caller": "*",
+              "text": "Los gerasenos son el tipo de aquellos hombres que se retiran de la Iglesia para no ser inquietados en la cómoda vida que llevan. Los cerdos, es decir, los bienes materiales, valen para ellos más que la fe y las promesas de Cristo. Véase la nota a Fil. 3, 11."
+            }
+          ]
+        },
+        {
+          "number": 18,
+          "text": "Mas cuando Él se reembarcaba, le pidió el endemoniado andar con Él;"
+        },
+        {
+          "number": 19,
+          "text": "pero no se lo permitió, sino que le dijo: “Vuelve a tu casa, junto a los tuyos, y cuéntales todo lo que el Señor te ha hecho y cómo tuvo misericordia de ti”."
+        },
+        {
+          "number": 20,
+          "text": "Fuése, y se puso a proclamar por la Decápolis todo lo que Jesús había hecho por él, y todos se maravillaban.",
+          "footnotes": [
+            {
+              "id": "FN43",
+              "caller": "*",
+              "text": "Decápolis, o región de las “diez ciudades libres”, situadas en su mayoría en la Transjordania septentrional."
+            }
+          ]
+        },
+        {
+          "number": 21,
+          "text": "Habiendo Jesús regresado en la barca a la otra orilla, una gran muchedumbre se juntó alrededor de Él. Y Él estaba a la orilla del mar,",
+          "headings": [
+            "Jesús sana a una mujer que padecía flujo de sangre y resucita a la hija de Jairo"
+          ],
+          "footnotes": [
+            {
+              "id": "FN44",
+              "caller": "*",
+              "text": "Véase Mt. 9, 18 ss. y notas."
+            }
+          ]
+        },
+        {
+          "number": 22,
+          "text": "cuando llegó un jefe de sinagoga, llamado Jairo, el cual, al verlo, se echó a sus pies,"
+        },
+        {
+          "number": 23,
+          "text": "le rogó encarecidamente y le dijo: “Mi hija está en las últimas; ven a poner tus manos sobre ella, para que se sane y viva”."
+        },
+        {
+          "number": 24,
+          "text": "Se fue con él, y numerosa gente le seguía, apretándolo."
+        },
+        {
+          "number": 25,
+          "text": "Y había una mujer atormentada por un flujo de sangre desde hacía doce años."
+        },
+        {
+          "number": 26,
+          "text": "Mucho había tenido que sufrir por numerosos médicos, y había gastado todo su haber, sin experimentar mejoría, antes, por el contrario, iba de mal en peor."
+        },
+        {
+          "number": 27,
+          "text": "Habiendo oído lo que se decía de Jesús, vino, entre la turba, por detrás, y tocó su vestido."
+        },
+        {
+          "number": 28,
+          "text": "Pues se decía: “Con solo tocar sus vestidos, quedaré sana”."
+        },
+        {
+          "number": 29,
+          "text": "Y al instante la fuente de su sangre se secó, y sintió en su cuerpo que estaba sana de su mal."
+        },
+        {
+          "number": 30,
+          "text": "En el acto Jesús, conociendo en sí mismo que una virtud había salido de Él, se volvió entre la turba y dijo: “¿Quién ha tocado mis vestidos?”.",
+          "footnotes": [
+            {
+              "id": "FN45",
+              "caller": "*",
+              "text": "La pregunta del Señor tiene por objeto confirmar el milagro delante de toda la muchedumbre. La respuesta de los discípulos acusa su poca inteligencia del poder y sabiduría de Jesús, pues Él sabía muy bien quién le había tocado."
+            }
+          ]
+        },
+        {
+          "number": 31,
+          "text": "Respondiéronle sus discípulos: “Bien ves que la turba te oprime, y preguntas: ‘¿Quién me ha tocado?’”."
+        },
+        {
+          "number": 32,
+          "text": "Pero Él miraba en torno suyo, para ver la persona que había hecho esto."
+        },
+        {
+          "number": 33,
+          "text": "Entonces, la mujer, azorada y temblando, sabiendo bien lo que le había acontecido, vino a postrarse delante de Él, y le dijo toda la verdad."
+        },
+        {
+          "number": 34,
+          "text": "Mas Él le dijo: “¡Hija! tu fe te ha salvado. Vete hacia la paz y queda libre de tu mal”."
+        },
+        {
+          "number": 35,
+          "text": "Estaba todavía hablando cuando vinieron de casa del jefe de sinagoga a decirle (a este): “Tu hija ha muerto. ¿Con qué objeto incomodas mas al Maestro?”."
+        },
+        {
+          "number": 36,
+          "text": "Mas Jesús, desoyendo lo que hablaban, dijo al jefe de sinagoga: “No temas, únicamente cree”."
+        },
+        {
+          "number": 37,
+          "text": "Y no permitió que nadie lo acompañara, sino Pedro, Santiago y Juan, hermano de Jacobo."
+        },
+        {
+          "number": 38,
+          "text": "Cuando hubieron llegado a la casa del jefe de sinagoga, vio el tumulto, y a los que estaban llorando y daban grandes alaridos."
+        },
+        {
+          "number": 39,
+          "text": "Entró y les dijo: “¿Por qué este tumulto y estas lamentaciones? La niña no ha muerto, sino que duerme”."
+        },
+        {
+          "number": 40,
+          "text": "y se burlaban de Él. Hizo, entonces, salir a todos, tomó consigo al padre de la niña y a la madre y a los que lo acompañaban, y entró donde estaba la niña."
+        },
+        {
+          "number": 41,
+          "text": "Tomó la mano de la niña y le dijo: “¡Talitha kum!”, que se traduce: “¡Niñita, Yo te lo mando, levántate!”.",
+          "footnotes": [
+            {
+              "id": "FN46",
+              "caller": "*",
+              "text": "“Talitha kum”: expresión aramea, que el Evangelista traduce para su auditorio de Roma."
+            }
+          ]
+        },
+        {
+          "number": 42,
+          "text": "Y al instante la niña se levantó, y se puso a caminar, pues era de doce años. Y al punto quedaron todos poseídos de gran estupor."
+        },
+        {
+          "number": 43,
+          "text": "Y les recomendó con insistencia que nadie lo supiese; y dijo que a ella le diesen de comer.",
+          "footnotes": [
+            {
+              "id": "FN47",
+              "caller": "*",
+              "text": "Parece que los padres, fuera de sí de alegría, olvidaban el alimento que requería su hija. Jesús no lo olvida, Véase Sal. 26, 10; 102, 13; Is. 66, 13 y notas."
+            }
+          ]
+        }
+      ]
+    },
+    "6": {
+      "chapter": 6,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Saliendo de allí, vino a su tierra, y sus discípulos lo acompañaron.",
+          "headings": [
+            "Jesús rechazado en Nazaret"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Llegado el sábado, se puso a enseñar en la sinagoga, y la numerosa concurrencia que lo escuchaba estaba llena de admiración, y decía: “¿De dónde le viene esto? ¿Y qué es esta sabiduría que le ha sido dada? ¿Y estos grandes milagros obrados por sus manos?"
+        },
+        {
+          "number": 3,
+          "text": "¿No es Este el carpintero, el hijo de María, el hermano de Santiago, de José, de Judas y de Simón? ¿Y sus hermanas no están aquí entre nosotros?” Y se escandalizaban de Él.",
+          "footnotes": [
+            {
+              "id": "FN48",
+              "caller": "*",
+              "text": "Véase Mt. 13, 54 ss.; Lc. 4, 16 ss.; Jn. 6, 42. No es sorprendente que tengan a Jesús por artesano, pues durante su vida oculta, hasta los treinta años, ayudaba a José en las tareas de carpintero, santificando así el trabajo manual. Respecto a los “hermanos” de Jesús véase 3, 32; Mt. 12, 46 y nota."
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "text": "Mas Jesús les dijo: “No hay profeta sin honor sino en su tierra, entre sus parientes y en su casa”."
+        },
+        {
+          "number": 5,
+          "text": "Y no pudo hacer allí ningún milagro; solamente puso las manos sobre unos pocos enfermos, y los sanó."
+        },
+        {
+          "number": 6,
+          "text": "Y se quedó asombrado de la falta de fe de ellos. Y recorrió las aldeas a la redonda, enseñando."
+        },
+        {
+          "number": 7,
+          "text": "Entonces, llamando a los doce, comenzó a enviarlos, de dos en dos, dándoles poder sobre los espíritus inmundos,",
+          "headings": [
+            "Misión de los Apóstoles"
+          ]
+        },
+        {
+          "number": 8,
+          "text": "y les ordenó que no llevasen nada para el camino, sino solo un bastón; ni pan, ni alforja, ni dinero en el cinto,",
+          "footnotes": [
+            {
+              "id": "FN49",
+              "caller": "*",
+              "text": "Véase Mt. 10, 5 ss.; Lc. 9, 1 ss.; 10, 1 ss. Jesús quiere que sus ministros tengan plena confianza en la providencia del Padre Celestial (Mt. 6, 25 ss.) y se desprendan de todo lo que no sea absolutamente necesario. Les basta con la eficacia infalible de la palabra evangélica y la gracia que la acompaña. Véase 2 Tm. 2, 4."
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "text": "sino que fuesen calzados de sandalias, y no se pusieran dos túnicas."
+        },
+        {
+          "number": 10,
+          "text": "Y les dijo: “Dondequiera que entréis en una casa, quedaos allí hasta el momento de salir del lugar."
+        },
+        {
+          "number": 11,
+          "text": "Y si en algún lugar no quieren recibiros y no se os escucha, salid de allí y sacudid el polvo de la planta de vuestros pies para testimonio a ellos”."
+        },
+        {
+          "number": 12,
+          "text": "Partieron, pues, y predicaron el arrepentimiento."
+        },
+        {
+          "number": 13,
+          "text": "Expulsaban también a muchos demonios, y ungían con óleo a muchos enfermos y los sanaban.",
+          "footnotes": [
+            {
+              "id": "FN50",
+              "caller": "*",
+              "text": "El óleo se usaba en primer lugar para reanimar las fuerzas físicas del enfermo. También hoy se lo emplea en la Santa Unción, que no es, como suele creerse, solo para los moribundos, sino como explica Santiago, un sacramento para confortar a los enfermos graves, incluso devolviéndoles la salud, y para perdonar pecados si los hubiere (St. 5, 14)."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "El rey Herodes oyó hablar (de Jesús), porque su nombre se había hecho célebre y dijo: “Juan el Bautista ha resucitado de entre los muertos, y por eso las virtudes obran en Él”.",
+          "headings": [
+            "Muerte del Bautista"
+          ],
+          "footnotes": [
+            {
+              "id": "FN51",
+              "caller": "*",
+              "text": "Véase Mt. 14, 1 ss.; Lc. 3, 19 s.; 9, 7 ss."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "Otros decían: “Es Elías” otros: “Es un profeta, tal como uno de los (antiguos) profetas”."
+        },
+        {
+          "number": 16,
+          "text": "No obstante esos rumores, Herodes decía: “Aquel Juan, a quien hice decapitar, ha resucitado”.",
+          "footnotes": [
+            {
+              "id": "FN52",
+              "caller": "*",
+              "text": "Era la mala conciencia lo que atormentaba a Herodes; por eso veía en Jesucristo al Bautista, a quien había matado. “No hay pena comparable a una conciencia cargada de crímenes, porque cuando el hombre sufre exteriormente, se refugia en Dios; pero una conciencia desarreglada, no encuentra a Dios dentro de sí misma; entonces, ¿dónde puede hallar consuelos? ¿dónde buscar el reposo y la paz?” (S. Gregorio)."
+            }
+          ]
+        },
+        {
+          "number": 17,
+          "text": "Herodes, en efecto, había mandado arrestar a Juan, y lo había encadenado en la cárcel, a causa de Herodías, la mujer de Filipo, su hermano, pues la había tomado por su mujer."
+        },
+        {
+          "number": 18,
+          "text": "Porque Juan decía a Herodes: “No te es lícito tener a la mujer de tu hermano”.",
+          "footnotes": [
+            {
+              "id": "FN53",
+              "caller": "*",
+              "text": "Véase Lv. 18, 16."
+            }
+          ]
+        },
+        {
+          "number": 19,
+          "text": "Herodías le guardaba rencor, y quería hacerlo morir, y no podía."
+        },
+        {
+          "number": 20,
+          "text": "Porque Herodes tenía respeto por Juan, sabiendo que era un varón justo y santo, y lo amparaba: al oírlo se quedaba muy perplejo y sin embargo lo escuchaba con gusto."
+        },
+        {
+          "number": 21,
+          "text": "Llegó, empero, una ocasión favorable, cuando Herodes, en su cumpleaños, dio un festín a sus grandes, a los oficiales, y a los personajes de Galilea."
+        },
+        {
+          "number": 22,
+          "text": "Entró (en esta ocasión) la hija de Herodías y se congració por sus danzas con Herodes y los convidados. Dijo, entonces, el rey a la muchacha. “Pídeme lo que quieras, yo te lo daré”."
+        },
+        {
+          "number": 23,
+          "text": "Y le juró: “Todo lo que me pidas, te lo daré, aunque sea la mitad de mi reino”."
+        },
+        {
+          "number": 24,
+          "text": "Ella salió y preguntó a su madre: “¿Qué he de pedir?” Esta dijo: “La cabeza de Juan el Bautista”."
+        },
+        {
+          "number": 25,
+          "text": "Y entrando luego a prisa ante el rey, le hizo su petición: “Quiero que al instante me des sobre un plato la cabeza de Juan el Bautista”."
+        },
+        {
+          "number": 26,
+          "text": "Se afligió mucho el rey; pero en atención a su juramento y a los convidados, no quiso rechazarla.",
+          "footnotes": [
+            {
+              "id": "FN54",
+              "caller": "*",
+              "text": "¿Qué valía un juramento hecho contra Dios? fue el respeto humano, raíz de tantos males, lo que determinó a Herodes a condescender con el capricho de una mujer desalmada. No teme a Dios, pero teme el juicio de algunos convidados ebrios como él. Cf. Mt. 14, 9 y nota."
+            }
+          ]
+        },
+        {
+          "number": 27,
+          "text": "Acto continuo envió, pues, el rey un verdugo, ordenándole traer la cabeza de Juan."
+        },
+        {
+          "number": 28,
+          "text": "Este fue, lo decapitó en la prisión, y trajo sobre un plato la cabeza que entregó a la muchacha, y la muchacha la dio a su madre."
+        },
+        {
+          "number": 29,
+          "text": "Sus discípulos luego que lo supieron, vinieron a llevarse el cuerpo y lo pusieron en un sepulcro."
+        },
+        {
+          "number": 30,
+          "text": "Nuevamente reunidos con Jesús, le refirieron los apóstoles todo cuanto habían hecho y enseñado.",
+          "headings": [
+            "Primera multiplicación de los panes"
+          ]
+        },
+        {
+          "number": 31,
+          "text": "Entonces les dijo: “Venid vosotros aparte, a un lugar desierto, para que descanséis un poco”. Porque muchos eran los que venían e iban, y ellos no tenían siquiera tiempo para comer."
+        },
+        {
+          "number": 32,
+          "text": "Partieron, pues, en una barca, hacia un lugar desierto y apartado."
+        },
+        {
+          "number": 33,
+          "text": "Pero (las gentes) los vieron cuando se iban, y muchos los conocieron; y, acudieron allí, a pie, de todas las ciudades, y llegaron antes que ellos.",
+          "footnotes": [
+            {
+              "id": "FN55",
+              "caller": "*",
+              "text": "Véase Mt. 14, 13-21; Lc. 9, 10-17; Jn. 6, 2-15."
+            }
+          ]
+        },
+        {
+          "number": 34,
+          "text": "Al desembarcar, vio una gran muchedumbre, y tuvo compasión de ellos, porque eran como ovejas sin pastor, y se puso a enseñarles muchas cosas."
+        },
+        {
+          "number": 35,
+          "text": "Siendo ya la hora muy avanzada, sus discípulos se acercaron a Él, y le dijeron: “Este lugar es desierto, y ya es muy tarde."
+        },
+        {
+          "number": 36,
+          "text": "Despídelos, para que se vayan a las granjas y aldeas del contorno a comprarse qué comer”."
+        },
+        {
+          "number": 37,
+          "text": "Mas Él les respondió y dijo: “Dadles de comer vosotros”. Le replicaron: “¿Acaso habremos de comprar pan por doscientos denarios, a fin de darles de comer?"
+        },
+        {
+          "number": 38,
+          "text": "Les preguntó: “¿Cuántos panes tenéis? Id a ver”. Habiéndose cerciorado, le dijeron: “Cinco panes y dos peces”."
+        },
+        {
+          "number": 39,
+          "text": "Y les ordenó hacerlos acampar a todos, por grupos, sobre la hierba verde."
+        },
+        {
+          "number": 40,
+          "text": "Se sentaron, pues, en cuadros, de a ciento y de a cincuenta."
+        },
+        {
+          "number": 41,
+          "text": "Entonces, tomó los cinco panes y los dos peces, levantó los ojos al cielo, bendijo los panes, los partió y los dio a los discípulos, para que ellos los sirviesen. Y repartió también los dos peces entre todos."
+        },
+        {
+          "number": 42,
+          "text": "Comieron todos hasta saciarse."
+        },
+        {
+          "number": 43,
+          "text": "Y recogieron doce canastos llenos de los trozos y de los peces."
+        },
+        {
+          "number": 44,
+          "text": "Los que habían comido los panes, eran cinco mil varones.",
+          "footnotes": [
+            {
+              "id": "FN56",
+              "caller": "*",
+              "text": "Esta primera multiplicación de los panes tuvo lugar probablemente al E. del lago (Jn. 6, 1 y 17); según Otros, al N. O., en el lugar donde se ha descubierto una antiquísima Basílica erigida en recuerdo del milagro."
+            }
+          ]
+        },
+        {
+          "number": 45,
+          "text": "Inmediatamente obligó a sus discípulos a reembarcarse y a adelantársele hacia la otra orilla, en dirección a Betsaida, mientras Él despedía a la gente.",
+          "headings": [
+            "Jesús camina sobre las olas"
+          ],
+          "footnotes": [
+            {
+              "id": "FN57",
+              "caller": "*",
+              "text": "Véase Mt. 14, 22-32; Jn. 6, 15-21."
+            }
+          ]
+        },
+        {
+          "number": 46,
+          "text": "Habiéndola, en efecto despedido, se fue al monte a orar."
+        },
+        {
+          "number": 47,
+          "text": "Cuando llegó la noche, la barca estaba en medio del mar, y Él solo en tierra."
+        },
+        {
+          "number": 48,
+          "text": "Y viendo que ellos hacían esfuerzos penosos por avanzar, porque el viento les era contrario, vino hacia ellos, cerca de la cuarta vela de la noche, andando sobre el mar, y parecía querer pasarlos de largo."
+        },
+        {
+          "number": 49,
+          "text": "Pero ellos, al verlo andando sobre el mar, creyeron que era un fantasma y gritaron;"
+        },
+        {
+          "number": 50,
+          "text": "porque todos lo vieron y se sobresaltaron. Mas Él, al instante, les habló y les dijo: “¡Ánimo! soy Yo. No tengáis miedo”."
+        },
+        {
+          "number": 51,
+          "text": "Subió entonces con ellos a la barca, y se calmó el viento. Y la extrañeza de ellos llegó a su colmo."
+        },
+        {
+          "number": 52,
+          "text": "Es que no habían comprendido lo de los panes, porque sus corazones estaban endurecidos."
+        },
+        {
+          "number": 53,
+          "text": "Terminada la travesía, llegaron a tierra de Genesaret, y atracaron."
+        },
+        {
+          "number": 54,
+          "text": "Apenas salieron de la barca, lo conocieron,"
+        },
+        {
+          "number": 55,
+          "text": "y recorrieron toda esa región; y empezaron a transportar en camillas los enfermos a los lugares donde oían que Él estaba."
+        },
+        {
+          "number": 56,
+          "text": "Y en todas partes adonde entraba: aldeas, ciudades, granjas, colocaban a los enfermos en las plazas, y le suplicaban que los dejasen tocar aunque no fuese más que la franja de su manto; y cuantos lo tocaban, quedaban sanos."
+        }
+      ]
+    },
+    "7": {
+      "chapter": 7,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Se congregaron en torno a Él los fariseos, así como algunos escribas venidos de Jerusalén.",
+          "headings": [
+            "Sobre las tradiciones y costumbres de los fariseos"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Los cuales vieron que algunos de sus discípulos comían con manos profanas, es decir, no lavadas,"
+        },
+        {
+          "number": 3,
+          "text": "porque los fariseos y los judíos en general, no comen, si no se lavan las manos, hasta la muñeca, guardando la tradición de los antiguos;"
+        },
+        {
+          "number": 4,
+          "text": "y lo que procede del mercado no lo comen, sin haberlo rociado con agua; y observan muchos otros puntos por tradición, ablución de copas, de jarros, de vasos de bronce.",
+          "footnotes": [
+            {
+              "id": "FN58",
+              "caller": "*",
+              "text": "Se trata de purificaciones que no eran prescriptas por la Ley y que los escribas multiplicaban llamándolas “tradiciones”. “No conociendo la justicia de Dios y queriendo establecer la suya propia (Rm. 10, 3), el fariseo, satisfecho de sí mismo, espera sorprender a Dios con su virtud que nada necesita (Lc. 18, 1 s.). En realidad, el fariseo es el más temible de los materialistas, pues el saduceo sensual ignora lo espiritual; pero él, en cierto modo, lo conoce para reducirlo a la materia: hechos, realizaciones, obras visibles para que sean vistos de los hombres y los hombres los alaben y los imiten. Antítesis del fariseo es la Verónica que al acercarse a Dios presenta, a la faz de la gracia, el lienzo en blanco de su esperanza”. Es evidente que la doctrina de Jesucristo era tan incompatible con esa mentalidad como el fuego con el agua (véase 12, 38 y nota). La tradición que vale para la Iglesia es la que tiene su origen en la revelación divina, es decir, en la predicación del mismo Jesucristo y de los apóstoles, “a fin de que siempre se crea del mismo modo la verdad absoluta e inmutable predicada desde el principio por los apóstoles” (Pío X en el juramento contra los modernistas). Cf. 1 Tm. 6, 3 s. y 20."
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "text": "Así, pues, los fariseos y los escribas le preguntaron: “¿Por qué no siguen tus discípulos la tradición de los antiguos, sino que comen con manos profanas?”"
+        },
+        {
+          "number": 6,
+          "text": "Les dijo: “Con razón Isaías profetizó sobre vosotros, hipócritas, como está escrito: ‘Este pueblo me honra con los labios,"
+        },
+        {
+          "number": 7,
+          "text": "pero su corazón está lejos de Mí. Me rinden un culto vano, enseñando doctrinas (que son) mandamientos de hombres’.",
+          "footnotes": [
+            {
+              "id": "FN59",
+              "caller": "*",
+              "text": "Véase Is. 29, 13; Cf. Mt. 15, 1-28; 23, 15; Lc. 11, 37-41; Jn. 4, 23 y notas."
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "text": "Vosotros quebrantáis los mandamientos de Dios, al paso que observáis la tradición de los hombres; lavados de jarros y copas y otras muchas cosas semejantes a estas hacéis”."
+        },
+        {
+          "number": 9,
+          "text": "Y les dijo: “Lindamente habéis anulado el mandamiento de Dios, para observar la tradición vuestra."
+        },
+        {
+          "number": 10,
+          "text": "Porque Moisés dijo: “Honra a tu padre y a tu madre”, y: “Quien maldice a su padre o a su madre, sea muerto”. Y vosotros decís:",
+          "footnotes": [
+            {
+              "id": "FN60",
+              "caller": "*",
+              "text": "Véase Ex. 20, 12; 21, 17; Lv. 20, 9; Dt. 5, 16; Ef. 6, 2."
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "text": "“Si uno dice a su padre o a su madre: «Es Korbán, es decir, ofrenda, esto con lo cual yo te podría socorrer»,",
+          "footnotes": [
+            {
+              "id": "FN61",
+              "caller": "*",
+              "text": "Quiere decir que los fariseos se consideraban exonerados de la obligación de sustentar a sus ancianos padres, pretendiendo que les valiera por tal una ofrenda de dinero (Korbán) dada al Templo."
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "text": "ya no lo dejáis hacer nada por su padre o por su madre,"
+        },
+        {
+          "number": 13,
+          "text": "anulando así la palabra de Dios por la tradición que transmitisteis. Y hacéis cantidad de cosas semejantes”."
+        },
+        {
+          "number": 14,
+          "text": "Y habiendo de nuevo llamado a la muchedumbre, les dijo: “Escuchadme todos con inteligencia:"
+        },
+        {
+          "number": 15,
+          "text": "No hay cosa fuera del hombre que, entrando en él, lo pueda manchar; mas lo que sale del hombre, eso es lo que mancha al hombre."
+        },
+        {
+          "number": 16,
+          "text": "Si alguno tiene oídos para oír, oiga”."
+        },
+        {
+          "number": 17,
+          "text": "Cuando, dejando a la multitud, hubo entrado en casa, sus discípulos lo interrogaron sobre esta parábola."
+        },
+        {
+          "number": 18,
+          "text": "Respondioles: “¿A tal punto vosotros también estáis sin inteligencia? ¿No comprendéis que todo lo que de fuera entra en el hombre, no lo puede manchar?"
+        },
+        {
+          "number": 19,
+          "text": "Porque eso no va al corazón, sino al vientre y sale a un lugar oculto, limpiando así todos los alimentos”."
+        },
+        {
+          "number": 20,
+          "text": "Y agregó: “Lo que procede del hombre, eso es lo que mancha al hombre."
+        },
+        {
+          "number": 21,
+          "text": "Porque es de adentro, del corazón de los hombres, de donde salen los malos pensamientos, fornicaciones, hurtos, homicidios,"
+        },
+        {
+          "number": 22,
+          "text": "adulterios, codicias, perversiones, dolo, deshonestidad, envidia, blasfemia, soberbia, insensatez."
+        },
+        {
+          "number": 23,
+          "text": "Todas estas cosas malas proceden de dentro y manchan al hombre”."
+        },
+        {
+          "number": 24,
+          "text": "Partiendo de allí, se fue al territorio de Tiro, y de Sidón, y entrando en una casa, no quiso que nadie lo supiese, mas no pudo quedar oculto.",
+          "headings": [
+            "La fe de la cananea"
+          ]
+        },
+        {
+          "number": 25,
+          "text": "Porque en seguida una mujer cuya hija estaba poseída de un demonio inmundo, habiendo oído hablar de Él, vino a prosternarse a sus pies."
+        },
+        {
+          "number": 26,
+          "text": "Esta mujer era pagana, sirofenicia de origen, y le rogó que echase al demonio fuera de su hija.",
+          "footnotes": [
+            {
+              "id": "FN62",
+              "caller": "*",
+              "text": "Sirofenicia es lo mismo que cananea (Mt. 15, 22), porque los fenicios se llaman también cananeos."
+            }
+          ]
+        },
+        {
+          "number": 27,
+          "text": "Mas Él le dijo: “Deja primero a los hijos saciarse, porque no está bien tomar el pan de los hijos para darlo a los perritos”."
+        },
+        {
+          "number": 28,
+          "text": "Ella le contestó diciendo: “Sí, Señor, pero también los perritos debajo de la mesa, comen de las migajas de los hijos”.",
+          "footnotes": [
+            {
+              "id": "FN63",
+              "caller": "*",
+              "text": "Como esta pagana, insistamos porfiados en la oración, aunque a veces parezca que Dios no quiere oírnos. Véase la parábola del amigo importuno (Lc. 11, 5 ss.). La perseverancia, dice San Bernardo, es una virtud sin la cual nadie verá a Dios, ni será visto por Dios. Cf. Lc. 21, 19."
+            }
+          ]
+        },
+        {
+          "number": 29,
+          "text": "Entonces Él le dijo: “¡Anda! Por lo que has dicho, el demonio ha salido de tu hija”."
+        },
+        {
+          "number": 30,
+          "text": "Ella se volvió a su casa, y encontró a la niña acostada sobre la cama, y que el demonio había salido."
+        },
+        {
+          "number": 31,
+          "text": "Al volver del territorio de Tiro, vino, por Sidón, hacia el mar de Galilea atravesando el territorio de la Decápolis.",
+          "headings": [
+            "El sordomudo"
+          ]
+        },
+        {
+          "number": 32,
+          "text": "Le trajeron un sordo y tartamudo, rogándole que pusiese su mano sobre él."
+        },
+        {
+          "number": 33,
+          "text": "Mas Él, tomándolo aparte, separado de la turba, puso sus dedos en los oídos de él; escupió y tocole la lengua."
+        },
+        {
+          "number": 34,
+          "text": "Después, levantando los ojos al cielo, dio un gemido y le dijo: “Effathá”, es decir, “ábrete”.",
+          "footnotes": [
+            {
+              "id": "FN64",
+              "caller": "*",
+              "text": "Este acto se repite hoy en la administración del Bautismo, cuando el sacerdote dice: “éfeta”: abre tus oídos a la palabra de Dios. Pío XII el 14 de enero de 1944 ha dispuesto que se suprima esto siempre que lo aconseje la higiene y la profilaxis en casos de grave peligro. (A. A. S. 36, 28-29)."
+            }
+          ]
+        },
+        {
+          "number": 35,
+          "text": "Y al punto sus oídos se abrieron, y la ligadura de su lengua se desató, y hablaba correctamente."
+        },
+        {
+          "number": 36,
+          "text": "Mas les mandó no decir nada a nadie; pero cuanto más lo prohibía, más lo proclamaban."
+        },
+        {
+          "number": 37,
+          "text": "Y en el colmo de la admiración, decían: “Todo lo hizo bien: hace oír a los sordos, y hablar a los mudos”."
+        }
+      ]
+    },
+    "8": {
+      "chapter": 8,
+      "verses": [
+        {
+          "number": 1,
+          "text": "En aquel tiempo, como hubiese de nuevo una gran muchedumbre, y que no tenía qué comer, llamó a sus discípulos, y les dijo:",
+          "headings": [
+            "Segunda multiplicación de los panes"
+          ],
+          "footnotes": [
+            {
+              "id": "FN65",
+              "caller": "*",
+              "text": "Véase Mt. 15, 32-39."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "“Tengo compasión de la muchedumbre, porque hace ya tres días que no se aparta de Mí, y no tiene nada qué comer."
+        },
+        {
+          "number": 3,
+          "text": "Si los despido en ayunas a sus casas, les van a faltar las fuerzas en el camino, porque los hay que han venido de lejos”."
+        },
+        {
+          "number": 4,
+          "text": "Dijéronle sus discípulos: “¿Cómo será posible aquí, en un desierto, saciarlos con pan?”"
+        },
+        {
+          "number": 5,
+          "text": "Les preguntó: “¿Cuántos panes tenéis?” Respondieron: “Siete”."
+        },
+        {
+          "number": 6,
+          "text": "Y mandó que la gente se sentase en el suelo; tomó, entonces, los siete panes, dio gracias, los partió y los dio a sus discípulos, para que ellos los sirviesen; y los sirvieron a la gente."
+        },
+        {
+          "number": 7,
+          "text": "Tenían también algunos pececillos; los bendijo, y dijo que los sirviesen también."
+        },
+        {
+          "number": 8,
+          "text": "Comieron hasta saciarse, y recogieron siete canastos de pedazos que sobraron."
+        },
+        {
+          "number": 9,
+          "text": "Eran alrededor de cuatro mil. Y los despidió."
+        },
+        {
+          "number": 10,
+          "text": "En seguida subió a la barca con sus discípulos, y fue a la región de Dalmanuta.",
+          "headings": [
+            "Los fariseos piden una señal"
+          ]
+        },
+        {
+          "number": 11,
+          "text": "Salieron entonces los fariseos y se pusieron a discutir con Él, exigiéndole alguna señal del cielo, para ponerlo a prueba.",
+          "footnotes": [
+            {
+              "id": "FN66",
+              "caller": "*",
+              "text": "Véase Mt. 16, 1-12; Lc. 11, 54."
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "text": "Mas Él, gimiendo en su espíritu, dijo: “¿Por qué esta raza exige una señal? En verdad, os digo, ninguna señal será dada a esta generación”.",
+          "footnotes": [
+            {
+              "id": "FN67",
+              "caller": "*",
+              "text": "Según S. Mateo (16, 4) Jesús citó el caso del profeta Jonás como figura de su milagrosa resurrección."
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "Y dejándolos allí, se volvió a embarcar para la otra ribera."
+        },
+        {
+          "number": 14,
+          "text": "Habían olvidado de tomar pan, y no tenían consigo en la barca más que un solo pan.",
+          "headings": [
+            "Contra las levaduras"
+          ]
+        },
+        {
+          "number": 15,
+          "text": "Les hizo entonces esta advertencia: “¡Cuidado! Guardaos de la levadura de los fariseos y de la levadura de Herodes”.",
+          "footnotes": [
+            {
+              "id": "FN68",
+              "caller": "*",
+              "text": "La levadura de los fariseos, según vemos en Lc. 12, 1, es la hipocresía. Hemos de guardarnos tanto de compartirla cuanto de ser su víctima. La levadura de Herodes es la mala vida, que se contagia como una peste. Véase Mt. 16, 6 y 12."
+            }
+          ]
+        },
+        {
+          "number": 16,
+          "text": "Por lo cual ellos se hicieron esta reflexión unos a otros: “Es que no tenemos panes”."
+        },
+        {
+          "number": 17,
+          "text": "Mas conociéndolo, Jesús les dijo: “¿Por qué estáis pensando en que no teneis panes? ¿No comprendéis todavía? ¿No caéis en la cuenta? ¿Tenéis endurecido vuestro corazón?"
+        },
+        {
+          "number": 18,
+          "text": "¿Teniendo ojos, no veis; y teniendo oídos, no oís?"
+        },
+        {
+          "number": 19,
+          "text": "Cuando partí los cinco panes entre los cinco mil, ¿cuántos canastos llenos de pedazos recogisteis?” “Doce”, le dijeron."
+        },
+        {
+          "number": 20,
+          "text": "“Y cuando partí los siete panes entre los cuatro mil, ¿cuántas canastas llenas de trozos os llevasteis?” Dijéronle: “Siete”."
+        },
+        {
+          "number": 21,
+          "text": "Y les dijo: “¿No comprendéis todavía?”"
+        },
+        {
+          "number": 22,
+          "text": "Fueron luego a Betsaida. Y le trajeron un ciego, rogándole que lo tocase.",
+          "headings": [
+            "El ciego de Betsaida"
+          ],
+          "footnotes": [
+            {
+              "id": "FN69",
+              "caller": "*",
+              "text": "Betsaida, la llamada Betsaida Julias, al E. de la desembocadura del Jordán en el lago de Genesaret."
+            }
+          ]
+        },
+        {
+          "number": 23,
+          "text": "Y Él, tomando de la mano al ciego, lo condujo fuera de la aldea, le escupió en los ojos, y le impuso las manos; después le preguntó: “¿Ves algo?”"
+        },
+        {
+          "number": 24,
+          "text": "Él alzó los ojos y dijo: “Veo a los hombres; los veo como árboles que caminan”."
+        },
+        {
+          "number": 25,
+          "text": "Le puso otra vez las manos sobre los ojos, y el hombre miró con fijeza y quedó curado, y veía todo claramente."
+        },
+        {
+          "number": 26,
+          "text": "Y lo envió de nuevo a su casa y le dijo: “Ni siquiera entres en la aldea”."
+        },
+        {
+          "number": 27,
+          "text": "Jesús se marchó con sus discípulos para las aldeas de Cesarea de Filipo. Por el camino hizo esta pregunta a sus discípulos: “¿Quién soy Yo, según el decir de los hombres?”.",
+          "headings": [
+            "Confesión de Pedro"
+          ],
+          "footnotes": [
+            {
+              "id": "FN70",
+              "caller": "*",
+              "text": "Véase Mt. 16, 13-16; Lc. 9, 18-20."
+            }
+          ]
+        },
+        {
+          "number": 28,
+          "text": "Le respondieron diciendo: “Juan el Bautista; otros: Elías; otros: uno de los profetas”."
+        },
+        {
+          "number": 29,
+          "text": "Entonces, les preguntó: “Según vosotros, ¿quién soy Yo?” Respondiole Pedro y dijo: “Tú eres el Cristo”.",
+          "footnotes": [
+            {
+              "id": "FN71",
+              "caller": "*",
+              "text": "Véase Mt. 16, 18, donde Jesús recompensó la fe de aquel humilde pescador, haciéndole príncipe de los apóstoles."
+            }
+          ]
+        },
+        {
+          "number": 30,
+          "text": "Y les mandó rigurosamente que a nadie dijeran (esto) de Él."
+        },
+        {
+          "number": 31,
+          "text": "Comenzó entonces, a enseñarles que era necesario que el Hijo del hombre sufriese mucho; que fuese reprobado por los ancianos, por los sumos sacerdotes, y por los escribas; que le fuese quitada la vida, y que, tres días después, resucitase.",
+          "headings": [
+            "Primer anuncio de la Pasión"
+          ],
+          "footnotes": [
+            {
+              "id": "FN72",
+              "caller": "*",
+              "text": "¡Reprobado! Y bien lo vemos en 14, 64 donde todos están horrorizados de sus “blasfemias”. Nosotros, gentiles, más que nadie debemos agradecerle, pues fue para abrirnos la puerta de la salud (Ef 2, 1 ss.). “Por el delito de los judíos la salud pasó a los gentiles; por la incredulidad de los gentiles volverá a los judíos” (S. Jerónimo)."
+            }
+          ]
+        },
+        {
+          "number": 32,
+          "text": "Y les hablaba abiertamente. Entonces, Pedro, tomándolo aparte, empezó a reprenderlo."
+        },
+        {
+          "number": 33,
+          "text": "Pero Él, volviéndose y viendo a sus discípulos, increpó a Pedro y le dijo: “¡Vete de Mí, atrás, Satanás! porque no sientes las cosas de Dios, sino las de los hombres”.",
+          "footnotes": [
+            {
+              "id": "FN73",
+              "caller": "*",
+              "text": "No obstante la confesión que acaba de hacer (v. 29), Pedro muestra aquí su falta de espíritu sobrenatural. Jesús, con la extrema severidad de su reproche, nos enseña que nada vale un amor sentimental, sino el que busca en todo la voluntad del Padre como lo hizo Él. Cf. Mt. 24, 42 y nota."
+            }
+          ]
+        },
+        {
+          "number": 34,
+          "text": "Y convocando a la muchedumbre con sus discípulos les dijo: “Si alguno quiere venir en pos de Mí, renúnciese a sí mismo, tome su cruz, y sígame.",
+          "headings": [
+            "La renuncia del “yo”"
+          ],
+          "footnotes": [
+            {
+              "id": "FN74",
+              "caller": "*",
+              "text": "A la luz de la doctrina revelada y definida, se comprende bien la suavidad de esta palabra de Jesús, que al principio parece tan dura. Renúnciese a si mismo. Ello significa decirnos, para nuestros bien: líbrate de ese enemigo, pues ahora sabes que es malo, corrompido, perverso. Si tú renuncias a ese mal amigo y consejero que llevas adentro, yo lo sustituiré con mi espíritu, sin el cual nada puedes hacer (Jn. 15, 5). ¡Y cómo será de total ese apartamiento que necesitamos hacer del autoenemigo, cuando Jesús nos enseña que es indispensable nacer de nuevo para poder entrar en el Reino de Dios! (Jn. 3, 3). Renacer del Espíritu, echar fuera aquel yo que nos aconsejaba y nos prometía quizá tantas grandezas. Echarlo fuera, quitarlo de en medio, destituirlo de su cargo de consejero, por mentiroso, malo e ignorante. He aquí lo que tanto cuesta a nuestro amor propio: reconocer que nuestro fulano de tal es “mentira” (Rm. 3, 4) y de suyo digno de la Ira de Dios. Cf. Lc. 9, 23 y nota."
+            }
+          ]
+        },
+        {
+          "number": 35,
+          "text": "Quien quiere salvar su vida, la perderá, y quien pierde su vida a causa de Mí y del Evangelio, la salvará."
+        },
+        {
+          "number": 36,
+          "text": "En efecto: ¿de qué servirá al hombre ganar el mundo entero, y perder su vida?"
+        },
+        {
+          "number": 37,
+          "text": "Pues ¿qué cosa puede dar el hombre a cambio de su vida?"
+        },
+        {
+          "number": 38,
+          "text": "Porque quien se avergonzare de Mí y de mis palabras delante de esta raza adúltera y pecadora, el Hijo del hombre también se avergonzará de él cuando vuelva en la gloria de su Padre, escoltado por los santos ángeles”."
+        }
+      ]
+    },
+    "9": {
+      "chapter": 9,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Y les dijo: “En verdad, os digo, entre los que están aquí, algunos no gustarán la muerte sin que hayan visto el reino de Dios venido con poder”.",
+          "headings": [
+            "Transfiguración de Jesús"
+          ],
+          "footnotes": [
+            {
+              "id": "FN75",
+              "caller": "*",
+              "text": "Colocado al principio del capítulo, este v. (que en la Vulgata figura como 39 del cap. 8) muestra claramente que el anuncio de Jesús se refiere a su gloriosa Transfiguración, relatada en los vv. que siguen, y en la cual Jesús mostró un anticipo de la gloria con que volverá al fin de los tiempos. Tal es la gloria cuya visión nos refieren S. Juan en su Evangelio (1, 14), y S. Pedro en su segunda Epistola (1, 16 ss.). Cf. Mt. 16, 28 y nota. Lc. 9, 27."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Y seis días después, tomó Jesús consigo a Pedro, a Santiago y a Juan, y los llevó solos, aparte, a un alto monte, y se transfiguró a su vista.",
+          "footnotes": [
+            {
+              "id": "FN76",
+              "caller": "*",
+              "text": "Véase Mt. 17, 1-8; Lc. 9, 28-36. Un alto monte: según la tradición, el monte Tabor en Galilea."
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "text": "Sus vestidos se pusieron resplandecientes y de tal blancura; que no hay batanero sobre esta tierra, capaz de blanquearlos así."
+        },
+        {
+          "number": 4,
+          "text": "Y se les aparecieron Elías y Moisés y conversaban con Jesús."
+        },
+        {
+          "number": 5,
+          "text": "Entonces, Pedro dijo a Jesús: “Rabí, es bueno que nos quedemos aquí. Hagamos, pues, aquí tres pabellones, uno para ti, uno para Moisés, y uno para Elías”."
+        },
+        {
+          "number": 6,
+          "text": "Era que no sabía lo que decía, porque estaban sobrecogidos de temor."
+        },
+        {
+          "number": 7,
+          "text": "Vino, entonces, una nube que los cubrió con su sombra, y de la nube una voz se hizo oír: “Este es mi Hijo, el Amado. ¡Escuchadlo!”.",
+          "footnotes": [
+            {
+              "id": "FN77",
+              "caller": "*",
+              "text": "Aquí, como en el Bautismo de Jesús, el Padre da solemne testimonio de la filiación divina del Mesías, y añade el único mandamiento que el Padre formula personalmente en todo el Evangelio: que escuchemos a Jesús. Por eso, el Maestro nos dice: “Esta es la obra de Dios: que creáis en Aquel que Él os envió” ( Jn. 6, 29)."
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "text": "Y de repente, mirando todo alrededor, no vieron a nadie con ellos, sino a Jesús solo."
+        },
+        {
+          "number": 9,
+          "text": "Cuando bajaban del monte, les prohibió referir a nadie lo que habían visto, mientras el Hijo del hombre no hubiese resucitado de entre los muertos.",
+          "headings": [
+            "La venida de Elías"
+          ],
+          "footnotes": [
+            {
+              "id": "FN78",
+              "caller": "*",
+              "text": "El monte Tabor y el Gólgota se complementan mostrándonos el doble misterio de Jesús que anunciaban las profecías (1 Pe. 1, 11). Aquí Jesús aparece en la gloria, con que vendrá en su triunfo (v. 1); allá lo verán sumido en un mar de penas y angustias. “En la transfiguración se trataba en primer lugar de quitar de los corazones de los discípulos el escándalo de la Cruz” (S. León Magno)."
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "Y conservaron lo acaecido dentro de sí, discurriendo “qué podría significar eso de resucitar de entre los muertos”."
+        },
+        {
+          "number": 11,
+          "text": "Y le hicieron esta pregunta: “¿Por qué, pues, dicen los escribas que Elías debe venir primero?”"
+        },
+        {
+          "number": 12,
+          "text": "Respondioles: “Elías, en efecto, vendrá primero y lo restaurará todo. Pero ¿cómo está escrito del Hijo del hombre, que debe padecer mucho y ser vilipendiado?"
+        },
+        {
+          "number": 13,
+          "text": "Pues bien, Yo os declaro: en realidad Elías ya vino e hicieron con él cuanto les plugo, como está escrito de él”.",
+          "footnotes": [
+            {
+              "id": "FN79",
+              "caller": "*",
+              "text": "“En espíritu S. Juan era Elías, mas no en persona” (S. Gregorio Magno). Véase Mt. 17, 11 s. y nota; Mal. 4, 5; Is. 53, 3."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "Llegaron, entretanto, a los discípulos y vieron un gran gentío que los rodeaba, y escribas que discutían con ellos.",
+          "headings": [
+            "El niño endemoniado"
+          ],
+          "footnotes": [
+            {
+              "id": "FN80",
+              "caller": "*",
+              "text": "Véase Mt. 17, 14, 21; Lc. 9, 37, 43 y notas."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "Toda esta multitud en cuanto lo vio se quedó asombrada y corrió a saludarlo."
+        },
+        {
+          "number": 16,
+          "text": "Preguntoles: “¿Por qué discutís con ellos?”"
+        },
+        {
+          "number": 17,
+          "text": "Respondiole uno de la multitud: “Maestro, te he traído a mi hijo, que tiene un demonio mudo."
+        },
+        {
+          "number": 18,
+          "text": "Y cuando se apodera de él, lo zamarrea y él echa espumarajos, rechina los dientes y queda todo rígido. Y pedí a tus discípulos que lo expulsasen, y no han podido”."
+        },
+        {
+          "number": 19,
+          "text": "Entonces, Él les respondió y dijo: “Oh raza incrédula, ¿hasta cuándo habré de estar con vosotros? ¿Hasta cuándo habré de soportaros? ¡Traédmelo!”.",
+          "footnotes": [
+            {
+              "id": "FN81",
+              "caller": "*",
+              "text": "Este reproche de incredulidad es el único que el divino Maestro dirige a sus discípulos. Pero es el más grave. Véase 11, 22 ss. y nota."
+            }
+          ]
+        },
+        {
+          "number": 20,
+          "text": "Y se lo trajeron. En cuanto lo vio, el espíritu lo zamarreaba (al muchacho); y caído en el suelo, se revolvía echando espumarajos."
+        },
+        {
+          "number": 21,
+          "text": "Y preguntó al padre: “¿Cuánto tiempo hace que esto le sucede?” Respondió: “Desde su infancia;"
+        },
+        {
+          "number": 22,
+          "text": "y a menudo lo ha echado, ora en el fuego, ora en el agua, para hacerlo morir. Pero si Tú puedes algo, ayúdanos, Y ten compasión de nosotros”."
+        },
+        {
+          "number": 23,
+          "text": "Replicole Jesús: “¡Si puedes! ... Todo es posible para el que cree”."
+        },
+        {
+          "number": 24,
+          "text": "Entonces, el padre del niño se puso a gritar: “¡Creo! ¡Ven en ayuda de mi falta de fe!”"
+        },
+        {
+          "number": 25,
+          "text": "Y Jesús viendo que se aproximaba un tropel de gente, conminó al espíritu diciéndole: “Espíritu mudo y sordo, Yo te lo mando, sal de él, y no vuelvas a entrar más en él”."
+        },
+        {
+          "number": 26,
+          "text": "Y, gritando y retorciéndole en convulsiones, salió. Y quedó el niño como muerto, y así muchos decían que había muerto."
+        },
+        {
+          "number": 27,
+          "text": "Pero Jesús, tomándolo de la mano, lo levantó y él se tuvo en pie."
+        },
+        {
+          "number": 28,
+          "text": "Cuando hubo entrado en casa, los discípulos le preguntaron en privado: “¿Por qué, pues, no pudimos nosotros expulsarlo?”"
+        },
+        {
+          "number": 29,
+          "text": "Les dijo: “Esta casta no puede ser expulsada sino con la oración y el ayuno”.",
+          "footnotes": [
+            {
+              "id": "FN82",
+              "caller": "*",
+              "text": "Y el ayuno: falta en el Codex Vaticanus. Cf. Mt. 17, 21."
+            }
+          ]
+        },
+        {
+          "number": 30,
+          "text": "Partiendo de allí, pasaron a través de Galilea, y no quería que se supiese;",
+          "headings": [
+            "Segundo anuncio de la Pasión"
+          ]
+        },
+        {
+          "number": 31,
+          "text": "porque enseñó esto a sus discípulos: “El Hijo del hombre va a ser entregado en manos de los hombres y lo harán morir; y tres días después de su muerte resucitará?”"
+        },
+        {
+          "number": 32,
+          "text": "Pero ellos no comprendieron estas palabras y temían preguntarle."
+        },
+        {
+          "number": 33,
+          "text": "Entretanto, llegaron a Cafarnaúm; y cuando estuvo en su casa, les preguntó: “¿De qué conversabais en el camino?”.",
+          "headings": [
+            "Humildad y caridad"
+          ],
+          "footnotes": [
+            {
+              "id": "FN83",
+              "caller": "*",
+              "text": "Véase Mt. 18, 1 ss.; Lc. 9, 46 ss."
+            }
+          ]
+        },
+        {
+          "number": 34,
+          "text": "Mas ellos guardaron silencio, porque habían discutido entre sí, durante el camino, sobre quien sería el mayor."
+        },
+        {
+          "number": 35,
+          "text": "Entonces, sentose, llamo a los Doce y les dijo: “Si alguno quiere, ser el primero, deberá ser el último de todos y el servidor de todos”."
+        },
+        {
+          "number": 36,
+          "text": "Y tomando a un niño, lo puso en medio de ellos, y abrazándolo, les dijo:"
+        },
+        {
+          "number": 37,
+          "text": "“El que recibe a uno de estos niños en mi nombre, a Mí me recibe; y el que a Mí me recibe, no me recibe a Mí, sino a Aquel que me envió”."
+        },
+        {
+          "number": 38,
+          "text": "Díjole Juan: “Maestro, vimos a un hombre que expulsaba demonios en tu nombre, el cual no nos sigue; y se lo impedíamos, porque no anda con nosotros”."
+        },
+        {
+          "number": 39,
+          "text": "Pero Jesús dijo: “No se lo impidáis, porque nadie, haciendo milagro por mi nombre, será capaz de hablar luego mal de Mí."
+        },
+        {
+          "number": 40,
+          "text": "Porque quien no está contra nosotros, por nosotros está."
+        },
+        {
+          "number": 41,
+          "text": "Quien os diere a beber un vaso de agua, por razón de que sois de Cristo, en verdad os digo, no perderá su recompensa”.",
+          "footnotes": [
+            {
+              "id": "FN84",
+              "caller": "*",
+              "text": "Nosotros: Así reza el texto griego según Merk. Algunos códices dicen vosotros, como en Lc. 9, 50. La variante parece acentuar más aún la diferencia que Jesús establece entre Él —que es el fin (Mt. 12, 30)— y nosotros, simples medios. Cf. Fil. 1, 15 ss.; Nm. 11, 24-30."
+            }
+          ]
+        },
+        {
+          "number": 42,
+          "text": "Quien escandalizare a uno de estos pequeñitos que creen, más le valdría que le atasen alrededor de su cuello una piedra de molino de las que mueve un asno, y que lo echasen al mar.",
+          "headings": [
+            "Gravedad del escándalo"
+          ]
+        },
+        {
+          "number": 43,
+          "text": "Si tu mano te escandaliza, córtala: más te vale entrar en la vida manco, que irte, con tus dos manos, a la gehenna, al fuego que no se apaga. [",
+          "footnotes": [
+            {
+              "id": "FN85",
+              "caller": "*",
+              "text": "Véase Mt. 5, 29 s.; 18, 8 y notas. Cf. Pr. 5, 8; Si. 9, 4. Gehenna : infierno Cf. Mt. 5, 22 y nota."
+            }
+          ]
+        },
+        {
+          "number": 44,
+          "text": "].",
+          "footnotes": [
+            {
+              "id": "FN86",
+              "caller": "*",
+              "text": "Dos vv. 44 y 46 faltan en los mejores códices griegos. Son repeticiones del v. 48, introducidas por los copistas (véase Merk, Joüon, etc.)."
+            }
+          ]
+        },
+        {
+          "number": 45,
+          "text": "Y si tu pie te escandaliza, córtalo: más te vale entrar en la vida cojo que ser, con tus dos pies, arrojado a la gehenna. ["
+        },
+        {
+          "number": 46,
+          "text": "]."
+        },
+        {
+          "number": 47,
+          "text": "Y si tu ojo te escandaliza, sácalo: más te vale entrar en el reino de Dios teniendo un solo ojo que con tus dos ojos ser arrojado a la gehenna,"
+        },
+        {
+          "number": 48,
+          "text": "donde “el gusano de ellos no muere y el fuego no se apaga”.",
+          "footnotes": [
+            {
+              "id": "FN87",
+              "caller": "*",
+              "text": "Aquí Jesús define la eternidad de las penas del infierno. Véase Judit 16, 21; Is. 66, 24; Ap. 20, 10."
+            }
+          ]
+        },
+        {
+          "number": 49,
+          "text": "Porque cada uno ha de ser salado con el fuego. La sal es buena; mas si la sal se vuelve insípida, ¿con qué la sazonaréis? Tened sal en vosotros mismos y estad en paz unos con otros.",
+          "footnotes": [
+            {
+              "id": "FN88",
+              "caller": "*",
+              "text": "Según la Ley (Lv. 2, 13) los sacrificios se rociaban con sal (de la Alianza)."
+            }
+          ]
+        }
+      ]
+    },
+    "10": {
+      "chapter": 10,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Partiendo de allí, fue al territorio de Judea y de Transjordania. De nuevo, las muchedumbres acudieron a Él, y de nuevo, según su costumbre, los instruía.",
+          "headings": [
+            "III. CAMINO DE JERUSALÉN",
+            "Indisolubilidad del matrimonio"
+          ],
+          "footnotes": [
+            {
+              "id": "FN89",
+              "caller": "*",
+              "text": "Véase Mt. 19, y ss.; Gn. 1, 27; 2, 24; Dt. 24, 14; 1 Co. 6, 16; 7, 10 s.; Ef. 5, 31."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Y viniendo a Él algunos fariseos que, con el propósito de tentarlo, le preguntaron si era lícito al marido repudiar a su mujer,"
+        },
+        {
+          "number": 3,
+          "text": "les respondió y dijo: “¿Qué os ha ordenado Moisés?”"
+        },
+        {
+          "number": 4,
+          "text": "Dijeron: “Moisés permitió dar libelo de repudio y despedir (la)”."
+        },
+        {
+          "number": 5,
+          "text": "Mas Jesús les replicó: “En vista de vuestra dureza de corazón os escribió ese precepto."
+        },
+        {
+          "number": 6,
+          "text": "Pero desde el comienzo de la creación, Dios los hizo varón y mujer."
+        },
+        {
+          "number": 7,
+          "text": "Por esto el hombre dejará a su padre y a su madre y se unirá a su mujer,"
+        },
+        {
+          "number": 8,
+          "text": "y los dos vendrán a ser una sola carne. De modo que no son ya dos, sino una sola carne."
+        },
+        {
+          "number": 9,
+          "text": "¡Y bien! ¡lo que Dios ha unido, el hombre no lo separe!”"
+        },
+        {
+          "number": 10,
+          "text": "De vuelta a su casa, los discípulos otra vez le preguntaron sobre eso."
+        },
+        {
+          "number": 11,
+          "text": "Y les dijo: “Quien repudia a su mujer y se casa con otra, comete adulterio contra la primera;",
+          "footnotes": [
+            {
+              "id": "FN90",
+              "caller": "*",
+              "text": "Contra la primera: hay un bello matiz de caridad en esta clara definición que condena el desorden de nuestra época, en la que una legislación civil se cree autorizada para separar “lo que Dios ha unido”."
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "text": "y si una mujer repudia a su marido y se casa con otro, ella comete adulterio”."
+        },
+        {
+          "number": 13,
+          "text": "Le trajeron unos niños para que los tocase; mas los discípulos ponían trabas.",
+          "headings": [
+            "Los niños son dueños del Reino"
+          ]
+        },
+        {
+          "number": 14,
+          "text": "Jesús viendo esto, se molestó y les dijo: “Dejad a los niños venir a Mí y no les impidáis, porque de tales como estos es el reino de Dios.",
+          "footnotes": [
+            {
+              "id": "FN91",
+              "caller": "*",
+              "text": "Este llamado de Jesús es el fundamento de toda educación. Los niños entienden muy bien las palabras del divino Maestro, porque Él mismo nos dijo que su Padre revela a los pequeños lo que oculta a los sabios y prudentes (Lc. 10, 21)."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "En verdad, os digo, quien no recibe el reino de Dios como un niño, no entrará en él”."
+        },
+        {
+          "number": 16,
+          "text": "Después los abrazó y los bendijo, poniendo sobre ellos las manos."
+        },
+        {
+          "number": 17,
+          "text": "Cuando iba ya en camino, vino uno corriendo y, doblando la rodilla, le preguntó: “Maestro bueno, ¿qué he de hacer para heredar la vida eterna?”.",
+          "headings": [
+            "El joven rico"
+          ],
+          "footnotes": [
+            {
+              "id": "FN92",
+              "caller": "*",
+              "text": "Véase Mt. 19, 16 ss.; Lc. 18, 18 ss."
+            }
+          ]
+        },
+        {
+          "number": 18,
+          "text": "Respondiole Jesús: “¿Por qué me llamas bueno? Nadie es bueno, sino solo Dios."
+        },
+        {
+          "number": 19,
+          "text": "Tú conoces los mandamientos: “No mates, no cometas adulterio, no robes, no des falso testimonio, no defraudes, honra a tu padre y a tu madre”;"
+        },
+        {
+          "number": 20,
+          "text": "y él le respondió: “Maestro, he cumplido todo esto desde mi juventud”."
+        },
+        {
+          "number": 21,
+          "text": "Entonces, Jesús lo miró con amor y le dijo: “Una cosa te queda: anda, vende todo lo que posees y dalo a los pobres, y tendrás un tesoro en el cielo; después, vuelve, y sígueme, llevando la cruz”."
+        },
+        {
+          "number": 22,
+          "text": "Al oír estas palabras, se entristeció, y se fue apenado, porque tenía muchos bienes.",
+          "footnotes": [
+            {
+              "id": "FN93",
+              "caller": "*",
+              "text": "Sobre este caso véase Lc. 18, 22 y nota."
+            }
+          ]
+        },
+        {
+          "number": 23,
+          "text": "Entonces, Jesús, dando una mirada a su rededor, dijo a sus discípulos: “¡Cuán difícil es para los ricos entrar en el reino de Dios!”",
+          "headings": [
+            "Recompensa de los que siguen a Jesús"
+          ]
+        },
+        {
+          "number": 24,
+          "text": "Como los discípulos se mostrasen asombrados de sus palabras, volvió a decirles Jesús: “Hijitos, ¡cuán difícil es para los que confían en las riquezas, entrar en el reino de Dios!"
+        },
+        {
+          "number": 25,
+          "text": "Es más fácil a un camello pasar por el ojo de una aguja que a un rico entrar en el reino de Dios”.",
+          "footnotes": [
+            {
+              "id": "FN94",
+              "caller": "*",
+              "text": "Jesús enseña que no puede salvarse el rico de corazón, porque, como Él mismo dijo, no se puede servir a Dios y a las riquezas (Mt. 6, 24). El que pone su corazón en los bienes de este mundo no es el amo de ellos, sino que los sirve, así como todo el que peca esclavo es del pecado (Jn. 8, 34). Tan triste situación es bien digna de lástima, pues se opone a la bienaventuranza de los pobres en espíritu, que Jesús presenta como la primera de todas (Mt. 5, 31). Véase Lc. 18, 24 y nota. “No se sepulte vuestra alma en el oro, elévese al cielo” (S. Jerónimo). Cf: Col. 3, 1, 4; Fil. 3, 19 ss.; Ef. 2, 6."
+            }
+          ]
+        },
+        {
+          "number": 26,
+          "text": "Pero su estupor aumentó todavía; y se decían entre sí: “Entonces, ¿quién podrá salvarse?”"
+        },
+        {
+          "number": 27,
+          "text": "Mas Jesús, fijando sobre ellos su mirada, dijo: “Para los hombres, esto es imposible, mas no para Dios, porque todo es posible para Dios”."
+        },
+        {
+          "number": 28,
+          "text": "Púsose, entonces, Pedro a decirle: “Tú lo ves, nosotros hemos dejado todo y te hemos seguido”."
+        },
+        {
+          "number": 29,
+          "text": "Jesús le contestó y dijo: “En verdad, os digo, nadie habrá dejado casa, o hermanos, o hermanas, o madre, o padre, o hijos, o campos, a causa de Mí y a causa del Evangelio,"
+        },
+        {
+          "number": 30,
+          "text": "que no reciba centuplicado ahora, en este tiempo, casas, hermanos, hermanas, madre, hijos y campos —a una con persecuciones—, y, en el siglo venidero, la vida eterna.",
+          "footnotes": [
+            {
+              "id": "FN95",
+              "caller": "*",
+              "text": "Centuplicado. Todos los verdaderos pobres son ricos. “¿No os parece rico, exclama S. Ambrosio, el que tiene la paz del alma, la tranquilidad y el reposo, el que nada desea, no se turba por nada, no se disgusta por las cosas que tiene desde largo tiempo, y no las busca nuevas?” A diferencia de San Mateo (19, 27 ss.), no se habla aquí del que deja la esposa, y se acentúa en cambio que esta recompensa se refiere a la vida presente, aun en medio de las persecuciones tantas veces anunciadas por el Señor a sus discípulos. Cf. Lc. 18, 29."
+            }
+          ]
+        },
+        {
+          "number": 31,
+          "text": "Mas muchos primeros serán últimos, y muchos últimos, primeros”."
+        },
+        {
+          "number": 32,
+          "text": "Iban de camino, subiendo a Jerusalén, y Jesús se les adelantaba; y ellos se asombraban y lo seguían con miedo. Y tomando otra vez consigo a los Doce, se puso a decirles lo que le había de acontecer:",
+          "headings": [
+            "Tercer anuncio de la Pasión"
+          ]
+        },
+        {
+          "number": 33,
+          "text": "“He aquí que subimos a Jerusalén, y el Hijo del hombre va a ser entregado a los sumos sacerdotes y a los escribas, y lo condenarán a muerte, y lo entregarán a los gentiles;"
+        },
+        {
+          "number": 34,
+          "text": "y lo escarnecerán, lo escupirán, lo azotarán y lo matarán, mas tres días después resucitará”."
+        },
+        {
+          "number": 35,
+          "text": "Acercáronsele Santiago y Juan, los hijos de Zebedeo, y le dijeron: “Maestro, queremos que Tú hagas por nosotros cualquier cosa que te pidamos”.",
+          "headings": [
+            "La ambición de Santiago y Juan"
+          ],
+          "footnotes": [
+            {
+              "id": "FN96",
+              "caller": "*",
+              "text": "Estos “hijos del trueno” (3, 17) recordaban los doce tronos (Mt. 19, 28) y pensaban coma los que oyeron la parábola de las minas (Lc. 19, 11), como los del Domingo de Ramos (11, 10), como todos los apóstoles después de la Resurrección (Hch. 1, 6), que el Reino empezaría a llegar. Jesús no condena precisamente, como algunos han creído, esta gestión que sus primos hermanos intentan por medio de su madre la buena Salomé (Mt. 20, 20) y que, si bien recuerda la ambición egoísta de Sancho por su ínsula, muestra al menos una fe Y esperanza sin doblez. Pero alude una vez más a los muchos anuncios de su Pasión, que ellos, como Pedro (Mt. 16, 22), querían olvidar, y les reitera la gran lección de la humildad, refiriéndose de paso a arcanos del Reino que San Pablo habría de explayar más tarde en las Epístolas de la cautividad."
+            }
+          ]
+        },
+        {
+          "number": 36,
+          "text": "Él les dijo: “¿Qué queréis, pues, que haga por vosotros?”"
+        },
+        {
+          "number": 37,
+          "text": "Le respondieron: “Concédenos sentarnos, el uno a tu derecha, el otro a tu izquierda, en tu gloria”."
+        },
+        {
+          "number": 38,
+          "text": "Pero Jesús les dijo: “No sabéis lo que pedís. ¿Podéis beber el cáliz que Yo he de beber, o recibir el bautismo que Yo he de recibir?”"
+        },
+        {
+          "number": 39,
+          "text": "Le contestaron: “Podemos”. Entonces, Jesús les dijo: “El cáliz que Yo he de beber, lo beberéis; y el bautismo que Yo he de recibir lo recibiréis.",
+          "footnotes": [
+            {
+              "id": "FN97",
+              "caller": "*",
+              "text": "Ese bautismo a que Jesús alude no parece ser sino el martirio. Véase Lc. 12, 50. Ambos apóstoles lo padecieron (Hch. 12 y nota), si bien Juan salió ileso de su “bautismo” en aceite hirviendo. Cf. Jn. 21, 22 y nota."
+            }
+          ]
+        },
+        {
+          "number": 40,
+          "text": "Mas en cuanto a sentarse a mi derecha o a mi izquierda, no es mío darlo sino a aquellos para quienes está preparado”."
+        },
+        {
+          "number": 41,
+          "text": "Cuando los otros diez oyeron esto, comenzaron a indignarse contra Santiago y Juan."
+        },
+        {
+          "number": 42,
+          "text": "Entonces, Jesús los llamó y les dijo: “Como vosotros sabéis, los que aparecen como jefes de los pueblos, les hacen sentir su dominación; y los grandes, su poder.",
+          "footnotes": [
+            {
+              "id": "FN98",
+              "caller": "*",
+              "text": "Véase Lc. 22, 25-27."
+            }
+          ]
+        },
+        {
+          "number": 43,
+          "text": "Entre vosotros no debe ser así; al contrario, quien, entre vosotros, desea hacerse grande, hágase sirviente de los demás;"
+        },
+        {
+          "number": 44,
+          "text": "y quien desea ser el primero, ha de ser esclavo de todos."
+        },
+        {
+          "number": 45,
+          "text": "Porque también el Hijo del hombre no vino para ser servido, sino para servir y dar su vida en rescate por muchos”.",
+          "footnotes": [
+            {
+              "id": "FN99",
+              "caller": "*",
+              "text": "Véase Lc. 22, 27 y nota."
+            }
+          ]
+        },
+        {
+          "number": 46,
+          "text": "Habían llegado a Jericó. Ahora bien, cuando iba saliendo de Jericó, acompañado de sus discípulos y de una numerosa muchedumbre, el hijo de Timeo, Bartimeo, ciego y mendigo, estaba sentado al borde del camino;",
+          "headings": [
+            "El ciego de Jericó"
+          ],
+          "footnotes": [
+            {
+              "id": "FN100",
+              "caller": "*",
+              "text": "San Mateo (20, 30) habla de dos ciegos: uno de ellos ha de ser este Bartimeo. Cf. Lc. 18, 35-43."
+            }
+          ]
+        },
+        {
+          "number": 47,
+          "text": "y oyendo que era Jesús de Nazaret, se puso a gritar: “¡Hijo de David, Jesús, ten piedad de mí!”"
+        },
+        {
+          "number": 48,
+          "text": "Muchos le reprendían para que callase, pero él mucho más gritaba: “¡Hijo de David, ten piedad de mí!”"
+        },
+        {
+          "number": 49,
+          "text": "Entonces, Jesús se detuvo y dijo: “Llamadlo”. Llamaron al ciego y le dijeron: “¡Ánimo, levántate! Él te llama”."
+        },
+        {
+          "number": 50,
+          "text": "Y él arrojó su manto, se puso en pie de un salto y vino a Jesús."
+        },
+        {
+          "number": 51,
+          "text": "Tomando la palabra, Jesús le dijo: “¿Qué deseas que te haga?” El ciego le respondió: “¡Rabbuni, que yo vea!”"
+        },
+        {
+          "number": 52,
+          "text": "Jesús le dijo: “¡Anda! tu fe te ha sanado”. Y en seguida vio, y lo fue siguiendo por el camino.",
+          "footnotes": [
+            {
+              "id": "FN101",
+              "caller": "*",
+              "text": "En seguida: el evangelista nos hace notar que el dichoso ciego siguió a Jesús sin acordarse de recoger el manto arrojado a que se refiere el v. 50."
+            }
+          ]
+        }
+      ]
+    },
+    "11": {
+      "chapter": 11,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Cuando estuvieron próximos a Jerusalén, cerca de Betfagé y Betania, junto al Monte de los Olivos, envió a dos de sus discípulos,",
+          "headings": [
+            "IV. JESÚS EN JERUSALÉN",
+            "Entrada triunfal en Jerusalén"
+          ],
+          "footnotes": [
+            {
+              "id": "FN102",
+              "caller": "*",
+              "text": "La aldea de Belfagé, situada entre Jerusalén y Betania (Mt. 21, 1 ss.; Lc. 19, 29 ss.; Jn. 12, 12 s.)."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "diciéndoles: “Id a la aldea que está enfrente de vosotros; y luego de entrar en ella, encontraréis un burrito atado, sobre el cual nadie ha montado todavía. Desatadlo y traedlo."
+        },
+        {
+          "number": 3,
+          "text": "Y si alguien os pregunta: “¿Por qué hacéis esto?”, contestad: “El Señor lo necesita, y al instante lo devolverá aquí”."
+        },
+        {
+          "number": 4,
+          "text": "Partieron, pues, y encontraron un burrito atado a una puerta, por de fuera, en la calle, y lo desataron."
+        },
+        {
+          "number": 5,
+          "text": "Algunas personas que se encontraban allí, les dijeron: “¿Qué hacéis, desatando el burrito?”"
+        },
+        {
+          "number": 6,
+          "text": "Ellos les respondieron como Jesús les había dicho, y los dejaron hacer."
+        },
+        {
+          "number": 7,
+          "text": "Llevaron, pues, el burrito a Jesús y pusieron encima sus mantos, y Él lo montó."
+        },
+        {
+          "number": 8,
+          "text": "Y muchos extendieron sus mantos sobre el camino; otros, brazadas de follaje que habían cortado de los campos."
+        },
+        {
+          "number": 9,
+          "text": "Y los que marchaban delante y los que seguían, clamaban: “¡Hosanna! ¡Bendito sea el que viene en el nombre del Señor!",
+          "footnotes": [
+            {
+              "id": "FN103",
+              "caller": "*",
+              "text": "Con la aclamación Hosanna: ¡Ayúdanos (oh Dios)! el pueblo quiere expresar su desbordante alegría según el Salmo 117, 25 s."
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "¡Bendito sea el advenimiento del reino de nuestro padre David! ¡Hosanna en las alturas!”"
+        },
+        {
+          "number": 11,
+          "text": "Y entró en Jerusalén en el Templo, y después de mirarlo todo, siendo ya tarde, partió de nuevo para Betania con los Doce."
+        },
+        {
+          "number": 12,
+          "text": "Al día siguiente, cuando salieron de Betania, tuvo hambre.",
+          "headings": [
+            "La higuera estéril"
+          ],
+          "footnotes": [
+            {
+              "id": "FN104",
+              "caller": "*",
+              "text": "Era el lunes de Semana Santa."
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "Y divisando, a la distancia, una higuera que tenía hojas, fue para ver si encontraba algo en ella; pero llegado allí, no encontró más que hojas, porque no era el tiempo de los higos.",
+          "footnotes": [
+            {
+              "id": "FN105",
+              "caller": "*",
+              "text": "La maldición de la higuera simboliza la reprobación del pueblo de Israel, rico en hojas pero estéril en frutos (Mt. 21, 18 s.; Lc. 13, 6 ss.)."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "Entonces, respondió y dijo a la higuera: “¡Que jamás ya nadie coma fruto de ti!” Y sus discípulos lo oyeron."
+        },
+        {
+          "number": 15,
+          "text": "Llegado a Jerusalén, entró en el Templo, y se puso a expulsar a los que vendían y a los que compraban en el Templo, y volcó las mesas de los cambistas y las sillas de los que vendían las palomas;",
+          "headings": [
+            "Indignación de Jesús por el templo profanado"
+          ]
+        },
+        {
+          "number": 16,
+          "text": "y no permitía que nadie atravesase el Templo transportando objetos."
+        },
+        {
+          "number": 17,
+          "text": "Y les enseñó diciendo: “¿No está escrito: «Mi casa será llamada casa de oración para todas las naciones»? Pero vosotros, la habéis hecho cueva de ladrones”.",
+          "footnotes": [
+            {
+              "id": "FN106",
+              "caller": "*",
+              "text": "Véase Is. 56, 7; Jr. 7, 11; Cf. Mt. 21, 12-46; Lc. 19, 45-47; Jn. 2, 14-16."
+            }
+          ]
+        },
+        {
+          "number": 18,
+          "text": "Los sumos sacerdotes y los escribas lo oyeron y buscaban cómo hacerlo perecer; pero le tenían miedo, porque todo el pueblo estaba poseído de admiración por su doctrina."
+        },
+        {
+          "number": 19,
+          "text": "Y llegada la tarde, salieron (Jesús y sus discípulos) de la ciudad."
+        },
+        {
+          "number": 20,
+          "text": "Al pasar (al día siguiente) muy de mañana, vieron la higuera que se había secado de raíz.",
+          "headings": [
+            "Poder de la fe"
+          ],
+          "footnotes": [
+            {
+              "id": "FN107",
+              "caller": "*",
+              "text": "Véase Mt. 21, 20-22."
+            }
+          ]
+        },
+        {
+          "number": 21,
+          "text": "Entonces, Pedro se acordó y dijo: “¡Rabí, mira! La higuera que maldijiste se ha secado”."
+        },
+        {
+          "number": 22,
+          "text": "Y Jesús les respondió y dijo: “¡Tened fe en Dios!",
+          "footnotes": [
+            {
+              "id": "FN108",
+              "caller": "*",
+              "text": "Sobre este punto principalísimo véase 9, 19 ss.; Mt. 17, 20; Lc. 17, 20 y notas."
+            }
+          ]
+        },
+        {
+          "number": 23,
+          "text": "En verdad, os digo, quien dijere a este monte: “Quítate de ahí y échate al mar”, sin titubear interiormente, sino creyendo que lo que dice se hará, lo obtendrá."
+        },
+        {
+          "number": 24,
+          "text": "Por eso, os digo, todo lo que pidiereis orando, creed que lo obtuvisteis ya, y se os dará.",
+          "footnotes": [
+            {
+              "id": "FN109",
+              "caller": "*",
+              "text": "Tal es la eficacia de la fe viva, la del que no es “vacilante en su corazón” (v. 23; St. 1, 6 ss.) y perdona a su prójimo (v. 25)."
+            }
+          ]
+        },
+        {
+          "number": 25,
+          "text": "Y cuando os ponéis de pie para orar, perdonad lo que podáis tener contra alguien, a fin de que también vuestro Padre celestial os perdone vuestros pecados."
+        },
+        {
+          "number": 26,
+          "text": "[Si no perdonáis, vuestro Padre que está en los cielos no os perdonará tampoco vuestros pecados]”.",
+          "footnotes": [
+            {
+              "id": "FN110",
+              "caller": "*",
+              "text": "El vers. 26 falta en los mejores códices. Pertenece a Mt. 6, 15."
+            }
+          ]
+        },
+        {
+          "number": 27,
+          "text": "Fueron de nuevo a Jerusalén. Y como Él se pasease por el Templo, se le llegaron los jefes de los sacerdotes, los escribas y los ancianos,",
+          "headings": [
+            "Controversia sobre el poder de Jesús"
+          ],
+          "footnotes": [
+            {
+              "id": "FN111",
+              "caller": "*",
+              "text": "Véase Mt. 21, 23 ss.; Lc. 20, 1-8."
+            }
+          ]
+        },
+        {
+          "number": 28,
+          "text": "y le dijeron: “¿Con qué poder haces estas cosas, y quién te ha dado ese poder para hacerlas?”"
+        },
+        {
+          "number": 29,
+          "text": "Jesús les contestó: “Os haré Yo también una pregunta. Respondedme, y os diré con qué derecho obro así:"
+        },
+        {
+          "number": 30,
+          "text": "El bautismo de Juan, ¿era del cielo o de los hombres? Respondedme”."
+        },
+        {
+          "number": 31,
+          "text": "Mas ellos discurrieron así en sí mismos: “Si decimos «del cielo», dirá: «entonces ¿por qué no le creísteis?»”"
+        },
+        {
+          "number": 32,
+          "text": "Y ¿si decimos: “de los hombres”? pero temían al pueblo, porque todos tenían a Juan por un verdadero profeta."
+        },
+        {
+          "number": 33,
+          "text": "Respondieron, pues, a Jesús. “No sabemos”. Entonces, Jesús les dijo: “Y bien, ni Yo tampoco os digo con qué poder hago esto”."
+        }
+      ]
+    },
+    "12": {
+      "chapter": 12,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Y se puso a hablarles en parábolas: “Un hombre plantó una viña, la cercó con un vallado, cavó un lagar y edificó una torre; después la arrendó a unos viñadores, y se fue a otro país.",
+          "headings": [
+            "Parábola de los viñadores"
+          ],
+          "footnotes": [
+            {
+              "id": "FN112",
+              "caller": "*",
+              "text": "La parábola de los viñadores homicidas exhibe la actitud de la Sinagoga para con el dueño de la viña (Dios), su hijo (Jesucristo) y sus siervos (profetas y apóstoles). San Pablo nos enseña a sacar fruto de esta tremenda lección (Rm. 11, 17 ss.). Cf. Mt. 21, 33 ss.; Lc. 20, 9 ss."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "A su debido tiempo, envió un siervo a los viñadores para recibir de ellos su parte de los frutos de la viña."
+        },
+        {
+          "number": 3,
+          "text": "Pero ellos lo agarraron, lo apalearon y lo remitieron con las manos vacías."
+        },
+        {
+          "number": 4,
+          "text": "Entonces, les envió otro siervo, al cual descalabraron y ultrajaron;"
+        },
+        {
+          "number": 5,
+          "text": "y otro, al cual mataron; después otros muchos, de los cuales apalearon a unos y mataron a otros."
+        },
+        {
+          "number": 6,
+          "text": "No le quedaba más que uno, su hijo amado; a este les envió por último, pensando: «Respetarán a mi hijo»."
+        },
+        {
+          "number": 7,
+          "text": "Pero aquellos viñadores se dijeron unos a otros: «Este es el heredero. Venid, matémoslo, y la herencia será nuestra»."
+        },
+        {
+          "number": 8,
+          "text": "Lo agarraron, pues, lo mataron y lo arrojaron fuera de la viña."
+        },
+        {
+          "number": 9,
+          "text": "¿Qué hará el dueño de la viña? Vendrá y acabará con los viñadores, y entregará la viña a otros."
+        },
+        {
+          "number": 10,
+          "text": "¿No habéis leído esta Escritura: «La piedra que desecharon los que edificaban, esta ha venido a ser cabeza de esquina;",
+          "footnotes": [
+            {
+              "id": "FN113",
+              "caller": "*",
+              "text": "La piedra desechada es Jesucristo, quien se aplica esta figura que en la profecía representaba a Israel. Los constructores son los judíos, en particular los príncipes y sacerdotes del pueblo. Véase Sal. 117, 22 y nota; Is. 28, 16."
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "text": "de parte del Señor esto ha sido hecho, y es maravilloso a nuestros ojos?»”"
+        },
+        {
+          "number": 12,
+          "text": "Trataron, entonces, de prenderlo, pero temían al pueblo. Habían comprendido, en efecto, que con respecto a ellos había dicho esta parábola. Lo dejaron, pues, y se fueron."
+        },
+        {
+          "number": 13,
+          "text": "Le enviaron, después, algunos fariseos y herodianos, a fin de enredarlo en alguna palabra.",
+          "headings": [
+            "Jesús ante lo temporal"
+          ]
+        },
+        {
+          "number": 14,
+          "text": "Vinieron ellos y le dijeron: “Maestro, sabemos que Tú eres veraz, que no tienes miedo a nadie, y que no miras la cara de los hombres, sino que enseñas el camino de Dios con verdad. ¿Es lícito pagar el tributo al César o no? ¿Pagaremos o no pagaremos?”",
+          "footnotes": [
+            {
+              "id": "FN114",
+              "caller": "*",
+              "text": "Con esta frase los fariseos por primera y única vez rinden públicamente homenaje a la santidad de Jesús, mas solo para esconder sus verdaderas intenciones. Véase Mt. 13, 57; 22, 15 ss.; Lc. 20, 20 ss."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "Mas Él, conociendo su hipocresía, les dijo: “¿Por qué me tendéis un lazo? Traedme un denario, para que Yo lo vea”."
+        },
+        {
+          "number": 16,
+          "text": "Se lo trajeron, y Él les preguntó: “¿De quién es esta figura y la leyenda?” Le respondieron: “Del César”."
+        },
+        {
+          "number": 17,
+          "text": "Entonces, Jesús les dijo: “Dad al César lo que es del César; y a Dios lo que es de Dios”. Y se quedaron admirados de Él.",
+          "footnotes": [
+            {
+              "id": "FN115",
+              "caller": "*",
+              "text": "Jesús establece aquí el respeto debido a la autoridad civil (cf. Rm. 13, 1 ss; Tt. 3, 1; 1 Pe. 2, 13) y suprime, como lo confirmarán los apóstoles, la teocracia o la unión del orden religioso con el político y temporal. Véase Lc. 12, 14; 2 Tm. 2, 4; 1 Pe. 5, 2 ss.; cf. Si. 45, 27 y 31 y notas."
+            }
+          ]
+        },
+        {
+          "number": 18,
+          "text": "Acercáronsele también algunos saduceos, que dicen que no hay resurrección, y le propusieron esta cuestión:",
+          "headings": [
+            "Los saduceos y la resurrección"
+          ],
+          "footnotes": [
+            {
+              "id": "FN116",
+              "caller": "*",
+              "text": "Ciérrase ahora la cadena de los enemigos y perseguidores en torno a Jesús: fariseos, saduceos, herodianos, escribas; todos los poderosos se han conjurado contra el Cordero (Sal. 2, 2). Todavía está fiel el pueblo humilde. ¿Hasta cuándo? Cf. Mt. 22, 23-33; Lc. 20, 27-38; Dt. 25, 5-6."
+            }
+          ]
+        },
+        {
+          "number": 19,
+          "text": "“Maestro, Moisés nos ha prescrito, si el hermano de alguno muere dejando mujer y no deja hijos, tome su hermano la mujer de él y dé prole a su hermano."
+        },
+        {
+          "number": 20,
+          "text": "Ahora bien, eran siete hermanos. El primero tomó mujer, y murió sin dejar prole."
+        },
+        {
+          "number": 21,
+          "text": "El segundo la tomó, y murió sin dejar prole. Sucedió lo mismo con el tercero."
+        },
+        {
+          "number": 22,
+          "text": "Y ninguno de los siete dejó descendencia. Después de todos ellos murió también la mujer."
+        },
+        {
+          "number": 23,
+          "text": "En la resurrección, cuando ellos resuciten, ¿de cuál de ellos será esposa? Porque los siete la tuvieron por mujer”."
+        },
+        {
+          "number": 24,
+          "text": "Mas Jesús les dijo: “¿No erráis, acaso, por no conocer las Escrituras ni el poder de Dios?"
+        },
+        {
+          "number": 25,
+          "text": "Porque, cuando resuciten de entre los muertos, no se casarán (los hombres ), ni se darán en matrimonio (las mujeres), sino que serán como ángeles en el cielo."
+        },
+        {
+          "number": 26,
+          "text": "Y en cuanto a que los muertos resucitan, ¿no habéis leído en el libro de Moisés, en el episodio de la Zarza, cómo Dios le dijo: «Yo soy el Dios de Abrahán y el Dios de Isaac, y el Dios de Jacob?»",
+          "footnotes": [
+            {
+              "id": "FN117",
+              "caller": "*",
+              "text": "Cf. Ex. 3, 2 y 6; Mt. 8, 11; Lc. 16, 22."
+            }
+          ]
+        },
+        {
+          "number": 27,
+          "text": "Él no es Dios de muertos, sino de vivos. Vosotros estáis, pues, en un gran error”."
+        },
+        {
+          "number": 28,
+          "text": "Llegó también un escriba que los había oído discutir; y viendo lo bien que Él les había respondido, le propuso esta cuestión: “¿Cuál es el primero de todos los mandamientos?”",
+          "headings": [
+            "El gran mandamiento"
+          ]
+        },
+        {
+          "number": 29,
+          "text": "Jesús respondió: “El primero es: «Oye, Israel, el Señor nuestro Dios, un solo Señor es."
+        },
+        {
+          "number": 30,
+          "text": "Y amarás al Señor tu Dios de todo tu corazón, y con toda tu alma, y con toda tu mente, y con toda tu fuerza»”",
+          "footnotes": [
+            {
+              "id": "FN118",
+              "caller": "*",
+              "text": "Véase Dt. 6, 4 s.; Lv. 19; 18; Jn. 13, 34 s.; 15, 12; Rm. 13, 9; Ga. 5, 14."
+            }
+          ]
+        },
+        {
+          "number": 31,
+          "text": "El segundo es: «Amarás a tu prójimo como a ti mismo». No existe mandamiento mayor que estos”."
+        },
+        {
+          "number": 32,
+          "text": "Díjole el escriba: “Maestro, bien has dicho; en verdad, que «Él es único, que no hay otro más que Él»."
+        },
+        {
+          "number": 33,
+          "text": "Y el amarlo con todo el corazón y con todo el espíritu y con toda la fuerza, y amar al prójimo como a sí mismo, vale más que todos los holocaustos y todos los sacrificios”."
+        },
+        {
+          "number": 34,
+          "text": "Jesús, viendo que había hablado juiciosamente, le dijo: “Tú no estás lejos del reino de Dios”. Y nadie osó más proponerle cuestiones."
+        },
+        {
+          "number": 35,
+          "text": "Entonces, Jesús, tomando la palabra, enseñaba en el Templo diciendo: “¿Cómo dicen los escribas que el Cristo es hijo de David?",
+          "headings": [
+            "Cristo Hijo y Señor de David"
+          ],
+          "footnotes": [
+            {
+              "id": "FN119",
+              "caller": "*",
+              "text": "Cf. Mt. 22, 41-45; Lc. 20, 41-44; Sal. 109, 1 y nota. Jesús establece aquí, en forma intergiversable, el origen davídico de este célebre Salmo, que tantos han puesto en duda."
+            }
+          ]
+        },
+        {
+          "number": 36,
+          "text": "Porque David mismo dijo (inspirado) por el Espíritu Santo: «El Señor dijo a mi Señor: Siéntate a mi diestra, hasta que ponga Yo a tus enemigos por tarima de tus pies»."
+        },
+        {
+          "number": 37,
+          "text": "Si David mismo lo llama «Señor», ¿cómo puede entonces ser su hijo?” Y la gente numerosa lo escuchaba con placer."
+        },
+        {
+          "number": 38,
+          "text": "Dijo también en su enseñanza: “Guardaos de los escribas, que se complacen en andar con largos vestidos, en ser saludados en las plazas públicas,",
+          "headings": [
+            "Guardaos de los escribas"
+          ],
+          "footnotes": [
+            {
+              "id": "FN120",
+              "caller": "*",
+              "text": "Los escribas o intérpretes de la Ley pertenecían en su gran mayoría a la secta de los fariseos y gozaban de gran prestigio ante el pueblo ignaro que confiaba en ellos (véase la expresión de Jesús en Mt. 9, 36). El hecho de que distinguían 613 mandamientos, 248 preceptos y 365 prohibiciones nos da idea de su interpretación de la Ley. Cf. 7, 4 y nota; Mt. 23, 1 ss.; Lc. 11, 43; 20, 45 ss."
+            }
+          ]
+        },
+        {
+          "number": 39,
+          "text": "en ocupar los primeros sitiales en las sinagogas y los primeros puestos en los convites,"
+        },
+        {
+          "number": 40,
+          "text": "y que devoran las casas de las viudas, y afectan hacer largas oraciones. Estos recibirán mayor castigo”."
+        },
+        {
+          "number": 41,
+          "text": "Estando Jesús sentado frente al arca de las ofrendas, miraba a la muchedumbre que echaba monedas en el arca, y numerosos ricos echaban mucho.",
+          "headings": [
+            "La ofrenda de la viuda"
+          ]
+        },
+        {
+          "number": 42,
+          "text": "Vino también una pobre viuda que echó dos moneditas, esto es un cuarto de as.",
+          "footnotes": [
+            {
+              "id": "FN121",
+              "caller": "*",
+              "text": "Un cuarto de as: un centavo. Cf. Lc. 21, 1-4."
+            }
+          ]
+        },
+        {
+          "number": 43,
+          "text": "Entonces llamó a sus discípulos y les dijo: “En verdad, os digo, esta pobre viuda ha echado más que todos los que echaron en el arca.",
+          "footnotes": [
+            {
+              "id": "FN122",
+              "caller": "*",
+              "text": "Palabra magnífica del Señor. Dios no mira la cantidad de la limosna sino el corazón del donante. Cf. 2 Co. 9, 7 ss. “No busco lo vuestro: os busco a vosotros” (2 Co. 12, 14)."
+            }
+          ]
+        },
+        {
+          "number": 44,
+          "text": "Porque todos los otros echaron de lo que les sobraba, pero esta ha echado de su propia indigencia todo lo que tenía, todo su sustento”."
+        }
+      ]
+    },
+    "13": {
+      "chapter": 13,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Cuando Él salía del templo, uno de sus discípulos le dijo: “¡Maestro, mira! ¡qué piedras y qué edificios!”",
+          "headings": [
+            "Profecía de la ruina de Jerusalén y del fin de los tiempos"
+          ],
+          "footnotes": [
+            {
+              "id": "FN123",
+              "caller": "*",
+              "text": "Este capítulo contiene, como entrelazadas, dos profecías: la ruina de Jerusalén y la venida del Señor al fin de los tiempos, Los vv. 6-13 se refieren a las persecuciones en general, los vv. 14-19 a la destrucción de Jerusalén, los vv. 19-27 al fin de “este siglo malo” (Ga. 1, 4). Para los detalles remitimos al lector a los lugares paralelos de Mt. 24, 1 ss.; Lc. 21, 5 ss. y notas."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Respondiole Jesús: “¿Ves estas grandes construcciones? No quedará piedra sobre piedra que no sea derribada”."
+        },
+        {
+          "number": 3,
+          "text": "Luego, estando Él sentado en el Monte de los Olivos, frente al Templo, Pedro, Santiago, Juan y Andrés le preguntaron aparte:"
+        },
+        {
+          "number": 4,
+          "text": "“Dinos: ¿cuándo sucederá esto?, y al estar esas cosas a punto de cumplirse todas, ¿cuál será la señal?”",
+          "footnotes": [
+            {
+              "id": "FN124",
+              "caller": "*",
+              "text": "Véase Mt. 24, 3 ss. y nota. La pregunta de los discípulos se refiere aquí exclusivamente al tiempo, primero en general (¿cuándo?), y luego, al modo de conocer el instante mismo. Jesús les da amplias señales para que puedan estar alerta (v. 23), y aun para que conozcan cuándo Él estará ya “a las puertas” (v. 29). Pero no les precisa el instante, esto es, el día y la hora (v. 32) porque está dis puesto que Él vendrá cuando menos lo esperen (cf. v. 37 y nota). “como una red sobre la tierra entera” (Lc. 21, 35), de modo que solo estén preparados “los que aman su venida”. Cf. 2 Tm. 4, 8; 1 Ts. 5, 4; Lc. 17, 20-37; 19, 14; 21, 34-36."
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "text": "Y Jesús se puso a decirles: “Estad en guardia, que nadie os induzca en error."
+        },
+        {
+          "number": 6,
+          "text": "Muchos vendrán bajo mi nombre y dirán: «Yo soy (el Cristo)» y a muchos engañarán.",
+          "footnotes": [
+            {
+              "id": "FN125",
+              "caller": "*",
+              "text": "Ya pudo verse esto en tiempo de Simón Mago (Hech. 8, 9 s. y nota)."
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "text": "Cuando oigáis hablar de guerras y de rumores de guerras, no os turbéis. Esto ha de suceder, pero no es todavía el fin."
+        },
+        {
+          "number": 8,
+          "text": "Porque se levantará pueblo contra pueblo, reino contra reino. Habrá terremotos en diversos lugares, y habrá hambres. Esto es el comienzo de los dolores”."
+        },
+        {
+          "number": 9,
+          "text": "“Mirad por vosotros mismos. Porque os entregarán a los sanhedrines, y seréis flagelados en las sinagogas, y compareceréis ante gobernadores y reyes, a causa de Mí, para dar testimonio ante ellos.",
+          "footnotes": [
+            {
+              "id": "FN126",
+              "caller": "*",
+              "text": "Mirad por vosotros mismos: es decir, desconfiad de los hombres (Mt. 10, 16 ss.), y cuidaos de no arriesgar vuestra vida sin causa (véase Sal. 115, 15 y nota). En los apóstoles vemos ya cumplirse muchas veces estos anuncios (Hch. 17, 6; 18, 12; 24, 2; 25, 7; 27, 24). Cf. Mt. 23, 34."
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "Y es necesario primero que a todas las naciones sea proclamado el Evangelio.",
+          "footnotes": [
+            {
+              "id": "FN127",
+              "caller": "*",
+              "text": "Véase la nota a Mt. 24, 14."
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "text": "Mas cuando os llevaren para entregaros, no os afanéis anticipadamente por lo que diréis; sino decid lo que en aquel momento os será inspirado; porque no sois vosotros los que hablaréis, sino el Espíritu Santo.",
+          "footnotes": [
+            {
+              "id": "FN128",
+              "caller": "*",
+              "text": "Véase Mt. 10, 19-22; Lc. 12, 11 s.; 21, 14 s.; Mi. 7, 6."
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "text": "El hermano entregará a su hermano a la muerte, el padre a su hijo; y los hijos se levantarán contra sus padres y los matarán."
+        },
+        {
+          "number": 13,
+          "text": "Seréis odiados de todos a causa de mi nombre; pero el que perseverare hasta el fin, este será salvo."
+        },
+        {
+          "number": 14,
+          "text": "Mas cuando veáis la abominación de la desolación instalada allí donde no debe —¡entienda el que lee!—, entonces, los que estén en Judea, huyan a las montañas;",
+          "footnotes": [
+            {
+              "id": "FN129",
+              "caller": "*",
+              "text": "La abominación de la desolación, establecida allí donde no debe, es la profanación del Templo. Véase Dn. 9, 27; Mt. 24, 15 y nota. A este respecto se ha publicado recientemente un fragmento desconocido de s. Hipólito, que con otros Padres dice: “La abominación de la desolación es la imagen del César que fue colocada delante del altar en Jerusalén”. Y sigue: “Así sucederá en el tiempo del Anticristo: su imagen estará en todas las iglesias que hay en el universo, para que todo aquel que le ruegue, antes de orar, lleve el incienso delante de su imagen” (Sefarad, 1946, p. 359). Entienda el que lee: las Escrituras (Mt. 24, 15 y nota), pues solo quien conozca los grandes misterios vaticinados en las profecías antiguas podrá comprender la gravedad de estos anuncios."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "quien se encuentre en la azotea, no baje ni entre para tomar nada en su casa;"
+        },
+        {
+          "number": 16,
+          "text": "quien vaya al campo, no vuelva atrás para tomar su manto."
+        },
+        {
+          "number": 17,
+          "text": "¡Ay de las mujeres que estén encintas y de las que críen por aquellos días!"
+        },
+        {
+          "number": 18,
+          "text": "Y orad, para que no acontezca en invierno”."
+        },
+        {
+          "number": 19,
+          "text": "“Porque habrá en aquellos días tribulación tal, cual no la hubo desde el principio de la creación que hizo Dios, hasta el presente, ni la habrá."
+        },
+        {
+          "number": 20,
+          "text": "Y si el Señor no hubiese acortado los días, ningún viviente escaparía; mas a causa de los escogidos que Él eligió, ha acortado esos días."
+        },
+        {
+          "number": 21,
+          "text": "Entonces, si os dicen: «Helo a Cristo aquí o allí», no lo creáis."
+        },
+        {
+          "number": 22,
+          "text": "Porque surgirán falsos Cristos y falsos profetas, que harán señales y prodigios para descarriar aun a los elegidos, si fuera posible.",
+          "footnotes": [
+            {
+              "id": "FN130",
+              "caller": "*",
+              "text": "Según el Apocalipsis los que triunfarán con el Cordero reunirán tres condiciones: llamados, elegidos y fieles (Ap. 17, 14). Cf. Mt. 22, 14."
+            }
+          ]
+        },
+        {
+          "number": 23,
+          "text": "Vosotros, pues, estad alerta; ved que os lo he predicho todo”."
+        },
+        {
+          "number": 24,
+          "text": "“Pero en aquellos días, después de la tribulación aquella, el sol se oscurecerá, y la luna no dará su resplandor,",
+          "footnotes": [
+            {
+              "id": "FN131",
+              "caller": "*",
+              "text": "Véase Is. 13, 10; Ez. 32, 7; Jl. 2, 10."
+            }
+          ]
+        },
+        {
+          "number": 25,
+          "text": "y los astros estarán cayendo del cielo, y las fuerzas que hay en los cielos serán sacudidas."
+        },
+        {
+          "number": 26,
+          "text": "Entonces, verán al Hijo del hombre viniendo en las nubes con gran poder y gloria."
+        },
+        {
+          "number": 27,
+          "text": "Y entonces enviará a los ángeles, y congregará a sus elegidos de los cuatro vientos, desde la extremidad de la tierra hasta la extremidad del cielo”.",
+          "footnotes": [
+            {
+              "id": "FN132",
+              "caller": "*",
+              "text": "Entonces... congregará, es decir, que el arrebato que anuncia S. Pablo en 1 Ts. 4, 15 ss. será al tiempo mismo de la Parusía, esto es cuando aparezca el Señor (v. 26), como lo dice el Apóstol. Así Marcos explica aquí que seremos llevados desde la extremidad de la tierra hasta el sumo cielo. Lo mismo dice Mt. 24, 31. Se trata de los elegidos, ya vivos transformados, ya resucitados de entre los muertos. Cf. 1 Co. 15, 51 ss. texto griego."
+            }
+          ]
+        },
+        {
+          "number": 28,
+          "text": "“De la higuera aprended la semejanza: cuando ya sus ramas se ponen tiernas, y brotan las hojas, conocéis que el verano esta cerca;",
+          "headings": [
+            "Aprended de la higuera"
+          ]
+        },
+        {
+          "number": 29,
+          "text": "así también, cuando veáis suceder todo esto, sabed que (Él) está cerca, a las puertas."
+        },
+        {
+          "number": 30,
+          "text": "En verdad, os digo, la generación esta no pasará sin que todas estas cosas se hayan efectuado.",
+          "footnotes": [
+            {
+              "id": "FN133",
+              "caller": "*",
+              "text": "Véase Mt. 24, 34 y nota; cf. Lc. 21, 32."
+            }
+          ]
+        },
+        {
+          "number": 31,
+          "text": "El cielo y la tierra pasarán, pero mis palabras no pasarán”."
+        },
+        {
+          "number": 32,
+          "text": "“Mas en cuanto al día y la hora, nadie sabe, ni los mismos ángeles del cielo, ni el Hijo, sino el Padre.",
+          "headings": [
+            "¡Velad!"
+          ],
+          "footnotes": [
+            {
+              "id": "FN134",
+              "caller": "*",
+              "text": "Ni el Hijo, sino el Padre: Una de las más sorprendentes palabras del Evangelio que nos podría hacer dudar de la divinidad de Jesucristo, si no tuviésemos de su misma boca el testimonio de que Él es igual al Padre. Cf. Jn. 10, 30: “Mi Padre y Yo somos Uno”, y muchos otros pasajes (Mt. 28, 18; Jn. 5, 17; 6, 58; 14, 10; 16, 15; 17, 10, etc.). “La aparente contradicción se explica y justifica con la alteza del misterio que es preciso aceptar a menos que renunciemos a toda certeza. El Hijo todo lo recibe de su Padre, y el Padre todo lo da... pero a manera de comunicación continua, perpetua y constante, por la cual el Padre está en el Hijo, y en el Hijo ejecuta Él mismo sus obras, de modo que quienquiera que vea al Hijo y le conozca, ve al Padre y conoce al Padre con un conocimiento que es la vida eterna” (Breton, La Trinidad, pág. 33). Lo mismo expresan las clásicas palabras de S. Hilario: “El Padre no es mayor que el Hijo, en poder, eternidad y grandeza, sino en razón de que es principio del Hijo, a quien da la vida”. Cf. Mt. 24, 36; Jn. 14, 28; Hch. 1, 7; 1 Co. 15, 28 y notas. Los teólogos suelen distinguir entre la ciencia de Cristo como Dios y como Hombre."
+            }
+          ]
+        },
+        {
+          "number": 33,
+          "text": "¡Mirad!, ¡velad! porque no sabéis cuándo será el tiempo;"
+        },
+        {
+          "number": 34,
+          "text": "como un hombre que partiendo para otro país, dejó su casa y dio a sus siervos la potestad, a cada uno su tarea, y al portero encomendó que velase."
+        },
+        {
+          "number": 35,
+          "text": "Velad, pues, porque no sabéis cuando volverá el Señor de la casa, si en la tarde, o a la medianoche, o al canto del gallo, o en la mañana,"
+        },
+        {
+          "number": 36,
+          "text": "no sea que volviendo de improviso, os encuentre dormidos."
+        },
+        {
+          "number": 37,
+          "text": "Lo que os digo a vosotros, lo digo a todos: ¡Velad!”.",
+          "footnotes": [
+            {
+              "id": "FN135",
+              "caller": "*",
+              "text": "¡Velad! Esta última palabra del capítulo es el resumen de las copiosas profecías que preceden. Notemos que en ellas Jesús afirma habérnoslo predicho “todo” (v. 23). Solo ignoramos “día y hora” (v. 32). Cuanto menos sabemos ese instante de la vuelta de Cristo, el cual vendrá “como un ladrón de noche” (1 Ts. 5, 2 y 4; 2 Pe. 3, 10; Mt. 24, 43; Lc. 12, 39; Ap. 16, 15), tanto más debemos estar alerta para esperarlo con el vehemente deseo con que aguardaban los patriarcas y profetas Su primera venida (Catecismo Romano, I, 8, 2)."
+            }
+          ]
+        }
+      ]
+    },
+    "14": {
+      "chapter": 14,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Dos días después era la Pascua y los Ázimos, y los sumos sacerdotes y los escribas, buscaban cómo podrían apoderarse de Él con engaño y matarlo.",
+          "headings": [
+            "V. PASIÓN Y MUERTE DEL SEÑOR",
+            "Unción de Jesús en Betania"
+          ],
+          "footnotes": [
+            {
+              "id": "FN136",
+              "caller": "*",
+              "text": "Dos días: la unción de Jesús, referida en los vv. 3 ss., tuvo lugar seis días antes de la Pascua (Jn. 12, 1)."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Mas decían: “No durante la fiesta, no sea que ocurra algún tumulto en el pueblo”."
+        },
+        {
+          "number": 3,
+          "text": "Ahora bien, hallándose Él en Betania, en casa de Simón, el Leproso, y estando sentado a la mesa, vino una mujer con un vaso de alabastro lleno de ungüento de nardo puro de gran precio; y quebrando el alabastro, derramó el ungüento sobre su cabeza.",
+          "footnotes": [
+            {
+              "id": "FN137",
+              "caller": "*",
+              "text": "Sobre su cabeza: el Señor se dignó aceptarle esto en concepto de unción para la sepultura (v. 8) y limosna hecha a É1 como pobre (v. 6 s.). Véase sobre esto Jn. 20, 7 y nota. En Jn. 12, 3 se habla de los pies, como en Lc. 7, 38."
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "text": "Mas algunos de los presentes indignados interiormente, decían: “¿A qué este despilfarro de ungüento?"
+        },
+        {
+          "number": 5,
+          "text": "Porque el ungüento este se podía vender por más de trescientos denarios, y dárselos a los pobres”. Y bramaban contra ella.",
+          "footnotes": [
+            {
+              "id": "FN138",
+              "caller": "*",
+              "text": "Trescientos denarios: más o menos, el salario anual de un empleado de entonces."
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "text": "Mas Jesús dijo: “Dejadla. ¿Por qué la molestáis? Ha hecho una buena obra conmigo."
+        },
+        {
+          "number": 7,
+          "text": "Porque los pobres los tenéis con vosotros siempre, y podéis hacerles bien cuando queráis; pero a Mí no me tenéis siempre."
+        },
+        {
+          "number": 8,
+          "text": "Lo que ella podía hacer lo ha hecho. Se adelantó a ungir mi cuerpo para la sepultura.",
+          "footnotes": [
+            {
+              "id": "FN139",
+              "caller": "*",
+              "text": "Cada vez más a menudo alude el Señor a su muerte, para preparar a sus discípulos a los tristes acontecimientos que se acercan."
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "text": "En verdad, os digo, dondequiera que fuere predicado este Evangelio, en el mundo entero, se narrará también lo que acaba de hacer, en recuerdo suyo”.",
+          "footnotes": [
+            {
+              "id": "FN140",
+              "caller": "*",
+              "text": "Este Evangelio: expresión singular y profética, pues sabemos que los santos evangelios fueron escritos mucho más tarde. Cf. Jn. 16, 12."
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "Entonces, Judas Iscariote, que era de los Doce, fue a los sumos sacerdotes, con el fin de entregarlo a ellos.",
+          "footnotes": [
+            {
+              "id": "FN141",
+              "caller": "*",
+              "text": "Véase Mt. 26, 14-16; Lc. 22, 3-6."
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "text": "Los cuales al oírlo se llenaron de alegría y prometieron darle dinero. Y él buscaba una ocasión favorable para entregarlo."
+        },
+        {
+          "number": 12,
+          "text": "El primer día de los Azimos, cuando se inmolaba la Pascua, sus discípulos le dijeron: “¿Adónde quieres que vayamos a hacer los preparativos para que comas la Pascua?”",
+          "headings": [
+            "La Última Cena"
+          ]
+        },
+        {
+          "number": 13,
+          "text": "Y envió a dos de ellos, diciéndoles: “Id a la ciudad, y os saldrá al encuentro un hombre llevando un cántaro de agua; seguidle,"
+        },
+        {
+          "number": 14,
+          "text": "y adonde entrare, decid al dueño de casa: “El Maestro dice: ¿Dónde está mi aposento en que voy a comer la Pascua con mis discípulos?”.",
+          "footnotes": [
+            {
+              "id": "FN142",
+              "caller": "*",
+              "text": "Comer la Pascua, es decir, el cordero pascual prescrito por la Ley (Ex. 12, 3 ss.). Jesús, que no había venido a derogarla (Mt. 5, 17), no ve inconveniente en observarla, como lo hizo con la circuncisión (cf. Rm. 15, 8), aunque Él había de ser, por su Pasión y Muerte en la Cruz, la suma Realidad en quien se cumplirían aquellas figuras; el Cordero divino que se entregó “en manos de los hombres” (9, 31) sin abrir su boca (Is. 53, 7); el que San Juan nos presenta como inmolado junto al trono de Dios (Ap. 5, 6), y que S. Pablo nos muestra como eterno Sacerdote y eterna Víctima. Cf. Hb. caps. 5-10; Sal. 109, 4 y nota."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "Y él os mostrará un cenáculo grande en el piso alto, ya dispuesto; y allí aderezad para nosotros”."
+        },
+        {
+          "number": 16,
+          "text": "Los discípulos se marcharon, y al llegar a la ciudad encontraron como Él había dicho; y prepararon la Pascua."
+        },
+        {
+          "number": 17,
+          "text": "Venida la tarde, fue Él con los Doce.",
+          "headings": [
+            "Institución de la Eucaristía"
+          ]
+        },
+        {
+          "number": 18,
+          "text": "Y mientras estaban en la mesa y comían, Jesús dijo: “En verdad os digo, me entregará uno de vosotros que come conmigo”."
+        },
+        {
+          "number": 19,
+          "text": "Pero ellos comenzaron a contristarse, y a preguntarle uno por uno: “¿Seré yo?”"
+        },
+        {
+          "number": 20,
+          "text": "Respondioles: “Uno de los Doce, el que moja conmigo en el plato."
+        },
+        {
+          "number": 21,
+          "text": "El Hijo del hombre se va, como está escrito de Él, pero ¡ay del hombre, por quien el Hijo del hombre es entregado! Más le valdría a ese hombre no haber nacido”.",
+          "footnotes": [
+            {
+              "id": "FN143",
+              "caller": "*",
+              "text": "Judas el traidor es expresamente condenado por el Señor y entregado a la maldición. Por eso es imposible creer que se haya salvado. Véase Jn. 17, 12; Hch. 1, 16; Sal. 40, 10. Cf. en 1 Sam. 31, 13 la nota sobre Saúl."
+            }
+          ]
+        },
+        {
+          "number": 22,
+          "text": "Y mientras ellos comían, tomó pan, y habiendo bendecido, partió y dio a ellos y dijo: “Tomad, este es el cuerpo mío”."
+        },
+        {
+          "number": 23,
+          "text": "Tomó luego un cáliz, y después de haber dado gracias dio a ellos; y bebieron de él todos."
+        },
+        {
+          "number": 24,
+          "text": "Y les dijo: “Esta es la sangre mía de la Alianza, que se derrama por muchos.",
+          "footnotes": [
+            {
+              "id": "FN144",
+              "caller": "*",
+              "text": "Véase Mt. 20, 28 y nota. No significa aquí: derramada “por obra de” muchos (aunque esto también sea verdad en el sentido de que todos somos pecadores), sino que se derrama como un bautismo de redención sobre todos los que lo aprovechen, según la palabra del Apocalipsis 22, 14 (Vulgata) coincidente con Ef. 1, 7; Col. 1, 14 y 20; Hb. 9, 12 ss.; 13, 12; 1 Pe. 1, 19; 1 Jn. 5, 6; Ap. 12, 11."
+            }
+          ]
+        },
+        {
+          "number": 25,
+          "text": "En verdad, os digo, que no beberé ya del fruto de la vid hasta el día aquel en que lo beberé nuevo en el reino de Dios”."
+        },
+        {
+          "number": 26,
+          "text": "Y después de cantar el himno, salieron para el monte de los olivos."
+        },
+        {
+          "number": 27,
+          "text": "Entonces Jesús les dijo: “Vosotros todos os vais a escandalizar, porque está escrito: «Heriré al pastor, y las ovejas se dispersarán».",
+          "headings": [
+            "Promesas de fidelidad"
+          ],
+          "footnotes": [
+            {
+              "id": "FN145",
+              "caller": "*",
+              "text": "Véase Za. 13, 7."
+            }
+          ]
+        },
+        {
+          "number": 28,
+          "text": "Mas después que Yo haya resucitado, os precederé en Galilea”.",
+          "footnotes": [
+            {
+              "id": "FN146",
+              "caller": "*",
+              "text": "Véase Mt. 26, 30 ss.; Mc. 14, 68-72; Lc. 22, 31 ss.; Jn. 13, 36 ss.; 16, 32."
+            }
+          ]
+        },
+        {
+          "number": 29,
+          "text": "Díjole Pedro: “Aunque todos se escandalizaren, yo no”."
+        },
+        {
+          "number": 30,
+          "text": "Y le dijo Jesús: “En verdad, te digo: que hoy, esta misma noche, antes que el gallo cante dos veces, tú me negarás tres”."
+        },
+        {
+          "number": 31,
+          "text": "Pero él decía con mayor insistencia: “¡Aunque deba morir contigo, jamás te negaré!” Esto mismo dijeron también todos."
+        },
+        {
+          "number": 32,
+          "text": "Y llegaron al huerto llamado Getsemaní, y dijo a sus discípulos: “Sentaos aquí mientras hago oración”.",
+          "headings": [
+            "Agonía de Jesús en Getsemaní"
+          ],
+          "footnotes": [
+            {
+              "id": "FN147",
+              "caller": "*",
+              "text": "Una iglesia, construida recientemente, conmemora el lugar de la agonía del Redentor en el huerto de Getsemaní, situado al este de Jerusalén, entre la ciudad y el Monte de los Olivos."
+            }
+          ]
+        },
+        {
+          "number": 33,
+          "text": "Tomó consigo a Pedro, a Santiago y a Juan; y comenzó a atemorizarse y angustiarse."
+        },
+        {
+          "number": 34,
+          "text": "Y les dijo: “Mi alma está mortalmente triste; quedaos aquí y velad”."
+        },
+        {
+          "number": 35,
+          "text": "Y yendo un poco más lejos, se postró en tierra, y rogó a fin de que, si fuese posible, se alejase de Él esa hora;"
+        },
+        {
+          "number": 36,
+          "text": "y decía: “¡Abba, Padre! ¡todo te es posible; aparta de Mí este cáliz; pero, no como Yo quiero, sino como Tú!”.",
+          "footnotes": [
+            {
+              "id": "FN148",
+              "caller": "*",
+              "text": "Véase Mt. 26, 42 y nota; Lc. 22, 42. El cáliz significa la pasión. Cf. 10, 38; Lc. 12, 50."
+            }
+          ]
+        },
+        {
+          "number": 37,
+          "text": "Volvió y los halló dormidos; y dijo a Pedro: “¡Simón! ¿duermes? ¿No pudiste velar una hora?.",
+          "footnotes": [
+            {
+              "id": "FN149",
+              "caller": "*",
+              "text": "¡Simón! ¿duermes?: Jesús se dirige especialmente a Pedro, ya que este se había tenido por más valiente que los otros (v. 29) y porque el jefe de los apóstoles tenía que dar buen ejemplo. Cf. Mt. 26, 36-46; Lc. 22, 40-46."
+            }
+          ]
+        },
+        {
+          "number": 38,
+          "text": "Velad y orad para no entrar en tentación. El espíritu está dispuesto, pero la carne es débil”."
+        },
+        {
+          "number": 39,
+          "text": "Se alejó de nuevo y oró, diciendo lo mismo."
+        },
+        {
+          "number": 40,
+          "text": "Después volvió y los encontró todavía dormidos; sus ojos estaban en efecto cargados, y no supieron qué decirle."
+        },
+        {
+          "number": 41,
+          "text": "Una tercera vez volvió, y les dijo: “¿Dormís ya y descansáis? ¡Basta! llegó la hora. Mirad: ahora el Hijo del hombre es entregado en las manos de los pecadores.",
+          "footnotes": [
+            {
+              "id": "FN150",
+              "caller": "*",
+              "text": "Estas palabras coinciden con las que el Señor había dicho a Pedro en el v. 37, y nos muestran, como una lección para nuestra humildad, el grado de inconsciencia de aquellos hombres en semejantes momentos. La versión que pone los verbos en imperativo resulta inexplicable ante la palabra que Jesús agrega inmediatamente: “¡basta!”. Véase Mt. 26, 45."
+            }
+          ]
+        },
+        {
+          "number": 42,
+          "text": "¡Levantaos! ¡Vamos! Se acerca el que me entrega”."
+        },
+        {
+          "number": 43,
+          "text": "Y al punto, cuando Él todavía hablaba, apareció Judas, uno de los Doce, y con él una tropa armada de espadas y palos, enviada por los sumos sacerdotes, los escribas y los ancianos.",
+          "headings": [
+            "Prisión de Jesús"
+          ],
+          "footnotes": [
+            {
+              "id": "FN151",
+              "caller": "*",
+              "text": "Véase Mt. 26, 47 ss.; Jn. 18, 3 ss."
+            }
+          ]
+        },
+        {
+          "number": 44,
+          "text": "Y el que lo entregaba, les había dado esta señal: “Aquel a quien yo daré un beso, Él es: prendedlo y llevadlo con cautela”."
+        },
+        {
+          "number": 45,
+          "text": "Y apenas llegó, se acercó a Él y le dijo: “Rabí”, y lo besó."
+        },
+        {
+          "number": 46,
+          "text": "Ellos, pues, le echaron mano, y lo sujetaron."
+        },
+        {
+          "number": 47,
+          "text": "Entonces, uno de los que ahí estaban, desenvainó su espada, y dio al siervo del sumo sacerdote un golpe y le amputó la oreja."
+        },
+        {
+          "number": 48,
+          "text": "Y Jesús, respondiendo, les dijo: “Como contra un bandolero habéis salido, armados de espadas y palos, para prenderme."
+        },
+        {
+          "number": 49,
+          "text": "Todos los días estaba Yo en medio de vosotros enseñando en el Templo, y no me prendisteis. Pero (es) para que se cumplan las Escrituras”."
+        },
+        {
+          "number": 50,
+          "text": "Y abandonándole, huyeron todos.",
+          "footnotes": [
+            {
+              "id": "FN152",
+              "caller": "*",
+              "text": "Esta, huída general, que nos enseña la miseria sin límites de que todos somos capaces, es también inexcusable falta de fe en la bondad y el poder del Salvador, pues Él había mostrado con sus palabras (Jn. 17, 12) y con su actitud (Jn. 18, 8 s. y 19 s.) que no permitiría que ellos fuesen sacrificados con Él. Véase Mt. 26, 56 y nota."
+            }
+          ]
+        },
+        {
+          "number": 51,
+          "text": "Cierto joven, empero, lo siguió, envuelto en una sábana sobre el cuerpo desnudo, y lo prendieron;",
+          "footnotes": [
+            {
+              "id": "FN153",
+              "caller": "*",
+              "text": "Ese joven que iba siguiendo a Jesús es, según se cree, el mismo Marcos que escribió este Evangelio, único en traer el episodio."
+            }
+          ]
+        },
+        {
+          "number": 52,
+          "text": "pero él soltando la sábana, se escapó de ellos desnudo."
+        },
+        {
+          "number": 53,
+          "text": "Condujeron a Jesús a casa del Sumo Sacerdote, donde se reunieron todos los jefes de los sacerdotes, los ancianos y los escribas.",
+          "footnotes": [
+            {
+              "id": "FN154",
+              "caller": "*",
+              "text": "La casa de Caifás estaba en la parte sudoeste de la ciudad. Había que andar hasta allí unos dos kilómetros. Según una tradición piadosa, Jesús en este largo trayecto cayó en tierra, a consecuencia de los malos tratamientos, muchas veces más que las tres caídas del Vía Crucis. Cf. Sal. 109, 7 nota."
+            }
+          ]
+        },
+        {
+          "number": 54,
+          "text": "Pedro lo había seguido de lejos hasta el interior del palacio del Sumo Sacerdote, y estando sentado con los criados se calentaba junto al fuego."
+        },
+        {
+          "number": 55,
+          "text": "Los sumos sacerdotes, y todo el Sanhedrín, buscaban contra Jesús un testimonio para hacerlo morir, pero no lo hallaban.",
+          "headings": [
+            "Ante Caifás"
+          ]
+        },
+        {
+          "number": 56,
+          "text": "Muchos, ciertamente, atestiguaron en falso contra Él, pero los testimonios no eran concordes."
+        },
+        {
+          "number": 57,
+          "text": "Y algunos se levantaron y adujeron contra Él este falso testimonio:"
+        },
+        {
+          "number": 58,
+          "text": "“Nosotros le hemos oído decir: ‘Derribaré este Templo hecho de mano de hombre, y en el espacio de tres días reedificaré otro no hecho de mano de hombre’”.",
+          "footnotes": [
+            {
+              "id": "FN155",
+              "caller": "*",
+              "text": "Véase Jn. 2, 19. Gramática recuerda también aquí el templo celestial de Hb. 9, 11 y 24."
+            }
+          ]
+        },
+        {
+          "number": 59,
+          "text": "Pero aun en esto el testimonio de ellos no era concorde."
+        },
+        {
+          "number": 60,
+          "text": "Entonces, el Sumo Sacerdote, se puso de pie en medio e interrogó a Jesús diciendo: “¿No respondes nada? ¿Qué es lo que estos atestiguan contra Ti?”"
+        },
+        {
+          "number": 61,
+          "text": "Pero Él guardó silencio y nada respondió. De nuevo, el Sumo Sacerdote lo interrogó y le dijo: “¿Eres Tú el Cristo, el Hijo del Bendito?”"
+        },
+        {
+          "number": 62,
+          "text": "Jesús respondió: “Yo soy. Y veréis al Hijo del Hombre sentado a la derecha del Poder, y viniendo en las nubes del cielo”.",
+          "footnotes": [
+            {
+              "id": "FN156",
+              "caller": "*",
+              "text": "“El nombre de Hijo del hombre, que Jesús mismo se dio, expresa su calidad de hombre, y por alusión a la profecía de Daniel, insinúa su dignidad mesiánica” (P. d’Alès). Véase Dn. 7, 13; Mt. 24, 30; 26, 64; Sal. 79, 16 y nota."
+            }
+          ]
+        },
+        {
+          "number": 63,
+          "text": "Entonces, el Sumo Sacerdote rasgó sus vestidos, y dijo: “¿Qué necesidad tenemos ahora de testigos?"
+        },
+        {
+          "number": 64,
+          "text": "Vosotros acabáis de oír la blasfemia. ¿Qué os parece?” Y ellos todos sentenciaron que Él era reo de muerte.",
+          "footnotes": [
+            {
+              "id": "FN157",
+              "caller": "*",
+              "text": "Es condenado por blasfemia el Santo de los santos, el inmaculado Cordero de Dios, el único Ser en quien el Padre tenía puestas todas sus complacencias (Mt. 3, 17; 17, 5). Su “blasfemia” consistió en decir la doble verdad de que Él era el anunciado por los profetas como Hijo de Dios y Rey de Israel (Lc. 23, 3; Jn. 18, 37)."
+            }
+          ]
+        },
+        {
+          "number": 65,
+          "text": "Y comenzaron algunos a escupir sobre Él y, velándole el rostro, lo abofeteaban diciéndole: “¡Adivina!” Y los criados le daban bofetadas."
+        },
+        {
+          "number": 66,
+          "text": "Mientras Pedro estaba abajo, en el patio, vino una de las sirvientas del Sumo Sacerdote,",
+          "headings": [
+            "Pedro niega a Cristo"
+          ],
+          "footnotes": [
+            {
+              "id": "FN158",
+              "caller": "*",
+              "text": "Véase Mt. 26, 69 ss.; Lc. 22, 55 ss.; Jn. 18, 16 ss."
+            }
+          ]
+        },
+        {
+          "number": 67,
+          "text": "la cual viendo a Pedro que se calentaba, lo miró y le dijo: “Tú también estabas con el Nazareno Jesús”."
+        },
+        {
+          "number": 68,
+          "text": "Pero él lo negó, diciendo: “No sé absolutamente qué quieres decir”. Y salió fuera, al pórtico, y cantó un gallo."
+        },
+        {
+          "number": 69,
+          "text": "Y la sirvienta, habiéndolo visto allí, se puso otra vez a decir a los circunstantes: “Este es uno de ellos”. Y él lo negó de nuevo."
+        },
+        {
+          "number": 70,
+          "text": "Poco después los que estaban allí, dijeron nuevamente a Pedro: “Por cierto que tú eres de ellos; porque también eres galileo”."
+        },
+        {
+          "number": 71,
+          "text": "Entonces, comenzó a echar imprecaciones y dijo con juramento: “Yo no conozco a ese hombre del que habláis”."
+        },
+        {
+          "number": 72,
+          "text": "Al punto, por segunda vez, cantó un gallo. Y Pedro se acordó de la palabra que Jesús le había dicho: “Antes que el gallo cante dos veces, me habrás negado tres”, y rompió en sollozos.",
+          "footnotes": [
+            {
+              "id": "FN159",
+              "caller": "*",
+              "text": "La caída de Pedro fue profunda, pero no menos profundo fue luego su dolor. Muchos seguimos a Pedro negando al Señor; sigamos también la preciosa lección del arrepentimiento, ya que, como enseña Jesús, el más perdonado es el que más ama (Lc. 7, 47)."
+            }
+          ]
+        }
+      ]
+    },
+    "15": {
+      "chapter": 15,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Inmediatamente, a la madrugada, los sumos sacerdotes tuvieron consejo con los ancianos, los escribas y todo el Sanhedrín, y después de atar a Jesús, lo llevaron y entregaron a Pilato.",
+          "headings": [
+            "Jesús ante Pilato"
+          ],
+          "footnotes": [
+            {
+              "id": "FN160",
+              "caller": "*",
+              "text": "Pilato era gobernador y representante del emperador romano, de cuyo imperio formaba parte la Judea. Sin el permiso del gobernador los judíos no podían condenar a muerte (Jn. 18, 31; 19, 6 s.)."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Pilato lo interrogó: “¿Eres Tú el rey de los judíos?” Él respondió y dijo: “Tú lo dices”.",
+          "footnotes": [
+            {
+              "id": "FN161",
+              "caller": "*",
+              "text": "Véase Mt. 27, 11 ss.; Lc. 23, 2 ss.; Jn. 18, 29 ss."
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "text": "Como los sumos sacerdotes lo acusasen de muchas cosas,"
+        },
+        {
+          "number": 4,
+          "text": "Pilato, de nuevo, lo interrogó diciendo: “¿Nada respondes? Mira de cuántas cosas te acusan”."
+        },
+        {
+          "number": 5,
+          "text": "Pero Jesús no respondió nada más, de suerte que Pilato estaba maravillado.",
+          "footnotes": [
+            {
+              "id": "FN162",
+              "caller": "*",
+              "text": "No respondió nada más: No era un rey que se imponía por la violencia (Mt. 26, 53), sino que, al contrario, la sufría (Mt. 11, 12; Jn. 18, 36). La Sinagoga lo rechazó formalmente (Jn. 19, 15; cf. Lc. 19, 14), no obstante la actitud del pueblo (11, 10; Mt. 21, 1-11; Lc. 19, 29-45; Jn. 12, 12 ss.)."
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "text": "Mas en cada fiesta les ponía en libertad a uno de los presos, al que pedían.",
+          "headings": [
+            "Pospuesto a Barrabás"
+          ]
+        },
+        {
+          "number": 7,
+          "text": "Y estaba el llamado Barrabás, preso entre los sublevados que, en la sedición, habían cometido un homicidio."
+        },
+        {
+          "number": 8,
+          "text": "Por lo cual la multitud subió y empezó a pedirle lo que él tenía costumbre de concederles."
+        },
+        {
+          "number": 9,
+          "text": "Pilato les respondió y dijo: “¿Queréis que os suelte al rey de los judíos?”"
+        },
+        {
+          "number": 10,
+          "text": "Él sabía, en efecto, que los sumos sacerdotes lo habían entregado por envidia."
+        },
+        {
+          "number": 11,
+          "text": "Mas los sumos sacerdotes incitaron a la plebe para conseguir que soltase más bien a Barrabás.",
+          "footnotes": [
+            {
+              "id": "FN163",
+              "caller": "*",
+              "text": "Véase la nota a Mt. 27, 18."
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "text": "Entonces, Pilato volvió a tomar la palabra y les dijo: “¿Qué decís pues que haga al rey de los judíos?”"
+        },
+        {
+          "number": 13,
+          "text": "Y ellos, gritaron: “¡Crucifícalo!”"
+        },
+        {
+          "number": 14,
+          "text": "Díjoles Pilato: “Pues, ¿qué mal ha hecho?” Y ellos gritaron todavía más fuerte: “¡Crucifícalo!”"
+        },
+        {
+          "number": 15,
+          "text": "Entonces Pilato, queriendo satisfacer a la turba, les dejó en libertad a Barrabás; y después de haber hecho flagelar a Jesús, lo entregó para ser crucificado.",
+          "footnotes": [
+            {
+              "id": "FN164",
+              "caller": "*",
+              "text": "Pilato había preguntado a Cristo qué verdad era aquella de que Él daba testimonio y no aguardó siquiera la respuesta (Jn. 18, 38), que le habría revelado las maravillas de los profetas (cf. Rm. 15, 8). De esta despreocupación por conocer la verdad nacen todos los extravíos del corazón. Pilato ha quedado para el mundo —que lo reprueba sin perjuicio de imitarlo frecuentemente— como el prototipo del juez que pospone la justicia a los intereses o al miedo. Véase en el Sal. 81 y sus notas las tremendas maldiciones con que Dios fulmina a cuantos abusan del poder."
+            }
+          ]
+        },
+        {
+          "number": 16,
+          "text": "Los soldados, pues, lo condujeron al interior del palacio, es decir, al pretorio, y llamaron a toda la cohorte.",
+          "headings": [
+            "El Rey de burlas coronado de espinas"
+          ],
+          "footnotes": [
+            {
+              "id": "FN165",
+              "caller": "*",
+              "text": "Véase Mt. 27, 27 ss.; Jn. 19, 2 s."
+            }
+          ]
+        },
+        {
+          "number": 17,
+          "text": "Lo vistieron de púrpura, y habiendo trenzado una corona de espinas, se la ciñeron."
+        },
+        {
+          "number": 18,
+          "text": "Y se pusieron a saludarlo: “¡Salve, rey de los judíos”."
+        },
+        {
+          "number": 19,
+          "text": "Y le golpeaban la cabeza con una caña, y lo escupían, y le hacían reverencia doblando la rodilla."
+        },
+        {
+          "number": 20,
+          "text": "Y después que se burlaron de Él, le quitaron la púrpura, le volvieron a poner sus vestidos, y se lo llevaron para crucificarlo."
+        },
+        {
+          "number": 21,
+          "text": "Requisaron a un hombre que pasaba por allí, volviendo del campo, Simón Cireneo, el padre de Alejandro y de Rufo, para que llevase la cruz de Él.",
+          "headings": [
+            "Simón de Cirene"
+          ],
+          "footnotes": [
+            {
+              "id": "FN166",
+              "caller": "*",
+              "text": "Marcos no solo menciona a Simón , sino también a sus hijos Alejandro y Rufo, conocidos en Roma, donde el Evangelista escribió su Evangelio (Rm. 16, 13). Esto demuestra que Simón con su familia se convirtió a la religión cristiana, sin duda como una gracia que Jesús concedió al que llevaba con Él la Cruz, aunque no lo hubiese aliviado mucho. Véase Lc. 23, 26 y nota."
+            }
+          ]
+        },
+        {
+          "number": 22,
+          "text": "Lo condujeron al lugar llamado Gólgota, que se traduce: “Lugar del Cráneo”.",
+          "footnotes": [
+            {
+              "id": "FN167",
+              "caller": "*",
+              "text": "Véase Mt. 27, 33; Lc. 23, 32 ss.; Jn. 19, 17 ss."
+            }
+          ]
+        },
+        {
+          "number": 23,
+          "text": "Y le ofrecieron vino mezclado con mirra, pero Él no lo tomó.",
+          "headings": [
+            "Crucifixión de Jesús"
+          ]
+        },
+        {
+          "number": 24,
+          "text": "Y lo crucificaron, y se repartieron sus vestidos, sorteando entre ellos la parte de cada cual."
+        },
+        {
+          "number": 25,
+          "text": "Era la hora de tercia cuando lo crucificaron.",
+          "footnotes": [
+            {
+              "id": "FN168",
+              "caller": "*",
+              "text": "La hora de tercia, o sea, el segundo cuarto del día que comenzaba a las nueve y terminaba a las doce. Según S. Juan (19, 14) eran casi las doce."
+            }
+          ]
+        },
+        {
+          "number": 26,
+          "text": "Y en el epígrafe de su causa estaba escrito: “El rey de los judíos”."
+        },
+        {
+          "number": 27,
+          "text": "Y con Él crucificaron a dos bandidos, uno a la derecha, y el otro a la izquierda de Él."
+        },
+        {
+          "number": 28,
+          "text": "Así se cumplió la Escritura que dice: “Y fue contado entre los malhechores”.",
+          "footnotes": [
+            {
+              "id": "FN169",
+              "caller": "*",
+              "text": "Véase Is. 53, 12; Sal. 21, 8; 108, 25."
+            }
+          ]
+        },
+        {
+          "number": 29,
+          "text": "Y los que pasaban, blasfemaban de Él meneando sus cabezas y diciendo: “¡Bah, Él que destruía el Templo, y lo reedificaba en tres días!",
+          "footnotes": [
+            {
+              "id": "FN170",
+              "caller": "*",
+              "text": "Cf. 14, 58; Jn. 2, 19."
+            }
+          ]
+        },
+        {
+          "number": 30,
+          "text": "¡Sálvate a Ti mismo, bajando de la cruz!”"
+        },
+        {
+          "number": 31,
+          "text": "Igualmente los sumos sacerdotes escarneciéndole, se decían unos a otros con los escribas: “¡Salvó a otros, y no puede salvarse a sí mismo!"
+        },
+        {
+          "number": 32,
+          "text": "¡El Cristo, el rey de Israel, baje ahora de la cruz para que veamos y creamos!” Y los que estaban crucificados con Él, lo injuriaban también."
+        },
+        {
+          "number": 33,
+          "text": "Y cuando fue la hora sexta, hubo tinieblas sobre toda la tierra hasta la hora nona."
+        },
+        {
+          "number": 34,
+          "text": "Y a la hora nona, Jesús gritó con una voz fuerte: “Eloí, Eloí, ¿lama sabacthani?”, lo que es interpretado: “Dios mío, Dios mío, ¿por qué me has abandonado?”.",
+          "footnotes": [
+            {
+              "id": "FN171",
+              "caller": "*",
+              "text": "Jesús no padeció a la manera de los santos mártires, que sufrían confortados por la gracia. Su alma estaba oprimida por el peso de los pecados que había tomado sobre sí (cf. Ez. 4, 4 ss. y nota), pues su divinidad permitió que su naturaleza humana fuera sumergida en un abismo insondable de sufrimientos. Las palabras del Sal. 21, que Jesús repite en alta voz, muestran que el divino Cordero toma sobre sí todos nuestros pecados. Véase nuestro comentario a dicho Salmo."
+            }
+          ]
+        },
+        {
+          "number": 35,
+          "text": "Oyendo esto, algunos de los presentes dijeron: “¡He ahí que llama a Elías!”"
+        },
+        {
+          "number": 36,
+          "text": "Y uno de ellos corrió entonces a empapar con vinagre una esponja, y atándola a una caña, le ofreció de beber, y decía: “Vamos a ver si viene Elías a bajarlo”.",
+          "footnotes": [
+            {
+              "id": "FN172",
+              "caller": "*",
+              "text": "Sobre el misterio de Elías, véase 9, 12 s. y nota."
+            }
+          ]
+        },
+        {
+          "number": 37,
+          "text": "Mas Jesús, dando una gran voz, expiró.",
+          "footnotes": [
+            {
+              "id": "FN173",
+              "caller": "*",
+              "text": "El Hijo de Dios muere emitiendo una gran voz para mostrar que no le quitan la vida sino porque Él lo quiere, y que en un instante habría podido bajar de la cruz y sanar de sus heridas, si no hubiera tenido la voluntad de inmolarse hasta la muerte para glorificar al Padre con nuestra redención (Jn. 17, 2; cf. Mt. 26, 42 y nota). Los evangelistas relatan que Jesús murió en viernes y, según los tres más antiguos, cerca de la hora nona, es decir, a las tres de la tarde."
+            }
+          ]
+        },
+        {
+          "number": 38,
+          "text": "Entonces, el velo del Templo se rasgó en dos partes, de alto a bajo."
+        },
+        {
+          "number": 39,
+          "text": "El centurión, apostado enfrente de Él, viéndolo expirar de este modo, dijo: “¡Verdaderamente este hombre era Hijo de Dios!”.",
+          "footnotes": [
+            {
+              "id": "FN174",
+              "caller": "*",
+              "text": "Véase Mt. 27, 54 ss.; Lc. 23, 47 ss.; Jn. 19, 38 ss."
+            }
+          ]
+        },
+        {
+          "number": 40,
+          "text": "Había también allí unas mujeres mirando desde lejos, entre las cuales también María la Magdalena, y María la madre de Santiago el Menor y de José, y Salomé,"
+        },
+        {
+          "number": 41,
+          "text": "las cuales cuando estaban en Galilea, lo seguían y lo servían, y otras muchas que habían subido con Él a Jerusalén."
+        },
+        {
+          "number": 42,
+          "text": "Llegada ya la tarde, como era día de Preparación, es decir, víspera del día sábado,",
+          "headings": [
+            "Sepultura de Jesús"
+          ],
+          "footnotes": [
+            {
+              "id": "FN175",
+              "caller": "*",
+              "text": "Preparación: Los judíos llamaban así el viernes, pues se preparaba en este día todo lo necesario para el sábado, en que estaba prohibido todo trabajo."
+            }
+          ]
+        },
+        {
+          "number": 43,
+          "text": "vino José, el de Arimatea, noble consejero, el cual también estaba esperando el reino de Dios. Este se atrevió a ir a Pilato, y le pidió el cuerpo de Jesús.",
+          "footnotes": [
+            {
+              "id": "FN176",
+              "caller": "*",
+              "text": "El heroísmo de José de Arimatea no tiene paralelo. Intrépido, confiesa pública y resueltamente ser partidario del Crucificado, confirmando las palabras con sus obras, mientras los apóstoles y amigos del Señor están desalentados y fugitivos. El Evangelio hace notar expresamente que José esperaba el reino de Dios, en lo cual vemos que esa esperanza era común entre los discípulos. Véase 10, 35 y nota; 11, 10; Mt. 23, 39; Lc. 19, 11; Hch. 1, 6; 2 Tm. 4, 1; Hb. 2, 8; 10, 37, etc."
+            }
+          ]
+        },
+        {
+          "number": 44,
+          "text": "Pilato, se extrañó de que estuviera muerto; hizo venir al centurión y le preguntó si había muerto ya."
+        },
+        {
+          "number": 45,
+          "text": "Informado por el centurión, dio el cuerpo a José;"
+        },
+        {
+          "number": 46,
+          "text": "el cual habiendo comprado una sábana, lo bajó, lo envolvió en el sudario, lo depositó en un sepulcro tallado en la roca, y arrimó una loza a la puerta del sepulcro."
+        },
+        {
+          "number": 47,
+          "text": "Entre tanto, María la Magdalena y María la de José observaron dónde era sepultado."
+        }
+      ]
+    },
+    "16": {
+      "chapter": 16,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Pasado el sábado, María la Magdalena, María la de Santiago y Salomé compraron aromas, para ir a ungirlo.",
+          "headings": [
+            "VI. LA RESURRECCIÓN",
+            "Las santas mujeres van al sepulcro"
+          ],
+          "footnotes": [
+            {
+              "id": "FN177",
+              "caller": "*",
+              "text": "Véase Mt. 28, 1 ss.; Lc. 24, 1 ss.; Jn. 20, 1 ss."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Y muy de madrugada, el primer día de la semana, llegaron al sepulcro, al salir el sol."
+        },
+        {
+          "number": 3,
+          "text": "Y se decían unas a otras: “¿Quién nos removerá la piedra de la entrada del sepulcro?”"
+        },
+        {
+          "number": 4,
+          "text": "Y al mirar, vieron que la piedra había ya sido removida, y era en efecto sumamente grande."
+        },
+        {
+          "number": 5,
+          "text": "Y entrando en el sepulcro vieron, sentado a la derecha, a un joven vestido con una larga túnica blanca, y quedaron llenas de estupor."
+        },
+        {
+          "number": 6,
+          "text": "Mas él les dijo: “No tengáis miedo. A Jesús buscáis, el Nazareno crucificado; resucitó, no está aquí. Ved el lugar donde lo habían puesto.",
+          "footnotes": [
+            {
+              "id": "FN178",
+              "caller": "*",
+              "text": "S. Juan (20, 2) refiere que María Magdalena fue la primera en comunicar a los discípulos la resurrección del Señor (v. 9 y nota)."
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "text": "Pero id a decir a los discípulos de Él y a Pedro: va delante de vosotros a la Galilea; allí lo veréis, como os dijo”.",
+          "footnotes": [
+            {
+              "id": "FN179",
+              "caller": "*",
+              "text": "Menciona especialmente a Pedro, como para indicar que le han sido perdonadas sus negaciones."
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "text": "Ellas salieron huyendo del sepulcro porque estaban dominadas por el temor y el asombro; y no dijeron nada a nadie, a causa del miedo."
+        },
+        {
+          "number": 9,
+          "text": "Resucitado, pues, temprano, el primer día de la semana, se apareció primeramente a María la Magdalena, de la cual había echado siete demonios.",
+          "headings": [
+            "Jesús se aparece a los suyos"
+          ],
+          "footnotes": [
+            {
+              "id": "FN180",
+              "caller": "*",
+              "text": "El evangelista parece querer destacar, como una paradoja de la divina misericordia, esta preferencia de Jesús por aparecerse a Magdalena, la que estuvo endemoniada. El v. 6 nos muestra que ella fue la primera en tener noticia de la resurrección, y que recibió también el honor de anunciarla a los apóstoles. Así quiso el Maestro recompensar la fidelidad de quien había antepuesto a todo su divina Palabra (Lc. 10, 39), su perdón (Lc. 7, 37 ss.), su culto (14, 3 ss) y su apostolado (Lc. 8, 2), siguiéndolo, junto a la Madre fidelísima, al pie de la Cruz (Jn. 19, 25)."
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "Ella fue y lo anunció a los que habían estado con Él, que se hallaban afligidos y llorando."
+        },
+        {
+          "number": 11,
+          "text": "Pero ellos al oír que vivía y que había sido visto por ella, no creyeron.",
+          "footnotes": [
+            {
+              "id": "FN181",
+              "caller": "*",
+              "text": "Esta impresionante incredulidad general muestra cuán lejos estuvo el Señor de ser glorificado visiblemente hasta que el Padre lo glorificó en el cielo sentándolo a su diestra (v. 19; Sal. 109, 1) en el Tabernáculo “no hecho de mano de hombre” (Hb. 9, 11 y 24; Sal. 109, 4). De ahí que el Espíritu Santo no viniese hasta después de la Ascensión (Jn. 7, 39), y que ni en esta ni en la resurrección (que nadie presenció) se mostrase Él glorioso como en la Transfiguración, donde Él quiso manifestarse con la gloria que ostentará también en su segunda venida. Cf. 9, 1; Sal. 109, 1 ss.; 2 Ts. 1, 10; Hb. 1, 6."
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "text": "Después de estas cosas se mostró en el camino, con otra figura, a dos de ellos, que iban a una granja.",
+          "footnotes": [
+            {
+              "id": "FN182",
+              "caller": "*",
+              "text": "Alusión al episodio de Emaús que solo narra San Lucas (24, 13-25)."
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "Estos también fueron a anunciarlo a los demás; pero tampoco a ellos les creyeron."
+        },
+        {
+          "number": 14,
+          "text": "Por último, se les apareció a los once mientras comían y les echó en cara su falta de fe y dureza de corazón porque no habían creído a los que lo habían visto a Él resucitado de entre los muertos.",
+          "headings": [
+            "Misión de los Apóstoles"
+          ],
+          "footnotes": [
+            {
+              "id": "FN183",
+              "caller": "*",
+              "text": "Esta aparición se realizó el día de la resurrección por la tarde, probablemente en la casa de María, la madre de S. Marcos, donde los discípulos solían reunirse."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "Y les dijo: “Id por el mundo entero, predicad el Evangelio a toda la creación."
+        },
+        {
+          "number": 16,
+          "text": "Quien creyere y fuere bautizado, será salvo; mas, quien no creyere, será condenado.",
+          "footnotes": [
+            {
+              "id": "FN184",
+              "caller": "*",
+              "text": "Sobre esta precedencia de la fe véase Hch. 2, 41; Col. 2, 12 y notas."
+            }
+          ]
+        },
+        {
+          "number": 17,
+          "text": "Y he aquí los milagros que acompañarán a los que creyeren: en mi nombre expulsarán demonios, hablarán nuevas lenguas,"
+        },
+        {
+          "number": 18,
+          "text": "tomarán las serpientes; y si bebieren algo mortífero no les hará daño alguno; sobre los enfermos pondrán sus manos y sanarán”."
+        },
+        {
+          "number": 19,
+          "text": "Y el Señor Jesús, después de hablarles, fue arrebatado al cielo, y se sentó a la diestra de Dios.",
+          "headings": [
+            "Ascensión del Señor"
+          ]
+        },
+        {
+          "number": 20,
+          "text": "En cuanto a ellos, fueron y predicaron por todas partes, asistiéndolos el Señor y confirmando la palabra con los milagros que la acompañaban.",
+          "footnotes": [
+            {
+              "id": "FN185",
+              "caller": "*",
+              "text": "El final de este Evangelio (vv. 20) falta en muchos códices antiguos. Su inspiración fue definida en el Concilio Tridentino. Críticamente consta de su autenticidad."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,521 @@
+{
+  "versionId": "SpaPlatense",
+  "bookCode": "ZEP",
+  "bookName": "Sofonías",
+  "testament": "AT",
+  "chapters": {
+    "1": {
+      "chapter": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Palabra de Yahvé, que llegó a Sofonías, hijo de Cusí, hijo de Godolías, hijo de Amarías, hijo de Ezequías, en los días de Josías, hijo de Amón, rey de Judá.",
+          "footnotes": [
+            {
+              "id": "FN1",
+              "caller": "*",
+              "text": "La genealogía de Sofonías es la más larga de todos los profetas, quizá para hacerla remontar hasta Ezequías, lo que ha inducido a algunos a creer que se trata del rey del mismo nombre (721-693)."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Haré desaparecer de la tierra todas las cosas, dice Yahvé.",
+          "headings": [
+            "El día del Señor"
+          ],
+          "footnotes": [
+            {
+              "id": "FN2",
+              "caller": "*",
+              "text": "Es el preludio de las grandes amenazas contra Jerusalén y el reino de Judá. Los escándalos: los ídolos."
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "text": "Acabaré con los hombres y las bestias; exterminaré las aves del cielo y los peces del mar, y los escándalos de los impíos; y aniquilaré al hombre de sobre la faz de la tierra, dice Yahvé."
+        },
+        {
+          "number": 4,
+          "text": "Extenderé mi mano contra Judá, y contra todos los moradores de Jerusalén; y exterminaré de este lugar los vestigios de Baal, a los ministros (de Baal) y a los sacerdotes (de Yahvé);",
+          "footnotes": [
+            {
+              "id": "FN3",
+              "caller": "*",
+              "text": "Los vestigios de Baal: He aquí la causa de la ira de Dios: la idolatría a manera de los cananeos, que adoraban a Baal y Astarté como personificaciones de la fertilidad de la naturaleza, practicando su culto en los lugares altos, contra los cuales se dirigieron durante varios años las reformas religiosas de los reyes piadosos, especialmente las de Ezequías y Josías."
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "text": "también a los que en los terrados se postran ante la milicia del cielo; a aquellos que adoran a Yahvé y juran por Milcom;",
+          "footnotes": [
+            {
+              "id": "FN4",
+              "caller": "*",
+              "text": "Milicia del cielo se llaman los astros a los cuales se ofrecían inciensos sobre los terrados (Jeremías 19, 13). El jurar por Milcom es síntoma de la diabólica mezcla del culto de Dios con la adoración de los ídolos, que es lo que a Él indigna más que nada. Milcom era el dios nacional de los ammonitas, cuyo culto inhumano se practicaba también en Jerusalén (III Reyes 11, 5 y 7). Cf. Jeremías 49, 3; Amós 1, 15 y nota."
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "text": "a quienes han dejado de seguir a Yahvé, y a los que no buscan a Yahvé, ni procuran encontrarlo."
+        },
+        {
+          "number": 7,
+          "text": "¡Silencio ante Yahvé, el Señor! porque el día de Yahvé se ha acercado, pues Yahvé ha preparado un sacrificio, ha santificado a sus convidados.",
+          "footnotes": [
+            {
+              "id": "FN5",
+              "caller": "*",
+              "text": "El día de Yahvé: el día del juicio (cf. versículos 14-15; Isaías 2, 12 y nota; Joel 1, 15; Abdías 15, etc.). Yahvé convida a los pueblos al trágico festín. La víctima es Judá. Los convidados han sido santificados, esto es, preparados ritualmente."
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "text": "En aquel día del sacrificio de Yahvé, castigaré a los príncipes y a los hijos del rey; y a cuantos se visten como extranjeros.",
+          "footnotes": [
+            {
+              "id": "FN6",
+              "caller": "*",
+              "text": "Se visten como extranjeros: Evidente indicio de que también su corazón se ha alejado de la religión de los padres (cf. Isaías 2, 6 ss. y nota). El mayor desprecio a Dios, que eligió a Israel y la llenó de privilegios, era envidiar a los paganos. De ahí vino siempre la corrupción, la idolatría y la degeneración de Israel, y hasta el rey Salomón cayó por causa de las mujeres extranjeras. En la moda se manifiesta el espíritu, como lo vemos palpablemente en la de hoy. Véase Ezequiel 13, 18 s. y nota. En sentido espiritual el vestido extraño es la hipocresía. El hipócrita busca cómo disfrazarse, mas “ay del que es de corazón doble” (Eclesiástico 2, 14); al ojo de Dios no escapará. Cf. Isaías 29, 15; Mateo capítulo 23; Juan 1, 47 y nota."
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "text": "En aquel día castigaré también a todos los que saltan sobre el umbral, a los que llenan de violencia y fraude la casa de su Señor.",
+          "footnotes": [
+            {
+              "id": "FN7",
+              "caller": "*",
+              "text": "Saltan sobre el umbral: Así entraban los filisteos en su templo de Dagón. De ahí vino quizá la costumbre supersticiosa de no pisar el umbral de la casa, costumbre divulgada hasta entre los pueblos modernos. La Vulgata vierte: entran por los umbrales: Esta versión adoptada aquí por San Jerónimo parecería poner de relieve “la insolencia con que los grandes penetraban en el templo de Yahvé, para ofrecer sacrificios cuya materia provenía de la violencia y del robo” (Fillion)."
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "En aquel día, dice Yahvé, se oirán gritos tremendos desde la puerta de los Peces, alaridos desde la (Ciudad) Segunda, y un gran estruendo desde los collados.",
+          "footnotes": [
+            {
+              "id": "FN8",
+              "caller": "*",
+              "text": "La puerta de los Peces se hallaba en la parte septentrional de Jerusalén. Por Segunda ha de entenderse un barrio nuevo, Los collados asimismo significan puntos topográficos de Jerusalén. Mortero: nombre de otro barrio de Jerusalén. Los traficantes: literalmente: el pueblo de los cananeos. Cf. Prov. 31, 24 y nota; Oseas 12, 7. Todos los que pesan plata: Vulgata: los envueltos en plata. Terrible alusión a los ricos de Jerusalén, que recuerda la de Santiago 5, 1 ss. Ellos, en primer lugar, han de experimentar la catástrofe, particularmente los negociantes. Cf. Zacarías 14, 21."
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "text": "¡Aullad, habitantes del Mortero, porque todos los traficantes han perecido; desaparecieron todos los que pesan plata."
+        },
+        {
+          "number": 12,
+          "text": "En aquel tiempo escudriñaré Yo a Jerusalén con linternas, y castigaré a los gordos sentados sobre sus heces, que dicen en su corazón: “No hace Yahvé ni bien ni mal.”",
+          "footnotes": [
+            {
+              "id": "FN9",
+              "caller": "*",
+              "text": "Sentados sobre sus heces, es decir, los grandes y opulentos que reposan seguros como el licor sobre las heces de las cuales toma color y fuerza. Véase Jeremías 48, 11-12. Es la más ofensiva blasfemia para el Dios vivo, sin él cual “no cae un pajarillo”, para el Dios celoso que reclama amor “de todo el corazón” y exige que nos decidamos “por Él o contra Él”, el mirarlo así como a un ente pasivo e inútil, que no hace bien ni mal."
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "Sus riquezas vendrán a ser saqueadas, y reducidas a desolación sus casas. Edificarán casas, y no las habitarán; plantarán viñas, y no beberán su vino.",
+          "footnotes": [
+            {
+              "id": "FN10",
+              "caller": "*",
+              "text": "Véase Deuteronomio 28, 30; Amós 5, 11; Miqueas 6, 15."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "Cerca está el día grande de Yahvé; próximo está y llega con suma velocidad. Es tan amarga la voz del día de Yahvé, que lanzarán gritos de angustia hasta los valientes.",
+          "headings": [
+            "Terrores del día del Señor"
+          ]
+        },
+        {
+          "number": 15,
+          "text": "Día de ira es aquel día, día de angustia y aflicción, día de devastación y ruina, día de tinieblas y oscuridad, día de nubes y densas nieblas;",
+          "footnotes": [
+            {
+              "id": "FN11",
+              "caller": "*",
+              "text": "El día de ira es, como el día grande (versículo 14), día de juicio para Jerusalén (cf. 3, 1), como en 3, 8 ss. lo será para las naciones, o sea los gentiles. En este pasaje se inspiró el autor del “Dies irae”. Las enérgicas expresiones que el profeta emplea aquí y en los versículos siguientes, muestran que el juicio ejecutado en Jerusalén es figura del juicio general de las naciones, así como en el capítulo 24 de San Mateo Jesús habla al mismo tiempo de la ruina de Jerusalén y de lo que ocurrirá en su segunda Venida."
+            }
+          ]
+        },
+        {
+          "number": 16,
+          "text": "día de trompeta y alarma contra las ciudades fuertes y las altas torres."
+        },
+        {
+          "number": 17,
+          "text": "Yo angustiaré a los hombres, de modo que andarán como ciegos, porque han pecado contra Yahvé; su sangre será derramada como polvo, y su carne como estiércol."
+        },
+        {
+          "number": 18,
+          "text": "Ni su plata ni su oro podrá librarlos en el día de la ira de Yahvé; el fuego de sus celos devorará toda la tierra; pues Él hará una ruina total, una destrucción repentina de todos los moradores de la tierra."
+        }
+      ]
+    },
+    "2": {
+      "chapter": 2,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Reflexionad sobre vosotros mismos, y arrepentíos, oh nación sin pudor,",
+          "headings": [
+            "Exhortación a la penitencia"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "antes que se ejecute el decreto, y el día pase como tamo; antes que os sobrevenga la ira ardiente de Yahvé, y antes que caiga sobre vosotros el día de la ira de Yahvé.",
+          "footnotes": [
+            {
+              "id": "FN12",
+              "caller": "*",
+              "text": "Antes que se ejecute el decreto: antes que se realice el divino decreto de castigaros, y se produzca como efecto aquel día de ira."
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "text": "Buscad a Yahvé, humildes todos de la tierra, los que obráis rectamente. Buscad la justicia, buscad la humildad, por si podéis poneros a cubierto en el día de la ira de Yahvé.",
+          "footnotes": [
+            {
+              "id": "FN13",
+              "caller": "*",
+              "text": "Es como si hablase Jesús. Cf. el Sermón de la Montaña (Mateo 5 ss.). Sofonías señala el único recurso para los que quieren evitar la ira del Señor."
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "text": "Porque Gaza será abandonada y Ascalón asolada, Azoto expulsada en pleno día y Acarón desarraigada.",
+          "headings": [
+            "Castigo de los filisteos"
+          ],
+          "footnotes": [
+            {
+              "id": "FN14",
+              "caller": "*",
+              "text": "Este vaticinio contiene amenazas contra las ciudades de los filisteos que oprimían a Judá desde los tiempos de los Jueces y ayudaban siempre a los enemigos del pueblo escogido."
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "text": "¡Ay de los habitantes de la costa del mar, del pueblo de los cereteos! Contra ti se dirige la palabra de Yahvé, oh Canaán, país de los filisteos; te asolaré de modo que no quede morador.",
+          "footnotes": [
+            {
+              "id": "FN15",
+              "caller": "*",
+              "text": "La costa del mar: la costa del Mediterráneo El pueblo de los cereteos (Vulgata: el pueblo de perdición), es decir, cretenses; pues los filisteos vinieron de Creta o Caftor (Deuteronomio 2, 23; I Rey. 30, 14 ver notas). Cf. Ezequiel 25, 16."
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "text": "La costa del mar se convertirá en pastizales, en refugios para pastores y apriscos para ovejas."
+        },
+        {
+          "number": 7,
+          "text": "Y pertenecerá la Costa a los restos de la casa de Judá; allí apacentarán (sus rebaños), y por la noche descansarán en las casas de Ascalón, pues Yahvé, su Dios, los visitará y los traerá del cautiverio.",
+          "footnotes": [
+            {
+              "id": "FN16",
+              "caller": "*",
+              "text": "El resto de los judíos que volviere de la cautividad, ocupará el país de los filisteos (cf. Isaías 14, 28 ss.). Este vaticinio se cumplió en los tiempos de los Macabeos, en forma transitoria, y como figura los grandes anuncios que el profeta hace luego a los restos de Israel. Cf. 3, 13 ss.; Abdías 19."
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "text": "He oído los insultos de Moab, y los ultrajes de los hijos de Ammón, que han afrentado a mi pueblo, y se han engrandecido a costa de su territorio.",
+          "headings": [
+            "Castigo de Moab y Ammón"
+          ],
+          "footnotes": [
+            {
+              "id": "FN17",
+              "caller": "*",
+              "text": "Los moabitas y ammonitas se engrandecieron a costa de los israelitas penetrando en los territorios de las tribus de Rubén, Gad y Manasés que habitaban en Transjordania. Véase Isaías capítulos 15 y 16; Jeremías 48, 25 ss.; Ezequiel 25, 3 ss."
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "text": "Por eso, ¡vivo Yo!, dice Yahvé de los ejércitos, el Dios de Israel: Moab será como Sodoma, y los hijos de Ammón como Gomorra, campo de ortigas, mina de sal, desierto para siempre. El resto de mi pueblo los despojará, y las reliquias de mi nación los tomaran en posesión."
+        },
+        {
+          "number": 10,
+          "text": "Este será el pago de su orgullo; pues han insultado y tratado con insolencia al pueblo de Yahvé de los ejércitos."
+        },
+        {
+          "number": 11,
+          "text": "Terrible será Yahvé contra ellos, pues acabará con todos los dioses de la tierra; ante Él se postrarán, cada cual desde su lugar, todas las islas de las gentes.",
+          "footnotes": [
+            {
+              "id": "FN18",
+              "caller": "*",
+              "text": "Análogas promesas mesiánicas se hallan en Miqueas 4, 1 ss.; Zacarías 14, 8 ss.; Mal. 1, 11. Cf. Isaías 2, 2 ss."
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "text": "También vosotros, oh etíopes, seréis muertos por mi espada.",
+          "headings": [
+            "Castigo de Etiopía y Asiria"
+          ],
+          "footnotes": [
+            {
+              "id": "FN19",
+              "caller": "*",
+              "text": "Etiopía representaba en aquel tiempo también a Egipto. El vaticinio se cumplió bajo Cambises rey de los persas en el año 525. Cf. Ezequiel 30, 1 ss."
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "Y extenderá Él su mano contra el Norte y destruirá a Asiria, haciendo de Nínive un yermo, un lugar árido como el desierto.",
+          "footnotes": [
+            {
+              "id": "FN20",
+              "caller": "*",
+              "text": "Nínive: Así reza el texto hebreo y la versión griega de los Setenta. La Vulgata dice: la hermosa. Asiria estaba todavía en el apogeo de su poder, pero poco después fue destruida por los babilonios. Cf. Isaías capítulo 10 y la profecía de Nahúm, toda referente a la ruina final de la capital asiria, figura de los enemigos del pueblo de Dios."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "Reposarán en medio de ella rebaños, y toda clase de animales; tanto el pelícano como el erizo se alojarán en sus capiteles; en los huecos se oirán voces que murmullan, y la desolación estará en los umbrales; pues ha sido arrancado el maderaje de cedro.",
+          "footnotes": [
+            {
+              "id": "FN21",
+              "caller": "*",
+              "text": "Véase Isaías 13, 20-22; 34, 11."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "¡Esta es la ciudad alegre que habitaba en seguridad, la que decía en su corazón: “¡Yo y nadie más que yo!” ¡Cómo se ha convertido en desierto, en guarida de fieras! Cuantos pasen junto a ella silbarán y agitarán la mano.",
+          "footnotes": [
+            {
+              "id": "FN22",
+              "caller": "*",
+              "text": "Véase Isaías 23, 7; 32, 13; 47, 8 ss.; Jeremías 19, 8; Miqueas 6, 16."
+            }
+          ]
+        }
+      ]
+    },
+    "3": {
+      "chapter": 3,
+      "verses": [
+        {
+          "number": 1,
+          "text": "¡Ay de la rebelde y contaminada, la ciudad opresora!",
+          "headings": [
+            "Los pecados de Jerusalén"
+          ],
+          "footnotes": [
+            {
+              "id": "FN23",
+              "caller": "*",
+              "text": "Llega el juicio a Jerusalén, que tantas veces ha provocado la ira de Dios y tan a menudo fue rescatada por la mano fuerte del Señor, sin convertirse. Jesucristo repite la queja del profeta (versículo 2) y dice a los jefes de la Sinagoga: “Vosotros no lo habéis querido.” Véase Mateo 23, 37 y Lucas 13, 34. Cf. Lucas 19, 42-44 y notas. En la Vulgata reza este verso: ¡Ay de ti, ciudad rebelde, y rescatada, oh paloma!"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "No quiere escuchar la voz, no admite la corrección; no pone su confianza en Yahvé, ni quiere acercarse a Dios."
+        },
+        {
+          "number": 3,
+          "text": "Sus príncipes en medio de ella son leones rugientes, sus jueces, lobos nocturnos; que no dejan hueso para mañana.",
+          "footnotes": [
+            {
+              "id": "FN24",
+              "caller": "*",
+              "text": "Véase Ezequiel 22, 27; Miqueas 3, 1 y 11, etc."
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "text": "Sus profetas son fanfarrones, hombres pérfidos; sus sacerdotes profanan el Santuario, violan la Ley.",
+          "footnotes": [
+            {
+              "id": "FN25",
+              "caller": "*",
+              "text": "Véase Ezequiel 22, 28; Oseas 4, 6; Miqueas 3, 11, etc."
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "text": "Mas Yahvé es justo en medio de ella, no hace iniquidad; cada mañana manifiesta Él su justicia, que nunca queda escondida, pero el impío no conoce la vergüenza.",
+          "footnotes": [
+            {
+              "id": "FN26",
+              "caller": "*",
+              "text": "Cada mañana: cada día manifiesta el Señor su voluntad por su Ley y por boca de los profetas. Más aún, está presente en su santo Templo."
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "text": "Yo he destruido naciones, han sido arrasadas sus ciudadelas, he devastado sus calles, de modo que nadie transita; sus ciudades están devastadas, han quedado sin nombre, sin habitante.",
+          "footnotes": [
+            {
+              "id": "FN27",
+              "caller": "*",
+              "text": "¡Admiremos la paternal ternura de este lenguaje! Pero Jerusalén no escarmentó por los castigos que cayeron sobre las otras naciones. El juicio que viene sobre ella, es pues, justísimo. Véase 1 y nota."
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "text": "Decía Yo: De cierto me temerás; aceptarás la corrección; y no será destruida su morada, como tenía resuelto contra ella; pero ellos se apresuraron a multiplicar sus obras perversas."
+        },
+        {
+          "number": 8,
+          "text": "Por eso, esperadme, dice Yahvé, hasta el día en que me levante para la presa; pues he decretado congregar los pueblos y juntar los reinos, para derramar sobre ellos mi indignación, todo el furor de mi ira: porque el fuego de mis celos devorará toda la tierra.",
+          "footnotes": [
+            {
+              "id": "FN28",
+              "caller": "*",
+              "text": "Apostrofe del Señor a la ciudad impenitente. El día en que me levante para la presa. En efecto “si junta aquí a las naciones es precisamente para batirlas y para despojarlas” (Fillion). Cf. Zacarías 12, 1-9; Ezequiel capítulos 38 y 39 y notas."
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "text": "Entonces volveré a dar a los pueblos labios puros, para que todos invoquen el Nombre de Yahvé, y le sirvan de común acuerdo.",
+          "headings": [
+            "Promesas mesiánicas"
+          ],
+          "footnotes": [
+            {
+              "id": "FN29",
+              "caller": "*",
+              "text": "En lo que sigue reconocen los santos Padres comúnmente una profecía mesiánica. Jesucristo mudará el semblante de la tierra. “Se hablará un nuevo lenguaje, puro y desconocido hasta entonces, con que todos con un mismo corazón y el mismo espíritu recibirán el yugo suave de la nueva Ley, invocando, adorando y alabando a un solo y verdadero Dios del cielo y de la tierra” (Scío). Algunos suponen aquí una restauración de la lengua universal que se confundió en Babel (véase Génesis 11, 1 y 9), lo que es poco probable, puesto que carecería de millares de palabras para designar los objetos de la cultura moderna."
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "Desde más allá de los ríos de Etiopía, mis adoradores, mis hijos dispersos, me traerán ofrendas.",
+          "footnotes": [
+            {
+              "id": "FN30",
+              "caller": "*",
+              "text": "Me traerán ofrendas: Véase Isaías 60, 5-6; Salmo 67, 30-32; Miqueas 4. I ss."
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "text": "En aquel día no tendrás ya que avergonzarte de todas tus obras, con que prevaricaste contra Mí, porque entonces quitaré de en medio de ti a los que se alegraban con altanería, y no volverás a engreírte en mi santo monte."
+        },
+        {
+          "number": 12,
+          "text": "Dejaré en medio de ti un pueblo pobre y humilde, que confiará en el Nombre de Yahvé.",
+          "footnotes": [
+            {
+              "id": "FN31",
+              "caller": "*",
+              "text": "En aquel día salvará el Señor el resto del pueblo de Israel, para formar un nuevo reino de paz y santidad. Esta nota de humildad se halla en muchos pasajes como para mostrar que ello vendrá cuando el pueblo se halle en el colmo del abatimiento. Véase Salmo 17, 28; 89, 15; 101, 18 y nota; Isaías 48, 10."
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "El resto de Israel no cometerá iniquidad, no dirá mentira, y ni se hallará en su boca lengua falaz. Se apacentarán y reposarán, sin que nadie los espante.",
+          "footnotes": [
+            {
+              "id": "FN32",
+              "caller": "*",
+              "text": "Véase esta paz anunciada en Ezequiel 39, 25 ss. Cf. Ezequiel 38, 11 ss."
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "¡Entona himnos, hija de Sión, da voces de júbilo, oh Israel! ¡alégrate y regocíjate de todo corazón, hija de Jerusalén!",
+          "headings": [
+            "Glorificación de Israel"
+          ],
+          "footnotes": [
+            {
+              "id": "FN33",
+              "caller": "*",
+              "text": "Al final de este divino Libro, Sofonías pinta un cuadro de la edad áurea de Israel. No es más la Jerusalén rebelde; ni siquiera habrá malhechores, pues Dios los sacará de en medio de ella (versículo 18), sino la nueva Jerusalén, el Israel de Dios. En aquel día de perpetua felicidad, el mismo Dios celebrará las alabanzas de Sión y no dejará de amarla constantemente (versículo 17), después de librarla de todos sus enemigos. El Señor (versículo 15) “se manifestará como rey infinitamente poderoso, de suerte que no quedará en sus corazones ningún sentimiento de temor” (Fillion)."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "Pues Yahvé ha apartado tus castigos, ha ahuyentado a tu enemigo. El rey de Israel, Yahvé, está en medio de ti; no temas ya el mal."
+        },
+        {
+          "number": 16,
+          "text": "En aquel día se dirá a Jerusalén: ¡No tengas miedo Sión; no se caigan tus manos!",
+          "footnotes": [
+            {
+              "id": "FN34",
+              "caller": "*",
+              "text": "Nótese el extraordinario lirismo del amor que se manifiesta en este pasaje, como un eco de Isaías 35, 3 s.; 62, 11 ss., etc."
+            }
+          ]
+        },
+        {
+          "number": 17,
+          "text": "Yahvé, tu Dios, está en medio de ti, el Poderoso, el Salvador. En ti hallará Él su gozo en constante amor, y se regocijará sobre ti con gritos de alegría."
+        },
+        {
+          "number": 18,
+          "text": "Yo congregaré a los afligidos (privados) de las fiestas; porque tuyos son; sufrían por ella humillación.",
+          "footnotes": [
+            {
+              "id": "FN35",
+              "caller": "*",
+              "text": "Texto dudoso: Se han propuesto muchas correcciones. La Vulgata vierte: Yo recogeré a los hombres vanos que se han apartado de la Ley, porque eran tuyos, para que no padezca más confusión a causa de ellos. Bover-Cantera: A los abatidos sin esperanto elimino de ti, pues se han convertido en oprobiosa carga. Fillion comenta: “Esto significa que en lo futuro ningún miembro del pueblo de Dios gemirá más en tierra extranjera, incapaz de asistir a las solemnidades religiosas que se celebraban en el Templo. En efecto, todos los crueles opresores habrán desaparecido. Cf. versículo 19.” Páramo anota: “Profecía de la conversión de todo el pueblo judaico a la fe de Jesucristo.” Véase Romanos 11, 25 ss."
+            }
+          ]
+        },
+        {
+          "number": 19,
+          "text": "He aquí que en aquel tiempo acabaré con todos tus opresores; salvaré a la que cojeaba, y recogeré a la repudiada y les daré gloria y nombradía en toda aquella tierra en que sufrieron ignominia.",
+          "footnotes": [
+            {
+              "id": "FN36",
+              "caller": "*",
+              "text": "“El día del Señor, que el profeta anuncia, será un juicio sobre todas las naciones, que recibirán su castigo mientras que Israel, purificado por el cautiverio, se convertirá a Yahvé que le recibirá. Entonces Sión cantará alegre, tanto más cuanto que ve el castigo de cuantos la maltrataron” (Nácar- Colunga). Véase Isaías 60, 12 ss.; Joel 3, 1 ss., etc. A la que cojeaba, etc.: Véase Miqueas 4, 6 s.; Isaías 54, 1 y nota; 62, 4. Gloria y nombradía: Es tomado de Deuteronomio 26, 19. Cf. Isaías 61, 7, etc."
+            }
+          ]
+        },
+        {
+          "number": 20,
+          "text": "En aquel tiempo os traeré, y en aquel tiempo os congregaré; porque os daré nombre y gloria entre todos los pueblos de la tierra, cuando ante vuestros ojos haga volver a vuestros cautivos, dice Yahvé.",
+          "footnotes": [
+            {
+              "id": "FN37",
+              "caller": "*",
+              "text": "El fin del cautiverio babilónico es tomado como punto de partida para la futura gloria de Israel. Cf. Salmo 13, 7; 84, 2; 125, 1 y 4; Isaías 11, 12; 27, 11 ss.; 56, 8; Jeremías 30, 18; Ezequiel 28, 25; 34, 13; 37, 21; 39, 25; Amós 9, 14, etc. Véase la Introducción al Libro del profeta Ageo. Ante vuestros ojos: es decir, de un modo manifiesto. En efecto, la libertad que aquí se anuncia solo será adquirida al precio de la muerte del Redentor (Hebreos 13, 20) y mediante su Resurrección (Hechos 3, 20-26; 13, 32-37 y notas)."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

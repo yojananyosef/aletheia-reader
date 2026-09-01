@@ -1,0 +1,670 @@
+{
+  "versionId": "BLL",
+  "bookCode": "LAM",
+  "bookName": "Lamentaciones",
+  "testament": "AT",
+  "chapters": {
+    "1": {
+      "chapter": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "¡Qué sola se ha quedado la ciudad que estaba llena de gente! Se ha quedado como una viuda la que era grande entre las naciones. La que fue princesa entre las provincias ¡se ha convertido en una sierva!"
+        },
+        {
+          "number": 2,
+          "text": "Llora amargamente por las noches; las lágrimas corren por sus mejillas. De entre todos sus amantes, no hay nadie que la consuele. Todos sus amigos la traicionaron; se volvieron sus enemigos."
+        },
+        {
+          "number": 3,
+          "text": "Judá se fue al cautiverio por causa de la aflicción y por la dura esclavitud. Ella vive entre las naciones, pero no halla descanso. Todos sus perseguidores la alcanzaron en medio de su angustia."
+        },
+        {
+          "number": 4,
+          "text": "Los caminos de Sión están de luto porque nadie viene a las fiestas solemnes. Todas sus puertas están desoladas; sus sacerdotes suspiran. Sus vírgenes están afligidas y ella misma está llena de amargura."
+        },
+        {
+          "number": 5,
+          "text": "Sus adversarios se han vuelto sus amos y sus enemigos prosperan, porque Yahvé la ha afligido por la multitud de sus pecados. Sus hijos pequeños han ido al cautiverio delante del enemigo.",
+          "footnotes": [
+            {
+              "id": "FN1",
+              "caller": "*",
+              "text": "“Yahvé” es el nombre propio de Dios, a veces traducido como “SEÑOR” (en mayúsculas) en otras traducciones."
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "text": "Toda la gloria se ha alejado de la hija de Sión. Sus príncipes parecen ciervos que no encuentran pasto; huyen sin fuerzas delante del perseguidor."
+        },
+        {
+          "number": 7,
+          "text": "En los días de su aflicción y de sus miserias, Jerusalén recuerda todas las cosas valiosas que tuvo en los tiempos antiguos. Cuando su pueblo cayó en manos del enemigo y nadie la ayudó, los adversarios la miraron y se burlaron de su caída."
+        },
+        {
+          "number": 8,
+          "text": "Jerusalén ha pecado gravemente; por eso se ha vuelto impura. Todos los que la honraban ahora la desprecian porque vieron su desnudez; ella misma suspira y esconde el rostro."
+        },
+        {
+          "number": 9,
+          "text": "Su inmundicia se ve en sus faldas; no pensó en su final. Su caída fue asombrosa; no tiene quien la consuele. “Mira, Yahvé, mi aflicción, porque el enemigo se ha engrandecido”."
+        },
+        {
+          "number": 10,
+          "text": "El enemigo extendió su mano sobre todos sus tesoros; ella ha visto a las naciones entrar en su santuario, a pesar de que tú ordenaste que no entraran en su asamblea."
+        },
+        {
+          "number": 11,
+          "text": "Todo su pueblo gime y busca pan; dieron sus tesoros a cambio de comida para salvar la vida. “Mira, Yahvé, y date cuenta de que soy despreciada”."
+        },
+        {
+          "number": 12,
+          "text": "“¿No les importa nada a todos ustedes que pasan por el camino? Miren y vean si hay dolor como el mío, este dolor que me ha sobrevenido, con el que Yahvé me ha afligido en el día de su ardiente ira."
+        },
+        {
+          "number": 13,
+          "text": "“Desde lo alto envió fuego a mis huesos y este los dominó. Puso una red a mis pies y me hizo retroceder. Me dejó abandonada y desfallezco todo el día."
+        },
+        {
+          "number": 14,
+          "text": "“Mis pecados han sido atados como un yugo por su mano; han sido entrelazados y puestos sobre mi cuello. Él me quitó las fuerzas. El Señor me entregó en manos de las que no puedo levantarme.",
+          "footnotes": [
+            {
+              "id": "FN2",
+              "caller": "†",
+              "text": "La palabra traducida “Señor” es “Adonai”."
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "“El Señor ha rechazado a todos mis valientes en medio de mí. Convocó a un ejército contra mí para aplastar a mis jóvenes. Como en un lagar, el Señor pisoteó a la virgen hija de Judá."
+        },
+        {
+          "number": 16,
+          "text": "“Por todo esto lloro; mis ojos se inundan de lágrimas, porque está lejos de mí el consolador que reanimaría mi vida. Mis hijos están desolados porque el enemigo ha vencido”."
+        },
+        {
+          "number": 17,
+          "text": "Sión extiende sus manos, pero nadie la consuela. Yahvé ha dado órdenes contra Jacob; sus vecinos son ahora sus enemigos. Jerusalén es para ellos como algo impuro."
+        },
+        {
+          "number": 18,
+          "text": "“Yahvé es justo, porque yo me rebelé contra su palabra. Escuchen, por favor, pueblos todos, y vean mi dolor; mis vírgenes y mis jóvenes se fueron al cautiverio."
+        },
+        {
+          "number": 19,
+          "text": "“Llamé a mis amantes, pero me engañaron. Mis sacerdotes y mis ancianos murieron en la ciudad mientras buscaban comida para mantenerse con vida."
+        },
+        {
+          "number": 20,
+          "text": "“Mira, Yahvé, que estoy angustiada; mi corazón se conmueve. Mi alma está trastornada dentro de mí porque fui muy rebelde. Afuera, la espada quita la vida; adentro, hay olor a muerte."
+        },
+        {
+          "number": 21,
+          "text": "“Han oído que suspiro, pero no hay quien me consuele. Todos mis enemigos supieron de mi mal y se alegran de lo que hiciste. ¡Trae ya el día que anunciaste para que ellos estén como yo!"
+        },
+        {
+          "number": 22,
+          "text": "“Que llegue ante ti toda su maldad. Haz con ellos lo mismo que hiciste conmigo por todos mis pecados; porque son muchos mis gemidos y mi corazón desfallece”."
+        }
+      ]
+    },
+    "2": {
+      "chapter": 2,
+      "verses": [
+        {
+          "number": 1,
+          "text": "¡Cómo ha oscurecido el Señor con una nube a la hija de Sión en su furor! Derribó del cielo a la tierra la hermosura de Israel, y no se acordó del banquillo de sus pies en el día de su ira."
+        },
+        {
+          "number": 2,
+          "text": "El Señor destruyó todas las viviendas de Jacob sin tener compasión. Derribó en su furor las fortalezas de la hija de Judá; las echó por tierra. Humilló al reino y a sus príncipes."
+        },
+        {
+          "number": 3,
+          "text": "Destrozó con el ardor de su ira todo el poder de Israel. Retiró su mano derecha frente al enemigo. Incendió a Jacob como un fuego ardiente que devora todo a su alrededor."
+        },
+        {
+          "number": 4,
+          "text": "Tensó su arco como un enemigo; preparó su mano derecha como un adversario. Mató a todo lo que era agradable a la vista; en la tienda de la hija de Sión derramó su enojo como fuego."
+        },
+        {
+          "number": 5,
+          "text": "El Señor se portó como un enemigo; destruyó a Israel. Derrumbó todos sus palacios y dejó en ruinas sus fortalezas. Multiplicó en la hija de Judá el luto y el lamento."
+        },
+        {
+          "number": 6,
+          "text": "Arrancó con violencia su santuario como si fuera un huerto. Destruyó su lugar de reunión. Yahvé hizo que en Sión se olvidaran las fiestas y el sábado; en su ardiente ira rechazó al rey y al sacerdote."
+        },
+        {
+          "number": 7,
+          "text": "El Señor desechó su propio altar; rechazó su santuario. Entregó en manos del enemigo los muros de sus palacios; ellos lanzaron gritos en la casa de Yahvé como en un día de fiesta solemne."
+        },
+        {
+          "number": 8,
+          "text": "Yahvé se propuso destruir el muro de la hija de Sión. Tiró la cuerda de medir y no detuvo su mano de la destrucción. Hizo que la muralla y el muro se lamentaran; ambos quedaron desolados."
+        },
+        {
+          "number": 9,
+          "text": "Sus puertas se hundieron en la tierra; él deshizo y rompió sus cerrojos. Su rey y sus príncipes andan entre las naciones donde no hay ley; sus profetas ya no tienen visiones de parte de Yahvé."
+        },
+        {
+          "number": 10,
+          "text": "Los ancianos de la hija de Sión se sientan en el suelo y callan. Echaron polvo sobre sus cabezas y se vistieron de luto. Las jóvenes de Jerusalén bajan la cabeza hasta el suelo."
+        },
+        {
+          "number": 11,
+          "text": "Mis ojos se cansan de tanto llorar; siento un nudo en el estómago. Mi ánimo se desmorona por tierra a causa de la destrucción de mi pueblo, porque los niños y los bebés se desmayan en las calles de la ciudad."
+        },
+        {
+          "number": 12,
+          "text": "Les preguntan a sus madres: “¿Dónde hay algo de comer y beber?”, mientras caen desmayados como heridos en las calles de la ciudad, mientras su vida se apaga en el regazo de sus madres."
+        },
+        {
+          "number": 13,
+          "text": "¿Qué puedo decirte? ¿A qué te compararé, hija de Jerusalén? ¿Con qué puedo igualarte para poder consolarte, virgen hija de Sión? Tu herida es tan inmensa como el mar, ¿quién podrá sanarte?"
+        },
+        {
+          "number": 14,
+          "text": "Los profetas de ustedes les anunciaron visiones falsas y sin sentido; no pusieron al descubierto el pecado de ustedes para cambiar su destino, sino que les dieron mensajes falsos que los llevaron al destierro."
+        },
+        {
+          "number": 15,
+          "text": "Todos los que pasan por el camino se burlan de ti; silban y mueven la cabeza ante la hija de Jerusalén, diciendo: “¿Es esta la ciudad que llamaban ‘La perfección de la belleza’, la alegría de toda la tierra?”."
+        },
+        {
+          "number": 16,
+          "text": "Todos tus enemigos abrieron la boca contra ti; silban y rechinan los dientes. Dicen: “¡Nos la hemos tragado! Este es el día que tanto esperábamos; ¡por fin lo hemos visto!”."
+        },
+        {
+          "number": 17,
+          "text": "Yahvé hizo lo que ya tenía planeado; cumplió la palabra que anunció hace mucho tiempo. Destruyó todo sin tener compasión. Dejó que el enemigo se alegrara de tu mal y les dio poder a tus adversarios."
+        },
+        {
+          "number": 18,
+          "text": "El corazón de ellos clamaba al Señor. ¡Muro de la hija de Sión, deja que tus lágrimas corran como un río día y noche! No descanses; no dejes de llorar."
+        },
+        {
+          "number": 19,
+          "text": "Levántate y grita por las noches, cuando empiezan las vigilias. Desahoga tu corazón como agua ante la presencia del Señor. Levanta tus manos hacia él por la vida de tus niños, que se mueren de hambre en todas las esquinas de la ciudad."
+        },
+        {
+          "number": 20,
+          "text": "“Mira, Yahvé, y observa: ¿a quién has tratado de esta manera? ¿Acaso las mujeres deben comerse a sus propios hijos, a los niños que con tanto amor arrullaron? ¿Acaso deben morir el sacerdote y el profeta en el santuario del Señor?"
+        },
+        {
+          "number": 21,
+          "text": "“Jóvenes y viejos yacen tirados en las calles; mis doncellas y mis jóvenes murieron a filo de espada. Los mataste en el día de tu ira; los masacraste sin piedad."
+        },
+        {
+          "number": 22,
+          "text": "“Convocaste mis temores de todas partes, como si fuera un día de fiesta. Nadie pudo escapar ni sobrevivir en el día de la ira de Yahvé. A los que yo crié y alimenté, mi enemigo los aniquiló”."
+        }
+      ]
+    },
+    "3": {
+      "chapter": 3,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Yo soy el hombre que ha sufrido la aflicción bajo la vara de su enojo."
+        },
+        {
+          "number": 2,
+          "text": "Él me guió y me hizo caminar en la oscuridad y no en la luz."
+        },
+        {
+          "number": 3,
+          "text": "Ciertamente volvió su mano contra mí una y otra vez, todo el día."
+        },
+        {
+          "number": 4,
+          "text": "Hizo que se envejecieran mi carne y mi piel; me quebró los huesos."
+        },
+        {
+          "number": 5,
+          "text": "Construyó un muro contra mí y me rodeó de amargura y de sufrimientos."
+        },
+        {
+          "number": 6,
+          "text": "Me obligó a vivir en lugares oscuros, como a los que murieron hace mucho tiempo."
+        },
+        {
+          "number": 7,
+          "text": "Me encerró para que no pudiera salir; puso sobre mí cadenas muy pesadas."
+        },
+        {
+          "number": 8,
+          "text": "Por más que grito y pido ayuda, él rechaza mi oración."
+        },
+        {
+          "number": 9,
+          "text": "Cerró mis caminos con bloques de piedra; torció todos mis senderos."
+        },
+        {
+          "number": 10,
+          "text": "Ha sido para mí como un oso al acecho, como un león escondido."
+        },
+        {
+          "number": 11,
+          "text": "Me sacó del camino y me despedazó; me dejó totalmente abandonado."
+        },
+        {
+          "number": 12,
+          "text": "Tensó su arco y me usó como blanco para sus flechas."
+        },
+        {
+          "number": 13,
+          "text": "Hizo que las flechas de su aljaba se me clavaran en lo más profundo."
+        },
+        {
+          "number": 14,
+          "text": "Soy el hazmerreír de todo mi pueblo; todo el día se burlan de mí en sus canciones."
+        },
+        {
+          "number": 15,
+          "text": "Me llenó de amargura, me hizo beber ajenjo hasta saciarme."
+        },
+        {
+          "number": 16,
+          "text": "Me hizo pedazos los dientes con piedras, me revolcó en la ceniza."
+        },
+        {
+          "number": 17,
+          "text": "Me quitaron la paz; ya no sé lo que es la prosperidad."
+        },
+        {
+          "number": 18,
+          "text": "Por eso dije: “Se acabaron mis fuerzas y mi esperanza en Yahvé”."
+        },
+        {
+          "number": 19,
+          "text": "Recuerdo mi aflicción y mi vida errante, la amargura y el ajenjo."
+        },
+        {
+          "number": 20,
+          "text": "Siempre los tengo presentes, y mi alma se deprime dentro de mí."
+        },
+        {
+          "number": 21,
+          "text": "Pero algo más me viene a la memoria, y eso me da esperanza:"
+        },
+        {
+          "number": 22,
+          "text": "Por el gran amor de Yahvé no somos consumidos, porque su bondad no tiene fin."
+        },
+        {
+          "number": 23,
+          "text": "Cada mañana se renuevan sus misericordias; ¡grande es su fidelidad!"
+        },
+        {
+          "number": 24,
+          "text": "Por eso digo: “Yahvé es todo lo que tengo; ¡en él esperaré!”."
+        },
+        {
+          "number": 25,
+          "text": "El Señor es bueno con los que en él confían, con todos los que lo buscan."
+        },
+        {
+          "number": 26,
+          "text": "Es bueno esperar en silencio que Yahvé nos salve."
+        },
+        {
+          "number": 27,
+          "text": "Es bueno que el hombre aprenda a llevar el yugo desde su juventud."
+        },
+        {
+          "number": 28,
+          "text": "Que se siente solo y guarde silencio, porque es el Señor quien se lo impuso."
+        },
+        {
+          "number": 29,
+          "text": "Que hunda el rostro en el polvo; ¡tal vez aún haya esperanza!"
+        },
+        {
+          "number": 30,
+          "text": "Que dé la mejilla a quien lo golpea y aceche las humillaciones."
+        },
+        {
+          "number": 31,
+          "text": "Porque el Señor no nos rechaza para siempre."
+        },
+        {
+          "number": 32,
+          "text": "Aunque nos haga sufrir, también nos tendrá compasión por su gran amor."
+        },
+        {
+          "number": 33,
+          "text": "Porque él no disfruta afligiendo ni entristeciendo a los seres humanos."
+        },
+        {
+          "number": 34,
+          "text": "El aplastar bajo los pies a todos los presos de la tierra,"
+        },
+        {
+          "number": 35,
+          "text": "el negar a alguien sus derechos en presencia del Altísimo,"
+        },
+        {
+          "number": 36,
+          "text": "o el impedir que se haga justicia, son cosas que el Señor no aprueba."
+        },
+        {
+          "number": 37,
+          "text": "¿Quién puede dar una orden y que esta se cumpla si el Señor no lo ha dispuesto?"
+        },
+        {
+          "number": 38,
+          "text": "¿No es acaso el Altísimo quien decide si viene el bien o viene el mal?"
+        },
+        {
+          "number": 39,
+          "text": "¿Por qué habría de quejarse el hombre que aún vive? ¡Que mejor se queje de sus propios pecados!"
+        },
+        {
+          "number": 40,
+          "text": "Examinemos nuestra conducta y busquemos, y volvamos de nuevo a Yahvé."
+        },
+        {
+          "number": 41,
+          "text": "Elevemos nuestras manos y nuestro corazón al Dios que está en el cielo.",
+          "footnotes": [
+            {
+              "id": "FN1",
+              "caller": "*",
+              "text": "La palabra hebrea traducida como “Dios” es “אֱלֹהִ֑ים” (Elohim)."
+            }
+          ]
+        },
+        {
+          "number": 42,
+          "text": "Dirijámonos a él: “Hemos pecado y nos hemos rebelado, y tú no nos has perdonado."
+        },
+        {
+          "number": 43,
+          "text": "“Nos perseguiste con tu enojo y nos envolvió tu ira; nos mataste sin tener compasión."
+        },
+        {
+          "number": 44,
+          "text": "Te ocultaste tras una nube para que nuestras oraciones no llegaran a ti."
+        },
+        {
+          "number": 45,
+          "text": "Nos convertiste en basura y desecho en medio de las naciones."
+        },
+        {
+          "number": 46,
+          "text": "“Nuestros enemigos abrieron la boca para burlarse de nosotros."
+        },
+        {
+          "number": 47,
+          "text": "Hemos pasado por el terror, la trampa, la ruina y la destrucción”."
+        },
+        {
+          "number": 48,
+          "text": "Mis ojos derraman ríos de lágrimas por la destrucción de mi pueblo."
+        },
+        {
+          "number": 49,
+          "text": "Mis ojos lloran sin descanso; no hay alivio para mi llanto,"
+        },
+        {
+          "number": 50,
+          "text": "hasta que Yahvé mire y nos vea desde el cielo."
+        },
+        {
+          "number": 51,
+          "text": "Me duele el alma al ver lo que sufren las mujeres de mi ciudad."
+        },
+        {
+          "number": 52,
+          "text": "Mis enemigos me cazaron como a un pájaro, sin que yo les hubiera hecho nada."
+        },
+        {
+          "number": 53,
+          "text": "Me arrojaron vivo en un pozo y lo cerraron con una piedra."
+        },
+        {
+          "number": 54,
+          "text": "El agua me cubrió la cabeza, y llegué a pensar: “¡Estoy perdido!”."
+        },
+        {
+          "number": 55,
+          "text": "Pero desde lo profundo del pozo, Yahvé, invoqué tu nombre."
+        },
+        {
+          "number": 56,
+          "text": "Tú oíste mi voz; ¡no cierres tus oídos a mi grito de auxilio!"
+        },
+        {
+          "number": 57,
+          "text": "El día que te llamé, viniste a mí y me dijiste: “No tengas miedo”."
+        },
+        {
+          "number": 58,
+          "text": "Señor, tú defendiste mi causa; tú rescataste mi vida."
+        },
+        {
+          "number": 59,
+          "text": "Yahvé, tú has visto la injusticia que me han hecho; ¡hazme justicia!"
+        },
+        {
+          "number": 60,
+          "text": "Has visto con qué saña se vengaron y todo lo que tramaron contra mí."
+        },
+        {
+          "number": 61,
+          "text": "Yahvé, tú has oído sus insultos y todos sus planes en mi contra."
+        },
+        {
+          "number": 62,
+          "text": "Los que me atacan no dejan de hablar, todo el día conspiran contra mí."
+        },
+        {
+          "number": 63,
+          "text": "¡Míralos! Ya sea que estén sentados o de pie, no dejan de burlarse de mí en sus canciones."
+        },
+        {
+          "number": 64,
+          "text": "Yahvé, ¡dales su merecido según lo que han hecho!"
+        },
+        {
+          "number": 65,
+          "text": "Ponles un velo en el corazón; ¡que tu maldición caiga sobre ellos!"
+        },
+        {
+          "number": 66,
+          "text": "Persíguelos con tu enojo, Yahvé, y bórralos de debajo del cielo."
+        }
+      ]
+    },
+    "4": {
+      "chapter": 4,
+      "verses": [
+        {
+          "number": 1,
+          "text": "¡Cómo se ha empañado el oro! ¡El oro más puro ha perdido su brillo! Las piedras del santuario están tiradas por todas las esquinas de las calles."
+        },
+        {
+          "number": 2,
+          "text": "Los valiosos hijos de Sión, que valían tanto como el oro fino, ¡ahora son tratados como vasijas de barro, hechas por un simple alfarero!"
+        },
+        {
+          "number": 3,
+          "text": "Hasta los chacales dan el pecho para alimentar a sus cachorros; pero mi pueblo se ha vuelto cruel, como los avestruces del desierto."
+        },
+        {
+          "number": 4,
+          "text": "La lengua del bebé se le pega al paladar por la sed. Los niños piden pan, pero no hay nadie que se lo reparta."
+        },
+        {
+          "number": 5,
+          "text": "Los que antes comían banquetes, ahora mueren de hambre en las calles. Los que crecieron entre lujos, ahora buscan comida en los basureros."
+        },
+        {
+          "number": 6,
+          "text": "La maldad de mi pueblo es mayor que el pecado de Sodoma, que fue destruida en un instante sin que nadie le pusiera la mano encima."
+        },
+        {
+          "number": 7,
+          "text": "Sus gobernantes eran más limpios que la nieve, más blancos que la leche; su piel era rosada como el coral, su apariencia era bella como el zafiro."
+        },
+        {
+          "number": 8,
+          "text": "Pero ahora se ven más negros que el carbón; nadie los reconoce por las calles. Su piel se les ha pegado a los huesos; se ha secado y parece madera."
+        },
+        {
+          "number": 9,
+          "text": "Más vale morir a espada que morir de hambre; porque los que mueren de hambre se van consumiendo poco a poco por falta de los frutos del campo."
+        },
+        {
+          "number": 10,
+          "text": "Las mismas mujeres que eran cariñosas cocinaron a sus propios hijos; ellos fueron su comida cuando mi pueblo fue destruido."
+        },
+        {
+          "number": 11,
+          "text": "Yahvé dio rienda suelta a su enojo; derramó su ardiente ira. Le prendió fuego a Sión, un fuego que consumió hasta sus cimientos."
+        },
+        {
+          "number": 12,
+          "text": "Ni los reyes de la tierra ni nadie en el mundo creyeron jamás que el enemigo y el opresor entrarían por las puertas de Jerusalén."
+        },
+        {
+          "number": 13,
+          "text": "Pero sucedió por los pecados de sus profetas y por las maldades de sus sacerdotes, que derramaron sangre inocente en medio de la ciudad."
+        },
+        {
+          "number": 14,
+          "text": "Vagaban como ciegos por las calles, tan sucios de sangre que nadie se atrevía a tocar su ropa."
+        },
+        {
+          "number": 15,
+          "text": "“¡Lárguense! ¡Impuros!”, les gritaba la gente. “¡Fuera! ¡Fuera! ¡No nos toquen!”. Cuando huían y vagaban, en otras naciones se decía: “Ya no pueden quedarse a vivir aquí”."
+        },
+        {
+          "number": 16,
+          "text": "El enojo de Yahvé los dispersó; él ya no se ocupa de ellos. No respetaron a los sacerdotes ni tuvieron compasión de los ancianos."
+        },
+        {
+          "number": 17,
+          "text": "Nuestros ojos ya no dan más, esperando en vano una ayuda que no llega. Desde nuestras torres vigilamos esperando a una nación que no podía salvarnos."
+        },
+        {
+          "number": 18,
+          "text": "Vigilaban cada paso nuestro, no podíamos ni caminar por nuestras calles. Nuestro fin está cerca, se nos acabó el tiempo; ¡nuestro final ha llegado!"
+        },
+        {
+          "number": 19,
+          "text": "Nuestros perseguidores eran más rápidos que las águilas del cielo; nos persiguieron por los montes, nos pusieron trampas en el desierto."
+        },
+        {
+          "number": 20,
+          "text": "Nuestro aliento de vida, el ungido de Yahvé, cayó en las trampas de ellos; aquel de quien decíamos: “Bajo su sombra viviremos seguros entre las naciones”."
+        },
+        {
+          "number": 21,
+          "text": "¡Ríete y alégrate, hija de Edom, tú que vives en la tierra de Uz! Pero a ti también te llegará esta copa; te emborracharás y quedarás desnuda."
+        },
+        {
+          "number": 22,
+          "text": "Hija de Sión, tu castigo ya terminó; él no permitirá que te lleven de nuevo al cautiverio. Pero a ti, hija de Edom, él te castigará por tu maldad; ¡él pondrá al descubierto todos tus pecados!"
+        }
+      ]
+    },
+    "5": {
+      "chapter": 5,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Acuérdate, Yahvé, de lo que nos ha pasado; ¡mira nuestra humillación!"
+        },
+        {
+          "number": 2,
+          "text": "Nuestra tierra ha pasado a manos de extraños, nuestras casas son ahora de extranjeros."
+        },
+        {
+          "number": 3,
+          "text": "Nos hemos quedado huérfanos, sin padre; nuestras madres se han quedado viudas."
+        },
+        {
+          "number": 4,
+          "text": "Tenemos que pagar por el agua que bebemos; nos venden la leña muy cara."
+        },
+        {
+          "number": 5,
+          "text": "Nos persiguen de cerca; estamos agotados y no nos dejan descansar."
+        },
+        {
+          "number": 6,
+          "text": "Estiramos la mano hacia Egipto y hacia Asiria para poder conseguir algo de comer."
+        },
+        {
+          "number": 7,
+          "text": "Nuestros antepasados pecaron y ya murieron, pero a nosotros nos toca sufrir por sus maldades."
+        },
+        {
+          "number": 8,
+          "text": "¡Hasta los esclavos nos dominan! No hay nadie que nos libre de su poder."
+        },
+        {
+          "number": 9,
+          "text": "Arriesgamos la vida para conseguir el pan, enfrentando la espada en el desierto."
+        },
+        {
+          "number": 10,
+          "text": "La piel se nos quema como un horno por el calor febril del hambre."
+        },
+        {
+          "number": 11,
+          "text": "Violaron a las mujeres en Sión, y a las jóvenes en las ciudades de Judá."
+        },
+        {
+          "number": 12,
+          "text": "Colgaron a los príncipes de las manos; no tuvieron respeto por los ancianos."
+        },
+        {
+          "number": 13,
+          "text": "A los jóvenes los pusieron a moler trigo, y los niños se caían bajo las cargas de leña."
+        },
+        {
+          "number": 14,
+          "text": "Los ancianos ya no se reúnen a la puerta de la ciudad, y los jóvenes dejaron de cantar."
+        },
+        {
+          "number": 15,
+          "text": "La alegría se fue de nuestro corazón; nuestro baile se cambió por luto."
+        },
+        {
+          "number": 16,
+          "text": "Se nos cayó la corona de la cabeza. ¡Pobres de nosotros, porque pecamos!"
+        },
+        {
+          "number": 17,
+          "text": "Por eso nuestro corazón está enfermo, por eso se nos nubla la vista:"
+        },
+        {
+          "number": 18,
+          "text": "porque el monte Sión está desierto, y por él andan los zorros."
+        },
+        {
+          "number": 19,
+          "text": "Pero tú, Yahvé, reinas para siempre; tu trono permanece de generación en generación."
+        },
+        {
+          "number": 20,
+          "text": "¿Por qué vas a olvidarnos para siempre? ¿Por qué nos abandonas por tanto tiempo?"
+        },
+        {
+          "number": 21,
+          "text": "Restáuranos, Yahvé, y volveremos a ti; ¡haz que nuestra vida sea otra vez como antes!"
+        },
+        {
+          "number": 22,
+          "text": "¿O es que ya nos rechazaste por completo y estás tan enojado con nosotros que no tienes perdón?"
+        }
+      ]
+    }
+  }
+}

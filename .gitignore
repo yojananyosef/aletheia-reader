@@ -42,3 +42,7 @@ next-env.d.ts
 
 # opencode / openspec tool config
 .opencode/
+# piper wasm - copied at build via copy-webpack-plugin, no need to commit
+/public/onnx/
+/public/piper/
+/public/worker/

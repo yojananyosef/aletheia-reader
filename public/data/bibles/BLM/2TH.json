@@ -1,0 +1,211 @@
+{
+  "versionId": "BLM",
+  "bookCode": "2TH",
+  "bookName": "2 Tesalonicenses",
+  "testament": "NT",
+  "chapters": {
+    "1": {
+      "chapter": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Pablo, Silvano y Timoteo, a la iglesia de los tesalonicenses en Dios nuestro Padre y en el Señor Jesucristo:"
+        },
+        {
+          "number": 2,
+          "text": "Gracia a vosotros y paz de parte de Dios nuestro Padre y del Señor Jesucristo."
+        },
+        {
+          "number": 3,
+          "text": "Estamos obligados a dar siempre gracias a Dios por vosotros, hermanos, como es digno, porque vuestra fe crece en extremo, y el amor de todos y cada uno de vosotros abunda para con los demás,"
+        },
+        {
+          "number": 4,
+          "text": "de modo que nosotros mismos nos gloriamos de vosotros en las iglesias de Dios por vuestra perseverancia y fe en todas vuestras persecuciones y en las aflicciones que soportáis."
+        },
+        {
+          "number": 5,
+          "text": "Esto es una señal evidente del justo juicio de Dios, a fin de que seáis tenidos por dignos del Reino de Dios, por el cual también sufrís."
+        },
+        {
+          "number": 6,
+          "text": "Porque es cosa justa delante de Dios pagar con aflicción a los que os afligen,"
+        },
+        {
+          "number": 7,
+          "text": "y daros alivio a vosotros, que estáis afligidos con nosotros, cuando el Señor Jesús se manifieste desde el cielo con sus poderosos ángeles en fuego ardiente,"
+        },
+        {
+          "number": 8,
+          "text": "castigando a los que no conocen a Dios, y a los que no obedecen la Buena Nueva de nuestro Señor Jesús,"
+        },
+        {
+          "number": 9,
+          "text": "los cuales sufrirán el castigo de la perdición eterna, excluidos de la presencia del Señor y de la gloria de su poder,"
+        },
+        {
+          "number": 10,
+          "text": "cuando venga en aquel día para ser glorificado en sus santos y para ser admirado entre todos los que han creído, porque nuestro testimonio a vosotros fue creído."
+        },
+        {
+          "number": 11,
+          "text": "Con este fin también rogamos siempre por vosotros, para que nuestro Dios os tenga por dignos de vuestra vocación, y cumpla con poder todo buen propósito y toda obra de fe,"
+        },
+        {
+          "number": 12,
+          "text": "para que el nombre de nuestro Señor Jesús sea glorificado en vosotros, y vosotros en él, según la gracia de nuestro Dios y del Señor Jesucristo."
+        }
+      ]
+    },
+    "2": {
+      "chapter": 2,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Ahora bien, hermanos, en cuanto a la venida de nuestro Señor Jesucristo y a nuestra reunión con él, os pedimos"
+        },
+        {
+          "number": 2,
+          "text": "que no os dejéis sacudir rápidamente en vuestro ánimo ni os turbéis, ni por espíritu, ni por palabra, ni por carta como si proviniera de nosotros, en el sentido de que el día del Señor ya ha llegado."
+        },
+        {
+          "number": 3,
+          "text": "Que nadie os engañe en modo alguno. Porque no vendrá sin que antes ocurra la rebelión, y se manifieste el hombre de pecado, el hijo de perdición."
+        },
+        {
+          "number": 4,
+          "text": "Este se opone y se levanta contra todo lo que se llama Dios o es objeto de culto, de modo que se sienta en el templo de Dios, haciéndose pasar por Dios."
+        },
+        {
+          "number": 5,
+          "text": "¿No os acordáis de que, cuando aún estaba con vosotros, os dije estas cosas?"
+        },
+        {
+          "number": 6,
+          "text": "Y ahora sabéis lo que lo detiene, a fin de que a su debido tiempo se manifieste."
+        },
+        {
+          "number": 7,
+          "text": "Porque el misterio de la iniquidad ya está en acción. Sólo que ahora hay uno que lo detiene, hasta que sea quitado de en medio."
+        },
+        {
+          "number": 8,
+          "text": "Y entonces se manifestará aquel inicuo, a quien el Señor matará con el soplo de su boca y destruirá con el resplandor de su venida;"
+        },
+        {
+          "number": 9,
+          "text": "inicuo cuya venida es por obra de Satanás, con gran poder y señales y prodigios mentirosos,"
+        },
+        {
+          "number": 10,
+          "text": "y con todo engaño de iniquidad para los que se pierden, por cuanto no recibieron el amor de la verdad para ser salvos."
+        },
+        {
+          "number": 11,
+          "text": "Por esto Dios les envía un poder engañoso, para que crean la mentira,"
+        },
+        {
+          "number": 12,
+          "text": "a fin de que sean condenados todos los que no creyeron a la verdad, sino que se complacieron en la injusticia."
+        },
+        {
+          "number": 13,
+          "text": "Pero nosotros debemos dar siempre gracias a Dios respecto a vosotros, hermanos amados por el Señor, de que Dios os haya escogido desde el principio para salvación, mediante la santificación por el Espíritu y la fe en la verdad,"
+        },
+        {
+          "number": 14,
+          "text": "a lo cual os llamó mediante nuestra Buena Noticia, para alcanzar la gloria de nuestro Señor Jesucristo."
+        },
+        {
+          "number": 15,
+          "text": "Así que, hermanos, manteneos firmes y conservad las tradiciones que os hemos enseñado, ya sea de palabra o por carta nuestra."
+        },
+        {
+          "number": 16,
+          "text": "Y que el mismo Señor nuestro Jesucristo, y Dios nuestro Padre, el cual nos amó y nos dio consolación eterna y buena esperanza por gracia,"
+        },
+        {
+          "number": 17,
+          "text": "conforte vuestros corazones y os confirme en toda buena palabra y obra."
+        }
+      ]
+    },
+    "3": {
+      "chapter": 3,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Por último, hermanos, rogad por nosotros, para que la palabra del Señor corra y sea glorificada, así como lo fue entre vosotros,"
+        },
+        {
+          "number": 2,
+          "text": "y para que seamos librados de hombres perversos y malos; porque no es de todos la fe."
+        },
+        {
+          "number": 3,
+          "text": "Pero fiel es el Señor, que os afirmará y os guardará del mal."
+        },
+        {
+          "number": 4,
+          "text": "Y tenemos confianza respecto a vosotros en el Señor, en que hacéis y haréis lo que os hemos mandado."
+        },
+        {
+          "number": 5,
+          "text": "Que el Señor encamine vuestros corazones al amor de Dios y a la paciencia de Cristo."
+        },
+        {
+          "number": 6,
+          "text": "Pero os ordenamos, hermanos, en el nombre de nuestro Señor Jesucristo, que os apartéis de todo hermano que ande desordenadamente y no según la tradición que recibisteis de nosotros."
+        },
+        {
+          "number": 7,
+          "text": "Porque vosotros mismos sabéis de qué manera debéis imitarnos; pues nosotros no anduvimos desordenadamente entre vosotros,"
+        },
+        {
+          "number": 8,
+          "text": "ni comimos de balde el pan de nadie, sino que trabajamos con afán y fatiga de día y de noche, para no ser gravosos a ninguno de vosotros."
+        },
+        {
+          "number": 9,
+          "text": "No porque no tuviésemos derecho, sino por daros en nosotros un ejemplo para que nos imitaseis."
+        },
+        {
+          "number": 10,
+          "text": "Porque también cuando estábamos con vosotros, os ordenábamos esto: «Si alguno no quiere trabajar, tampoco coma»."
+        },
+        {
+          "number": 11,
+          "text": "Porque oímos que algunos de entre vosotros andan desordenadamente, no trabajando en nada, sino entremetiéndose en lo ajeno."
+        },
+        {
+          "number": 12,
+          "text": "A los tales mandamos y exhortamos por nuestro Señor Jesucristo, que trabajando sosegadamente, coman su propio pan."
+        },
+        {
+          "number": 13,
+          "text": "Pero vosotros, hermanos, no os canséis de hacer el bien."
+        },
+        {
+          "number": 14,
+          "text": "Si alguno no obedece a lo que decimos por medio de esta carta, tomad nota de ese hombre y no os juntéis con él, para que se avergüence."
+        },
+        {
+          "number": 15,
+          "text": "Sin embargo, no lo tengáis por enemigo, sino amonestadle como a hermano."
+        },
+        {
+          "number": 16,
+          "text": "Y el mismo Señor de paz os dé siempre paz en toda manera. El Señor sea con todos vosotros."
+        },
+        {
+          "number": 17,
+          "text": "La salutación es de mi propia mano, de Pablo, que es la marca en toda carta mía; así escribo."
+        },
+        {
+          "number": 18,
+          "text": "La gracia de nuestro Señor Jesucristo sea con todos vosotros. Amén."
+        }
+      ]
+    }
+  }
+}

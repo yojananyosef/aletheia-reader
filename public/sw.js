@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alethia-v1';
+const CACHE_NAME = 'alethia-v2';
 const STATIC_ASSETS = [
   '/',
   '/manifest.webmanifest',
@@ -37,17 +37,21 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cache-first for static assets, fonts, and JSON bible data
+  // Cache-first for static assets, fonts, JSON bible data y Piper/Kokoro WASM (cross-origin)
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) return cached;
       return fetch(request).then((response) => {
-        if (response.ok && request.url.endsWith('.json') || request.url.includes('/fonts/')) {
+        const isJson = request.url.endsWith('.json') || request.url.includes('/data/bibles/');
+        const isFont = request.url.includes('/fonts/');
+        const isKokoro = request.url.includes('huggingface.co') && (request.url.includes('Kokoro') || request.url.includes('piper-voices') || request.url.includes('rhasspy'));
+        const isOnnx = request.url.endsWith('.onnx') || request.url.endsWith('.wasm') || request.url.endsWith('.onnx.json') || request.url.endsWith('.bin');
+        if (response.ok && (isJson || isFont || isKokoro || isOnnx)) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
         }
         return response;
-      });
+      }).catch(() => caches.match(request));
     })
   );
 });

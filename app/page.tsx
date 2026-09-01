@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { BibleBookMeta, ChapterPayload, ThemeMode, ReaderTarget } from '@/types/bible';
+import { BibleBookMeta, ChapterPayload, ThemeMode, ReaderTarget, TranslationId, AVAILABLE_TRANSLATIONS, DEFAULT_TRANSLATION_ID } from '@/types/bible';
 import { getBibleBooks, getChapterData } from '@/lib/bible-service';
 import { ComfortBibleReader } from '@/components/reader/ComfortBibleReader';
 import {
@@ -27,21 +27,21 @@ import {
   getStoredBookmarks,
   saveStoredBookmarks,
   StoredBookmark,
+  getStoredVersionId,
+  saveStoredVersionId,
 } from '@/lib/storage-service';
 
 export default function Home() {
+  const [selectedVersionId, setSelectedVersionId] = useState<TranslationId>(DEFAULT_TRANSLATION_ID);
   const [books, setBooks] = useState<BibleBookMeta[]>([]);
   const [selectedBookId, setSelectedBookId] = useState<string>('GEN');
   const [selectedChapter, setSelectedChapter] = useState<number>(1);
-  // Intento de navegación preciso (versículo concreto o última página de un
-  // capítulo). El lector solo lo honra cuando el capítulo cargado coincide.
   const [readerTarget, setReaderTarget] = useState<ReaderTarget | null>(null);
   const targetRequestRef = useRef(0);
   const [chapterPayload, setChapterPayload] = useState<ChapterPayload | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [theme, setTheme] = useState<ThemeMode>('pergamino');
 
-  // Navigation Drawers & Mobile Steps
   const [showBookSelector, setShowBookSelector] = useState<boolean>(false);
   const [showBookmarksDrawer, setShowBookmarksDrawer] = useState<boolean>(false);
   const [activeTestamentTab, setActiveTestamentTab] = useState<'AT' | 'NT'>('AT');
@@ -49,29 +49,35 @@ export default function Home() {
   const [browsingBook, setBrowsingBook] = useState<BibleBookMeta | null>(null);
   const [mobileSelectorStep, setMobileSelectorStep] = useState<'books' | 'chapters'>('books');
 
-  // Bookmarks List
   const [bookmarksList, setBookmarksList] = useState<StoredBookmark[]>([]);
 
-  // Load Bible books catalog, stored position, stored theme and bookmarks on mount
+  const selectedVersionMeta = AVAILABLE_TRANSLATIONS[selectedVersionId] ?? AVAILABLE_TRANSLATIONS[DEFAULT_TRANSLATION_ID];
+
+  // Load Bible books catalog, stored position, stored theme and bookmarks on mount (version-aware)
   useEffect(() => {
     let isMounted = true;
 
     const storedPos = getStoredReadingPosition();
     const storedSettings = getStoredSettings();
     const storedBookmarks = getStoredBookmarks();
+    const storedVersion = getStoredVersionId();
 
-    if (storedSettings.theme) {
-      setTheme(storedSettings.theme);
-    }
-    if (storedBookmarks.length > 0) {
-      setBookmarksList(storedBookmarks);
-    }
+    if (storedSettings.theme) setTheme(storedSettings.theme);
+    if (storedBookmarks.length > 0) setBookmarksList(storedBookmarks);
+    setSelectedVersionId(storedVersion);
 
-    getBibleBooks()
+    // Use stored position version if it differs from selected (migration)
+    const initialVersion = storedPos?.versionId || storedVersion;
+
+    getBibleBooks(initialVersion)
       .then((loadedBooks) => {
         if (!isMounted) return;
         setBooks(loadedBooks);
         if (loadedBooks.length > 0) {
+          // Ensure initial version reflects storedPos if present
+          if (initialVersion !== storedVersion) {
+            setSelectedVersionId(initialVersion as TranslationId);
+          }
           const targetBookId =
             storedPos?.bookId && loadedBooks.some((b) => b.id === storedPos.bookId)
               ? storedPos.bookId
@@ -87,6 +93,7 @@ export default function Home() {
               chapter: storedPos.chapterNumber,
               verse: storedPos.verseNumber,
               requestId: ++targetRequestRef.current,
+              versionId: (storedPos.versionId as TranslationId) || initialVersion,
             });
           }
 
@@ -103,26 +110,64 @@ export default function Home() {
     };
   }, []);
 
-  // Persist reading position when book or chapter changes
+  // Reload books when version changes (on-demand cache)
+  useEffect(() => {
+    let isMounted = true;
+    // Skip initial mount's double fetch if already loaded for same version
+    getBibleBooks(selectedVersionId)
+      .then((loadedBooks) => {
+        if (!isMounted) return;
+        setBooks(loadedBooks);
+        // If current book not in new version (e.g. deuterocanonical switching), fallback to GEN
+        if (!loadedBooks.some((b) => b.id === selectedBookId)) {
+          setSelectedBookId(loadedBooks[0].id);
+          setSelectedChapter(1);
+          setReaderTarget(null);
+        } else {
+          // Validate chapter exists in new version's book
+          const meta = loadedBooks.find((b) => b.id === selectedBookId);
+          if (meta && selectedChapter > meta.totalChapters) {
+            setSelectedChapter(meta.totalChapters);
+            setReaderTarget({
+              kind: 'lastPage',
+              bookId: selectedBookId,
+              chapter: meta.totalChapters,
+              requestId: ++targetRequestRef.current,
+              versionId: selectedVersionId,
+            });
+          }
+        }
+        const current = loadedBooks.find((b) => b.id === selectedBookId) || loadedBooks[0];
+        setBrowsingBook(current);
+      })
+      .catch((err) => console.error('Error cargando catálogo versión', selectedVersionId, err));
+    return () => { isMounted = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedVersionId]);
+
+  // Persist reading position when book or chapter or version changes
   useEffect(() => {
     if (selectedBookId && selectedChapter) {
       saveStoredReadingPosition({
         bookId: selectedBookId,
         chapterNumber: selectedChapter,
         verseNumber: readerTarget?.kind === 'verse' ? readerTarget.verse : undefined,
+        versionId: selectedVersionId,
       });
     }
-  }, [selectedBookId, selectedChapter, readerTarget]);
+  }, [selectedBookId, selectedChapter, readerTarget, selectedVersionId]);
 
-  // Load chapter data when book or chapter changes
+  // Load chapter data when book or chapter or version changes
   useEffect(() => {
     let isMounted = true;
 
     async function fetchChapter() {
       try {
-        const data = await getChapterData(selectedBookId, selectedChapter);
+        const data = await getChapterData(selectedVersionId, selectedBookId, selectedChapter);
         if (isMounted && data) {
           setChapterPayload(data);
+          setLoading(false);
+        } else if (isMounted) {
           setLoading(false);
         }
       } catch (err) {
@@ -134,20 +179,26 @@ export default function Home() {
     }
 
     if (selectedBookId) {
+      setLoading(true);
       fetchChapter();
     }
 
     return () => {
       isMounted = false;
     };
-  }, [selectedBookId, selectedChapter]);
+  }, [selectedBookId, selectedChapter, selectedVersionId]);
 
-  // Current Book Meta
+  const handleVersionChange = (newVersionId: TranslationId) => {
+    saveStoredVersionId(newVersionId);
+    setSelectedVersionId(newVersionId);
+    setLoading(true);
+    setReaderTarget(null);
+  };
+
   const currentBookMeta = useMemo(() => {
     return books.find((b) => b.id === selectedBookId) || books[0];
   }, [books, selectedBookId]);
 
-  // Filtered books list
   const filteredBooks = useMemo(() => {
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
@@ -158,7 +209,6 @@ export default function Home() {
     return books.filter((b) => b.testament === activeTestamentTab);
   }, [books, activeTestamentTab, searchQuery]);
 
-  // Navigate to Next Chapter across books
   const handleNextChapter = () => {
     if (!currentBookMeta) return;
 
@@ -178,8 +228,6 @@ export default function Home() {
     }
   };
 
-  // Navigate to Previous Chapter across books, landing on its LAST page
-  // (book-like backward navigation)
   const handlePrevChapter = () => {
     if (selectedChapter > 1) {
       setLoading(true);
@@ -189,6 +237,7 @@ export default function Home() {
         bookId: selectedBookId,
         chapter: selectedChapter - 1,
         requestId: ++targetRequestRef.current,
+        versionId: selectedVersionId,
       });
     } else {
       const currentIndex = books.findIndex((b) => b.id === selectedBookId);
@@ -202,15 +251,14 @@ export default function Home() {
           bookId: prevBook.id,
           chapter: prevBook.totalChapters,
           requestId: ++targetRequestRef.current,
+          versionId: selectedVersionId,
         });
       }
     }
   };
 
-  // Handle Verse Bookmarking with storage persistence
   const handleBookmarkVerse = (verseNumber: string | number) => {
     if (!chapterPayload) return;
-
     const verseObj = chapterPayload.verses.find((v) => String(v.number) === String(verseNumber));
     const verseText = verseObj?.text;
 
@@ -219,7 +267,8 @@ export default function Home() {
         (b) =>
           b.bookId === chapterPayload.bookId &&
           b.chapter === chapterPayload.chapterNumber &&
-          String(b.verse) === String(verseNumber)
+          String(b.verse) === String(verseNumber) &&
+          (b.versionId || DEFAULT_TRANSLATION_ID) === selectedVersionId
       );
 
       let next: StoredBookmark[];
@@ -229,7 +278,8 @@ export default function Home() {
             !(
               b.bookId === chapterPayload.bookId &&
               b.chapter === chapterPayload.chapterNumber &&
-              String(b.verse) === String(verseNumber)
+              String(b.verse) === String(verseNumber) &&
+              (b.versionId || DEFAULT_TRANSLATION_ID) === selectedVersionId
             )
         );
       } else {
@@ -242,6 +292,7 @@ export default function Home() {
             verse: verseNumber,
             text: verseText,
             createdAt: Date.now(),
+            versionId: selectedVersionId,
           },
         ];
       }
@@ -262,6 +313,9 @@ export default function Home() {
       ? 'theme-noche'
       : 'theme-sepia';
 
+  // Bookmarks filtered by version (show current version first, but keep all for now with badge)
+  const visibleBookmarks = bookmarksList; // keep all; UI will badge version
+
   return (
     <div
       className={`relative h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col w-full transition-colors duration-200 ${themeClass}`}
@@ -270,11 +324,10 @@ export default function Home() {
         color: 'var(--reader-text)',
       }}
     >
-      {/* Main ComfortBibleReader Component */}
       {loading && !chapterPayload ? (
         <div className="flex-1 flex flex-col items-center justify-center p-8 sm:p-12 space-y-3 min-h-[100dvh]">
           <Loader2 className="h-8 w-8 animate-spin text-reader-accent" />
-          <p className="text-sm font-medium opacity-70">Cargando Sagradas Escrituras...</p>
+          <p className="text-sm font-medium opacity-70" suppressHydrationWarning>Cargando Sagradas Escrituras — {selectedVersionMeta.shortName}...</p>
         </div>
       ) : chapterPayload ? (
         <ComfortBibleReader
@@ -291,7 +344,9 @@ export default function Home() {
             setShowBookSelector(true);
           }}
           onOpenBookmarks={() => setShowBookmarksDrawer(true)}
-          bookmarksCount={bookmarksList.length}
+          bookmarksCount={bookmarksList.filter((b) => (b.versionId || DEFAULT_TRANSLATION_ID) === selectedVersionId).length}
+          selectedVersionId={selectedVersionId}
+          onSelectVersion={handleVersionChange}
         />
       ) : (
         <div className="flex-1 flex items-center justify-center p-8 min-h-[100dvh]">
@@ -307,23 +362,23 @@ export default function Home() {
         title="Explorador de Libros y Capítulos de la Biblia"
         className="max-w-4xl max-h-[92dvh] sm:max-h-[90vh] flex flex-col overflow-hidden p-0"
       >
-        {/* Modal Header */}
         <DialogHeader onClose={() => setShowBookSelector(false)}>
           <div className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-reader-accent shrink-0" />
             <DialogTitle className="text-sm sm:text-lg">
-              Explorador Bíblico (66 Libros)
+              Explorador Bíblico — {selectedVersionMeta.shortName}
+              <span className="ml-2 text-xs font-normal opacity-60 hidden sm:inline">
+                {books.length} libros {selectedVersionMeta.hasDeuterocanonical ? '· +7 deuterocanónicos' : ''} · {selectedVersionMeta.copyright}
+              </span>
             </DialogTitle>
           </div>
         </DialogHeader>
 
-        {/* Search and Testament Tabs */}
         <div
           className={`p-3 sm:p-4 border-b border-[var(--reader-border)] space-y-2.5 ${
             mobileSelectorStep === 'chapters' ? 'hidden md:block' : 'block'
           }`}
         >
-          {/* Search Bar */}
           <div className="relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 opacity-50" />
             <input
@@ -348,24 +403,21 @@ export default function Home() {
             )}
           </div>
 
-          {/* Testament Switcher Tabs (Only if not searching) */}
           {!searchQuery && (
             <Tabs value={activeTestamentTab} onValueChange={(val) => setActiveTestamentTab(val as 'AT' | 'NT')}>
               <TabsList className="w-full grid grid-cols-2">
                 <TabsTrigger value="AT">
-                  Antiguo Testamento (39)
+                  Antiguo Testamento ({books.filter((b) => b.testament === 'AT').length})
                 </TabsTrigger>
                 <TabsTrigger value="NT">
-                  Nuevo Testamento (27)
+                  Nuevo Testamento ({books.filter((b) => b.testament === 'NT').length})
                 </TabsTrigger>
               </TabsList>
             </Tabs>
           )}
         </div>
 
-        {/* Body: Responsive 2-Column Browser */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-h-[320px]">
-          {/* Left Column: Books List */}
           <div
             className={`md:col-span-6 border-r border-[var(--reader-border)] overflow-y-auto custom-scrollbar p-2.5 sm:p-3 space-y-1 ${
               mobileSelectorStep === 'chapters' ? 'hidden md:block' : 'block'
@@ -406,7 +458,6 @@ export default function Home() {
             })}
           </div>
 
-          {/* Right Column: Chapter Grid */}
           <div
             className={`md:col-span-6 overflow-y-auto custom-scrollbar p-3.5 sm:p-4 flex flex-col ${
               mobileSelectorStep === 'books' ? 'hidden md:flex' : 'flex'
@@ -414,10 +465,8 @@ export default function Home() {
           >
             {browsingBook ? (
               <>
-                {/* Header for Chapter view (with Mobile Back Button) */}
                 <div className="border-b border-[var(--reader-border)] pb-3 mb-3 sm:mb-4 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    {/* Mobile Back to Books Button */}
                     <Button
                       variant="outline"
                       size="sm"
@@ -461,6 +510,7 @@ export default function Home() {
                             chapterNumber: chapNum,
                             verseNumber: undefined,
                             page: 1,
+                            versionId: selectedVersionId,
                           });
                           setShowBookSelector(false);
                         }}
@@ -493,12 +543,12 @@ export default function Home() {
         <DialogHeader onClose={() => setShowBookmarksDrawer(false)}>
           <div className="flex items-center gap-2">
             <BookmarkCheck className="h-5 w-5 text-reader-accent" />
-            <DialogTitle>Versículos Guardados</DialogTitle>
+            <DialogTitle>Versículos Guardados — {selectedVersionMeta.shortName}</DialogTitle>
           </div>
         </DialogHeader>
 
         <DialogContent className="max-h-[85vh] space-y-3">
-          {bookmarksList.length === 0 ? (
+          {visibleBookmarks.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center p-6 space-y-3 opacity-60">
               <BookMarked className="h-12 w-12 text-reader-accent opacity-50" />
               <p className="text-sm font-medium">No has guardado versículos todavía.</p>
@@ -508,19 +558,28 @@ export default function Home() {
             </div>
           ) : (
             <div className="space-y-3 pb-6">
-              {bookmarksList.map((bm, index) => (
+              {visibleBookmarks.map((bm, index) => {
+                const bmVersion = (bm.versionId as TranslationId) || DEFAULT_TRANSLATION_ID;
+                const meta = AVAILABLE_TRANSLATIONS[bmVersion];
+                return (
                 <Card
-                  key={`${bm.bookId}-${bm.chapter}-${bm.verse}-${index}`}
+                  key={`${bm.bookId}-${bm.chapter}-${bm.verse}-${bm.versionId}-${index}`}
                   className="p-3 transition-all hover:bg-neutral-500/5 flex flex-col gap-2"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-sm text-reader-accent">
+                    <span className="font-bold text-sm text-reader-accent flex items-center gap-1.5">
                       {bm.bookName} {bm.chapter}:{bm.verse}
+                      <Badge variant="subtle" className="text-[10px] px-1.5 py-0 font-bold">
+                        {meta?.shortName || bmVersion}
+                      </Badge>
                     </span>
                     <Button
                       variant="subtle"
                       size="sm"
                       onClick={() => {
+                        if (bmVersion !== selectedVersionId) {
+                          handleVersionChange(bmVersion);
+                        }
                         setLoading(true);
                         setSelectedBookId(bm.bookId);
                         setSelectedChapter(bm.chapter);
@@ -530,11 +589,13 @@ export default function Home() {
                           chapter: bm.chapter,
                           verse: bm.verse,
                           requestId: ++targetRequestRef.current,
+                          versionId: bmVersion,
                         });
                         saveStoredReadingPosition({
                           bookId: bm.bookId,
                           chapterNumber: bm.chapter,
                           verseNumber: bm.verse,
+                          versionId: bmVersion,
                         });
                         setShowBookmarksDrawer(false);
                       }}
@@ -550,7 +611,8 @@ export default function Home() {
                     </p>
                   )}
                 </Card>
-              ))}
+                );
+              })}
             </div>
           )}
         </DialogContent>

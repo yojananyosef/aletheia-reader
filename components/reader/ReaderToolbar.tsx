@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import {
   ReaderSettings,
   LineFocusMode,
+  TranslationId,
 } from '@/types/bible';
 import {
   BookOpen,
@@ -16,7 +17,6 @@ import {
   ChevronDown,
   BookMarked,
   Volume2,
-  Check,
   Search,
   MoveHorizontal,
   AlignJustify,
@@ -28,6 +28,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogHeader, DialogTitle, DialogContent } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
 import { Card } from '@/components/ui/card';
+import { VersionSelector } from './VersionSelector';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -43,6 +44,8 @@ interface ReaderToolbarProps {
   bookmarksCount?: number;
   onToggleAudioNarrator?: () => void;
   isAudioNarratorActive?: boolean;
+  selectedVersionId?: TranslationId;
+  onSelectVersion?: (id: TranslationId) => void;
 }
 
 export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
@@ -57,6 +60,8 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
   bookmarksCount = 0,
   onToggleAudioNarrator,
   isAudioNarratorActive = false,
+  selectedVersionId = 'ONBV',
+  onSelectVersion,
 }) => {
   const [showSettingsDrawer, setShowSettingsDrawer] = useState(false);
   const [showShortcutsModal, setShowShortcutsModal] = useState(false);
@@ -82,7 +87,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             animate={{ opacity: 1, height: 'auto', y: 0 }}
             exit={{ opacity: 0, height: 0, y: -30 }}
             transition={{ duration: 0.15, ease: 'easeInOut' }}
-            className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-[var(--reader-border)] bg-[var(--reader-bg)] text-[var(--reader-text)] px-3 sm:px-5 py-2 backdrop-blur-md transition-colors duration-200 select-none shadow-2xs shrink-0 overflow-hidden"
+            className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-[var(--reader-border)] bg-[var(--reader-bg)] text-[var(--reader-text)] px-3 sm:px-5 py-2 backdrop-blur-md transition-colors duration-200 select-none shadow-2xs shrink-0 overflow-visible"
           >
         {/* Left: Brand & Bible Explorer / Books Selector Button */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -106,6 +111,17 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             <span>Libros</span>
             <ChevronDown className="h-3.5 w-3.5 opacity-60" />
           </Button>
+
+          {/* Version Pill — solo desktop, en móvil está en Ajustes para respetar espacio */}
+          {onSelectVersion && (
+            <div className="hidden sm:block">
+              <VersionSelector
+                selectedVersionId={selectedVersionId}
+                onSelectVersion={onSelectVersion}
+                variant="pill"
+              />
+            </div>
+          )}
         </div>
 
         {/* Right: Audio Narrator, Bookmarks, Shortcuts, Fullscreen, Settings */}
@@ -181,6 +197,15 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
         </DialogHeader>
 
         <DialogContent className="space-y-6 max-h-[85vh]">
+          {/* 0. Translation Selection */}
+          {onSelectVersion && (
+            <VersionSelector
+              selectedVersionId={selectedVersionId}
+              onSelectVersion={onSelectVersion}
+              variant="cards"
+            />
+          )}
+
           {/* 1. Theme Selection */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider mb-2 opacity-80">

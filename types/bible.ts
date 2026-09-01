@@ -23,6 +23,7 @@ export interface ChapterPayload {
   verses: Verse[];
   footnotes?: Footnote[];
   sections?: SectionHeading[];
+  versionId?: TranslationId;
 }
 
 export type ThemeMode = 'pergamino' | 'noche' | 'sepia';
@@ -59,12 +60,15 @@ export interface ComfortBibleReaderProps {
   onOpenBookSelector?: () => void;
   onOpenBookmarks?: () => void;
   bookmarksCount?: number;
+  selectedVersionId?: TranslationId;
+  onSelectVersion?: (id: TranslationId) => void;
 }
 
 export interface BookmarkRef {
   bookId: string;
   chapter: number;
   verse: string | number;
+  versionId?: TranslationId;
 }
 
 /**
@@ -80,6 +84,7 @@ export interface ReaderTarget {
   chapter: number;
   verse?: string | number;
   requestId: number;
+  versionId?: TranslationId;
 }
 
 export interface BibleBookMeta {
@@ -122,3 +127,127 @@ export interface TTSState {
   selectedVoiceURI: string | null;
 }
 
+// ---------------------------------------------------------------------------
+// Multi-version support (ES — 9 traducciones desde alethia-gateway)
+// ---------------------------------------------------------------------------
+
+export type TranslationId =
+  | 'RV1909'
+  | 'BES'
+  | 'VBL'
+  | 'PDDPT'
+  | 'ONBV'
+  | 'BLL'
+  | 'BLM'
+  | 'SpaPlatense'
+  | 'SpaRVG';
+
+export const DEFAULT_TRANSLATION_ID: TranslationId = 'ONBV';
+
+export interface TranslationMeta {
+  id: TranslationId;
+  name: string;
+  shortName: string;
+  language: string;
+  languageName?: string;
+  description?: string;
+  copyright?: string;
+  hasDeuterocanonical?: boolean;
+}
+
+export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
+  RV1909: {
+    id: 'RV1909',
+    name: 'Reina Valera 1909',
+    shortName: 'RV1909',
+    language: 'es',
+    languageName: 'Español',
+    description: 'Traducción clásica histórica, fiel al Texto Recibido.',
+    copyright: 'Dominio Público',
+    hasDeuterocanonical: false,
+  },
+  BES: {
+    id: 'BES',
+    name: 'Biblia en Español Sencillo',
+    shortName: 'BES',
+    language: 'es',
+    languageName: 'Español',
+    description: 'Lenguaje contemporáneo accesible de AudioBiblia.org.',
+    copyright: 'CC BY 4.0',
+    hasDeuterocanonical: false,
+  },
+  VBL: {
+    id: 'VBL',
+    name: 'Versión Biblia Libre',
+    shortName: 'VBL',
+    language: 'es',
+    languageName: 'Español',
+    description: 'Traducción moderna con abundantes notas de estudio.',
+    copyright: 'CC BY-SA 4.0',
+    hasDeuterocanonical: false,
+  },
+  PDDPT: {
+    id: 'PDDPT',
+    name: 'Palabra de Dios para ti',
+    shortName: 'PDDPT',
+    language: 'es',
+    languageName: 'Español',
+    description: 'Traducción fiel y contextual.',
+    copyright: 'CC BY 4.0',
+    hasDeuterocanonical: false,
+  },
+  ONBV: {
+    id: 'ONBV',
+    name: 'Open Nueva Biblia Viva',
+    shortName: 'ONBV',
+    language: 'es',
+    languageName: 'Español',
+    description: 'Paráfrasis moderna de fácil comprensión.',
+    copyright: 'Biblica, Inc. / CC',
+    hasDeuterocanonical: false,
+  },
+  BLL: {
+    id: 'BLL',
+    name: 'Biblia Libre Latinoamericano',
+    shortName: 'BLL',
+    language: 'es',
+    languageName: 'Español',
+    description: 'Edición latinoamericana de eBible.org.',
+    copyright: 'Dominio Público',
+    hasDeuterocanonical: false,
+  },
+  BLM: {
+    id: 'BLM',
+    name: 'Biblia Libre para el Mundo',
+    shortName: 'BLM',
+    language: 'es',
+    languageName: 'Español',
+    description: 'Edición español global de eBible.org.',
+    copyright: 'Dominio Público',
+    hasDeuterocanonical: false,
+  },
+  SpaPlatense: {
+    id: 'SpaPlatense',
+    name: 'Biblia Platense (Straubinger)',
+    shortName: 'PLATENSE',
+    language: 'es',
+    languageName: 'Español',
+    description: 'Traducción comentada con notas exegéticas.',
+    copyright: 'Dominio Público',
+    hasDeuterocanonical: true,
+  },
+  SpaRVG: {
+    id: 'SpaRVG',
+    name: 'Reina Valera Gómez (2010)',
+    shortName: 'RVG',
+    language: 'es',
+    languageName: 'Español',
+    description: 'Revisión fiel al Texto Recibido.',
+    copyright: 'CC BY-NC-ND 4.0',
+    hasDeuterocanonical: false,
+  },
+};
+
+export function getTranslationMeta(id: TranslationId): TranslationMeta {
+  return AVAILABLE_TRANSLATIONS[id] ?? AVAILABLE_TRANSLATIONS[DEFAULT_TRANSLATION_ID];
+}

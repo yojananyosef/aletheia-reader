@@ -1,17 +1,17 @@
 import { TTSVoiceOption, Verse } from '@/types/bible';
+import EasySpeech from 'easy-speech';
+import { speakWithPiper, SPANISH_VOICE as PIPER_VOICE, isPiperEngineReady, isPiperVoiceReady } from './piper-service';
 
 // Safari/iOS rate correction factor: WebKit internally doubles/triples the rate
-// so we divide by ~1.8 to get natural-sounding output.
 const SAFARI_RATE_FACTOR = 0.55;
 const isSafari = (() => {
   if (typeof navigator === 'undefined') return false;
   const ua = navigator.userAgent;
-  // Safari explicitly says "Safari" but NOT "Chrome" and NOT "Android"
-  // Android Chrome has WebKit/Mobile but is NOT Safari
   return /^((?!chrome|android).)*safari/i.test(ua);
 })();
 
-// Android keepalive interval: reanuda el synth cada 10s para evitar que Chrome lo pause
+// EasySpeech handles cross-browser quirks (voices async, cancel->speak race, GC pin)
+// We also keep native fallbacks for boundary/mediaSession/wakeLock
 const KEEPALIVE_INTERVAL_MS = 10_000;
 
 class BibleTTSService {
@@ -20,20 +20,49 @@ class BibleTTSService {
   private voices: SpeechSynthesisVoice[] = [];
   private onVoicesLoadedCallbacks: Array<() => void> = [];
   private keepaliveTimer: ReturnType<typeof setInterval> | null = null;
+  private easyReady = false;
+  private easyVoices: SpeechSynthesisVoice[] = [];
+  private piperAudio: HTMLAudioElement | null = null;
+  private piperAbort: AbortController | null = null;
 
-  // Callbacks for prev/next verse (used by Media Session)
   private onPrevVerseCallback: (() => void) | null = null;
   private onNextVerseCallback: (() => void) | null = null;
 
   constructor() {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       this.synth = window.speechSynthesis;
-      this.initVoices();
+      this.initVoicesRobust();
+      this.initEasySpeech();
     }
   }
 
-  private initVoices() {
+  private initEasySpeech() {
+    try {
+      const det = EasySpeech.detect();
+      if (!det.speechSynthesis || !det.speechSynthesisUtterance) return;
+      EasySpeech.init({ maxTimeout: 5000, interval: 250 })
+        .then(() => {
+          this.easyReady = true;
+          this.easyVoices = EasySpeech.voices() as unknown as SpeechSynthesisVoice[];
+          if (this.easyVoices.length > 0) {
+            this.voices = this.easyVoices;
+            this.onVoicesLoadedCallbacks.forEach((cb) => cb());
+          }
+        })
+        .catch(() => {
+          // Fallback to native polling already running
+        });
+    } catch {
+      // EasySpeech not available, native fallback will handle
+    }
+  }
+
+  private initVoicesRobust() {
     if (!this.synth) return;
+
+    let attempts = 0;
+    const maxAttempts = 20; // 5000 / 250 like EasySpeech
+    const interval = 250;
 
     const loadVoices = () => {
       if (!this.synth) return;
@@ -41,13 +70,24 @@ class BibleTTSService {
       if (allVoices.length > 0) {
         this.voices = allVoices;
         this.onVoicesLoadedCallbacks.forEach((cb) => cb());
+        return;
+      }
+      if (attempts++ < maxAttempts) {
+        setTimeout(loadVoices, interval);
       }
     };
 
     loadVoices();
-    if (this.synth.onvoiceschanged !== undefined) {
-      this.synth.onvoiceschanged = loadVoices;
-    }
+    // Also hook onvoiceschanged for browsers that fire it (Chrome)
+    try {
+      if (this.synth.onvoiceschanged !== undefined) {
+        this.synth.onvoiceschanged = loadVoices;
+      }
+    } catch {}
+    // Also listen via addEventListener where available
+    try {
+      this.synth.addEventListener?.('voiceschanged', loadVoices as any);
+    } catch {}
   }
 
   public isSupported(): boolean {
@@ -56,29 +96,29 @@ class BibleTTSService {
 
   public onVoicesLoaded(callback: () => void) {
     this.onVoicesLoadedCallbacks.push(callback);
-    if (this.voices.length > 0) {
-      callback();
-    }
+    if (this.voices.length > 0) callback();
   }
 
-  /**
-   * Obtiene la lista de voces en español disponibles en el navegador/sistema (Deduplicadas)
-   */
   public getSpanishVoices(): TTSVoiceOption[] {
-    if (!this.voices || this.voices.length === 0) {
+    // Prefer EasySpeech voices if available (more reliable cross-browser)
+    const sourceVoices = this.easyReady && this.easyVoices.length > 0 ? this.easyVoices : this.voices;
+    if (sourceVoices.length === 0) {
+      // Try fresh fetch (Chrome Linux may populate late)
       if (this.synth) {
-        this.voices = this.synth.getVoices();
+        const fresh = this.synth.getVoices();
+        if (fresh.length > 0) {
+          this.voices = fresh;
+          return this.getSpanishVoices();
+        }
       }
+      return [];
     }
 
-    // Filter Spanish voices first, or fallback to system voices
-    const spanish = this.voices.filter((v) => v.lang.toLowerCase().startsWith('es'));
-    const sourceList = spanish.length > 0 ? spanish : this.voices;
+    const spanish = sourceVoices.filter((v) => v.lang.toLowerCase().startsWith('es'));
+    const sourceList = spanish.length > 0 ? spanish : sourceVoices;
 
-    // Deduplicate voices by voiceURI, name and lang to prevent React duplicate key warnings
     const seen = new Set<string>();
     const uniqueVoices: TTSVoiceOption[] = [];
-
     for (const v of sourceList) {
       const key = `${v.voiceURI || v.name}::${v.lang}`;
       if (!seen.has(key)) {
@@ -91,37 +131,30 @@ class BibleTTSService {
         });
       }
     }
-
     return uniqueVoices;
   }
 
-  /**
-   * Limpia el texto de notas al pie y caracteres especiales para una locución bíblica natural
-   */
   public cleanTextForSpeech(text: string): string {
     return text
-      .replace(/\[\s*[\d*†‡a-zA-Z]+\s*\]/g, '') // Elimina indicadores de notas al pie [1], [*]
+      .replace(/\[\s*[\d*†‡a-zA-Z]+\s*\]/g, '')
       .replace(/\(\s*[\d*†‡a-zA-Z]+\s*\)/g, '')
-      .replace(/[«»"]/g, '') // Elimina comillas latinas
-      .replace(/—/g, ', ') // Convierte rayas en pausas naturales
+      .replace(/[«»"]/g, '')
+      .replace(/—/g, ', ')
       .replace(/\s+/g, ' ')
       .trim();
   }
 
-  /**
-   * Apply Safari/iOS rate correction to compensate for WebKit bug
-   */
   private correctRate(rate: number): number {
     return isSafari ? rate * SAFARI_RATE_FACTOR : rate;
   }
-
-  // --- Keepalive Heartbeat (Android Chrome) ---
 
   private startKeepalive() {
     this.stopKeepalive();
     this.keepaliveTimer = setInterval(() => {
       if (this.synth && this.synth.speaking && !this.synth.paused) {
-        this.synth.resume();
+        try {
+          this.synth.resume();
+        } catch {}
       } else {
         this.stopKeepalive();
       }
@@ -135,29 +168,20 @@ class BibleTTSService {
     }
   }
 
-  // --- Media Session ---
-
   private updateMediaSession(verse: Verse, bookName?: string, chapterNumber?: number) {
     if (typeof navigator === 'undefined' || !('mediaSession' in navigator)) return;
-
-    const verseLabel = bookName && chapterNumber
-      ? `${bookName} ${chapterNumber}:${verse.number}`
-      : `Versículo ${verse.number}`;
-
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: verseLabel,
-      artist: 'Alethia Reader',
-      album: 'Nueva Biblia Viva',
-    });
-
-    navigator.mediaSession.setActionHandler('play', () => this.resume());
-    navigator.mediaSession.setActionHandler('pause', () => this.pause());
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-      this.onPrevVerseCallback?.();
-    });
-    navigator.mediaSession.setActionHandler('nexttrack', () => {
-      this.onNextVerseCallback?.();
-    });
+    const verseLabel = bookName && chapterNumber ? `${bookName} ${chapterNumber}:${verse.number}` : `Versículo ${verse.number}`;
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: verseLabel,
+        artist: 'Alethia Reader',
+        album: 'Nueva Biblia Viva',
+      });
+      navigator.mediaSession.setActionHandler('play', () => this.resume());
+      navigator.mediaSession.setActionHandler('pause', () => this.pause());
+      navigator.mediaSession.setActionHandler('previoustrack', () => this.onPrevVerseCallback?.());
+      navigator.mediaSession.setActionHandler('nexttrack', () => this.onNextVerseCallback?.());
+    } catch {}
   }
 
   public setMediaSessionCallbacks(onPrev: () => void, onNext: () => void) {
@@ -165,10 +189,7 @@ class BibleTTSService {
     this.onNextVerseCallback = onNext;
   }
 
-  /**
-   * Sintetiza la voz para un versículo específico de forma fluida y sincronizada
-   */
-  public speakVerse(
+  public async speakVerse(
     verse: Verse,
     options: {
       voiceURI?: string | null;
@@ -186,76 +207,101 @@ class BibleTTSService {
       return;
     }
 
+    // Ensure voices are loaded — poll like EasySpeech if needed
+    if (this.voices.length === 0) {
+      // Try EasySpeech voices
+      if (this.easyReady && this.easyVoices.length > 0) {
+        this.voices = this.easyVoices;
+      } else {
+        const fresh = this.synth.getVoices();
+        if (fresh.length > 0) {
+          this.voices = fresh;
+          this.onVoicesLoadedCallbacks.forEach((cb) => cb());
+        }
+      }
+    }
+
     const cleanText = this.cleanTextForSpeech(verse.text);
     if (!cleanText) {
       options.onEnd?.();
       return;
     }
 
-    // Clean up any previous speech state before starting
+    // No early-return for empty pool — try with default voice (some browsers synthesize even if getVoices() === [])
+    // Only warn, don't block English fallback as user requested
+
+    // Chrome quirk: cancel pending speech and wait a tick before speak (prevents synthesis-failed)
     try {
-      this.synth.cancel();
-    } catch (_) {}
+      if (this.synth.speaking || this.synth.pending) {
+        this.synth.cancel();
+        // Wait for cancel to propagate (EasySpeech does 50-100ms)
+        await new Promise((r) => setTimeout(r, 80));
+      } else {
+        this.synth.cancel();
+      }
+    } catch {}
+
+    // If paused, resume first (Chrome Android)
+    try {
+      if (this.synth.paused) this.synth.resume();
+    } catch {}
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
     this.currentUtterance = utterance;
 
-    // Pin utterance to window to prevent Chromium / Safari garbage collection bug
     if (typeof window !== 'undefined') {
       (window as any)._activeBibleUtterance = utterance;
     }
 
-    // Apply Safari rate correction
     const requestedRate = options.rate || 1.0;
     utterance.rate = this.correctRate(requestedRate);
     utterance.pitch = 1.0;
+    utterance.volume = 1.0;
     utterance.lang = 'es-ES';
 
-    // Match selected voice if provided
+    // Voice selection: prefer explicit voiceURI, else best Spanish Google/Natural
+    const pool = this.easyReady && this.easyVoices.length > 0 ? this.easyVoices : this.voices;
     if (options.voiceURI) {
-      const selected = this.voices.find((v) => v.voiceURI === options.voiceURI);
+      const selected = pool.find((v) => v.voiceURI === options.voiceURI);
       if (selected) {
         utterance.voice = selected;
         utterance.lang = selected.lang;
       }
     } else {
-      // Default to best natural Spanish voice
-      const preferred = this.voices.find(
-        (v) =>
-          v.lang.toLowerCase().startsWith('es') &&
-          (v.name.includes('Natural') ||
-            v.name.includes('Google') ||
-            v.name.includes('Neural') ||
-            v.name.includes('Sabina') ||
-            v.name.includes('Helena') ||
-            v.name.includes('Jorge') ||
-            v.name.includes('Mónica') ||
-            v.name.includes('Paulina'))
-      ) || this.voices.find((v) => v.lang.toLowerCase().startsWith('es'));
-
+      const preferred =
+        pool.find(
+          (v) =>
+            v.lang.toLowerCase().startsWith('es') &&
+            (v.name.includes('Natural') ||
+              v.name.includes('Google') ||
+              v.name.includes('Neural') ||
+              v.name.includes('Sabina') ||
+              v.name.includes('Helena') ||
+              v.name.includes('Jorge') ||
+              v.name.includes('Mónica') ||
+              v.name.includes('Paulina'))
+        ) || pool.find((v) => v.lang.toLowerCase().startsWith('es'));
       if (preferred) {
         utterance.voice = preferred;
         utterance.lang = preferred.lang;
+      } else {
+        // Solo español: no fallback a inglés. Dejar lang es-ES para que falle y caiga a Kokoro español.
+        // No asignar pool[0] si es en
       }
     }
 
     let hasStarted = false;
     let hasEnded = false;
-    let startTime = 0;
 
     utterance.onstart = () => {
       hasStarted = true;
-      startTime = Date.now();
-      // Update Media Session with verse info
       this.updateMediaSession(verse, options.bookName, options.chapterNumber);
       options.onStart?.();
     };
 
     if (options.onBoundary) {
       utterance.onboundary = (e: SpeechSynthesisEvent) => {
-        if (e.charIndex !== undefined) {
-          options.onBoundary?.(e.charIndex, cleanText);
-        }
+        if (e.charIndex !== undefined) options.onBoundary?.(e.charIndex, cleanText);
       };
     }
 
@@ -266,87 +312,225 @@ class BibleTTSService {
       this.stopKeepalive();
       if (typeof window !== 'undefined') {
         (window as any)._activeBibleUtterance = null;
-        if ('mediaSession' in navigator) {
-          navigator.mediaSession.playbackState = 'none';
-        }
+        try {
+          if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'none';
+        } catch {}
       }
-
-      // Phantom onend guard: if onend fires before onstart or in < 50ms for real text, ignore phantom loop
       if (!hasStarted && cleanText.length > 5) {
         console.warn('TTS onend fired before onstart, ignoring phantom cascade');
         return;
       }
-
       options.onEnd?.();
     };
 
-    utterance.onerror = (e) => {
+    utterance.onerror = (e: any) => {
       if (hasEnded) return;
+      if (!hasStarted && e.error === 'synthesis-failed' && cleanText.length > 0) {
+        this.currentUtterance = null;
+        this.stopKeepalive();
+        this.tryPiperFallback(cleanText, options, hasStarted, false);
+        hasEnded = true;
+        return;
+      }
       hasEnded = true;
       this.currentUtterance = null;
       this.stopKeepalive();
       if (typeof window !== 'undefined') {
         (window as any)._activeBibleUtterance = null;
-        if ('mediaSession' in navigator) {
-          navigator.mediaSession.playbackState = 'none';
-        }
+        try {
+          if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'none';
+        } catch {}
       }
-      if (e.error === 'canceled' || e.error === 'interrupted') {
-        return;
+      if (e.error === 'canceled' || e.error === 'interrupted') return;
+
+      if (e.error === 'synthesis-failed' || e.error === 'synthesis-unavailable' || e.error === 'not-allowed' || e.error === 'language-unavailable' || e.error === 'voice-unavailable') {
+        const hasVoices = pool.length > 0;
+        const hasSpanish = pool.some((v) => v.lang.toLowerCase().startsWith('es'));
+        if (!hasVoices) {
+          console.warn('TTS Web Speech sin voces, probando Piper español...');
+          this.tryPiperFallback(cleanText, options, hasStarted, false);
+          hasEnded = true;
+          return;
+        } else if (!hasSpanish) {
+          console.warn(`TTS: synthesis failed (${e.error}) sin voz es-ES, usando Piper español.`);
+          this.tryPiperFallback(cleanText, options, hasStarted, false);
+          hasEnded = true;
+          return;
+        }
+        if (e.error === 'not-allowed') {
+          const err: any = new Error('El navegador bloqueó el audio (requiere interacción). Pulsa de nuevo 🔊.');
+          err.code = 'not-allowed';
+          err.originalEvent = e;
+          options.onError?.(err);
+          return;
+        }
+        if (e.error === 'synthesis-failed' || e.error === 'synthesis-unavailable') {
+          this.tryPiperFallback(cleanText, options, hasStarted, false);
+          hasEnded = true;
+          return;
+        }
       }
       options.onError?.(e);
     };
 
-    // Ensure synth is active before speaking
-    if (this.synth.paused) {
-      this.synth.resume();
+    // Ensure resume before speak (Chrome resume quirk)
+    try {
+      if (this.synth.paused) this.synth.resume();
+    } catch {}
+
+    // Use EasySpeech.speak if ready — it handles chunking and cross-browser quirks better
+    if (this.easyReady) {
+      try {
+        await EasySpeech.speak({
+          text: cleanText,
+          voice: utterance.voice as any,
+          rate: utterance.rate,
+          pitch: utterance.pitch,
+          volume: utterance.volume,
+          boundary: options.onBoundary ? (e: any) => options.onBoundary?.(e.charIndex, cleanText) : undefined,
+        });
+        // EasySpeech resolves on end — trigger our handlers
+        if (!hasEnded) {
+          hasEnded = true;
+          this.stopKeepalive();
+          options.onEnd?.();
+        }
+        return;
+      } catch (err: any) {
+        // Fallback to native if EasySpeech fails
+        if (err?.error === 'canceled' || err?.error === 'interrupted') return;
+      }
     }
 
     try {
       this.synth.speak(utterance);
       this.startKeepalive();
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'playing';
-      }
+      try {
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+      } catch {}
+      // Safety: if no onstart/onerror within 3s, try Piper español before failing
+      setTimeout(() => {
+        if (!hasStarted && !hasEnded) {
+          hasEnded = true;
+          this.currentUtterance = null;
+          this.stopKeepalive();
+          console.warn('TTS Web Speech timeout 3s, probando Piper español...');
+          this.tryPiperFallback(cleanText, options, hasStarted, false);
+        }
+      }, 3000);
     } catch (err) {
-      options.onError?.(err);
+      this.tryPiperFallback(cleanText, options, hasStarted, hasEnded);
     }
   }
 
-  public pause() {
-    if (this.synth && this.synth.speaking) {
-      this.synth.pause();
-      this.stopKeepalive();
-      if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'paused';
+  private async tryPiperFallback(cleanText: string, options: any, hasStarted: boolean, hasEnded: boolean) {
+    // Fallback único: Piper español rhasspy/piper-voices es_ES-sharvard-medium (solo español)
+    const needsLoading = !isPiperEngineReady() || !isPiperVoiceReady();
+    if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: true }));
+    try {
+      if (this.piperAudio) {
+        try { this.piperAudio.pause(); } catch {}
+        this.piperAudio = null;
       }
+      if (this.piperAbort) {
+        try { this.piperAbort.abort(); } catch {}
+      }
+      this.piperAbort = new AbortController();
+      const audio = await speakWithPiper(cleanText, {
+        voice: PIPER_VOICE,
+        onStart: () => {
+          if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+          options.onStart?.();
+        },
+        onEnd: () => {
+          if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+          options.onEnd?.();
+        },
+        onError: (e) => {
+          if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+          console.warn('Piper onError:', e);
+        },
+        signal: this.piperAbort.signal,
+      });
+      if (audio) {
+        this.piperAudio = audio;
+        if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+        return;
+      }
+      if (this.piperAbort.signal.aborted) return;
+      if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+    } catch (e) {
+      console.warn('Piper fallback falló:', e);
+      if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+    }
+    const err: any = new Error('TTS no disponible. Web Speech falló y Piper español no pudo sintetizar. Verifica conexión.');
+    err.code = 'all-failed';
+    setTimeout(() => options.onError?.(err), 100);
+  }
+
+  public pause() {
+    if (this.piperAudio && !this.piperAudio.paused && this.piperAudio.readyState >= 2) {
+      try { this.piperAudio.pause(); } catch {}
+    }
+    if (this.synth && this.synth.speaking) {
+      try {
+        this.synth.pause();
+      } catch {}
+      this.stopKeepalive();
+      try {
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
+      } catch {}
     }
   }
 
   public resume() {
+    if (this.piperAudio && this.piperAudio.paused) {
+      try { this.piperAudio.play()?.catch(() => {}); } catch {}
+      return;
+    }
+    // meSpeak no soporta resume real — re-speak se maneja en el reader
     if (this.synth && this.synth.paused) {
-      this.synth.resume();
+      try {
+        this.synth.resume();
+      } catch {}
       this.startKeepalive();
-      if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'playing';
-      }
+      try {
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+      } catch {}
     }
   }
 
   public cancel() {
+    if (this.piperAbort) {
+      try {
+        this.piperAbort.abort();
+      } catch {}
+      this.piperAbort = null;
+    }
+    if (this.piperAudio) {
+      try {
+        if (this.piperAudio.readyState >= 2 && !this.piperAudio.paused) this.piperAudio.pause();
+      } catch {}
+      try { this.piperAudio.src = ''; } catch {}
+      this.piperAudio = null;
+    }
     if (this.synth) {
-      this.synth.cancel();
+      try {
+        this.synth.cancel();
+      } catch {}
       this.currentUtterance = null;
       this.stopKeepalive();
       if (typeof window !== 'undefined') {
         (window as any)._activeBibleUtterance = null;
-        if ('mediaSession' in navigator) {
-          navigator.mediaSession.playbackState = 'none';
-          navigator.mediaSession.setActionHandler('play', null);
-          navigator.mediaSession.setActionHandler('pause', null);
-          navigator.mediaSession.setActionHandler('previoustrack', null);
-          navigator.mediaSession.setActionHandler('nexttrack', null);
-        }
+        try {
+          if ('mediaSession' in navigator) {
+            navigator.mediaSession.playbackState = 'none';
+            navigator.mediaSession.setActionHandler('play', null);
+            navigator.mediaSession.setActionHandler('pause', null);
+            navigator.mediaSession.setActionHandler('previoustrack', null);
+            navigator.mediaSession.setActionHandler('nexttrack', null);
+          }
+        } catch {}
       }
     }
   }
