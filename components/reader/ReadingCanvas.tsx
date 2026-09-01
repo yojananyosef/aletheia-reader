@@ -705,45 +705,53 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                       }`}
                     >
                       {!continued && (
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onSelectVerse(verse);
-                          }}
-                          className="verse-super inline-flex items-center"
-                          aria-label={`Versículo ${verse.number}. Clic para ver opciones o notas`}
-                          title={`Versículo ${verse.number}`}
-                        >
-                          {verse.number}
-                          {isBookmarked && (
-                            <Bookmark className="inline h-2.5 w-2.5 ml-0.5 fill-current text-reader-accent" />
-                          )}
-                        </button>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onSelectVerse(verse);
+                              }}
+                              className="verse-super inline-flex items-center"
+                              aria-label={`Versículo ${verse.number}. Clic para ver opciones o notas`}
+                            >
+                              {verse.number}
+                              {isBookmarked && (
+                                <Bookmark className="inline h-2.5 w-2.5 ml-0.5 fill-current text-reader-accent" />
+                              )}
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">Versículo {verse.number}</TooltipContent>
+                        </Tooltip>
                       )}
 
-                      <span
-                        onClick={(e) => {
-                          if (window.getSelection()?.toString().length === 0) {
-                            e.stopPropagation();
-                            onSelectVerse(verse);
-                          }
-                        }}
-                        className="cursor-pointer hover:bg-neutral-500/5 rounded px-0.5 transition-colors"
-                        title="Clic para opciones del versículo"
-                        dangerouslySetInnerHTML={{
-                          __html: (() => {
-                            let text = verse.text;
-                            if (settings.bionicReading) {
-                              text = applyBionicReading(text);
-                            }
-                            if (settings.phoneticDots) {
-                              text = applySyllablePoints(text);
-                            }
-                            return text;
-                          })(),
-                        }}
-                      />
+                      <Tooltip delayDuration={500}>
+                        <TooltipTrigger asChild>
+                          <span
+                            onClick={(e) => {
+                              if (window.getSelection()?.toString().length === 0) {
+                                e.stopPropagation();
+                                onSelectVerse(verse);
+                              }
+                            }}
+                            className="cursor-pointer hover:bg-neutral-500/5 rounded px-0.5 transition-colors"
+                            dangerouslySetInnerHTML={{
+                              __html: (() => {
+                                let text = verse.text;
+                                if (settings.bionicReading) {
+                                  text = applyBionicReading(text);
+                                }
+                                if (settings.phoneticDots) {
+                                  text = applySyllablePoints(text);
+                                }
+                                return text;
+                              })(),
+                            }}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent side="top">Clic para opciones del versículo</TooltipContent>
+                      </Tooltip>
 
                       {!continued && verseFootnotes.map((fn) => (
                         <Tooltip key={fn.id}>

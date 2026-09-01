@@ -19,6 +19,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogHeader, DialogTitle, DialogContent } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import {
   getStoredSettings,
   saveStoredSettings,
@@ -496,29 +497,32 @@ export default function Home() {
                       selectedBookId === browsingBook.id && selectedChapter === chapNum;
 
                     return (
-                      <Button
-                        key={chapNum}
-                        variant={isCurrentActive ? "default" : "outline"}
-                        size="default"
-                        onClick={() => {
-                          setLoading(true);
-                          setSelectedBookId(browsingBook.id);
-                          setSelectedChapter(chapNum);
-                          setReaderTarget(null);
-                          saveStoredReadingPosition({
-                            bookId: browsingBook.id,
-                            chapterNumber: chapNum,
-                            verseNumber: undefined,
-                            page: 1,
-                            versionId: selectedVersionId,
-                          });
-                          setShowBookSelector(false);
-                        }}
-                        className={`min-h-[44px] font-bold text-sm ${isCurrentActive ? 'ring-2 ring-offset-2 ring-reader-accent' : ''}`}
-                        title={`${browsingBook.name} Capítulo ${chapNum}`}
-                      >
-                        {chapNum}
-                      </Button>
+                      <Tooltip key={chapNum}>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant={isCurrentActive ? "default" : "outline"}
+                            size="default"
+                            onClick={() => {
+                              setLoading(true);
+                              setSelectedBookId(browsingBook.id);
+                              setSelectedChapter(chapNum);
+                              setReaderTarget(null);
+                              saveStoredReadingPosition({
+                                bookId: browsingBook.id,
+                                chapterNumber: chapNum,
+                                verseNumber: undefined,
+                                page: 1,
+                                versionId: selectedVersionId,
+                              });
+                              setShowBookSelector(false);
+                            }}
+                            className={`min-h-[44px] font-bold text-sm ${isCurrentActive ? 'ring-2 ring-offset-2 ring-reader-accent' : ''}`}
+                          >
+                            {chapNum}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="top">{browsingBook.name} Capítulo {chapNum}</TooltipContent>
+                      </Tooltip>
                     );
                   })}
                 </div>

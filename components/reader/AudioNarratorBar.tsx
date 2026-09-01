@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TTSStatus, TTSVoiceOption } from '@/types/bible';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface AudioNarratorBarProps {
   status: TTSStatus;
@@ -100,48 +101,50 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
           transition={{ duration: 0.15 }}
           className="fixed bottom-14 sm:bottom-16 right-3 sm:right-6 z-40 select-none"
         >
-          <div
-            onClick={() => setIsMinimized(false)}
-            className="flex items-center gap-2 rounded-full border shadow-xl backdrop-blur-md px-3.5 py-1.5 cursor-pointer hover:scale-105 active:scale-95 transition-transform"
-            style={{
-              backgroundColor: 'var(--reader-bg)',
-              borderColor: 'var(--reader-border)',
-              color: 'var(--reader-text)',
-            }}
-            title="Toca para expandir controles de audio"
-          >
-            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <Volume2 className="h-4 w-4 text-reader-accent" />
-            <span className="text-xs font-bold font-sans">
-              v.{currentVerseNumber || '1'}
-            </span>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div
+                onClick={() => setIsMinimized(false)}
+                className="flex items-center gap-2 rounded-full border shadow-xl backdrop-blur-md px-3.5 py-1.5 cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                style={{
+                  backgroundColor: 'var(--reader-bg)',
+                  borderColor: 'var(--reader-border)',
+                  color: 'var(--reader-text)',
+                }}
+              >
+                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                <Volume2 className="h-4 w-4 text-reader-accent" />
+                <span className="text-xs font-bold font-sans">
+                  v.{currentVerseNumber || '1'}
+                </span>
 
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onStop();
-              }}
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-reader-accent text-white shadow-xs ml-1"
-              aria-label="Detener audio"
-              title="Detener"
-            >
-              <Square className="h-3 w-3 fill-current" />
-            </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onStop();
+                  }}
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-reader-accent text-white shadow-xs ml-1"
+                  aria-label="Detener audio"
+                >
+                  <Square className="h-3 w-3 fill-current" />
+                </button>
 
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsMinimized(false);
-              }}
-              className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-neutral-500/15"
-              aria-label="Expandir controles"
-              title="Expandir controles"
-            >
-              <Maximize2 className="h-3 w-3 opacity-70" />
-            </button>
-          </div>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMinimized(false);
+                  }}
+                  className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-neutral-500/15"
+                  aria-label="Expandir controles"
+                >
+                  <Maximize2 className="h-3 w-3 opacity-70" />
+                </button>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="top">Toca para expandir controles de audio</TooltipContent>
+          </Tooltip>
         </motion.div>
       ) : (
         /* Full Controls Floating HUD */
@@ -179,20 +182,24 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
               <div className="flex items-center gap-1.5 shrink-0">
                 {/* Speed Button */}
                 <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowSpeedMenu(!showSpeedMenu);
-                      setShowVoiceMenu(false);
-                    }}
-                    className="flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-mono font-bold border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                    style={{ borderColor: 'var(--reader-border)' }}
-                    title="Velocidad de reproducción"
-                    aria-label={`Velocidad actual: ${rate}x`}
-                  >
-                    <Gauge className="h-3 w-3" />
-                    <span>{rate}x</span>
-                  </button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowSpeedMenu(!showSpeedMenu);
+                          setShowVoiceMenu(false);
+                        }}
+                        className="flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-mono font-bold border transition-colors hover:bg-neutral-500/10 active:scale-95"
+                        style={{ borderColor: 'var(--reader-border)' }}
+                        aria-label={`Velocidad actual: ${rate}x`}
+                      >
+                        <Gauge className="h-3 w-3" />
+                        <span>{rate}x</span>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">Velocidad de reproducción</TooltipContent>
+                  </Tooltip>
 
                   {/* Speed Popover */}
                   {showSpeedMenu && (
@@ -227,19 +234,23 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
                 {/* Voices Button */}
                 {availableVoices.length > 0 && (
                   <div className="relative">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setShowVoiceMenu(!showVoiceMenu);
-                        setShowSpeedMenu(false);
-                      }}
-                      className="flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-medium border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                      style={{ borderColor: 'var(--reader-border)' }}
-                      title="Cambiar voz de narración"
-                    >
-                      <UserCheck className="h-3 w-3" />
-                      <span className="hidden sm:inline">Voz</span>
-                    </button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowVoiceMenu(!showVoiceMenu);
+                            setShowSpeedMenu(false);
+                          }}
+                          className="flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-medium border transition-colors hover:bg-neutral-500/10 active:scale-95"
+                          style={{ borderColor: 'var(--reader-border)' }}
+                        >
+                          <UserCheck className="h-3 w-3" />
+                          <span className="hidden sm:inline">Voz</span>
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">Cambiar voz de narración</TooltipContent>
+                    </Tooltip>
 
                     {/* Voice Popover */}
                     {showVoiceMenu && (
@@ -254,21 +265,24 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
                         {availableVoices.map((voice, idx) => {
                           const isSelected = selectedVoiceURI === voice.voiceURI;
                           return (
-                            <button
-                              key={`voice-${voice.voiceURI || voice.name}-${idx}`}
-                              type="button"
-                              onClick={() => {
-                                onSetVoice(voice.voiceURI);
-                                setShowVoiceMenu(false);
-                              }}
-                              className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors truncate ${
-                                isSelected ? 'bg-reader-accent font-bold shadow-xs' : 'hover:bg-neutral-500/10'
-                              }`}
-                              title={voice.name}
-                            >
-                              <span className="truncate">{voice.name}</span>
-                              {isSelected && <span className="ml-1 shrink-0">✓</span>}
-                            </button>
+                            <Tooltip key={`voice-${voice.voiceURI || voice.name}-${idx}`}>
+                              <TooltipTrigger asChild>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    onSetVoice(voice.voiceURI);
+                                    setShowVoiceMenu(false);
+                                  }}
+                                  className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors truncate ${
+                                    isSelected ? 'bg-reader-accent font-bold shadow-xs' : 'hover:bg-neutral-500/10'
+                                  }`}
+                                >
+                                  <span className="truncate">{voice.name}</span>
+                                  {isSelected && <span className="ml-1 shrink-0">✓</span>}
+                                </button>
+                              </TooltipTrigger>
+                              <TooltipContent side="top">{voice.name}</TooltipContent>
+                            </Tooltip>
                           );
                         })}
                       </div>
@@ -291,16 +305,20 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
             {/* Main Controls Row */}
             <div className="flex items-center justify-between gap-1 sm:gap-2">
               {/* Previous Verse */}
-              <button
-                type="button"
-                onClick={onPrevVerse}
-                className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                style={{ borderColor: 'var(--reader-border)' }}
-                aria-label="Versículo anterior"
-                title="Versículo Anterior"
-              >
-                <SkipBack className="h-4 w-4" />
-              </button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={onPrevVerse}
+                    className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 active:scale-95"
+                    style={{ borderColor: 'var(--reader-border)' }}
+                    aria-label="Versículo anterior"
+                  >
+                    <SkipBack className="h-4 w-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="top">Versículo Anterior</TooltipContent>
+              </Tooltip>
 
               {/* Center: Play / Stop Toggle */}
               <button
@@ -323,16 +341,20 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
               </button>
 
               {/* Next Verse */}
-              <button
-                type="button"
-                onClick={onNextVerse}
-                className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 active:scale-95"
-                style={{ borderColor: 'var(--reader-border)' }}
-                aria-label="Siguiente versículo"
-                title="Siguiente Versículo"
-              >
-                <SkipForward className="h-4 w-4" />
-              </button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={onNextVerse}
+                    className="flex h-11 w-11 items-center justify-center rounded-xl border transition-colors hover:bg-neutral-500/10 active:scale-95"
+                    style={{ borderColor: 'var(--reader-border)' }}
+                    aria-label="Siguiente versículo"
+                  >
+                    <SkipForward className="h-4 w-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="top">Siguiente Versículo</TooltipContent>
+              </Tooltip>
             </div>
           </div>
         </motion.div>

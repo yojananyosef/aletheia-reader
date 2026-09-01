@@ -33,6 +33,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogHeader, DialogTitle, DialogContent } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
 import { Card } from '@/components/ui/card';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { VersionSelector } from './VersionSelector';
 
 import { motion, AnimatePresence } from 'framer-motion';
@@ -105,18 +106,22 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           </div>
 
           {/* Clean 'Libros' Selector Button */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onOpenBookSelector}
-            className="font-bold text-xs sm:text-sm gap-1.5"
-            aria-label="Explorar libros y capítulos de la Biblia"
-            title="Explorar libros y capítulos"
-          >
-            <Search className="h-3.5 w-3.5 opacity-70" />
-            <span>Libros</span>
-            <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onOpenBookSelector}
+                className="font-bold text-xs sm:text-sm gap-1.5"
+                aria-label="Explorar libros y capítulos de la Biblia"
+              >
+                <Search className="h-3.5 w-3.5 opacity-70" />
+                <span>Libros</span>
+                <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Explorar libros y capítulos</TooltipContent>
+          </Tooltip>
 
           {/* Version Pill — solo desktop, en móvil está en Ajustes para respetar espacio */}
           {onSelectVersion && (
@@ -133,44 +138,56 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
         {/* Right: Audio Narrator, Bookmarks, Shortcuts, Fullscreen, Settings */}
         <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
           {onToggleAudioNarrator && (
-            <Button
-              variant={isAudioNarratorActive ? "default" : "outline"}
-              size="icon-sm"
-              onClick={onToggleAudioNarrator}
-              aria-label={isAudioNarratorActive ? "Ocultar narrador de audio" : "Activar narrador de audio bíblico"}
-              title="Narrador en Audio (TTS Bimodal)"
-            >
-              <Volume2 className={`h-4 w-4 ${isAudioNarratorActive ? 'animate-pulse' : 'text-reader-accent'}`} />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={isAudioNarratorActive ? "default" : "outline"}
+                  size="icon-sm"
+                  onClick={onToggleAudioNarrator}
+                  aria-label={isAudioNarratorActive ? "Ocultar narrador de audio" : "Activar narrador de audio bíblico"}
+                >
+                  <Volume2 className={`h-4 w-4 ${isAudioNarratorActive ? 'animate-pulse' : 'text-reader-accent'}`} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">Narrador en Audio (TTS Bimodal)</TooltipContent>
+            </Tooltip>
           )}
 
           {onOpenBookmarks && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onOpenBookmarks}
-              aria-label="Ver versículos guardados"
-              title="Versículos Guardados"
-            >
-              <BookMarked className="h-4 w-4 text-reader-accent" />
-              {bookmarksCount > 0 && (
-                <Badge variant="default" className="h-4 min-w-[16px] px-1 text-[10px] font-bold">
-                  {bookmarksCount}
-                </Badge>
-              )}
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onOpenBookmarks}
+                  aria-label="Ver versículos guardados"
+                >
+                  <BookMarked className="h-4 w-4 text-reader-accent" />
+                  {bookmarksCount > 0 && (
+                    <Badge variant="default" className="h-4 min-w-[16px] px-1 text-[10px] font-bold">
+                      {bookmarksCount}
+                    </Badge>
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">Versículos Guardados</TooltipContent>
+            </Tooltip>
           )}
 
           {/* Fullscreen */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleFullscreen}
-            aria-label={isFullscreen ? 'Salir de pantalla completa' : 'Activar pantalla completa'}
-            title="Pantalla Completa (F11)"
-          >
-            {isFullscreen ? <Minimize className="h-4 w-4 sm:h-4.5 sm:w-4.5 opacity-80" /> : <Maximize className="h-4 w-4 sm:h-4.5 sm:w-4.5 opacity-80" />}
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleFullscreen}
+                aria-label={isFullscreen ? 'Salir de pantalla completa' : 'Activar pantalla completa'}
+              >
+                {isFullscreen ? <Minimize className="h-4 w-4 sm:h-4.5 sm:w-4.5 opacity-80" /> : <Maximize className="h-4 w-4 sm:h-4.5 sm:w-4.5 opacity-80" />}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Pantalla Completa (F11)</TooltipContent>
+          </Tooltip>
 
           <Button
             variant="outline"

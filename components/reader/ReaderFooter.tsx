@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TTSStatus, TTSVoiceOption } from '@/types/bible';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface ReaderFooterProps {
   currentPage: number;
@@ -133,19 +134,23 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                     {/* Speed Selector */}
                     {onSetRateTTS && (
                       <div className="relative">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            setShowSpeedMenu(!showSpeedMenu);
-                            setShowVoiceMenu(false);
-                          }}
-                          className="h-7 px-1.5 font-mono font-bold text-[11px]"
-                          title="Velocidad de voz"
-                        >
-                          <Gauge className="h-3 w-3" />
-                          <span>{rate}x</span>
-                        </Button>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setShowSpeedMenu(!showSpeedMenu);
+                                setShowVoiceMenu(false);
+                              }}
+                              className="h-7 px-1.5 font-mono font-bold text-[11px]"
+                            >
+                              <Gauge className="h-3 w-3" />
+                              <span>{rate}x</span>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">Velocidad de voz</TooltipContent>
+                        </Tooltip>
 
                         {showSpeedMenu && (
                           <div
@@ -176,19 +181,23 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                     {/* Voice Selector */}
                     {onSetVoiceTTS && availableVoices.length > 0 && (
                       <div className="relative">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            setShowVoiceMenu(!showVoiceMenu);
-                            setShowSpeedMenu(false);
-                          }}
-                          className="h-7 px-1.5 text-[11px]"
-                          title="Cambiar voz"
-                        >
-                          <UserCheck className="h-3 w-3" />
-                          <span className="hidden sm:inline">Voz</span>
-                        </Button>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setShowVoiceMenu(!showVoiceMenu);
+                                setShowSpeedMenu(false);
+                              }}
+                              className="h-7 px-1.5 text-[11px]"
+                            >
+                              <UserCheck className="h-3 w-3" />
+                              <span className="hidden sm:inline">Voz</span>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">Cambiar voz</TooltipContent>
+                        </Tooltip>
 
                         {showVoiceMenu && (
                           <div
@@ -198,21 +207,24 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                             {availableVoices.map((voice, idx) => {
                               const isSelected = selectedVoiceURI === voice.voiceURI;
                               return (
-                                <button
-                                  key={`voice-${voice.voiceURI || voice.name}-${idx}`}
-                                  type="button"
-                                  onClick={() => {
-                                    onSetVoiceTTS(voice.voiceURI);
-                                    setShowVoiceMenu(false);
-                                  }}
-                                  className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors truncate ${
-                                    isSelected ? 'bg-reader-accent text-reader-accent-fg font-bold shadow-xs' : 'hover:bg-neutral-500/10'
-                                  }`}
-                                  title={voice.name}
-                                >
-                                  <span className="truncate">{voice.name}</span>
-                                  {isSelected && <span className="ml-1 shrink-0">✓</span>}
-                                </button>
+                                <Tooltip key={`voice-${voice.voiceURI || voice.name}-${idx}`}>
+                                  <TooltipTrigger asChild>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        onSetVoiceTTS(voice.voiceURI);
+                                        setShowVoiceMenu(false);
+                                      }}
+                                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors truncate ${
+                                        isSelected ? 'bg-reader-accent text-reader-accent-fg font-bold shadow-xs' : 'hover:bg-neutral-500/10'
+                                      }`}
+                                    >
+                                      <span className="truncate">{voice.name}</span>
+                                      {isSelected && <span className="ml-1 shrink-0">✓</span>}
+                                    </button>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top">{voice.name}</TooltipContent>
+                                </Tooltip>
                               );
                             })}
                           </div>
@@ -224,35 +236,43 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
 
                 {/* Center: Audio Playback Cluster (Play / Stop Toggle) */}
                 <div className="flex items-center justify-center gap-1.5 shrink-0">
-                  <Button
-                    variant="default"
-                    size="icon"
-                    onClick={isPlaying ? onStopTTS : onPlayTTS}
-                    className="h-9 w-9 min-w-[36px] font-bold shadow-md"
-                    aria-label={isPlaying ? 'Detener locución' : 'Reproducir locución'}
-                    title={isPlaying ? 'Detener' : 'Escuchar'}
-                  >
-                    {isPlaying ? (
-                      <Square className="h-4 w-4 fill-current" />
-                    ) : (
-                      <Play className="h-4 w-4 fill-current ml-0.5" />
-                    )}
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="default"
+                        size="icon"
+                        onClick={isPlaying ? onStopTTS : onPlayTTS}
+                        className="h-9 w-9 min-w-[36px] font-bold shadow-md"
+                        aria-label={isPlaying ? 'Detener locución' : 'Reproducir locución'}
+                      >
+                        {isPlaying ? (
+                          <Square className="h-4 w-4 fill-current" />
+                        ) : (
+                          <Play className="h-4 w-4 fill-current ml-0.5" />
+                        )}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">{isPlaying ? 'Detener' : 'Escuchar'}</TooltipContent>
+                  </Tooltip>
                 </div>
 
                 {/* Right: Close Narrator Button */}
                 <div className="flex items-center justify-end shrink-0">
                   {onCloseNarrator && (
-                    <Button
-                      variant="ghost"
-                      size="icon-sm"
-                      onClick={onCloseNarrator}
-                      title="Cerrar barra de audio"
-                      aria-label="Cerrar narrador de audio"
-                      className="h-8 w-8 opacity-70 hover:opacity-100"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon-sm"
+                          onClick={onCloseNarrator}
+                          aria-label="Cerrar narrador de audio"
+                          className="h-8 w-8 opacity-70 hover:opacity-100"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">Cerrar barra de audio</TooltipContent>
+                    </Tooltip>
                   )}
                 </div>
               </div>
