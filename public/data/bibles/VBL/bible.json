@@ -4,7 +4,11 @@
     "translationId": "VBL",
     "language": "es",
     "languageName": "Español",
-    "copyright": "Creative Commons Atribución-CompartirIgual 4.0 (CC BY-SA 4.0)",
+    "copyright": "© Versión Biblia Libre",
+    "license": "CC BY-SA 4.0 Internacional",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.es",
+    "year": "2022",
+    "source": "biblialibre.org / alethia-gateway",
     "totalBooks": 66,
     "totalChapters": 1189,
     "totalVerses": 31102

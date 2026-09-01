@@ -4,7 +4,11 @@
     "translationId": "ONBV",
     "language": "es",
     "languageName": "Español",
-    "copyright": "Biblica, Inc. / Creative Commons",
+    "copyright": "© Biblica, Inc.",
+    "license": "CC BY-SA 4.0 (Open License)",
+    "licenseUrl": "https://www.biblica.com/biblica-license/",
+    "year": "2008",
+    "source": "Biblica, Inc. / Open NBV",
     "totalBooks": 66,
     "totalChapters": 1189,
     "totalVerses": 29102

@@ -4,7 +4,11 @@
     "translationId": "BES",
     "language": "es",
     "languageName": "Español",
-    "copyright": "Creative Commons Atribución 4.0 Internacional (CC BY 4.0)",
+    "copyright": "© AudioBiblia.org",
+    "license": "CC BY 4.0 Internacional",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.es",
+    "year": "2018",
+    "source": "AudioBiblia.org / alethia-gateway",
     "totalBooks": 66,
     "totalChapters": 1189,
     "totalVerses": 31102

@@ -5,6 +5,8 @@ import {
   ReaderSettings,
   LineFocusMode,
   TranslationId,
+  AVAILABLE_TRANSLATIONS,
+  type TranslationMeta,
 } from '@/types/bible';
 import {
   BookOpen,
@@ -22,6 +24,9 @@ import {
   AlignJustify,
   Type,
   RotateCcw,
+  Scale,
+  ShieldCheck,
+  ExternalLink,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -65,6 +70,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
 }) => {
   const [showSettingsDrawer, setShowSettingsDrawer] = useState(false);
   const [showShortcutsModal, setShowShortcutsModal] = useState(false);
+  const [showLicensesModal, setShowLicensesModal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const toggleFullscreen = () => {
@@ -542,6 +548,26 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                 <span>Atajos de teclado y ayuda</span>
               </Button>
             </div>
+
+            {/* 8. Licencias de las Biblias */}
+            <div className="pt-3 border-t border-[var(--reader-border)]">
+              <Button
+                variant="outline"
+                size="default"
+                className="w-full justify-center gap-2"
+                onClick={() => {
+                  setShowSettingsDrawer(false);
+                  setShowLicensesModal(true);
+                }}
+                aria-label="Ver licencias de las traducciones bíblicas"
+              >
+                <Scale className="h-4 w-4 text-reader-accent" />
+                <span>Licencias y atribución</span>
+              </Button>
+              <p className="text-[11px] opacity-50 mt-1.5 text-center">
+                Solo versiones de dominio público o Creative Commons.
+              </p>
+            </div>
           </DialogContent>
         </Dialog>
 
@@ -605,6 +631,74 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
 
           <Card className="mt-4 p-3 bg-[var(--reader-hover)] text-xs leading-relaxed">
             <strong>Estándar WCAG 2.2 AAA:</strong> Todas las áreas táctiles tienen un tamaño mínimo de 44x44px, los ratios de contraste superan 12:1 y los colores se adaptan específicamente a la luminancia del modo seleccionado.
+          </Card>
+        </DialogContent>
+      </Dialog>
+
+      {/* Licenses & Attribution Modal */}
+      <Dialog
+        isOpen={showLicensesModal}
+        onClose={() => setShowLicensesModal(false)}
+        position="center"
+        title="Licencias y atribución"
+        className="max-w-2xl"
+      >
+        <DialogHeader onClose={() => setShowLicensesModal(false)}>
+          <div className="flex items-center gap-2">
+            <Scale className="h-5 w-5 text-reader-accent" />
+            <DialogTitle>Licencias de las traducciones</DialogTitle>
+          </div>
+        </DialogHeader>
+
+        <DialogContent className="space-y-4">
+          <Card className="p-3 bg-[var(--reader-hover)] text-xs leading-relaxed flex gap-2">
+            <ShieldCheck className="h-4 w-4 text-reader-accent shrink-0 mt-0.5" />
+            <div>
+              <strong>Alethia Reader</strong> solo distribuye traducciones en <strong>dominio público</strong> o bajo <strong>Creative Commons</strong>. Cada archivo <code className="px-1 py-0.5 rounded bg-neutral-500/10 font-mono text-[11px]">public/data/bibles/*/bible.json</code> incluye su <code className="font-mono text-[11px]">copyright</code>, <code className="font-mono text-[11px]">license</code> y <code className="font-mono text-[11px]">licenseUrl</code>. Respeta la licencia al reutilizar textos.
+            </div>
+          </Card>
+
+          <div className="grid gap-2">
+            {(Object.values(AVAILABLE_TRANSLATIONS) as TranslationMeta[]).map((meta) => (
+              <Card key={meta.id} className="p-3 flex flex-col gap-1.5">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-sm">{meta.shortName}</span>
+                      {meta.hasDeuterocanonical && (
+                        <Badge variant="subtle" className="text-[9px] px-1.5 py-0">
+                          73 libros
+                        </Badge>
+                      )}
+                      <span className="text-xs opacity-60">· {meta.year}</span>
+                    </div>
+                    <div className="text-sm font-medium leading-tight">{meta.name}</div>
+                    <div className="text-xs opacity-70">{meta.description}</div>
+                    <div className="text-[11px] opacity-50">Fuente: {meta.source}</div>
+                  </div>
+                  <Badge variant="outline" className="shrink-0 text-[10px]">
+                    {meta.license}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2 text-xs flex-wrap">
+                  <span className="opacity-60">{meta.copyright}</span>
+                  {meta.licenseUrl && (
+                    <a
+                      href={meta.licenseUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-reader-accent hover:underline font-medium"
+                    >
+                      Ver licencia <ExternalLink className="h-3 w-3" />
+                    </a>
+                  )}
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <Card className="p-3 bg-[var(--reader-hover)] text-xs leading-relaxed">
+            <strong>¿Cómo reutilizar?</strong> Dominio público: libre sin atribución obligatoria (se agradece). CC BY / BY-SA: atribución + comparte igual. CC BY-NC-ND: solo uso personal, sin derivados comerciales. Consulta siempre el <code className="font-mono text-[11px]">licenseUrl</code> de cada versión antes de publicar.
           </Card>
         </DialogContent>
       </Dialog>

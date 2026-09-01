@@ -5,6 +5,10 @@
     "language": "es",
     "languageName": "Español",
     "copyright": "Dominio Público",
+    "license": "Dominio Público (1951)",
+    "licenseUrl": "https://es.wikipedia.org/wiki/Biblia_Platense",
+    "year": "1951",
+    "source": "Fundación Straubinger / alethia-gateway",
     "totalBooks": 73,
     "totalChapters": 1334,
     "totalVerses": 35792

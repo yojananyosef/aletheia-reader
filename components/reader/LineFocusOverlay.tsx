@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { LineFocusMode } from '@/types/bible';
-import { ChevronUp, ChevronDown, Lock, MousePointer } from 'lucide-react';
 
 interface LineFocusOverlayProps {
   mode: LineFocusMode;
@@ -262,65 +261,14 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
         style={{ height: `${topMaskHeight}px` }}
       />
 
-      {/* Focus Aperture Highlight Window */}
+      {/* Focus Aperture — solo resalte, sin controles flotantes (quitan visión) */}
       <div
         className={`absolute left-0 right-0 border-y border-amber-600/40 bg-amber-500/[0.03] shadow-[0_0_20px_rgba(0,0,0,0.2)] ${transitionClass}`}
         style={{
           top: `${topMaskHeight}px`,
           height: `${apertureHeight}px`,
         }}
-      >
-        {/* Floating Line Focus Nav & Lock Buttons */}
-        <div className="pointer-events-auto absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-1 rounded-full bg-neutral-900/85 p-0.5 sm:p-1 text-white shadow-xl backdrop-blur-md border border-white/10">
-          <button
-            type="button"
-            onClick={() => {
-              setIsLocked(true);
-              moveUp();
-            }}
-            aria-label="Mover enfoque de línea hacia arriba"
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-colors hover:bg-white/20 active:scale-95 text-white/90 hover:text-white"
-            title="Subir línea (Flecha Arriba)"
-          >
-            <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5" />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setIsLocked((prev) => !prev)}
-            aria-label={isLocked ? 'Desbloquear y seguir ratón (Espacio)' : 'Fijar línea en posición actual (Espacio)'}
-            className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-all active:scale-95 ${
-              isLocked
-                ? 'bg-amber-500 text-neutral-950 font-bold shadow-xs'
-                : 'text-white/80 hover:bg-white/20 hover:text-white'
-            }`}
-            title={
-              isLocked
-                ? 'Línea fija. Clic o [Espacio] para seguir ratón'
-                : 'Siguiendo ratón. Clic o [Espacio] para fijar'
-            }
-          >
-            {isLocked ? (
-              <Lock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            ) : (
-              <MousePointer className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            )}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setIsLocked(true);
-              moveDown();
-            }}
-            aria-label="Mover enfoque de línea hacia abajo"
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-colors hover:bg-white/20 active:scale-95 text-white/90 hover:text-white"
-            title="Bajar línea (Flecha Abajo)"
-          >
-            <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5" />
-          </button>
-        </div>
-      </div>
+      />
 
       {/* Bottom Mask */}
       <div

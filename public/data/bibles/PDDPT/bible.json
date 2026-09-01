@@ -4,7 +4,11 @@
     "translationId": "PDDPT",
     "language": "es",
     "languageName": "Español",
-    "copyright": "Creative Commons Atribución 4.0 (CC BY 4.0)",
+    "copyright": "© Asociación Bíblica Latinoamericana",
+    "license": "CC BY 4.0 Internacional",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.es",
+    "year": "2010",
+    "source": "PDDPT / alethia-gateway",
     "totalBooks": 66,
     "totalChapters": 1189,
     "totalVerses": 31081

@@ -152,6 +152,10 @@ export interface TranslationMeta {
   languageName?: string;
   description?: string;
   copyright?: string;
+  license?: string;
+  licenseUrl?: string;
+  year?: string;
+  source?: string;
   hasDeuterocanonical?: boolean;
 }
 
@@ -164,6 +168,10 @@ export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
     languageName: 'Español',
     description: 'Traducción clásica histórica, fiel al Texto Recibido.',
     copyright: 'Dominio Público',
+    license: 'Dominio Público (1909)',
+    licenseUrl: 'https://es.wikipedia.org/wiki/Reina-Valera#Revisi%C3%B3n_de_1909',
+    year: '1909',
+    source: 'Sociedad Bíblica Americana',
     hasDeuterocanonical: false,
   },
   BES: {
@@ -173,7 +181,11 @@ export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
     language: 'es',
     languageName: 'Español',
     description: 'Lenguaje contemporáneo accesible de AudioBiblia.org.',
-    copyright: 'CC BY 4.0',
+    copyright: '© AudioBiblia.org',
+    license: 'CC BY 4.0 Internacional',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/deed.es',
+    year: '2018',
+    source: 'AudioBiblia.org / alethia-gateway',
     hasDeuterocanonical: false,
   },
   VBL: {
@@ -183,7 +195,11 @@ export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
     language: 'es',
     languageName: 'Español',
     description: 'Traducción moderna con abundantes notas de estudio.',
-    copyright: 'CC BY-SA 4.0',
+    copyright: '© Versión Biblia Libre',
+    license: 'CC BY-SA 4.0 Internacional',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/deed.es',
+    year: '2022',
+    source: 'biblialibre.org / alethia-gateway',
     hasDeuterocanonical: false,
   },
   PDDPT: {
@@ -193,7 +209,11 @@ export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
     language: 'es',
     languageName: 'Español',
     description: 'Traducción fiel y contextual.',
-    copyright: 'CC BY 4.0',
+    copyright: '© Asociación Bíblica Latinoamericana',
+    license: 'CC BY 4.0 Internacional',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/deed.es',
+    year: '2010',
+    source: 'PDDPT / alethia-gateway',
     hasDeuterocanonical: false,
   },
   ONBV: {
@@ -203,7 +223,11 @@ export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
     language: 'es',
     languageName: 'Español',
     description: 'Paráfrasis moderna de fácil comprensión.',
-    copyright: 'Biblica, Inc. / CC',
+    copyright: '© Biblica, Inc.',
+    license: 'CC BY-SA 4.0 (Open License)',
+    licenseUrl: 'https://www.biblica.com/biblica-license/',
+    year: '2008',
+    source: 'Biblica, Inc. / Open NBV',
     hasDeuterocanonical: false,
   },
   BLL: {
@@ -214,6 +238,10 @@ export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
     languageName: 'Español',
     description: 'Edición latinoamericana de eBible.org.',
     copyright: 'Dominio Público',
+    license: 'Dominio Público / CC0',
+    licenseUrl: 'https://ebible.org/details.php?id=spaBlL',
+    year: '2020',
+    source: 'eBible.org',
     hasDeuterocanonical: false,
   },
   BLM: {
@@ -224,6 +252,10 @@ export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
     languageName: 'Español',
     description: 'Edición español global de eBible.org.',
     copyright: 'Dominio Público',
+    license: 'Dominio Público / CC0',
+    licenseUrl: 'https://ebible.org/details.php?id=spaBLM',
+    year: '2020',
+    source: 'eBible.org',
     hasDeuterocanonical: false,
   },
   SpaPlatense: {
@@ -232,8 +264,12 @@ export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
     shortName: 'PLATENSE',
     language: 'es',
     languageName: 'Español',
-    description: 'Traducción comentada con notas exegéticas.',
+    description: 'Traducción comentada con notas exegéticas de Mons. Straubinger (1951).',
     copyright: 'Dominio Público',
+    license: 'Dominio Público (1951)',
+    licenseUrl: 'https://es.wikipedia.org/wiki/Biblia_Platense',
+    year: '1951',
+    source: 'Fundación Straubinger / alethia-gateway',
     hasDeuterocanonical: true,
   },
   SpaRVG: {
@@ -242,8 +278,12 @@ export const AVAILABLE_TRANSLATIONS: Record<TranslationId, TranslationMeta> = {
     shortName: 'RVG',
     language: 'es',
     languageName: 'Español',
-    description: 'Revisión fiel al Texto Recibido.',
-    copyright: 'CC BY-NC-ND 4.0',
+    description: 'Revisión fiel al Texto Recibido por el Dr. H. Gómez.',
+    copyright: '© Dr. Humberto Gómez Caballero',
+    license: 'CC BY-NC-ND 4.0 Internacional',
+    licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es',
+    year: '2010',
+    source: 'ReinaValeraGomez.com',
     hasDeuterocanonical: false,
   },
 };
