@@ -427,41 +427,50 @@ class BibleTTSService {
     // Fallback único: Piper español rhasspy/piper-voices es_ES-sharvard-medium (solo español)
     const needsLoading = !isPiperEngineReady() || !isPiperVoiceReady();
     if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: true }));
+    if (this.piperAudio) {
+      try { this.piperAudio.pause(); } catch {}
+      this.piperAudio = null;
+    }
+    if (this.piperAbort) {
+      try { this.piperAbort.abort(); } catch {}
+    }
+    // Referencia local: cancel() puede null-ear this.piperAbort mientras generamos
+    const abort = new AbortController();
+    this.piperAbort = abort;
+    const stopLoading = () => {
+      if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+    };
     try {
-      if (this.piperAudio) {
-        try { this.piperAudio.pause(); } catch {}
-        this.piperAudio = null;
-      }
-      if (this.piperAbort) {
-        try { this.piperAbort.abort(); } catch {}
-      }
-      this.piperAbort = new AbortController();
       const audio = await speakWithPiper(cleanText, {
         voice: PIPER_VOICE,
         onStart: () => {
-          if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+          stopLoading();
           options.onStart?.();
         },
         onEnd: () => {
-          if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+          stopLoading();
           options.onEnd?.();
         },
         onError: (e) => {
-          if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+          stopLoading();
           console.warn('Piper onError:', e);
         },
-        signal: this.piperAbort.signal,
+        signal: abort.signal,
       });
       if (audio) {
+        // cancel() llegó durante el generate: no resucitar el audio
+        if (abort.signal.aborted) return;
         this.piperAudio = audio;
-        if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+        stopLoading();
         return;
       }
-      if (this.piperAbort.signal.aborted) return;
-      if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
+      stopLoading();
+      // Cancelación intencional (pausa/stop): silencio, sin error falso
+      if (abort.signal.aborted) return;
     } catch (e) {
+      stopLoading();
+      if (abort.signal.aborted) return;
       console.warn('Piper fallback falló:', e);
-      if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: false }));
     }
     const err: any = new Error('TTS no disponible. Web Speech falló y Piper español no pudo sintetizar. Verifica conexión.');
     err.code = 'all-failed';
