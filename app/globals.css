@@ -305,6 +305,18 @@ input[type="range"]::-webkit-slider-thumb:active {
   transform: scale(1.15);
 }
 
+/* Tooltip (shadcn-style, temado con --reader-*) */
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Deshabilitar animaciones intrusivas si el usuario prefiere movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
   * {

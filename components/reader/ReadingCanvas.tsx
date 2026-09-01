@@ -5,6 +5,7 @@ import { ChapterPayload, Verse, ReaderSettings, BookmarkRef, ReaderTarget } from
 import { Bookmark } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { applyBionicReading, applySyllablePoints } from '@/lib/text-transforms';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface ReadingCanvasProps {
   data: ChapterPayload;
@@ -745,19 +746,27 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                       />
 
                       {!continued && verseFootnotes.map((fn) => (
-                        <button
-                          key={fn.id}
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onSelectVerse(verse);
-                          }}
-                          className="footnote-indicator inline-flex items-center"
-                          aria-label={`Nota al pie del versículo ${verse.number}: ${fn.note}`}
-                          title={`Nota al pie: ${fn.note}`}
-                        >
-                          [{fn.marker || '*'}]
-                        </button>
+                        <Tooltip key={fn.id}>
+                          <TooltipTrigger asChild>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onSelectVerse(verse);
+                              }}
+                              className="footnote-indicator inline-flex items-center"
+                              aria-label={`Nota al pie del versículo ${verse.number}: ${fn.note}`}
+                            >
+                              [{fn.marker || '*'}]
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <span className="block text-[0.7rem] font-bold uppercase tracking-wide text-reader-accent">
+                              Nota al pie · v{verse.number}
+                            </span>
+                            <span className="mt-0.5 block">{fn.note}</span>
+                          </TooltipContent>
+                        </Tooltip>
                       ))}
                       {' '}
                     </span>
