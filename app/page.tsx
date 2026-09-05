@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { BibleBookMeta, ChapterPayload, ThemeMode, ReaderTarget, TranslationId, AVAILABLE_TRANSLATIONS, DEFAULT_TRANSLATION_ID } from '@/types/bible';
 import { getBibleBooks, getChapterData } from '@/lib/bible-service';
+import { getNextChapter, getPrevChapter } from '@/lib/bible-navigation';
 import { ComfortBibleReader } from '@/components/reader/ComfortBibleReader';
 import {
   BookOpen,
@@ -222,6 +223,11 @@ export default function Home() {
     return books.find((b) => b.id === selectedBookId) || books[0];
   }, [books, selectedBookId]);
 
+  // Whether a next chapter exists (drives TTS auto-advance at chapter end)
+  const hasNextChapter = useMemo(() => {
+    return getNextChapter(books, selectedBookId, selectedChapter) !== null;
+  }, [books, selectedBookId, selectedChapter]);
+
   const filteredBooks = useMemo(() => {
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
@@ -233,51 +239,27 @@ export default function Home() {
   }, [books, activeTestamentTab, searchQuery]);
 
   const handleNextChapter = useCallback(() => {
-    if (!currentBookMeta) return;
-
-    if (selectedChapter < currentBookMeta.totalChapters) {
-      setLoading(true);
-      setSelectedChapter((prev) => prev + 1);
-      setReaderTarget(null);
-    } else {
-      const currentIndex = books.findIndex((b) => b.id === selectedBookId);
-      if (currentIndex !== -1 && currentIndex < books.length - 1) {
-        const nextBook = books[currentIndex + 1];
-        setLoading(true);
-        setSelectedBookId(nextBook.id);
-        setSelectedChapter(1);
-        setReaderTarget(null);
-      }
-    }
-  }, [books, currentBookMeta, selectedBookId, selectedChapter]);
+    const next = getNextChapter(books, selectedBookId, selectedChapter);
+    if (!next) return;
+    setLoading(true);
+    setSelectedBookId(next.bookId);
+    setSelectedChapter(next.chapter);
+    setReaderTarget(null);
+  }, [books, selectedBookId, selectedChapter]);
 
   const handlePrevChapter = useCallback(() => {
-    if (selectedChapter > 1) {
-      setLoading(true);
-      setSelectedChapter((prev) => prev - 1);
-      setReaderTarget({
-        kind: 'lastPage',
-        bookId: selectedBookId,
-        chapter: selectedChapter - 1,
-        requestId: ++targetRequestRef.current,
-        versionId: selectedVersionId,
-      });
-    } else {
-      const currentIndex = books.findIndex((b) => b.id === selectedBookId);
-      if (currentIndex > 0) {
-        const prevBook = books[currentIndex - 1];
-        setLoading(true);
-        setSelectedBookId(prevBook.id);
-        setSelectedChapter(prevBook.totalChapters);
-        setReaderTarget({
-          kind: 'lastPage',
-          bookId: prevBook.id,
-          chapter: prevBook.totalChapters,
-          requestId: ++targetRequestRef.current,
-          versionId: selectedVersionId,
-        });
-      }
-    }
+    const prev = getPrevChapter(books, selectedBookId, selectedChapter);
+    if (!prev) return;
+    setLoading(true);
+    setSelectedBookId(prev.bookId);
+    setSelectedChapter(prev.chapter);
+    setReaderTarget({
+      kind: 'lastPage',
+      bookId: prev.bookId,
+      chapter: prev.chapter,
+      requestId: ++targetRequestRef.current,
+      versionId: selectedVersionId,
+    });
   }, [books, selectedBookId, selectedChapter, selectedVersionId]);
 
   const handleBookmarkVerse = useCallback((verseNumber: string | number) => {
@@ -363,6 +345,7 @@ export default function Home() {
           onBookmarkVerse={handleBookmarkVerse}
           onNextChapter={handleNextChapter}
           onPrevChapter={handlePrevChapter}
+          hasNextChapter={hasNextChapter}
           onOpenBookSelector={() => {
             setBrowsingBook(currentBookMeta || books[0]);
             setMobileSelectorStep('books');

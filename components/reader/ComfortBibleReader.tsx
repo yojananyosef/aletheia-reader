@@ -39,6 +39,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   onBookmarkVerse,
   onNextChapter,
   onPrevChapter,
+  hasNextChapter = true,
   onOpenBookSelector,
   onOpenBookmarks,
   bookmarksCount = 0,
@@ -81,6 +82,9 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   const [paginatedPages, setPaginatedPages] = useState<(Verse & { _continuation?: boolean })[][]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const pendingTTSLastVerseRef = useRef<boolean>(false);
+  // Set when TTS reaches the chapter end: the next chapter's data resumes
+  // narration at verse 0 (continuous playback, no per-chapter play press).
+  const pendingTTSFirstVerseRef = useRef<boolean>(false);
 
   // --- Bookmarking & Verse Interaction State ---
   const [bookmarkedVerses, setBookmarkedVerses] = useState<BookmarkRef[]>(() =>
@@ -147,17 +151,24 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
       const playbackId = ++activePlaybackIdRef.current;
 
-      // When finishing the chapter
+      // When finishing the chapter: auto-advance into the next one so
+      // narration continues without pressing play per chapter.
       if (index >= data.verses.length) {
         ttsService.cancel();
-        setTtsState((prev) => ({
-          ...prev,
-          status: 'idle',
-          currentVerseIndex: 0,
-          currentVerseNumber: null,
-        }));
-        if (onNextChapter) {
+        if (hasNextChapter && onNextChapter) {
+          // Stay 'playing' across the gap; the pending effect below resumes
+          // at verse 0 once the next chapter's verses arrive.
+          pendingTTSFirstVerseRef.current = true;
           onNextChapter();
+        } else {
+          pendingTTSFirstVerseRef.current = false;
+          wakeLockService.release();
+          setTtsState((prev) => ({
+            ...prev,
+            status: 'idle',
+            currentVerseIndex: 0,
+            currentVerseNumber: null,
+          }));
         }
         return;
       }
@@ -242,7 +253,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         },
       });
     },
-    [data.verses, data.bookId, data.chapterNumber, data.bookName, data.versionId, handlePageChange, onNextChapter]
+    [data.verses, data.bookId, data.chapterNumber, data.bookName, data.versionId, handlePageChange, onNextChapter, hasNextChapter]
   );
 
   // Load Spanish voices on mount + Kokoro loading feedback
@@ -304,6 +315,16 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     speakVerseAtIndex(data.verses.length - 1);
   }, [data.verses, speakVerseAtIndex]);
 
+  // TTS auto-advance: resume at verse 0 when the next chapter arrives.
+  // Runs after the chapter-reset effect above (declaration order), which
+  // cancels in-flight audio and idles the state first.
+  useEffect(() => {
+    if (!pendingTTSFirstVerseRef.current) return;
+    if (!data.verses || data.verses.length === 0) return;
+    pendingTTSFirstVerseRef.current = false;
+    speakVerseAtIndex(0);
+  }, [data.verses, speakVerseAtIndex]);
+
   // Warm Piper WASM engine when the narrator opens so the first fallback
   // verse doesn't pay the full cold-start latency (onnx + phonemizer).
   useEffect(() => {
@@ -324,6 +345,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
   const handleStopTTS = () => {
     activePlaybackIdRef.current++;
+    pendingTTSFirstVerseRef.current = false;
     ttsService.cancel();
     wakeLockService.release();
     setTtsState((prev) => ({
@@ -335,12 +357,14 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
 
   const handleNextVerseTTS = () => {
     activePlaybackIdRef.current++;
+    pendingTTSFirstVerseRef.current = false;
     ttsService.cancel();
     speakVerseAtIndex(ttsStateRef.current.currentVerseIndex + 1);
   };
 
   const handlePrevVerseTTS = () => {
     activePlaybackIdRef.current++;
+    pendingTTSFirstVerseRef.current = false;
     ttsService.cancel();
     if (ttsStateRef.current.currentVerseIndex <= 0) {
       if (ttsStateRef.current.status === 'idle') {
