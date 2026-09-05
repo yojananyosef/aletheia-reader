@@ -63,7 +63,7 @@ Bookmarks and reading positions SHALL be tagged with `versionId`. Legacy entries
 
 ### Requirement: PWA cache version-aware
 
-Service worker cache SHALL be bumped to `alethia-v3` (evolución de `v2` propuesta) and cache `.json` by full URL including `versionId`, using on-demand `cache.put` (no precache of 60M).
+Service worker cache SHALL be `aletheia-v2` and cache `.json` by full URL including `versionId`, using on-demand `cache.put` (no precache of 60M).
 
 #### Scenario: SW caches per version
 - **WHEN** `RV1909/GEN.json` fetched
