@@ -1,0 +1,2 @@
+- [x] Actualizar specs brand-identity y bible-versions a v2 + banner
+- [x] Verificación: validate + gates
