@@ -36,8 +36,6 @@ import { Card } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { VersionSelector } from './VersionSelector';
 
-import { motion, AnimatePresence } from 'framer-motion';
-
 interface ReaderToolbarProps {
   settings: ReaderSettings;
   onUpdateSettings: (updates: Partial<ReaderSettings>) => void;
@@ -78,15 +76,10 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
 
   return (
     <>
-      <AnimatePresence>
-        {settings.showToolbar && (
-          <motion.header
+      {settings.showToolbar && (
+          <header
             role="banner"
-            initial={{ opacity: 0, height: 0, y: -30 }}
-            animate={{ opacity: 1, height: 'auto', y: 0 }}
-            exit={{ opacity: 0, height: 0, y: -30 }}
-            transition={{ duration: 0.15, ease: 'easeInOut' }}
-            className="sticky top-0 z-20 flex w-full items-center justify-between border-b border-[var(--reader-border)] bg-[var(--reader-bg)] text-[var(--reader-text)] px-3 sm:px-5 py-2 backdrop-blur-md transition-colors duration-200 select-none shadow-2xs shrink-0 overflow-visible"
+            className="animate-toolbar-in sticky top-0 z-20 flex w-full items-center justify-between border-b border-[var(--reader-border)] bg-[var(--reader-bg)] text-[var(--reader-text)] px-3 sm:px-5 py-2 backdrop-blur-md transition-colors duration-200 select-none shadow-2xs shrink-0 overflow-visible"
           >
         {/* Left: Brand & Bible Explorer / Books Selector Button */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -192,9 +185,8 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             <span className="hidden sm:inline">Ajustes</span>
           </Button>
         </div>
-      </motion.header>
+      </header>
     )}
-  </AnimatePresence>
 
       {/* Slide-out Accessibility Settings Drawer */}
       <Dialog

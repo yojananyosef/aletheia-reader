@@ -7,7 +7,7 @@ context: |
   Estructura: app/ (layout, page orquestador, globals.css, manifest), components/reader/ (ComfortBibleReader god-container, ReadingCanvas paginación DOM, ReaderToolbar, ReaderFooter, LineFocusOverlay, PaperGrainOverlay, PwmDimmerOverlay, VerseModal, VersionSelector), lib/ (bible-service adapter gateway dict→array, storage-service claves aletheia_* con fallback alethia_*, tts-service EasySpeech+nativo, piper-service WASM es_ES, text-transforms biónica/sílabas, wake-lock), types/bible.ts (fuente verdad TranslationId 9 versiones), public/data/bibles/{9 versiones}/ + sw.js (CACHE aletheia-v1, limpia alethia-*), scripts/copy-piper-assets.mjs.
   Convenciones: Conventional Commits, WCAG 2.2 objetivo AAA (real hoy: AA cumplido, AAA parcial — ver auditoría 2026-09-04), max-w 60ch, text-left nunca justify, targets táctiles objetivo 44px (real hoy 36-40px en ui/button), focus-visible 3px.
   Dominio: lector bíblico confort neurocognitivo (E-Ink emulation, PWM dimmer GPU 0.3-1.0, Line Focus 1/3/5, tipografías Literata/Atkinson/OpenDyslexic — Bookerly solo fallback sin archivo).
-  Restricciones: sin infinite scroll (paginación discreta), sin blanco #FFF ni negro #000 puros en UI lector (excepciones conocidas: accent-fg #FFF, PwmDimmer #000 — pendientes), no animar dentro del canvas de lectura (hoy framer-motion 13 viola esto — pendiente migrar a CSS).
+  Restricciones: sin infinite scroll (paginación discreta), sin blanco #FFF ni negro #000 puros en UI lector (excepciones conocidas: accent-fg #FFF, PwmDimmer #000 — pendientes), canvas de lectura sin animaciones (paginación instantánea; solo chrome UI con CSS ≤150ms, anulable por prefers-reduced-motion), sin librerías de animación.
 
 rules:
   proposal:

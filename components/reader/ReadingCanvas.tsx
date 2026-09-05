@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef, useMemo, useLayoutEffect, useCallback } from 'react';
 import { ChapterPayload, Verse, ReaderSettings, BookmarkRef, ReaderTarget } from '@/types/bible';
 import { Bookmark } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { applyBionicReading, applySyllablePoints } from '@/lib/text-transforms';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
@@ -639,16 +638,11 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
           )}
         </div>
 
-        {/* Page Content with smooth transition */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`${data.bookId}-${data.chapterNumber}-${currentPage}`}
-            initial={{ opacity: 0.35, x: 6 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0.35, x: -6 }}
-            transition={{ duration: 0.1, ease: 'easeOut' }}
-            className="flex-1"
-          >
+        {/* Page Content — instant turns by design (no motion inside reading container) */}
+        <div
+          key={`${data.bookId}-${data.chapterNumber}-${currentPage}`}
+          className="flex-1"
+        >
             {/* Continuous Biblical Paragraph Flow */}
             <div
               ref={contentRef}
@@ -786,8 +780,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                 );
               })}
             </div>
-          </motion.div>
-        </AnimatePresence>
+          </div>
       </div>
 
       {/* Invisible Left and Right Tap Guides */}

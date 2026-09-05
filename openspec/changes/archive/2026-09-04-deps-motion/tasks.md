@@ -1,0 +1,3 @@
+- [x] Actualizar Next + eslint-config-next a 16.3.3
+- [x] Canvas instantáneo + Toolbar/Footer con CSS + remover framer-motion
+- [x] Verificación: gates + cero hits + checklist dev

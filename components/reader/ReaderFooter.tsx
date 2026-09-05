@@ -9,7 +9,6 @@ import {
   Gauge,
   UserCheck,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { TTSStatus, TTSVoiceOption } from '@/types/bible';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -90,14 +89,9 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
       </div>
 
       {/* Extended Controls (Hidden in Zero-Distraction Immersive Mode / Middle Click) */}
-      <AnimatePresence>
-        {showControls && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.12, ease: 'easeInOut' }}
-            className="flex flex-col gap-1.5 pt-0.5 relative overflow-visible"
+      {showControls && (
+          <div
+            className="animate-controls-in flex flex-col gap-1.5 pt-0.5 relative overflow-visible"
           >
             {/* Click Outside Overlay for Popovers */}
             {(showSpeedMenu || showVoiceMenu) && (
@@ -291,9 +285,8 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                 </div>
               </div>
             )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+      )}
     </footer>
   );
 };
