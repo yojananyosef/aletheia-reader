@@ -8,13 +8,7 @@
  * Peso voz ~60MB onnx, phonemizer ~18MB data, cacheado
  */
 
-import type {
-  OnnxWebRuntime,
-  OnnxWebWorkerRuntime,
-  PhonemizeWebWorkerRuntime,
-  PiperEngineLike,
-  PiperGenerateResult,
-} from 'piper-tts-web';
+import type { PiperEngineLike, PiperGenerateResult } from 'piper-tts-web';
 
 let piperEngine: PiperEngineLike | null = null;
 let loadingPromise: Promise<PiperEngineLike> | null = null;
@@ -35,8 +29,6 @@ function setLoading(v: boolean) {
 export function isPiperLoading(): boolean {
   return isLoading;
 }
-
-export function onPiperProgress(_cb: (pct: number) => void) {}
 
 /** Error name for unknown throwables (DOMException from play() is not an Error instance) */
 function errorName(e: unknown): string {

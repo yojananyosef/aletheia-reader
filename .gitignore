@@ -44,6 +44,7 @@ next-env.d.ts
 
 # opencode / openspec tool config
 .opencode/
+**/.openspec-archive.lock
 # piper tts assets - copied at build via scripts/copy-piper-assets.mjs, no need to commit
 /public/onnx/
 /public/piper/

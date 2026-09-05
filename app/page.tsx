@@ -63,7 +63,9 @@ export default function Home() {
     const storedBookmarks = getStoredBookmarks();
     const storedVersion = getStoredVersionId();
 
-    if (storedSettings.theme) setTheme(storedSettings.theme); // eslint-disable-line react-hooks/set-state-in-effect -- TODO(reader-hygiene): mount hydration, move to lazy useState init
+    // Intentional post-SSR hydration: lazy useState init would mismatch server HTML (localStorage only exists client-side)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (storedSettings.theme) setTheme(storedSettings.theme);
     if (storedBookmarks.length > 0) setBookmarksList(storedBookmarks);
     setSelectedVersionId(storedVersion);
 
@@ -180,7 +182,9 @@ export default function Home() {
     }
 
     if (selectedBookId) {
-      setLoading(true); // eslint-disable-line react-hooks/set-state-in-effect -- TODO(reader-hygiene): fetch-on-mount, move to event/loader pattern
+      // Standard fetch-pending flag for dep-driven chapter loads
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLoading(true);
       fetchChapter();
     }
 

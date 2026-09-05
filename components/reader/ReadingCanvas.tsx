@@ -356,7 +356,9 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
       return { chapterKey: currentChapterKey, pages: [data.verses || []] };
     }
 
-    const { availableHeight, availableWidth } = getAvailableDimensions(); // eslint-disable-line react-hooks/refs -- TODO(reader-hygiene): hoist measurement helpers above component
+    // Intentional sync DOM measurement during render (zero-flash pagination); moving to an effect would flash unpaginated text
+    // eslint-disable-next-line react-hooks/refs
+    const { availableHeight, availableWidth } = getAvailableDimensions();
 
     const result = buildPagination(
       data.verses,
@@ -370,6 +372,8 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
       chapterKey: currentChapterKey,
       pages: result.pages,
     };
+    // Granular typography deps on purpose: whole-settings identity would repaginate on brightness/theme changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     data.bookId,
     data.chapterNumber,

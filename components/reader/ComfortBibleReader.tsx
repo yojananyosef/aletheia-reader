@@ -6,7 +6,6 @@ import {
   ReaderSettings,
   Verse,
   ThemeMode,
-  TTSStatus,
   TTSVoiceOption,
   TTSState,
   BookmarkRef,
@@ -51,24 +50,14 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     return { ...stored, theme: theme || stored.theme };
   });
 
-  // Load stored settings and TTS preferences on mount
+  // Notify parent of stored theme on mount (settings/TTS states already lazy-init from storage above)
   useEffect(() => {
     const stored = getStoredSettings();
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO(reader-hygiene): mount hydration, move to lazy useState init
-    setSettings((prev) => ({ ...prev, ...stored }));
     if (stored.theme && onThemeChange && stored.theme !== theme) {
       onThemeChange(stored.theme);
     }
-
-    const storedTTS = getStoredTTSSettings();
-    if (storedTTS) {
-      // eslint-disable-next-line react-hooks/immutability -- TODO(reader-hygiene): setter declared below, reorder declarations
-      setTtsState((prev) => ({
-        ...prev,
-        rate: storedTTS.rate || 1.0,
-        selectedVoiceURI: storedTTS.selectedVoiceURI || prev.selectedVoiceURI,
-      }));
-    }
+    // Mount-only parent sync by design; storage must not re-read on prop changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Effective active theme (prop takes precedence if provided)
@@ -230,7 +219,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         },
         onEnd: () => {
           if (activePlaybackIdRef.current !== playbackId) return;
-          // eslint-disable-next-line react-hooks/immutability -- TODO(reader-hygiene): callback ordering, reorder declarations
+          // eslint-disable-next-line react-hooks/immutability -- intentional recursion: self-call executes after init, chains verses
           speakVerseAtIndex(index + 1, { rate: effectiveRate, voiceURI: effectiveVoiceURI });
         },
         onError: (err) => {
@@ -242,7 +231,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         },
       });
     },
-    [data.verses, data.bookId, data.chapterNumber, data.bookName, handlePageChange, onNextChapter]
+    [data.verses, data.bookId, data.chapterNumber, data.bookName, data.versionId, handlePageChange, onNextChapter]
   );
 
   // Load Spanish voices on mount + Kokoro loading feedback
@@ -289,6 +278,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     }
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- nonce must observe latest playback; copying would miss in-flight races
       activePlaybackIdRef.current++;
       ttsService.cancel();
       wakeLockService.release();
@@ -485,6 +475,15 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     [settings, currentTheme]
   );
 
+  const totalChapterWords = useMemo(
+    () =>
+      (data.verses ?? []).reduce(
+        (acc, v) => acc + (v.text ? v.text.split(/\s+/).filter(Boolean).length : 0),
+        0
+      ),
+    [data.verses]
+  );
+
   const themeClass =
     currentTheme === 'pergamino'
       ? 'theme-pergamino'
@@ -508,10 +507,6 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       <ReaderToolbar
         settings={mergedSettings}
         onUpdateSettings={updateSettings}
-        bookTitle={data.bookName}
-        chapterNumber={data.chapterNumber}
-        onNextChapter={onNextChapter}
-        onPrevChapter={onPrevChapter}
         onOpenBookSelector={onOpenBookSelector}
         onOpenBookmarks={onOpenBookmarks}
         bookmarksCount={bookmarksCount}
@@ -568,22 +563,9 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
       <ReaderFooter
         currentPage={currentPage}
         totalPages={totalPages}
-        onPrevPage={() => {
-          if (currentPage > 1) {
-            handlePageChange(currentPage - 1, totalPages);
-          } else if (onPrevChapter) {
-            onPrevChapter();
-          }
-        }}
-        onNextPage={() => {
-          if (currentPage < totalPages) {
-            handlePageChange(currentPage + 1, totalPages);
-          } else if (onNextChapter) {
-            onNextChapter();
-          }
-        }}
         bookName={data.bookName}
         chapterNumber={data.chapterNumber}
+        totalWords={totalChapterWords}
         showControls={settings.showToolbar}
         isNarratorOpen={isNarratorOpen}
         ttsStatus={kokoroLoading ? 'playing' : ttsState.status}

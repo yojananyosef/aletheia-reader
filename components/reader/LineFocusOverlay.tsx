@@ -28,8 +28,10 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   // State to track whether line is fixed (locked) or actively following the mouse
   const [isLocked, setIsLocked] = useState<boolean>(false);
 
-  // Track active touch drag — disables CSS transitions for instant movement
+  // Track active touch drag — disables CSS transitions for instant movement.
+  // Ref drives handler logic; state mirror drives render (refs can't be read during render).
   const isDragging = useRef<boolean>(false);
+  const [isDraggingState, setIsDraggingState] = useState<boolean>(false);
 
   // Determine aperture height in pixels based on mode (1, 3, or 5 lines)
   const lineMultiplier = mode === '1-line' ? 1 : mode === '3-line' ? 3 : mode === '5-line' ? 5 : 0;
@@ -116,6 +118,7 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
     touchStartTime.current = Date.now();
     touchActive.current = true;
     isDragging.current = false;
+    setIsDraggingState(false);
     // Position immediately on touch, but don't lock yet — wait for movement threshold
     setWindowCenterY(clampY(t.clientY));
   };
@@ -134,6 +137,7 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
     // Only activate vertical drag after 8px of vertical movement (avoids conflict with taps/horizontal swipe)
     if (!isDragging.current && deltaY > 8 && deltaY > deltaX * 1.5) {
       isDragging.current = true;
+      setIsDraggingState(true);
       setIsLocked(true);
     }
 
@@ -174,6 +178,7 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
     // If we were dragging, just end — don't forward anything
     if (isDragging.current) {
       isDragging.current = false;
+      setIsDraggingState(false);
       return;
     }
 
@@ -239,8 +244,7 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   const bottomMaskTop = windowCenterY + apertureHeight / 2;
 
   // No transitions during active drag — instant position update
-  // eslint-disable-next-line react-hooks/refs -- TODO(reader-hygiene): ref read in render, move to state/event
-  const transitionClass = isDragging.current
+  const transitionClass = isDraggingState
     ? 'transition-none'
     : isLocked
     ? 'transition-all duration-150 ease-out'

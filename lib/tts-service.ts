@@ -361,7 +361,7 @@ class BibleTTSService {
       if (!hasStarted && e.error === 'synthesis-failed' && cleanText.length > 0) {
         this.currentUtterance = null;
         this.stopKeepalive();
-        this.tryPiperFallback(cleanText, options, hasStarted, false);
+        this.tryPiperFallback(cleanText, options);
         hasEnded = true;
         return;
       }
@@ -381,12 +381,12 @@ class BibleTTSService {
         const hasSpanish = pool.some((v) => v.lang.toLowerCase().startsWith('es'));
         if (!hasVoices) {
           console.warn('TTS Web Speech sin voces, probando Piper español...');
-          this.tryPiperFallback(cleanText, options, hasStarted, false);
+          this.tryPiperFallback(cleanText, options);
           hasEnded = true;
           return;
         } else if (!hasSpanish) {
           console.warn(`TTS: synthesis failed (${e.error}) sin voz es-ES, usando Piper español.`);
-          this.tryPiperFallback(cleanText, options, hasStarted, false);
+          this.tryPiperFallback(cleanText, options);
           hasEnded = true;
           return;
         }
@@ -397,7 +397,7 @@ class BibleTTSService {
           return;
         }
         if (e.error === 'synthesis-failed' || e.error === 'synthesis-unavailable') {
-          this.tryPiperFallback(cleanText, options, hasStarted, false);
+          this.tryPiperFallback(cleanText, options);
           hasEnded = true;
           return;
         }
@@ -448,15 +448,15 @@ class BibleTTSService {
           this.currentUtterance = null;
           this.stopKeepalive();
           console.warn('TTS Web Speech timeout 3s, probando Piper español...');
-          this.tryPiperFallback(cleanText, options, hasStarted, false);
+          this.tryPiperFallback(cleanText, options);
         }
       }, 3000);
-    } catch (err) {
-      this.tryPiperFallback(cleanText, options, hasStarted, hasEnded);
+    } catch {
+      this.tryPiperFallback(cleanText, options);
     }
   }
 
-  private async tryPiperFallback(cleanText: string, options: SpeakVerseOptions, hasStarted: boolean, hasEnded: boolean) {
+  private async tryPiperFallback(cleanText: string, options: SpeakVerseOptions) {
     // Fallback único: Piper español rhasspy/piper-voices es_ES-sharvard-medium (solo español)
     const needsLoading = !isPiperEngineReady() || !isPiperVoiceReady();
     if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: true }));

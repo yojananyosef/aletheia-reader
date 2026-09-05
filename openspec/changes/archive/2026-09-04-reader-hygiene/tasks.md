@@ -1,0 +1,7 @@
+- [x] Borrar `AudioNarratorBar.tsx` muerto
+- [x] `ComfortBibleReader`: hidratación redundante fuera, deps, imports, props muertas, totalWords real
+- [x] `page.tsx` + `ReadingCanvas`: disables razonados documentados
+- [x] `LineFocusOverlay`: dragging a estado
+- [x] `Footer`/`Toolbar`: props e imports muertos fuera
+- [x] `tts`/`piper`: params, imports y stub sin uso fuera
+- [x] Verificación: lint 0/0 + typecheck + test + build + checklist manual

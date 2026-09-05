@@ -41,10 +41,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface ReaderToolbarProps {
   settings: ReaderSettings;
   onUpdateSettings: (updates: Partial<ReaderSettings>) => void;
-  bookTitle: string;
-  chapterNumber: number;
-  onNextChapter?: () => void;
-  onPrevChapter?: () => void;
   onOpenBookSelector?: () => void;
   onOpenBookmarks?: () => void;
   bookmarksCount?: number;
@@ -57,10 +53,6 @@ interface ReaderToolbarProps {
 export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
   settings,
   onUpdateSettings,
-  bookTitle,
-  chapterNumber,
-  onNextChapter,
-  onPrevChapter,
   onOpenBookSelector,
   onOpenBookmarks,
   bookmarksCount = 0,

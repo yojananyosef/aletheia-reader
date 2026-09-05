@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react';
 import {
-  ChevronLeft,
-  ChevronRight,
   Play,
   Square,
   Volume2,
@@ -20,8 +18,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 interface ReaderFooterProps {
   currentPage: number;
   totalPages: number;
-  onPrevPage: () => void;
-  onNextPage: () => void;
   bookName: string;
   chapterNumber: number;
   totalWords?: number;
@@ -47,8 +43,6 @@ const SPEED_OPTIONS = [0.75, 1.0, 1.25, 1.5, 2.0];
 export const ReaderFooter: React.FC<ReaderFooterProps> = ({
   currentPage,
   totalPages,
-  onPrevPage,
-  onNextPage,
   bookName,
   chapterNumber,
   totalWords = 500,
