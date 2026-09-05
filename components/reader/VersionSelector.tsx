@@ -33,21 +33,43 @@ export const VersionSelector: React.FC<VersionSelectorProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   useEffect(() => {
     const onPointerDown = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
     document.addEventListener('mousedown', onPointerDown);
-    document.addEventListener('keydown', onKeyDown);
     return () => {
       document.removeEventListener('mousedown', onPointerDown);
-      document.removeEventListener('keydown', onKeyDown);
     };
   }, []);
+
+  const closeAndRefocus = () => {
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  // Listbox keyboard nav: arrows move, Home/End jump, Enter/Space select (native), Escape closes.
+  const onListKeyDown = (e: React.KeyboardEvent) => {
+    const idx = optionRefs.current.findIndex((el) => el === document.activeElement);
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeAndRefocus();
+      return;
+    }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Home' || e.key === 'End') {
+      e.preventDefault();
+      const last = ORDER.length - 1;
+      let next: number;
+      if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = last;
+      else if (idx === -1) next = e.key === 'ArrowDown' ? 0 : last;
+      else next = e.key === 'ArrowDown' ? (idx + 1) % ORDER.length : (idx - 1 + ORDER.length) % ORDER.length;
+      optionRefs.current[next]?.focus();
+    }
+  };
 
   const selected = AVAILABLE_TRANSLATIONS[selectedVersionId];
 
@@ -71,7 +93,19 @@ export const VersionSelector: React.FC<VersionSelectorProps> = ({
         <div className="relative">
           <button
             type="button"
+            ref={triggerRef}
             onClick={() => setOpen((v) => !v)}
+            onKeyDown={(e) => {
+              if ((e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') && !open) {
+                e.preventDefault();
+                setOpen(true);
+                // Focus selected option once open
+                requestAnimationFrame(() => {
+                  const idx = ORDER.indexOf(selectedVersionId);
+                  optionRefs.current[idx]?.focus();
+                });
+              }
+            }}
             aria-expanded={open}
             aria-haspopup="listbox"
             aria-label={`Traducción actual: ${selected.shortName}. Cambiar versión`}
@@ -94,6 +128,7 @@ export const VersionSelector: React.FC<VersionSelectorProps> = ({
           {open && (
             <div
               role="listbox"
+              onKeyDown={onListKeyDown}
               className="absolute left-0 right-0 top-full mt-2 max-h-[45vh] overflow-y-auto custom-scrollbar rounded-2xl border shadow-2xl z-[60] p-1.5 space-y-1"
               style={{
                 backgroundColor: 'var(--reader-bg)',
@@ -104,7 +139,7 @@ export const VersionSelector: React.FC<VersionSelectorProps> = ({
               <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-widest opacity-50">
                 9 traducciones · Español
               </div>
-              {ORDER.map((id) => {
+              {ORDER.map((id, i) => {
                 const meta = AVAILABLE_TRANSLATIONS[id];
                 const active = id === selectedVersionId;
                 return (
@@ -113,6 +148,9 @@ export const VersionSelector: React.FC<VersionSelectorProps> = ({
                     type="button"
                     role="option"
                     aria-selected={active}
+                    ref={(el) => {
+                      optionRefs.current[i] = el;
+                    }}
                     onClick={() => {
                       onSelectVersion(id);
                       setOpen(false);
@@ -155,7 +193,18 @@ export const VersionSelector: React.FC<VersionSelectorProps> = ({
       <Button
         variant="outline"
         size="sm"
+        ref={triggerRef}
         onClick={() => setOpen((v) => !v)}
+        onKeyDown={(e) => {
+          if ((e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') && !open) {
+            e.preventDefault();
+            setOpen(true);
+            requestAnimationFrame(() => {
+              const idx = ORDER.indexOf(selectedVersionId);
+              optionRefs.current[idx]?.focus();
+            });
+          }
+        }}
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-label={`Traducción actual: ${selected.shortName}. Cambiar versión`}
@@ -169,6 +218,7 @@ export const VersionSelector: React.FC<VersionSelectorProps> = ({
       {open && (
         <div
           role="listbox"
+          onKeyDown={onListKeyDown}
           className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-72 sm:w-80 max-h-[70vh] overflow-y-auto custom-scrollbar rounded-2xl border shadow-2xl z-[60] p-2 space-y-1"
           style={{
             backgroundColor: 'var(--reader-bg)',
@@ -179,7 +229,7 @@ export const VersionSelector: React.FC<VersionSelectorProps> = ({
           <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-widest opacity-50">
             9 traducciones · Español
           </div>
-          {ORDER.map((id) => {
+          {ORDER.map((id, i) => {
             const meta = AVAILABLE_TRANSLATIONS[id];
             const active = id === selectedVersionId;
             return (
@@ -188,6 +238,9 @@ export const VersionSelector: React.FC<VersionSelectorProps> = ({
                 type="button"
                 role="option"
                 aria-selected={active}
+                ref={(el) => {
+                  optionRefs.current[i] = el;
+                }}
                 onClick={() => {
                   onSelectVersion(id);
                   setOpen(false);

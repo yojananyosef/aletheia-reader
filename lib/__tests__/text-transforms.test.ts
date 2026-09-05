@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { applyBionicReading, applySyllablePoints } from '../text-transforms';
+import { applyBionicReading, applySyllablePoints, applyReadingAids } from '../text-transforms';
 
 describe('applyBionicReading', () => {
   it('wraps ~40% of each word in strong tags', () => {
@@ -116,5 +116,45 @@ describe('applySyllablePoints', () => {
     // "oído" → o·í·do (hiatus)
     const result = applySyllablePoints('oído');
     expect(result).toBe('o·í·do');
+  });
+});
+
+describe('applyReadingAids (bionic + syllables combo)', () => {
+  it('delegates to single-mode functions when only one mode is on', () => {
+    expect(applyReadingAids('Hola mundo', { bionic: true })).toBe(applyBionicReading('Hola mundo'));
+    expect(applyReadingAids('gracias casa', { syllables: true })).toBe(applySyllablePoints('gracias casa'));
+    expect(applyReadingAids('Hola', {})).toBe('Hola');
+  });
+
+  it('keeps HTML well-formed: no mid-dot inside <strong>', () => {
+    const result = applyReadingAids('gracias casa universo', { bionic: true, syllables: true });
+    const strongContents = [...result.matchAll(/<strong>(.*?)<\/strong>/g)].map((m) => m[1]);
+    expect(strongContents.length).toBe(3);
+    for (const inner of strongContents) {
+      expect(inner).not.toContain('·');
+      expect(inner).not.toContain('<');
+      expect(inner).not.toContain('>');
+    }
+    // Tags stay balanced, no tag text got syllabified (no stray < > inside output text)
+    expect((result.match(/<strong>/g) || []).length).toBe((result.match(/<\/strong>/g) || []).length);
+    expect(result.replace(/<\/?strong>/g, '')).not.toContain('<');
+    expect(result.replace(/<\/?strong>/g, '')).not.toContain('>');
+  });
+
+  it('produces expected combo output', () => {
+    expect(applyReadingAids('gracias', { bionic: true, syllables: true })).toBe(
+      '<strong>gra</strong>·cias'
+    );
+    expect(applyReadingAids('casa', { bionic: true, syllables: true })).toBe(
+      '<strong>ca</strong>·sa'
+    );
+  });
+
+  it('handles punctuation and short words in combo mode', () => {
+    const result = applyReadingAids('¡Hola, el sol!', { bionic: true, syllables: true });
+    expect(result).toContain('¡<strong>Ho</strong>·la,');
+    expect(result).toContain('<strong>el</strong>');
+    expect(result).toContain('<strong>s</strong>ol!');
+    expect((result.match(/<strong>/g) || []).length).toBe((result.match(/<\/strong>/g) || []).length);
   });
 });

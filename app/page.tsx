@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { BibleBookMeta, ChapterPayload, ThemeMode, ReaderTarget, TranslationId, AVAILABLE_TRANSLATIONS, DEFAULT_TRANSLATION_ID } from '@/types/bible';
 import { getBibleBooks, getChapterData } from '@/lib/bible-service';
 import { ComfortBibleReader } from '@/components/reader/ComfortBibleReader';
@@ -56,6 +56,7 @@ export default function Home() {
 
   // Load Bible books catalog, stored position, stored theme and bookmarks on mount (version-aware)
   useEffect(() => {
+    const ctrl = new AbortController();
     let isMounted = true;
 
     const storedPos = getStoredReadingPosition();
@@ -72,7 +73,7 @@ export default function Home() {
     // Use stored position version if it differs from selected (migration)
     const initialVersion = storedPos?.versionId || storedVersion;
 
-    getBibleBooks(initialVersion)
+    getBibleBooks(initialVersion, { signal: ctrl.signal })
       .then((loadedBooks) => {
         if (!isMounted) return;
         setBooks(loadedBooks);
@@ -105,19 +106,30 @@ export default function Home() {
         }
       })
       .catch((err) => {
+        if (ctrl.signal.aborted) return;
         console.error('Error cargando catálogo bíblico:', err);
       });
 
     return () => {
       isMounted = false;
+      ctrl.abort();
     };
   }, []);
 
+  // Skip the version effect's mount run: the mount effect above already loads
+  // the initial version. Without this both fire on mount (double fetch).
+  const skipVersionEffectFirstRun = useRef(true);
+
   // Reload books when version changes (on-demand cache)
   useEffect(() => {
+    if (skipVersionEffectFirstRun.current) {
+      skipVersionEffectFirstRun.current = false;
+      return;
+    }
+    const ctrl = new AbortController();
     let isMounted = true;
     // Skip initial mount's double fetch if already loaded for same version
-    getBibleBooks(selectedVersionId)
+    getBibleBooks(selectedVersionId, { signal: ctrl.signal })
       .then((loadedBooks) => {
         if (!isMounted) return;
         setBooks(loadedBooks);
@@ -143,8 +155,11 @@ export default function Home() {
         const current = loadedBooks.find((b) => b.id === selectedBookId) || loadedBooks[0];
         setBrowsingBook(current);
       })
-      .catch((err) => console.error('Error cargando catálogo versión', selectedVersionId, err));
-    return () => { isMounted = false; };
+      .catch((err) => {
+        if (ctrl.signal.aborted) return;
+        console.error('Error cargando catálogo versión', selectedVersionId, err);
+      });
+    return () => { isMounted = false; ctrl.abort(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVersionId]);
 
@@ -162,11 +177,12 @@ export default function Home() {
 
   // Load chapter data when book or chapter or version changes
   useEffect(() => {
+    const ctrl = new AbortController();
     let isMounted = true;
 
     async function fetchChapter() {
       try {
-        const data = await getChapterData(selectedVersionId, selectedBookId, selectedChapter);
+        const data = await getChapterData(selectedVersionId, selectedBookId, selectedChapter, { signal: ctrl.signal });
         if (isMounted && data) {
           setChapterPayload(data);
           setLoading(false);
@@ -174,6 +190,7 @@ export default function Home() {
           setLoading(false);
         }
       } catch (err) {
+        if (ctrl.signal.aborted) return;
         if (isMounted) {
           console.error('Error cargando capítulo:', err);
           setLoading(false);
@@ -190,15 +207,16 @@ export default function Home() {
 
     return () => {
       isMounted = false;
+      ctrl.abort();
     };
   }, [selectedBookId, selectedChapter, selectedVersionId]);
 
-  const handleVersionChange = (newVersionId: TranslationId) => {
+  const handleVersionChange = useCallback((newVersionId: TranslationId) => {
     saveStoredVersionId(newVersionId);
     setSelectedVersionId(newVersionId);
     setLoading(true);
     setReaderTarget(null);
-  };
+  }, []);
 
   const currentBookMeta = useMemo(() => {
     return books.find((b) => b.id === selectedBookId) || books[0];
@@ -214,7 +232,7 @@ export default function Home() {
     return books.filter((b) => b.testament === activeTestamentTab);
   }, [books, activeTestamentTab, searchQuery]);
 
-  const handleNextChapter = () => {
+  const handleNextChapter = useCallback(() => {
     if (!currentBookMeta) return;
 
     if (selectedChapter < currentBookMeta.totalChapters) {
@@ -231,9 +249,9 @@ export default function Home() {
         setReaderTarget(null);
       }
     }
-  };
+  }, [books, currentBookMeta, selectedBookId, selectedChapter]);
 
-  const handlePrevChapter = () => {
+  const handlePrevChapter = useCallback(() => {
     if (selectedChapter > 1) {
       setLoading(true);
       setSelectedChapter((prev) => prev - 1);
@@ -260,9 +278,9 @@ export default function Home() {
         });
       }
     }
-  };
+  }, [books, selectedBookId, selectedChapter, selectedVersionId]);
 
-  const handleBookmarkVerse = (verseNumber: string | number) => {
+  const handleBookmarkVerse = useCallback((verseNumber: string | number) => {
     if (!chapterPayload) return;
     const verseObj = chapterPayload.verses.find((v) => String(v.number) === String(verseNumber));
     const verseText = verseObj?.text;
@@ -304,12 +322,12 @@ export default function Home() {
       saveStoredBookmarks(next);
       return next;
     });
-  };
+  }, [chapterPayload, selectedVersionId]);
 
-  const handleThemeChange = (newTheme: ThemeMode) => {
+  const handleThemeChange = useCallback((newTheme: ThemeMode) => {
     setTheme(newTheme);
     saveStoredSettings({ theme: newTheme });
-  };
+  }, []);
 
   const themeClass =
     theme === 'pergamino'

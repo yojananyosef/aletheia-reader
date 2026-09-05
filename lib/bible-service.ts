@@ -63,6 +63,80 @@ interface GatewayBookJson {
 const bookCache = new Map<string, RawBookData>();
 const catalogCache = new Map<string, BibleCatalog>();
 
+// Bounded LRU: 9 catalogs max (one per version), 30 books max. Without this
+// the in-memory cache grows with every version×book visited in a session.
+const CATALOG_CACHE_MAX = 9;
+const BOOK_CACHE_MAX = 30;
+
+function lruGet<K, V>(map: Map<K, V>, key: K): V | undefined {
+  const value = map.get(key);
+  if (value !== undefined) {
+    // Refresh recency
+    map.delete(key);
+    map.set(key, value);
+  }
+  return value;
+}
+
+function lruSet<K, V>(map: Map<K, V>, key: K, value: V, max: number): void {
+  if (map.has(key)) map.delete(key);
+  map.set(key, value);
+  while (map.size > max) {
+    const oldest = map.keys().next();
+    if (oldest.done) break;
+    map.delete(oldest.value);
+  }
+}
+
+/** Options accepted by fetch-backed loaders (race-safe chapter/version switches). */
+export interface LoadOptions {
+  signal?: AbortSignal;
+}
+
+function isAbortError(err: unknown): boolean {
+  return (
+    (typeof DOMException !== 'undefined' && err instanceof DOMException && err.name === 'AbortError') ||
+    (typeof err === 'object' && err !== null && 'name' in err && (err as { name: unknown }).name === 'AbortError')
+  );
+}
+
+// --- Runtime JSON guards (gateway data is fetched, never trusted) ---
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isBibleCatalog(data: unknown): data is BibleCatalog {
+  if (!isRecord(data)) return false;
+  const meta = data.meta;
+  const books = data.books;
+  return isRecord(meta) && Array.isArray(books) && typeof meta.translationId === 'string';
+}
+
+function isGatewayVerse(value: unknown): value is GatewayVerse {
+  if (!isRecord(value)) return false;
+  return typeof value.number === 'number' && typeof value.text === 'string';
+}
+
+function isGatewayBook(data: unknown): data is GatewayBookJson {
+  if (!isRecord(data)) return false;
+  const chapters = data.chapters;
+  if (typeof data.bookCode !== 'string' && typeof data.versionId !== 'string') return false;
+  if (Array.isArray(chapters)) return chapters.every((c) => isRecord(c) && Array.isArray((c as Record<string, unknown>).verses));
+  if (isRecord(chapters)) {
+    return Object.values(chapters).every((c) => isRecord(c) && Array.isArray((c as Record<string, unknown>).verses));
+  }
+  return false;
+}
+
+function isRawBookData(data: unknown): data is RawBookData {
+  if (!isRecord(data)) return false;
+  if (typeof data.id !== 'string' || !Array.isArray(data.chapters)) return false;
+  return (data.chapters as unknown[]).every(
+    (c) => isRecord(c) && typeof (c as Record<string, unknown>).chapter !== 'undefined' && Array.isArray((c as Record<string, unknown>).verses)
+  );
+}
+
 function normalizeTranslationId(id?: string | null): TranslationId {
   if (!id) return DEFAULT_TRANSLATION_ID;
   const upper = id.toUpperCase();
@@ -110,31 +184,37 @@ function adaptGatewayBook(data: GatewayBookJson, fallbackId: string): RawBookDat
   }
 
   const rawChapters: RawChapter[] = chaptersArray.map((ch) => {
+    const chapterNumber = Number(ch.chapter);
+    const versesArray = Array.isArray(ch.verses) ? ch.verses : [];
     const sections: SectionHeading[] = [];
-    const verses: RawVerse[] = ch.verses.map((v) => {
+    const verses: RawVerse[] = [];
+    for (const v of versesArray) {
+      if (!isGatewayVerse(v)) continue;
       // headings → sections
       if (v.headings && v.headings.length > 0) {
         for (const h of v.headings) {
-          sections.push({ title: h, beforeVerse: String(v.verseDisplay || v.number) });
+          if (typeof h === 'string') {
+            sections.push({ title: h, beforeVerse: String(v.verseDisplay || v.number) });
+          }
         }
       }
       // Preserve verseDisplay (e.g. "11-12") as number string
       const num = v.verseDisplay ? String(v.verseDisplay) : String(v.number);
-      return { number: num, text: v.text };
-    });
+      verses.push({ number: num, text: v.text });
+    }
 
     // footnotes from gateway are per-verse; collect if any
     const footnotes: RawFootnote[] = [];
-    for (const v of ch.verses) {
-      if (v.footnotes) {
-        for (const fn of v.footnotes) {
-          footnotes.push({ marker: fn.caller, text: fn.text, reference: `${id} ${ch.chapter}:${v.number}` });
-        }
+    for (const v of versesArray) {
+      if (!isGatewayVerse(v) || !v.footnotes) continue;
+      for (const fn of v.footnotes) {
+        if (typeof fn?.text !== 'string') continue;
+        footnotes.push({ marker: fn.caller, text: fn.text, reference: `${id} ${chapterNumber}:${v.number}` });
       }
     }
 
     return {
-      chapter: ch.chapter,
+      chapter: chapterNumber,
       verses,
       sections: sections.length > 0 ? sections : undefined,
       footnotes: footnotes.length > 0 ? footnotes : undefined,
@@ -168,9 +248,10 @@ function adaptGatewayBook(data: GatewayBookJson, fallbackId: string): RawBookDat
 /**
  * Obtiene el catálogo maestro de la Biblia para una versión.
  */
-export async function getBibleCatalog(versionId?: string | null): Promise<BibleCatalog> {
+export async function getBibleCatalog(versionId?: string | null, opts?: LoadOptions): Promise<BibleCatalog> {
   const vid = normalizeTranslationId(versionId);
-  if (catalogCache.has(vid)) return catalogCache.get(vid)!;
+  const cached = lruGet(catalogCache, vid);
+  if (cached) return cached;
 
   // Try new versioned path first: /data/bibles/{versionId}/bible.json
   // Fallback to legacy /json/bible.json for ONBV during transition
@@ -183,9 +264,10 @@ export async function getBibleCatalog(versionId?: string | null): Promise<BibleC
 
   for (const url of candidates) {
     try {
-      const res = await fetch(url);
+      if (opts?.signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+      const res = await fetch(url, { signal: opts?.signal });
       if (!res.ok) continue;
-      const data = await res.json();
+      const data: unknown = await res.json();
       // If it's the global manifest (array), build catalog from it
       if (Array.isArray(data)) {
         const entry = data.find((m: { id: string }) => m.id.toUpperCase() === vid.toUpperCase());
@@ -194,11 +276,12 @@ export async function getBibleCatalog(versionId?: string | null): Promise<BibleC
         continue;
       }
       // It's a BibleCatalog
-      if (data.meta && data.books) {
-        catalogCache.set(vid, data as BibleCatalog);
-        return data as BibleCatalog;
+      if (isBibleCatalog(data)) {
+        lruSet(catalogCache, vid, data, CATALOG_CACHE_MAX);
+        return data;
       }
-    } catch {
+    } catch (err) {
+      if (isAbortError(err) || opts?.signal?.aborted) throw err;
       continue;
     }
   }
@@ -210,8 +293,8 @@ export async function getBibleCatalog(versionId?: string | null): Promise<BibleC
 /**
  * Obtiene la lista de libros para una versión.
  */
-export async function getBibleBooks(versionId?: string | null): Promise<BibleBookMeta[]> {
-  const catalog = await getBibleCatalog(versionId);
+export async function getBibleBooks(versionId?: string | null, opts?: LoadOptions): Promise<BibleBookMeta[]> {
+  const catalog = await getBibleCatalog(versionId, opts);
   return catalog.books;
 }
 
@@ -220,15 +303,15 @@ export async function getBibleBooks(versionId?: string | null): Promise<BibleBoo
  */
 export async function getBookData(
   bookId: string,
-  versionId?: string | null
+  versionId?: string | null,
+  opts?: LoadOptions
 ): Promise<RawBookData | null> {
   const normalizedId = bookId.toUpperCase();
   const vid = normalizeTranslationId(versionId);
   const cacheKey = `${vid}:${normalizedId}`;
 
-  if (bookCache.has(cacheKey)) {
-    return bookCache.get(cacheKey) || null;
-  }
+  const cached = lruGet(bookCache, cacheKey);
+  if (cached) return cached;
 
   // Try versioned path first
   const candidates = [
@@ -239,23 +322,25 @@ export async function getBookData(
 
   for (const url of candidates) {
     try {
-      const res = await fetch(url);
+      if (opts?.signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+      const res = await fetch(url, { signal: opts?.signal });
       if (!res.ok) continue;
-      const json = await res.json();
+      const json: unknown = await res.json();
 
       // Detect gateway shape vs legacy reader shape
-      let data: RawBookData;
-      if (json.versionId || json.bookCode || (json.chapters && !Array.isArray(json.chapters))) {
-        data = adaptGatewayBook(json as GatewayBookJson, normalizedId);
-      } else if (json.id && Array.isArray(json.chapters)) {
-        data = json as RawBookData;
+      let data: RawBookData | null = null;
+      if (isGatewayBook(json)) {
+        data = adaptGatewayBook(json, normalizedId);
+      } else if (isRawBookData(json)) {
+        data = json;
       } else {
         continue;
       }
 
-      bookCache.set(cacheKey, data);
+      lruSet(bookCache, cacheKey, data, BOOK_CACHE_MAX);
       return data;
-    } catch {
+    } catch (err) {
+      if (isAbortError(err) || opts?.signal?.aborted) throw err;
       continue;
     }
   }
@@ -272,7 +357,8 @@ export async function getBookData(
 export async function getChapterData(
   bookIdOrVersion: string,
   chapterNumberOrBookId: number | string,
-  chapterNumberMaybe?: number
+  chapterNumberMaybe?: number,
+  opts?: LoadOptions
 ): Promise<ChapterPayload | null> {
   // Detect overload: (versionId, bookId, chapter) vs (bookId, chapter)
   let versionId: string | null;
@@ -290,7 +376,7 @@ export async function getChapterData(
   }
 
   const vid = normalizeTranslationId(versionId);
-  const bookData = await getBookData(bookId, vid);
+  const bookData = await getBookData(bookId, vid, opts);
   if (!bookData || !bookData.chapters) return null;
 
   const chapter = bookData.chapters.find((c) => Number(c.chapter) === Number(chapterNumber));
@@ -317,7 +403,7 @@ export async function getChapterData(
     chapterNumber: Number(chapter.chapter),
     verses: chapter.verses.map((v) => ({
       number: String(v.number),
-      text: v.text,
+      text: typeof v.text === 'string' ? v.text : String(v.text ?? ''),
     })),
     sections: chapter.sections || [],
     footnotes,

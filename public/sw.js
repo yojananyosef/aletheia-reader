@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aletheia-v1';
+const CACHE_NAME = 'aletheia-v2';
 // Cachés legacy de la marca anterior (sin E) — se eliminan en activate.
 const LEGACY_CACHE_PREFIX = 'alethia-';
 const STATIC_ASSETS = [

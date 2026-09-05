@@ -91,6 +91,8 @@ export async function speakWithPiper(
   text: string,
   opts: {
     voice?: string;
+    /** Playback speed emulated via HTMLAudioElement (Piper has no native rate) */
+    rate?: number;
     onStart?: () => void;
     onEnd?: () => void;
     onError?: (e: unknown) => void;
@@ -129,7 +131,7 @@ export async function speakWithPiper(
 
     const url = URL.createObjectURL(blob);
     // onStart se dispara cuando el audio realmente empieza (playStarted), no antes
-    return playAudioElement(url, opts);
+    return playAudioElement(url, { ...opts, rate: opts.rate ?? 1.0 });
   } catch (e: unknown) {
     // Cancelación durante generate no debe reportarse como error
     if (opts.signal?.aborted) return null;
@@ -140,10 +142,17 @@ export async function speakWithPiper(
 
 function playAudioElement(
   url: string,
-  opts: { onStart?: () => void; onEnd?: () => void; onError?: (e: unknown) => void; signal?: AbortSignal }
+  opts: { rate?: number; onStart?: () => void; onEnd?: () => void; onError?: (e: unknown) => void; signal?: AbortSignal }
 ): Promise<HTMLAudioElement> {
   const el = new Audio(url);
   el.preload = 'auto';
+  if (opts.rate && Number.isFinite(opts.rate)) {
+    el.playbackRate = Math.min(2, Math.max(0.5, opts.rate));
+    try {
+      // Avoid chipmunk effect where supported
+      (el as HTMLAudioElement & { preservesPitch?: boolean }).preservesPitch = true;
+    } catch {}
+  }
   el.style.display = 'none';
   try { document.body.appendChild(el); } catch {}
 

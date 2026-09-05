@@ -217,3 +217,64 @@ export function applySyllablePoints(text: string): string {
     return syllables.join('·');
   });
 }
+
+// --- Combined aids (bionic + syllables) ---
+
+/**
+ * Applies Bionic Reading and/or Syllable Points in a single per-word pass.
+ *
+ * MUST be used when both modes are on: the sequential alternative
+ * (applyBionicReading → applySyllablePoints) feeds `<strong>` tags into the
+ * syllabifier, which inserts `·` inside the tags and corrupts the HTML.
+ * Here tags are generated last, so output HTML is always well-formed.
+ * Single-mode calls delegate to the original functions to preserve behavior.
+ */
+export function applyReadingAids(
+  text: string,
+  opts: { bionic?: boolean; syllables?: boolean } = {}
+): string {
+  const bionic = opts.bionic ?? false;
+  const syllables = opts.syllables ?? false;
+  if (bionic && !syllables) return applyBionicReading(text);
+  if (syllables && !bionic) return applySyllablePoints(text);
+  if (!bionic && !syllables) return text;
+
+  return text.replace(/(\S+)/g, (word) => {
+    if (/^[\p{P}\p{S}\d]+$/u.test(word)) return word;
+
+    const match = word.match(/^([\p{P}\p{S}]*)(.*?)([\p{P}\p{S}]*)$/u);
+    if (!match) return word;
+
+    const leading = match[1];
+    const core = match[2];
+    const trailing = match[3];
+
+    if (core.length === 0) return word;
+
+    const letters = [...core];
+    const dotted =
+      letters.length > 1
+        ? (() => {
+            const parts = splitSyllables(core);
+            return parts.length > 1 ? parts.join('·') : core;
+          })()
+        : core;
+
+    // Bold prefix counts letters only; separators never advance the cut, so
+    // · always lands outside <strong> and no separator is ever swallowed.
+    const boldLen = letters.length <= 2 ? letters.length : Math.max(1, Math.round(letters.length * 0.4));
+    const chars = [...dotted];
+    let end = 0;
+    let counted = 0;
+    for (let i = 0; i < chars.length; i++) {
+      if (chars[i] === '·') continue;
+      if (counted >= boldLen) break;
+      counted++;
+      end = i + 1;
+    }
+
+    const bold = chars.slice(0, end).filter((c) => c !== '·').join('');
+    const rest = chars.slice(end).join('');
+    return `${leading}<strong>${bold}</strong>${rest}${trailing}`;
+  });
+}

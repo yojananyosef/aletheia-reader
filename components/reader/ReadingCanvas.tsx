@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useMemo, useLayoutEffect, useCallback } from 'react';
 import { ChapterPayload, Verse, ReaderSettings, BookmarkRef, ReaderTarget } from '@/types/bible';
 import { Bookmark } from 'lucide-react';
-import { applyBionicReading, applySyllablePoints } from '@/lib/text-transforms';
+import { applyReadingAids } from '@/lib/text-transforms';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface ReadingCanvasProps {
@@ -88,11 +88,10 @@ function renderVerseHtmlForMeasurement(
   }
 
   let text = verse.text;
-  if (settings?.bionicReading) {
-    text = applyBionicReading(text);
-  }
-  if (settings?.phoneticDots) {
-    text = applySyllablePoints(text);
+  const bionic = !!settings?.bionicReading;
+  const syllables = !!settings?.phoneticDots;
+  if (bionic || syllables) {
+    text = applyReadingAids(text, { bionic, syllables });
   }
 
   const superHtml = !continued
@@ -741,14 +740,10 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                             className="cursor-pointer hover:bg-neutral-500/5 rounded px-0.5 transition-colors"
                             dangerouslySetInnerHTML={{
                               __html: (() => {
-                                let text = verse.text;
-                                if (settings.bionicReading) {
-                                  text = applyBionicReading(text);
-                                }
-                                if (settings.phoneticDots) {
-                                  text = applySyllablePoints(text);
-                                }
-                                return text;
+                                const bionic = !!settings.bionicReading;
+                                const syllables = !!settings.phoneticDots;
+                                if (!bionic && !syllables) return verse.text;
+                                return applyReadingAids(verse.text, { bionic, syllables });
                               })(),
                             }}
                           />

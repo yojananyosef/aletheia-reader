@@ -19,6 +19,7 @@ import { PwmDimmerOverlay } from './PwmDimmerOverlay';
 import { LineFocusOverlay } from './LineFocusOverlay';
 import { VerseModal } from './VerseModal';
 import { ttsService, ttsErrorMessage } from '@/lib/tts-service';
+import { preloadPiper } from '@/lib/piper-service';
 import { wakeLockService } from '@/lib/wake-lock-service';
 import {
   getStoredSettings,
@@ -207,6 +208,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
         rate: effectiveRate,
         bookName: data.bookName,
         chapterNumber: data.chapterNumber,
+        versionId: data.versionId,
         onBoundary: (charIndex) => {
           if (activePlaybackIdRef.current !== playbackId) return;
           const pgs = paginatedPagesRef.current;
@@ -301,6 +303,12 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
     pendingTTSLastVerseRef.current = false;
     speakVerseAtIndex(data.verses.length - 1);
   }, [data.verses, speakVerseAtIndex]);
+
+  // Warm Piper WASM engine when the narrator opens so the first fallback
+  // verse doesn't pay the full cold-start latency (onnx + phonemizer).
+  useEffect(() => {
+    if (isNarratorOpen) preloadPiper();
+  }, [isNarratorOpen]);
 
   // Play / Start Narrator
   const handlePlayTTS = () => {

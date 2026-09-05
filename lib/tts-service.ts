@@ -1,4 +1,4 @@
-import { TTSVoiceOption, Verse } from '@/types/bible';
+import { TTSVoiceOption, Verse, AVAILABLE_TRANSLATIONS, TranslationId } from '@/types/bible';
 import EasySpeech from 'easy-speech';
 import { speakWithPiper, SPANISH_VOICE as PIPER_VOICE, isPiperEngineReady, isPiperVoiceReady } from './piper-service';
 
@@ -27,6 +27,7 @@ export interface SpeakVerseOptions {
   onError?: (err: unknown) => void;
   bookName?: string;
   chapterNumber?: number;
+  versionId?: TranslationId;
 }
 
 /** Error con código legible por UI (bloqueo de autoplay, fallo total, …) */
@@ -213,14 +214,15 @@ class BibleTTSService {
     }
   }
 
-  private updateMediaSession(verse: Verse, bookName?: string, chapterNumber?: number) {
+  private updateMediaSession(verse: Verse, bookName?: string, chapterNumber?: number, versionId?: TranslationId) {
     if (typeof navigator === 'undefined' || !('mediaSession' in navigator)) return;
     const verseLabel = bookName && chapterNumber ? `${bookName} ${chapterNumber}:${verse.number}` : `Versículo ${verse.number}`;
+    const album = (versionId && AVAILABLE_TRANSLATIONS[versionId]?.name) || 'Aletheia Reader';
     try {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: verseLabel,
         artist: 'Aletheia Reader',
-        album: 'Nueva Biblia Viva',
+        album,
       });
       navigator.mediaSession.setActionHandler('play', () => this.resume());
       navigator.mediaSession.setActionHandler('pause', () => this.pause());
@@ -263,12 +265,16 @@ class BibleTTSService {
     // No early-return for empty pool — try with default voice (some browsers synthesize even if getVoices() === [])
     // Only warn, don't block English fallback as user requested
 
-    // Chrome quirk: cancel pending speech and wait a tick before speak (prevents synthesis-failed)
+    // Chrome quirk: cancel pending speech before speak (prevents synthesis-failed).
+    // Only wait when something is actually queued; poll for idle with a cap
+    // instead of a fixed 80ms sleep on every verse.
     try {
       if (this.synth.speaking || this.synth.pending) {
         this.synth.cancel();
-        // Wait for cancel to propagate (EasySpeech does 50-100ms)
-        await new Promise((r) => setTimeout(r, 80));
+        const start = Date.now();
+        while ((this.synth.speaking || this.synth.pending) && Date.now() - start < 150) {
+          await new Promise((r) => setTimeout(r, 10));
+        }
       } else {
         this.synth.cancel();
       }
@@ -328,7 +334,7 @@ class BibleTTSService {
 
     utterance.onstart = () => {
       hasStarted = true;
-      this.updateMediaSession(verse, options.bookName, options.chapterNumber);
+      this.updateMediaSession(verse, options.bookName, options.chapterNumber, options.versionId);
       options.onStart?.();
     };
 
@@ -476,6 +482,7 @@ class BibleTTSService {
     try {
       const audio = await speakWithPiper(cleanText, {
         voice: PIPER_VOICE,
+        rate: options.rate ?? 1.0,
         onStart: () => {
           stopLoading();
           options.onStart?.();

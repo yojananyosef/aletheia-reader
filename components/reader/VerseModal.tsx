@@ -31,11 +31,60 @@ export const VerseModal: React.FC<VerseModalProps> = ({
   onPlayFromVerse,
 }) => {
   const [copied, setCopied] = React.useState(false);
+  const copiedTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const citation = verse ? `${bookName} ${chapterNumber}:${verse.number}` : '';
+  const fullText = verse ? `«${verse.text}» (${citation})` : '';
+
+  // Clear the "¡Copiado!" reset timer on unmount/close (no setState after unmount)
+  React.useEffect(() => {
+    return () => {
+      if (copiedTimer.current !== null) {
+        clearTimeout(copiedTimer.current);
+        copiedTimer.current = null;
+      }
+    };
+  }, []);
+
+  const flashCopied = React.useCallback(() => {
+    setCopied(true);
+    if (copiedTimer.current !== null) clearTimeout(copiedTimer.current);
+    copiedTimer.current = setTimeout(() => {
+      copiedTimer.current = null;
+      setCopied(false);
+    }, 2000);
+  }, []);
+
+  const handleCopy = React.useCallback(async () => {
+    // Clipboard API may be unavailable (non-secure context, permissions)
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(fullText);
+        flashCopied();
+        return;
+      }
+      throw new Error('clipboard-api-unavailable');
+    } catch {
+      // Fallback: hidden textarea + execCommand
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = fullText;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand('copy');
+        ta.remove();
+        if (ok) flashCopied();
+        else setCopied(false);
+      } catch {
+        setCopied(false);
+      }
+    }
+  }, [fullText, flashCopied]);
 
   if (!isOpen || !verse) return null;
-
-  const citation = `${bookName} ${chapterNumber}:${verse.number}`;
-  const fullText = `«${verse.text}» (${citation})`;
 
   // Filter footnotes matching this verse
   const relevantFootnotes = footnotes.filter((fn) => {
@@ -43,16 +92,6 @@ export const VerseModal: React.FC<VerseModalProps> = ({
     const vNum = String(verse.number).trim();
     return fnRef === vNum || vNum.split('-').includes(fnRef);
   });
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(fullText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setCopied(false);
-    }
-  };
 
   return (
     <Dialog

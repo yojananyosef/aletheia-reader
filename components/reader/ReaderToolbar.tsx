@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ReaderSettings,
   LineFocusMode,
@@ -73,6 +73,13 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
       setIsFullscreen(false);
     }
   };
+
+  // Sync state when fullscreen changes outside the button (F11, Esc, browser UI)
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
 
   return (
     <>
