@@ -1,0 +1,2 @@
+- [x] Workflow CI con los 4 gates
+- [x] `--max-warnings=0` y verificación local
