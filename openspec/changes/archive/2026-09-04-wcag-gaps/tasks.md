@@ -1,0 +1,4 @@
+- [x] Hit-areas 44px (.aaa-target, slider, menús) + excepción inline documentada
+- [x] Dialog trap + Tabs roles + Esc en popovers
+- [x] LineFocus no roba teclas + labels + aria-live único + PwmDimmer z
+- [x] Verificación: gates + checklist teclado/visual (usuario)

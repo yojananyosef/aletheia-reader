@@ -15,7 +15,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
     const percentage = ((value - min) / (max - min)) * 100
 
     return (
-      <div className="relative flex w-full touch-none select-none items-center py-2">
+      <div className="relative flex w-full touch-none select-none items-center py-2 min-h-[44px]">
         <input
           ref={ref}
           type="range"

@@ -766,7 +766,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                                 onSelectVerse(verse);
                               }}
                               className="footnote-indicator inline-flex items-center"
-                              aria-label={`Nota al pie del versículo ${verse.number}: ${fn.note}`}
+                              aria-label={`Nota al pie · versículo ${verse.number}`}
                             >
                               [{fn.marker || '*'}]
                             </button>

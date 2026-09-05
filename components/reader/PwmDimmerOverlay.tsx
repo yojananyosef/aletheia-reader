@@ -18,9 +18,10 @@ export const PwmDimmerOverlay: React.FC<PwmDimmerOverlayProps> = ({ brightness }
   const dimOpacity = Math.max(0, Math.min(0.75, 1 - brightness));
 
   return (
+    // Below dialogs (z-50) and tooltips (z-60): chrome dims, modal content stays readable
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[70] transition-opacity duration-150"
+      className="pointer-events-none fixed inset-0 z-[45] transition-opacity duration-150"
       style={{
         backgroundColor: '#000000',
         opacity: dimOpacity,

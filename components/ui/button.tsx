@@ -34,13 +34,13 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  default: "min-h-[40px] px-3.5 py-2",
-  sm: "min-h-[36px] px-2.5 py-1 text-xs",
+  default: "min-h-[40px] px-3.5 py-2 aaa-target",
+  sm: "min-h-[36px] px-2.5 py-1 text-xs aaa-target",
   lg: "min-h-[48px] px-6 py-2.5 text-base font-semibold",
-  icon: "h-10 w-10 min-w-[40px] p-0 rounded-xl",
-  "icon-sm": "h-9 w-9 min-w-[36px] p-0 rounded-lg",
+  icon: "h-10 w-10 min-w-[40px] p-0 rounded-xl aaa-target",
+  "icon-sm": "h-9 w-9 min-w-[36px] p-0 rounded-lg aaa-target",
   "icon-lg": "h-11 w-11 min-w-[44px] p-0 rounded-xl",
-  pill: "min-h-[36px] px-4 py-1.5 rounded-full text-xs font-semibold",
+  pill: "min-h-[36px] px-4 py-1.5 rounded-full text-xs font-semibold aaa-target",
 };
 
 export function buttonVariants({

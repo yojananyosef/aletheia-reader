@@ -21,6 +21,9 @@ export function Dialog({
   position = 'center',
   title,
 }: DialogProps) {
+  const panelRef = React.useRef<HTMLDivElement>(null);
+  const invokerRef = React.useRef<HTMLElement | null>(null);
+
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -32,6 +35,47 @@ export function Dialog({
     }
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])
+
+  // Focus containment: trap Tab inside, focus panel on open, restore invoker on close
+  React.useEffect(() => {
+    if (!isOpen) return;
+    invokerRef.current = document.activeElement as HTMLElement | null;
+    const panel = panelRef.current;
+    const focusables = () =>
+      panel
+        ? Array.from(
+            panel.querySelectorAll<HTMLElement>(
+              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            )
+          ).filter((el) => !el.hasAttribute('disabled') && el.offsetParent !== null)
+        : [];
+    // Focus panel itself if nothing focusable yet (lists load async)
+    const first = focusables()[0];
+    if (first) first.focus();
+    else panel?.focus();
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !panel) return;
+      const items = focusables();
+      if (items.length === 0) {
+        e.preventDefault();
+        return;
+      }
+      const firstItem = items[0];
+      const lastItem = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === firstItem) {
+        e.preventDefault();
+        lastItem.focus();
+      } else if (!e.shiftKey && document.activeElement === lastItem) {
+        e.preventDefault();
+        firstItem.focus();
+      }
+    };
+    window.addEventListener('keydown', handleTab);
+    return () => {
+      window.removeEventListener('keydown', handleTab);
+      invokerRef.current?.focus?.();
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null
 
@@ -53,6 +97,8 @@ export function Dialog({
       onClick={onClose}
     >
       <div
+        ref={panelRef}
+        tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
         className={cn(
           "w-full rounded-2xl border border-[var(--reader-border)] bg-[var(--reader-bg)] text-[var(--reader-text)] shadow-2xl transition-all",
@@ -87,7 +133,7 @@ export function DialogHeader({
           type="button"
           onClick={onClose}
           aria-label="Cerrar ventana"
-          className="flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-neutral-500/15 focus-visible:ring-2 ml-2 shrink-0 active:scale-95"
+          className="aaa-target flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-neutral-500/15 focus-visible:ring-2 ml-2 shrink-0 active:scale-95"
         >
           <X className="h-5 w-5 opacity-70 hover:opacity-100" />
         </button>

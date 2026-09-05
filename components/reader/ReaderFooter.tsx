@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Play,
   Square,
@@ -60,6 +60,19 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
 }) => {
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
   const [showVoiceMenu, setShowVoiceMenu] = useState(false);
+
+  // Escape closes open voice/speed menus
+  useEffect(() => {
+    if (!showSpeedMenu && !showVoiceMenu) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowSpeedMenu(false);
+        setShowVoiceMenu(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [showSpeedMenu, showVoiceMenu]);
 
   const percentage = totalPages > 0 ? Math.round((currentPage / totalPages) * 100) : 0;
   const estimatedMinutes = Math.max(1, Math.ceil(totalWords / 200));
@@ -131,7 +144,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                                 setShowSpeedMenu(!showSpeedMenu);
                                 setShowVoiceMenu(false);
                               }}
-                              className="h-7 px-1.5 font-mono font-bold text-[11px]"
+                              className="px-1.5 text-[11px]"
                             >
                               <Gauge className="h-3 w-3" />
                               <span>{rate}x</span>
@@ -153,7 +166,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                                   onSetRateTTS(speed);
                                   setShowSpeedMenu(false);
                                 }}
-                                className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold text-left transition-colors ${
+                                className={`flex items-center justify-between px-2.5 py-1.5 min-h-[44px] rounded-lg text-xs font-mono font-bold text-left transition-colors ${
                                   rate === speed ? 'bg-reader-accent text-reader-accent-fg shadow-xs' : 'hover:bg-neutral-500/10'
                                 }`}
                               >
@@ -178,7 +191,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                                 setShowVoiceMenu(!showVoiceMenu);
                                 setShowSpeedMenu(false);
                               }}
-                              className="h-7 px-1.5 text-[11px]"
+                              className="px-1.5 text-[11px]"
                             >
                               <UserCheck className="h-3 w-3" />
                               <span className="hidden sm:inline">Voz</span>
@@ -203,7 +216,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                                         onSetVoiceTTS(voice.voiceURI);
                                         setShowVoiceMenu(false);
                                       }}
-                                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors truncate ${
+                                      className={`flex items-center justify-between px-2.5 py-1.5 min-h-[44px] rounded-lg text-xs text-left transition-colors truncate ${
                                         isSelected ? 'bg-reader-accent text-reader-accent-fg font-bold shadow-xs' : 'hover:bg-neutral-500/10'
                                       }`}
                                     >
@@ -230,7 +243,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                         variant="default"
                         size="icon"
                         onClick={isPlaying ? onStopTTS : onPlayTTS}
-                        className="h-9 w-9 min-w-[36px] font-bold shadow-md"
+                        className="font-bold shadow-md"
                         aria-label={isPlaying ? 'Detener locución' : 'Reproducir locución'}
                       >
                         {isPlaying ? (
@@ -254,7 +267,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
                           size="icon-sm"
                           onClick={onCloseNarrator}
                           aria-label="Cerrar narrador de audio"
-                          className="h-8 w-8 opacity-70 hover:opacity-100"
+                          className="opacity-70 hover:opacity-100"
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -276,7 +289,7 @@ export const ReaderFooter: React.FC<ReaderFooterProps> = ({
 
                 {/* Right: Page Indicator & Percentage */}
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <span className="font-mono font-bold tracking-wider" aria-live="polite">
+                  <span className="font-mono font-bold tracking-wider">
                     Pág. {currentPage}/{totalPages}
                   </span>
                   <Badge variant="secondary" className="font-mono text-[11px]">

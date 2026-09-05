@@ -391,6 +391,7 @@ export default function Home() {
             <input
               type="text"
               placeholder="Buscar libro (ej. Génesis, Salmos, Mateo, Romanos)..."
+              aria-label="Buscar libro por nombre"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-xl border border-[var(--reader-border)] bg-transparent pl-10 pr-9 py-2 text-sm outline-none transition-all focus:ring-2 focus:ring-reader-accent"
@@ -403,7 +404,8 @@ export default function Home() {
                 variant="ghost"
                 size="icon-sm"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6"
+                className="absolute right-2 top-1/2 -translate-y-1/2"
+                aria-label="Limpiar búsqueda"
               >
                 <X className="h-3.5 w-3.5" />
               </Button>

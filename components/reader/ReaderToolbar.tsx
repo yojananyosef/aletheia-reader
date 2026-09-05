@@ -312,7 +312,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             <div className="flex justify-between items-center mb-1">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold font-serif opacity-80">Aa</span>
-                <label className="text-xs font-bold uppercase tracking-wider">
+                <label htmlFor="slider-font-size" className="text-xs font-bold uppercase tracking-wider">
                   Tamaño de Fuente
                 </label>
               </div>
@@ -327,6 +327,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               min={16}
               max={28}
               step={1}
+              id="slider-font-size"
               value={settings.fontSize}
               onValueChange={(val) => onUpdateSettings({ fontSize: val })}
               label="Ajustar tamaño de fuente"
@@ -338,7 +339,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             <div className="flex justify-between items-center mb-1">
               <div className="flex items-center gap-2">
                 <AlignJustify className="h-4 w-4 text-reader-accent" />
-                <label className="text-xs font-bold uppercase tracking-wider">
+                <label htmlFor="slider-line-height" className="text-xs font-bold uppercase tracking-wider">
                   Interlineado
                 </label>
               </div>
@@ -353,6 +354,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               min={1.2}
               max={2.5}
               step={0.1}
+              id="slider-line-height"
               value={settings.lineHeight}
               onValueChange={(val) => onUpdateSettings({ lineHeight: val })}
               label="Ajustar interlineado"
@@ -364,7 +366,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             <div className="flex justify-between items-center mb-1">
               <div className="flex items-center gap-2">
                 <MoveHorizontal className="h-4 w-4 text-reader-accent" />
-                <label className="text-xs font-bold uppercase tracking-wider">
+                <label htmlFor="slider-letter-spacing" className="text-xs font-bold uppercase tracking-wider">
                   Espaciado
                 </label>
               </div>
@@ -379,6 +381,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               min={0}
               max={0.1}
               step={0.01}
+              id="slider-letter-spacing"
               value={settings.letterSpacing ?? 0.02}
               onValueChange={(val) => onUpdateSettings({ letterSpacing: val })}
               label="Ajustar espaciado entre letras"
@@ -468,7 +471,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
                 <SunMedium className="h-4 w-4 text-reader-accent" />
-                <label className="text-xs font-bold uppercase tracking-wider">
+                <label htmlFor="slider-brightness" className="text-xs font-bold uppercase tracking-wider">
                   Luminancia por Software (PWM Free)
                 </label>
               </div>
@@ -483,6 +486,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
               min={0.3}
               max={1.0}
               step={0.05}
+              id="slider-brightness"
               value={settings.softwareBrightness}
               onValueChange={(val) => onUpdateSettings({ softwareBrightness: val })}
               label="Ajustar atenuación por software"

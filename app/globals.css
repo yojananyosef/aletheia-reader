@@ -317,8 +317,20 @@ input[type="range"]::-webkit-slider-thumb:active {
   }
 }
 
-/* Chrome UI entries (toolbar/footer) — subtle, outside the reading container */
-@keyframes toolbar-in {
+/* AAA hit-area expansion without visual change (WCAG 2.5.5).
+   Apply to compact chrome controls: ::after stretches the clickable box
+   ~12px per side (36px control -> 48px). Inline verse/footnote markers are
+   exempt per the WCAG 2.5.5 Inline exception — do NOT apply there. */
+.aaa-target:not(.absolute):not(.fixed) {
+  position: relative;
+}
+.aaa-target::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+
+/* Chrome UI entries (toolbar/footer) — subtle, outside the reading container */@keyframes toolbar-in {
   from {
     opacity: 0;
     transform: translateY(-8px);

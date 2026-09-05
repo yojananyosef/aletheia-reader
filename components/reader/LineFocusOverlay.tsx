@@ -210,8 +210,10 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
 
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
+      // Never steal keys from interactive elements or open dialogs/drawers
       if (
-        ['INPUT', 'TEXTAREA', 'SELECT'].includes(target?.tagName) ||
+        ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(target?.tagName) ||
+        target?.closest('a, [role="dialog"], [role="listbox"], [role="menu"]') ||
         target?.isContentEditable
       ) {
         return;
