@@ -180,7 +180,7 @@ aletheia-reader/
 
 | Criterio de Éxito WCAG 2.2 | Estado | Implementación en Aletheia Reader |
 |---|---|---|
-| **1.4.3 / 1.4.6 Contraste (AAA)** | Parcial | Cuerpo 13–15:1 OK (`#FDFBF6/#222`, `#F5EFEB/#2B261F`, `#1A1A1A/#E8E8E8`). Acentos (`#9A5B24` 5.21:1), muted y `verse-super opacity .55` no llegan a 7:1. |
+| **1.4.3 / 1.4.6 Contraste (AAA)** | CUMPLE | Cuerpo 13–15:1; acentos 7.4–8.1:1; muted 7.2–7.6:1; números de versículo ≥7.2 efectivo. Verificado por `lib/__tests__/contrast.test.ts`. |
 | **1.4.8 Presentación Visual (AAA)** | Parcial | `max-w-60ch`, `text-left` sin justificar OK. Slider permite `line-height 1.2`, por debajo del ≥1.5 recomendado. |
 | **1.4.12 Espaciado del Texto (AA)** | Parcial | `letter-spacing` 0–0.1em + `line-height` 1.2–2.5 OK. `word-spacing` sin control UI. |
 | **2.1.1 Accesibilidad por Teclado** | Parcial | Flechas + Esc + Line Focus OK. Versos no tabulables, sin `Alt+`, sin `Shift+Espacio` global. |

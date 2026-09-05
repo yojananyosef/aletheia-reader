@@ -224,7 +224,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                 onClick={() => onUpdateSettings({ theme: 'pergamino' })}
                 className={`flex-col h-auto p-3 ${
                   settings.theme === 'pergamino'
-                    ? 'ring-2 ring-[#9A5B24] bg-[#9A5B24]/15 font-bold shadow-xs text-[var(--reader-text)]'
+                    ? 'ring-2 ring-[#74471B] bg-[#74471B]/15 font-bold shadow-xs text-[var(--reader-text)]'
                     : ''
                 }`}
               >
@@ -237,7 +237,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
                 onClick={() => onUpdateSettings({ theme: 'sepia' })}
                 className={`flex-col h-auto p-3 ${
                   settings.theme === 'sepia'
-                    ? 'ring-2 ring-[#784421] bg-[#784421]/15 font-bold shadow-xs text-[var(--reader-text)]'
+                    ? 'ring-2 ring-[#74401F] bg-[#74401F]/15 font-bold shadow-xs text-[var(--reader-text)]'
                     : ''
                 }`}
               >

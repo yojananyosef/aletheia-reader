@@ -31,8 +31,8 @@
   --bg-pergamino: #FDFBF6;
   --text-pergamino: #222222;
   --border-pergamino: rgba(34, 34, 34, 0.12);
-  --muted-pergamino: #666666;
-  --accent-pergamino: #9A5B24; /* Terracota Noble / Bronce Pergamino */
+  --muted-pergamino: #555555;
+  --accent-pergamino: #74471B; /* Terracota Noble / Bronce Pergamino (7.63:1 AAA) */
   --accent-fg-pergamino: #FFFFFF;
   --accent-subtle-pergamino: rgba(154, 91, 36, 0.12);
   --hover-pergamino: rgba(34, 34, 34, 0.05);
@@ -41,7 +41,7 @@
   --bg-noche: #1A1A1A;
   --text-noche: #E8E8E8;
   --border-noche: rgba(232, 232, 232, 0.15);
-  --muted-noche: #999999;
+  --muted-noche: #ABABAB;
   --accent-noche: #D4A373; /* Arena Dorada Cálida / Bronce Luna - cero deslumbramiento */
   --accent-fg-noche: #1A1A1A;
   --accent-subtle-noche: rgba(212, 163, 115, 0.18);
@@ -51,8 +51,8 @@
   --bg-sepia: #F5EFEB;
   --text-sepia: #2B261F;
   --border-sepia: rgba(43, 38, 31, 0.14);
-  --muted-sepia: #6e6457;
-  --accent-sepia: #784421; /* Nogal Antiguo / Bistre Profundo */
+  --muted-sepia: #544D43;
+  --accent-sepia: #74401F; /* Nogal Antiguo / Bistre Profundo (7.38:1 AAA) */
   --accent-fg-sepia: #FDFBF6;
   --accent-subtle-sepia: rgba(120, 68, 33, 0.14);
   --hover-sepia: rgba(43, 38, 31, 0.06);
@@ -170,7 +170,7 @@ html, body {
   position: relative;
   vertical-align: super;
   font-weight: 700;
-  opacity: 0.55;
+  opacity: 0.8;
   margin-right: 0.3em;
   margin-left: 0.15em;
   padding: 0.1em 0.25em;

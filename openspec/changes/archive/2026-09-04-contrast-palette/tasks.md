@@ -1,0 +1,3 @@
+- [x] Aplicar 5 tokens + verse-super .8 + quitar ring-2
+- [x] Test de contraste + README a CUMPLE
+- [x] Verificación: gates + visual usuario

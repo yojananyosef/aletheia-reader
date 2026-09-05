@@ -53,7 +53,7 @@ export function buttonVariants({
   className?: string;
 } = {}): string {
   return cn(
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 select-none active:scale-[0.98]",
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40 select-none active:scale-[0.98]",
     variantStyles[variant],
     sizeStyles[size],
     className
