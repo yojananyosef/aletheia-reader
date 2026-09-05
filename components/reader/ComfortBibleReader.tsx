@@ -492,7 +492,7 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   return (
     <div
       ref={containerRef}
-      id="alethia-reader-container"
+      id="aletheia-reader-container"
       className={`relative h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between w-full transition-colors duration-200 ${themeClass}`}
       style={{
         backgroundColor: 'var(--reader-bg)',

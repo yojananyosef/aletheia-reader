@@ -174,7 +174,7 @@ class BibleTTSService {
     try {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: verseLabel,
-        artist: 'Alethia Reader',
+        artist: 'Aletheia Reader',
         album: 'Nueva Biblia Viva',
       });
       navigator.mediaSession.setActionHandler('play', () => this.resume());

@@ -1,7 +1,8 @@
 {
-  "name": "alethia-reader",
+  "name": "aletheia-reader",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "node scripts/copy-piper-assets.mjs && next build",

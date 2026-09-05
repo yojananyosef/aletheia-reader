@@ -1,0 +1,6 @@
+- [x] Inventariar ocurrencias `alethia/Alethia/ALETHIA` fuera de `node_modules/.next` y clasificar (código vs contenido bíblico vs histórico openspec)
+- [x] Renombrar marca en `package.json`, `app/manifest.ts`, `app/layout.tsx`, `components/ui/tooltip.tsx`
+- [x] Migrar `lib/storage-service.ts` a claves `aletheia_*` con lectura dual + fallback `alethia_*`
+- [x] Migrar `public/sw.js` a `aletheia-v1` con limpieza de cachés `alethia-*`
+- [x] Reescribir README veraz (marca, tipografías, targets, atajos, estructura, TTS) + añadir `LICENSE` MIT
+- [x] Verificación: build + tsc + validate + checklist migración storage/SW

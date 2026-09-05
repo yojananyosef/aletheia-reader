@@ -101,7 +101,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           <div className="flex items-center gap-2">
             <BookOpen className="h-4 w-4 text-reader-accent shrink-0" />
             <span className="font-bold tracking-wide uppercase text-xs hidden lg:inline opacity-80">
-              Alethia Reader
+              Aletheia Reader
             </span>
           </div>
 
@@ -671,7 +671,7 @@ export const ReaderToolbar: React.FC<ReaderToolbarProps> = ({
           <Card className="p-3 bg-[var(--reader-hover)] text-xs leading-relaxed flex gap-2">
             <ShieldCheck className="h-4 w-4 text-reader-accent shrink-0 mt-0.5" />
             <div>
-              <strong>Alethia Reader</strong> solo distribuye traducciones en <strong>dominio público</strong> o bajo <strong>Creative Commons</strong>. Cada archivo <code className="px-1 py-0.5 rounded bg-neutral-500/10 font-mono text-[11px]">public/data/bibles/*/bible.json</code> incluye su <code className="font-mono text-[11px]">copyright</code>, <code className="font-mono text-[11px]">license</code> y <code className="font-mono text-[11px]">licenseUrl</code>. Respeta la licencia al reutilizar textos.
+              <strong>Aletheia Reader</strong> solo distribuye traducciones en <strong>dominio público</strong> o bajo <strong>Creative Commons</strong>. Cada archivo <code className="px-1 py-0.5 rounded bg-neutral-500/10 font-mono text-[11px]">public/data/bibles/*/bible.json</code> incluye su <code className="font-mono text-[11px]">copyright</code>, <code className="font-mono text-[11px]">license</code> y <code className="font-mono text-[11px]">licenseUrl</code>. Respeta la licencia al reutilizar textos.
             </div>
           </Card>
 

@@ -3,13 +3,13 @@ import "./globals.css";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
 export const metadata: Metadata = {
-  title: "Alethia Reader - Lector Bíblico de Alto Confort y Tinta Electrónica",
-  description: "Componente de lectura bíblica modular, responsivo y de alto rendimiento con emulación de tinta electrónica, accesibilidad WCAG 2.2 AAA y mitigación de fatiga visual.",
+  title: "Aletheia Reader - Lector Bíblico de Alto Confort y Tinta Electrónica",
+  description: "Componente de lectura bíblica modular, responsivo y de alto rendimiento con emulación de tinta electrónica, accesibilidad WCAG 2.2 AA (objetivo AAA) y mitigación de fatiga visual.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Alethia",
+    title: "Aletheia",
   },
 };
 

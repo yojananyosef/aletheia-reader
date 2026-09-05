@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 
 function getPortalContainer(): HTMLElement | undefined {
   if (typeof document === 'undefined') return undefined
-  return document.getElementById('alethia-reader-container') ?? document.body
+  return document.getElementById('aletheia-reader-container') ?? document.body
 }
 
 function TooltipProvider({

@@ -1,4 +1,6 @@
-const CACHE_NAME = 'alethia-v3';
+const CACHE_NAME = 'aletheia-v1';
+// Cachés legacy de la marca anterior (sin E) — se eliminan en activate.
+const LEGACY_CACHE_PREFIX = 'alethia-';
 const STATIC_ASSETS = [
   '/',
   '/manifest.webmanifest',
@@ -30,7 +32,11 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+      Promise.all(
+        keys
+          .filter((k) => k !== CACHE_NAME && (k.startsWith(LEGACY_CACHE_PREFIX) || k.startsWith('aletheia-')))
+          .map((k) => caches.delete(k))
+      )
     )
   );
   self.clients.claim();

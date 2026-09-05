@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Alethia Reader - Lector Bíblico de Alto Confort',
-    short_name: 'Alethia',
+    name: 'Aletheia Reader - Lector Bíblico de Alto Confort',
+    short_name: 'Aletheia',
     description: 'Lector bíblico con emulación de tinta electrónica, accesibilidad WCAG 2.2 AAA y narración por voz.',
     start_url: '/',
     display: 'standalone',

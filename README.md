@@ -1,6 +1,6 @@
-# 📖 Alethia Reader
+# 📖 Aletheia Reader
 
-> **Lector Bíblico Modular de Ultraconfort Neurocognitivo, Emulación de Tinta Electrónica y Accesibilidad Universal (WCAG 2.2 AAA)**
+> **Lector Bíblico Modular de Ultraconfort Neurocognitivo, Emulación de Tinta Electrónica y Accesibilidad Universal (WCAG 2.2 AA, objetivo AAA)**
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.3-black?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2-blue?style=flat-square&logo=react)
@@ -13,9 +13,9 @@
 
 ## 🌟 Visión General
 
-**Alethia Reader** es una aplicación web y componente de lectura interactivo diseñado para transformar la lectura digital en pantallas emisivas (LCD, OLED, IPS) en una experiencia pasiva, serena y biestética, emulando la física del papel y de los paneles de tinta electrónica (**E-Ink / Kindle**).
+**Aletheia Reader** (del griego ἀλήθεια, verdad) es una aplicación web y componente de lectura interactivo diseñado para transformar la lectura digital en pantallas emisivas (LCD, OLED, IPS) en una experiencia pasiva, serena y biestética, emulando la física del papel y de los paneles de tinta electrónica (**E-Ink / Kindle**).
 
-Basado en el **modelo neurocognitivo 3NPK** y el cumplimiento estricto del estándar **WCAG 2.2 AAA**, Alethia Reader combate la **astenopia visual** (fatiga ocular por emisión directa de luz azul y parpadeo PWM) y elimina barreras cognitivas para lectores con **dislexia, TDAH, baja visión y fatiga crónica**.
+Basado en el **modelo neurocognitivo 3NPK** y con objetivo **WCAG 2.2 AAA** (estado actual: **AA cumplido, AAA parcial** — ver tabla de cumplimiento), Aletheia Reader combate la **astenopia visual** (fatiga ocular por emisión directa de luz azul y parpadeo PWM) y elimina barreras cognitivas para lectores con **dislexia, TDAH, baja visión y fatiga crónica**.
 
 Incorpora el canon completo de los **66 libros de la Biblia** en español con perícopas estructuradas, versículos indexados, notas al pie exegéticas y un sistema fluido de marcadores.
 
@@ -23,11 +23,11 @@ Incorpora el canon completo de los **66 libros de la Biblia** en español con pe
 
 ## 🔬 Fundamentos y los 7 Pilares de Confort
 
-Alethia Reader no es un lector web convencional con modo oscuro; implementa una arquitectura basada en siete pilares de ingeniería biomédica y diseño visual:
+Aletheia Reader no es un lector web convencional con modo oscuro; implementa una arquitectura basada en siete pilares de ingeniería biomédica y diseño visual:
 
 ```
                   ┌─────────────────────────────────────────┐
-                  │          ALETHIA DESIGN SYSTEM          │
+                  │          ALETHEIA DESIGN SYSTEM          │
                   └────────────────────┬────────────────────┘
                                        │
         ┌──────────────┬───────────────┼───────────────┬──────────────┐
@@ -81,49 +81,60 @@ El lector permite alternar dinámicamente entre tres tipografías especializadas
 
 ## 📱 Características de la Aplicación
 
-* 📚 **Explorador Bíblico Completo:** Navegación por los 66 libros del Antiguo y Nuevo Testamento con buscador en tiempo real y selector directo de capítulos.
-* 🔎 **Modal de Estudio y Versículos:** Clic en cualquier versículo para abrir su ficha, copiar la cita al portapapeles y consultar notas exegéticas o históricas.
+* 📚 **Explorador Bíblico Completo:** Navegación por los 66 libros del Antiguo y Nuevo Testamento (73 en versión Platense con deuterocanónicos) con buscador en tiempo real y selector directo de capítulos. 9 versiones en español con selector en la barra de herramientas.
+* 🔎 **Modal de Estudio y Versículos:** Clic en cualquier versículo para abrir su ficha, copiar la cita al portapapeles y consultar notas exegéticas o históricas (disponibilidad varía por versión: Platense abundantes, RVG sin notas).
 * 🔖 **Sistema de Marcadores:** Guarda y gestiona versículos favoritos con acceso rápido desde un panel lateral.
-* ⌨️ **Atajos de Teclado Universales:**
-  * `Flecha Derecha` / `Espacio`: Página siguiente / Capítulo siguiente.
-  * `Flecha Izquierda` / `Shift + Espacio`: Página anterior / Capítulo anterior.
-  * `Alt + Flecha Arriba / Abajo`: Desplazar la ventana activa de *Line Focus*.
-  * `Clic central`: Ocultar / mostrar barra de herramientas (Modo Inmersivo).
+* 🔊 **Narración por voz:** Web Speech API (EasySpeech) como vía primaria + fallback offline Piper WASM en español (`es_ES-sharvard-medium`). Velocidad ajustable (no aplica a Piper en esta versión).
+* ⌨️ **Atajos de Teclado (implementados):**
+  * `Flecha Derecha` / `Flecha Izquierda`: Página siguiente / anterior.
   * `Escape`: Cerrar modales y paneles.
-* 📐 **Diseño Totalmente Responsivo:** Adaptado a pantallas móviles, tablets, laptops y monitores ultrawide.
+  * `Flechas Arriba / Abajo` y `Espacio`: solo desplazan *Line Focus* cuando está activo (no paginan globalmente).
+  * Swipe horizontal y zonas laterales táctiles en móvil. `Alt+`, `Shift+Espacio` y clic central documentados anteriormente **no implementados**.
+* 📐 **Diseño Totalmente Responsivo:** Adaptado a pantallas móviles, tablets y laptops. Ultrawide solo centrado a 60ch, sin layout dedicado.
 
 ---
 
 ## 📂 Estructura del Proyecto
 
 ```
-alethia-reader/
+aletheia-reader/
 ├── app/
 │   ├── globals.css           # Tokens del sistema de diseño, fuentes y clases E-Ink
 │   ├── layout.tsx            # Metadata, Viewport y configuración base HTML
+│   ├── manifest.ts           # Manifiesto PWA (nombre Aletheia, iconos, orientación)
 │   └── page.tsx              # Orquestador principal, explorador bíblico y marcadores
 ├── components/
+│   ├── ServiceWorkerRegister.tsx
+│   ├── ui/                   # button, dialog, tooltip, slider, switch, tabs, card, badge
 │   └── reader/
-│       ├── ComfortBibleReader.tsx # Componente contenedor y gestor de estado
-│       ├── ReadingCanvas.tsx      # Lienzo de lectura con paginación horizontal
-│       ├── ReaderToolbar.tsx      # Barra de herramientas y panel de ajustes
-│       ├── ReaderFooter.tsx       # Progreso de lectura y controles de página
+│       ├── ComfortBibleReader.tsx # Componente contenedor y gestor de estado + TTS
+│       ├── ReadingCanvas.tsx      # Lienzo de lectura con paginación horizontal por medición DOM
+│       ├── ReaderToolbar.tsx      # Barra de herramientas, ajustes y VersionSelector
+│       ├── VersionSelector.tsx    # Pill + cards de 9 versiones ES
+│       ├── ReaderFooter.tsx       # Progreso de lectura y controles de página + HUD narrador
 │       ├── LineFocusOverlay.tsx   # Máscara de enfoque de 1, 3 o 5 líneas
 │       ├── PaperGrainOverlay.tsx  # Capa de grano de papel procedimental SVG
 │       ├── PwmDimmerOverlay.tsx   # Atenuador de luminancia GPU (PWM Free)
 │       └── VerseModal.tsx         # Modal de versículo, notas al pie y copiado
-├── context/
-│   ├── docs/                 # Pliegos técnicos, análisis Kindle y evidencia neurocognitiva
-│   ├── rules/                # Reglas estrictas de maquetación y accesibilidad
-│   ├── styles/               # Especificación CSS original
-│   └── components/           # Prototipo base de referencia
 ├── lib/
-│   ├── bible-service.ts      # Cliente de datos bíblicos asíncrono con caché en memoria
-│   └── sample-biblical-data.ts# Datos de respaldo / fallback
+│   ├── bible-service.ts      # Cliente gateway dict→array con caché en memoria por versión
+│   ├── storage-service.ts    # Claves aletheia_* con fallback legacy alethia_* + migración ONBV
+│   ├── tts-service.ts        # EasySpeech + nativo + fallback Piper
+│   ├── piper-service.ts      # Piper WASM es-ES (sharvard-medium)
+│   ├── text-transforms.ts    # Lectura biónica + puntos silábicos
+│   ├── wake-lock-service.ts  # WakeLock con recovery por visibilidad
+│   └── utils.ts              # cn() casero
 ├── public/
-│   └── json/                 # 66 libros de la Biblia en formato JSON + bible.json
-└── types/
-    └── bible.ts              # Definiciones e interfaces TypeScript estrictas
+│   ├── sw.js                 # Service Worker caché aletheia-v1 (limpia alethia-*)
+│   ├── fonts/                # OpenDyslexic local (Atkinson/Literata vía Google Fonts)
+│   └── data/bibles/{9 versiones}/ # JSON gateway + manifest.json + bible.json por versión
+├── types/
+│   └── bible.ts              # TranslationId (9), ReaderSettings, ChapterPayload, TTS
+├── scripts/
+│   ├── copy-piper-assets.mjs     # Copia piper/onnx/worker a public/ en build
+│   ├── generate-bible-catalogs.mjs # Genera bible.json desde manifest (manual)
+│   └── test-pagination.js        # Heurística de paginación (no sustituye medición DOM)
+└── openspec/                 # Specs (reading-settings, reading-aids) + changes
 ```
 
 ---
@@ -137,22 +148,18 @@ alethia-reader/
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/alethia-reader.git
-   cd alethia-reader
+   git clone https://github.com/tu-usuario/aletheia-reader.git
+   cd aletheia-reader
    ```
 
 2. **Instalar dependencias:**
    ```bash
    bun install
-   # o con npm:
-   # npm install
    ```
 
 3. **Iniciar el servidor de desarrollo:**
    ```bash
    bun dev
-   # o con npm:
-   # npm run dev
    ```
 
 4. **Abrir en el navegador:**
@@ -169,16 +176,18 @@ alethia-reader/
 
 ---
 
-## ♿ Cumplimiento de Estándares WCAG 2.2 AAA
+## ♿ Cumplimiento de Estándares WCAG 2.2 (estado verificado 2026-09-05)
 
-| Criterio de Éxito WCAG 2.2 | Implementación en Alethia Reader |
-|---|---|
-| **1.4.3 / 1.4.6 Contraste (AAA)** | Ratios de contraste dinámico calibrados entre **12:1 y 15:1**, superando el mínimo legal de 7:1 sin causar deslumbramiento. |
-| **1.4.8 Presentación Visual (AAA)** | Ancho limitado a 60 CPL, interlineado $\ge 1.6$, sin texto justificado y selección de tipografías legibles. |
-| **1.4.12 Espaciado del Texto (AA)** | Soporte tipográfico adaptativo para `letter-spacing`, `word-spacing` y `line-height`. |
-| **2.1.1 Accesibilidad por Teclado** | Navegación completa sin necesidad de ratón (paginación, ajustes, modales y *Line Focus*). |
-| **2.4.13 Apariencia del Foco (AAA)** | Indicadores de foco visual de alto contraste (`focus-visible: outline 3px`) con halo de separación. |
-| **2.5.5 / 2.5.8 Tamaño del Objetivo** | Todas las zonas interactivas poseen un área mínima de **$44\times 44\text{px}$** para evitar errores motores. |
+| Criterio de Éxito WCAG 2.2 | Estado | Implementación en Aletheia Reader |
+|---|---|---|
+| **1.4.3 / 1.4.6 Contraste (AAA)** | Parcial | Cuerpo 13–15:1 OK (`#FDFBF6/#222`, `#F5EFEB/#2B261F`, `#1A1A1A/#E8E8E8`). Acentos (`#9A5B24` 5.21:1), muted y `verse-super opacity .55` no llegan a 7:1. |
+| **1.4.8 Presentación Visual (AAA)** | Parcial | `max-w-60ch`, `text-left` sin justificar OK. Slider permite `line-height 1.2`, por debajo del ≥1.5 recomendado. |
+| **1.4.12 Espaciado del Texto (AA)** | Parcial | `letter-spacing` 0–0.1em + `line-height` 1.2–2.5 OK. `word-spacing` sin control UI. |
+| **2.1.1 Accesibilidad por Teclado** | Parcial | Flechas + Esc + Line Focus OK. Versos no tabulables, sin `Alt+`, sin `Shift+Espacio` global. |
+| **2.4.13 Apariencia del Foco (AAA)** | Parcial | `focus-visible outline 3px` OK en CSS global. Versos `span onClick` sin foco, sin test de contraste de perímetro. |
+| **2.5.5 / 2.5.8 Tamaño del Objetivo** | AA sí, AAA no | Base `button 36–40px` (`ui/button.tsx`), `dialog-close 40px`, `slider thumb 20px`. Solo `icon-lg` llega a 44px. AA 24px sí se cumple. |
+
+> Tipografías: Literata (Google) + Atkinson Hyperlegible + OpenDyslexic local. `Bookerly` solo aparece como fallback en la pila serif, sin archivo (fuente propietaria Amazon).
 
 ---
 

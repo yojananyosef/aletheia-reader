@@ -1,12 +1,26 @@
 import { ReaderSettings, TranslationId, DEFAULT_TRANSLATION_ID } from '@/types/bible';
 
 const STORAGE_KEYS = {
+  SETTINGS: 'aletheia_reader_settings',
+  POSITION: 'aletheia_reading_position',
+  BOOKMARKS: 'aletheia_bookmarks',
+  TTS: 'aletheia_tts_settings',
+  SELECTED_VERSION: 'aletheia_selected_version',
+};
+
+// Claves legacy (marca anterior sin E) — solo lectura fallback, no escribir.
+const LEGACY_STORAGE_KEYS = {
   SETTINGS: 'alethia_reader_settings',
   POSITION: 'alethia_reading_position',
   BOOKMARKS: 'alethia_bookmarks',
   TTS: 'alethia_tts_settings',
   SELECTED_VERSION: 'alethia_selected_version',
 };
+
+function readWithFallback(key: string, legacyKey: string): string | null {
+  if (!isStorageAvailable()) return null;
+  return localStorage.getItem(key) ?? localStorage.getItem(legacyKey);
+}
 
 export interface StoredReadingPosition {
   bookId: string;
@@ -78,7 +92,7 @@ function normalizeVersionId(id?: string | null): TranslationId {
 export function getStoredVersionId(): TranslationId {
   if (!isStorageAvailable()) return DEFAULT_TRANSLATION_ID;
   try {
-    const raw = localStorage.getItem(STORAGE_KEYS.SELECTED_VERSION);
+    const raw = readWithFallback(STORAGE_KEYS.SELECTED_VERSION, LEGACY_STORAGE_KEYS.SELECTED_VERSION);
     if (!raw) return DEFAULT_TRANSLATION_ID;
     // Stored as plain string or JSON string
     const parsed = raw.startsWith('"') ? JSON.parse(raw) : raw;
@@ -93,7 +107,7 @@ export function saveStoredVersionId(versionId: TranslationId): void {
   try {
     localStorage.setItem(STORAGE_KEYS.SELECTED_VERSION, versionId);
   } catch (e) {
-    console.warn('Error guardando alethia_selected_version:', e);
+    console.warn('Error guardando aletheia_selected_version:', e);
   }
 }
 
@@ -103,12 +117,12 @@ export function saveStoredVersionId(versionId: TranslationId): void {
 export function getStoredSettings(): ReaderSettings {
   if (!isStorageAvailable()) return DEFAULT_SETTINGS;
   try {
-    const raw = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+    const raw = readWithFallback(STORAGE_KEYS.SETTINGS, LEGACY_STORAGE_KEYS.SETTINGS);
     if (!raw) return DEFAULT_SETTINGS;
     const parsed = JSON.parse(raw);
     return { ...DEFAULT_SETTINGS, ...parsed };
   } catch (e) {
-    console.warn('Error leyendo alethia_reader_settings de localStorage:', e);
+    console.warn('Error leyendo aletheia_reader_settings de localStorage:', e);
     return DEFAULT_SETTINGS;
   }
 }
@@ -123,7 +137,7 @@ export function saveStoredSettings(settings: Partial<ReaderSettings>): void {
     const next = { ...current, ...settings };
     localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(next));
   } catch (e) {
-    console.warn('Error guardando alethia_reader_settings en localStorage:', e);
+    console.warn('Error guardando aletheia_reader_settings en localStorage:', e);
   }
 }
 
@@ -133,7 +147,7 @@ export function saveStoredSettings(settings: Partial<ReaderSettings>): void {
 export function getStoredReadingPosition(): StoredReadingPosition | null {
   if (!isStorageAvailable()) return null;
   try {
-    const raw = localStorage.getItem(STORAGE_KEYS.POSITION);
+    const raw = readWithFallback(STORAGE_KEYS.POSITION, LEGACY_STORAGE_KEYS.POSITION);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     // Migration: legacy without versionId → ONBV
@@ -144,7 +158,7 @@ export function getStoredReadingPosition(): StoredReadingPosition | null {
     }
     return parsed as StoredReadingPosition;
   } catch (e) {
-    console.warn('Error leyendo alethia_reading_position de localStorage:', e);
+    console.warn('Error leyendo aletheia_reading_position de localStorage:', e);
     return null;
   }
 }
@@ -171,7 +185,7 @@ export function saveStoredReadingPosition(pos: {
     };
     localStorage.setItem(STORAGE_KEYS.POSITION, JSON.stringify(payload));
   } catch (e) {
-    console.warn('Error guardando alethia_reading_position en localStorage:', e);
+    console.warn('Error guardando aletheia_reading_position en localStorage:', e);
   }
 }
 
@@ -181,7 +195,7 @@ export function saveStoredReadingPosition(pos: {
 export function getStoredBookmarks(): StoredBookmark[] {
   if (!isStorageAvailable()) return [];
   try {
-    const raw = localStorage.getItem(STORAGE_KEYS.BOOKMARKS);
+    const raw = readWithFallback(STORAGE_KEYS.BOOKMARKS, LEGACY_STORAGE_KEYS.BOOKMARKS);
     if (!raw) return [];
     const parsed: StoredBookmark[] = JSON.parse(raw);
     return parsed.map((b) => ({
@@ -189,7 +203,7 @@ export function getStoredBookmarks(): StoredBookmark[] {
       versionId: b.versionId ? normalizeVersionId(b.versionId) : DEFAULT_TRANSLATION_ID,
     }));
   } catch (e) {
-    console.warn('Error leyendo alethia_bookmarks de localStorage:', e);
+    console.warn('Error leyendo aletheia_bookmarks de localStorage:', e);
     return [];
   }
 }
@@ -206,7 +220,7 @@ export function saveStoredBookmarks(bookmarks: StoredBookmark[]): void {
     }));
     localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(normalized));
   } catch (e) {
-    console.warn('Error guardando alethia_bookmarks en localStorage:', e);
+    console.warn('Error guardando aletheia_bookmarks en localStorage:', e);
   }
 }
 
@@ -216,11 +230,11 @@ export function saveStoredBookmarks(bookmarks: StoredBookmark[]): void {
 export function getStoredTTSSettings(): StoredTTSSettings | null {
   if (!isStorageAvailable()) return null;
   try {
-    const raw = localStorage.getItem(STORAGE_KEYS.TTS);
+    const raw = readWithFallback(STORAGE_KEYS.TTS, LEGACY_STORAGE_KEYS.TTS);
     if (!raw) return null;
     return JSON.parse(raw);
   } catch (e) {
-    console.warn('Error leyendo alethia_tts_settings de localStorage:', e);
+    console.warn('Error leyendo aletheia_tts_settings de localStorage:', e);
     return null;
   }
 }
@@ -233,7 +247,7 @@ export function saveStoredTTSSettings(settings: StoredTTSSettings): void {
   try {
     localStorage.setItem(STORAGE_KEYS.TTS, JSON.stringify(settings));
   } catch (e) {
-    console.warn('Error guardando alethia_tts_settings en localStorage:', e);
+    console.warn('Error guardando aletheia_tts_settings en localStorage:', e);
   }
 }
 
