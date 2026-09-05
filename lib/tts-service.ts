@@ -10,6 +10,51 @@ const isSafari = (() => {
   return /^((?!chrome|android).)*safari/i.test(ua);
 })();
 
+// GC pin: utterance must stay reachable or Chrome collects it mid-speech
+declare global {
+  interface Window {
+    _activeBibleUtterance?: SpeechSynthesisUtterance | null;
+  }
+}
+
+/** Opciones de speakVerse, reutilizadas por el fallback Piper */
+export interface SpeakVerseOptions {
+  voiceURI?: string | null;
+  rate?: number;
+  onStart?: () => void;
+  onBoundary?: (charIndex: number, text: string) => void;
+  onEnd?: () => void;
+  onError?: (err: unknown) => void;
+  bookName?: string;
+  chapterNumber?: number;
+}
+
+/** Error con código legible por UI (bloqueo de autoplay, fallo total, …) */
+export interface TTSCodedError extends Error {
+  code?: string;
+  originalEvent?: unknown;
+}
+
+function ttsCodedError(message: string, code: string, originalEvent?: unknown): TTSCodedError {
+  const err = new Error(message) as TTSCodedError;
+  err.code = code;
+  if (originalEvent !== undefined) err.originalEvent = originalEvent;
+  return err;
+}
+
+/** Mensaje legible para cualquier throwable del pipeline TTS */
+export function ttsErrorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === 'object' && err !== null && 'error' in err) return String((err as { error: unknown }).error);
+  return String(err);
+}
+
+/** Código de error de EasySpeech/WebSpeech cuando el rechazo trae { error: 'canceled' | … } */
+function speechRejectCode(err: unknown): string {
+  if (typeof err === 'object' && err !== null && 'error' in err) return String((err as { error: unknown }).error);
+  return '';
+}
+
 // EasySpeech handles cross-browser quirks (voices async, cancel->speak race, GC pin)
 // We also keep native fallbacks for boundary/mediaSession/wakeLock
 const KEEPALIVE_INTERVAL_MS = 10_000;
@@ -86,7 +131,7 @@ class BibleTTSService {
     } catch {}
     // Also listen via addEventListener where available
     try {
-      this.synth.addEventListener?.('voiceschanged', loadVoices as any);
+      this.synth.addEventListener?.('voiceschanged', loadVoices);
     } catch {}
   }
 
@@ -189,19 +234,7 @@ class BibleTTSService {
     this.onNextVerseCallback = onNext;
   }
 
-  public async speakVerse(
-    verse: Verse,
-    options: {
-      voiceURI?: string | null;
-      rate?: number;
-      onStart?: () => void;
-      onBoundary?: (charIndex: number, text: string) => void;
-      onEnd?: () => void;
-      onError?: (err: any) => void;
-      bookName?: string;
-      chapterNumber?: number;
-    }
-  ) {
+  public async speakVerse(verse: Verse, options: SpeakVerseOptions) {
     if (!this.synth) {
       options.onError?.(new Error('SpeechSynthesis no está disponible en este navegador'));
       return;
@@ -250,7 +283,7 @@ class BibleTTSService {
     this.currentUtterance = utterance;
 
     if (typeof window !== 'undefined') {
-      (window as any)._activeBibleUtterance = utterance;
+      window._activeBibleUtterance = utterance;
     }
 
     const requestedRate = options.rate || 1.0;
@@ -311,7 +344,7 @@ class BibleTTSService {
       this.currentUtterance = null;
       this.stopKeepalive();
       if (typeof window !== 'undefined') {
-        (window as any)._activeBibleUtterance = null;
+        window._activeBibleUtterance = null;
         try {
           if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'none';
         } catch {}
@@ -323,7 +356,7 @@ class BibleTTSService {
       options.onEnd?.();
     };
 
-    utterance.onerror = (e: any) => {
+    utterance.onerror = (e: SpeechSynthesisErrorEvent) => {
       if (hasEnded) return;
       if (!hasStarted && e.error === 'synthesis-failed' && cleanText.length > 0) {
         this.currentUtterance = null;
@@ -336,7 +369,7 @@ class BibleTTSService {
       this.currentUtterance = null;
       this.stopKeepalive();
       if (typeof window !== 'undefined') {
-        (window as any)._activeBibleUtterance = null;
+        window._activeBibleUtterance = null;
         try {
           if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'none';
         } catch {}
@@ -358,10 +391,9 @@ class BibleTTSService {
           return;
         }
         if (e.error === 'not-allowed') {
-          const err: any = new Error('El navegador bloqueó el audio (requiere interacción). Pulsa de nuevo 🔊.');
-          err.code = 'not-allowed';
-          err.originalEvent = e;
-          options.onError?.(err);
+          options.onError?.(
+            ttsCodedError('El navegador bloqueó el audio (requiere interacción). Pulsa de nuevo 🔊.', 'not-allowed', e)
+          );
           return;
         }
         if (e.error === 'synthesis-failed' || e.error === 'synthesis-unavailable') {
@@ -383,11 +415,11 @@ class BibleTTSService {
       try {
         await EasySpeech.speak({
           text: cleanText,
-          voice: utterance.voice as any,
+          voice: utterance.voice ?? undefined,
           rate: utterance.rate,
           pitch: utterance.pitch,
           volume: utterance.volume,
-          boundary: options.onBoundary ? (e: any) => options.onBoundary?.(e.charIndex, cleanText) : undefined,
+          boundary: options.onBoundary ? (e) => options.onBoundary?.(e.charIndex, cleanText) : undefined,
         });
         // EasySpeech resolves on end — trigger our handlers
         if (!hasEnded) {
@@ -396,9 +428,10 @@ class BibleTTSService {
           options.onEnd?.();
         }
         return;
-      } catch (err: any) {
+      } catch (err: unknown) {
         // Fallback to native if EasySpeech fails
-        if (err?.error === 'canceled' || err?.error === 'interrupted') return;
+        const code = speechRejectCode(err);
+        if (code === 'canceled' || code === 'interrupted') return;
       }
     }
 
@@ -423,7 +456,7 @@ class BibleTTSService {
     }
   }
 
-  private async tryPiperFallback(cleanText: string, options: any, hasStarted: boolean, hasEnded: boolean) {
+  private async tryPiperFallback(cleanText: string, options: SpeakVerseOptions, hasStarted: boolean, hasEnded: boolean) {
     // Fallback único: Piper español rhasspy/piper-voices es_ES-sharvard-medium (solo español)
     const needsLoading = !isPiperEngineReady() || !isPiperVoiceReady();
     if (needsLoading && typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('kokoro-loading', { detail: true }));
@@ -472,9 +505,10 @@ class BibleTTSService {
       if (abort.signal.aborted) return;
       console.warn('Piper fallback falló:', e);
     }
-    const err: any = new Error('TTS no disponible. Web Speech falló y Piper español no pudo sintetizar. Verifica conexión.');
-    err.code = 'all-failed';
-    setTimeout(() => options.onError?.(err), 100);
+    setTimeout(
+      () => options.onError?.(ttsCodedError('TTS no disponible. Web Speech falló y Piper español no pudo sintetizar. Verifica conexión.', 'all-failed')),
+      100
+    );
   }
 
   public pause() {
@@ -530,7 +564,7 @@ class BibleTTSService {
       this.currentUtterance = null;
       this.stopKeepalive();
       if (typeof window !== 'undefined') {
-        (window as any)._activeBibleUtterance = null;
+        window._activeBibleUtterance = null;
         try {
           if ('mediaSession' in navigator) {
             navigator.mediaSession.playbackState = 'none';

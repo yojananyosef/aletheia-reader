@@ -79,6 +79,7 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
       if (autoHideTimeoutRef.current) {
         clearTimeout(autoHideTimeoutRef.current);
       }
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO(reader-hygiene): dead component, delete or merge with ReaderFooter
       setIsMinimized(false);
     }
 
@@ -134,7 +135,7 @@ export const AudioNarratorBar: React.FC<AudioNarratorBarProps> = ({
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setIsMinimized(false);
+      setIsMinimized(false); // eslint-disable-line react-hooks/set-state-in-effect -- TODO(reader-hygiene): dead component, delete or merge with ReaderFooter
                   }}
                   className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-neutral-500/15"
                   aria-label="Expandir controles"

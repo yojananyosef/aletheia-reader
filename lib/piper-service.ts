@@ -8,8 +8,16 @@
  * Peso voz ~60MB onnx, phonemizer ~18MB data, cacheado
  */
 
-let piperEngine: any | null = null;
-let loadingPromise: Promise<any> | null = null;
+import type {
+  OnnxWebRuntime,
+  OnnxWebWorkerRuntime,
+  PhonemizeWebWorkerRuntime,
+  PiperEngineLike,
+  PiperGenerateResult,
+} from 'piper-tts-web';
+
+let piperEngine: PiperEngineLike | null = null;
+let loadingPromise: Promise<PiperEngineLike> | null = null;
 let isLoading = false;
 
 export const SPANISH_VOICE = 'es_ES-sharvard-medium';
@@ -30,21 +38,28 @@ export function isPiperLoading(): boolean {
 
 export function onPiperProgress(_cb: (pct: number) => void) {}
 
-async function getPiperEngine(): Promise<any> {
+/** Error name for unknown throwables (DOMException from play() is not an Error instance) */
+function errorName(e: unknown): string {
+  if (e instanceof Error) return e.name;
+  if (typeof e === 'object' && e !== null && 'name' in e) return String((e as { name: unknown }).name);
+  return '';
+}
+
+async function getPiperEngine(): Promise<PiperEngineLike> {
   if (piperEngine) return piperEngine;
   if (loadingPromise) return loadingPromise;
 
   loadingPromise = (async () => {
     // No setLoading aquí — el loading lo controla tryPiperFallback hasta que suene
-    const mod: any = await import('piper-tts-web');
+    const mod = await import('piper-tts-web');
 
     // Usar Worker Engine para no bloquear hilo principal (fix UI pesada al pausar)
     // Worker + numThreads:1 evita warning crossOriginIsolated y fallback single-thread
-    const WorkerEngine = (mod as any).PiperWebWorkerEngine;
-    const OnnxWorkerRuntime = (mod as any).OnnxWebWorkerRuntime;
-    const PhonemizeWorkerRuntime = (mod as any).PhonemizeWebWorkerRuntime;
+    const WorkerEngine = mod.PiperWebWorkerEngine;
+    const OnnxWorkerRuntime = mod.OnnxWebWorkerRuntime;
+    const PhonemizeWorkerRuntime = mod.PhonemizeWebWorkerRuntime;
 
-    let engine: any;
+    let engine: PiperEngineLike;
     if (WorkerEngine && OnnxWorkerRuntime && PhonemizeWorkerRuntime) {
       try {
         engine = new WorkerEngine({
@@ -53,17 +68,13 @@ async function getPiperEngine(): Promise<any> {
         });
       } catch (e) {
         console.warn('Piper worker engine falló, fallback a main thread', e);
-        const Fallback = (mod as any).PiperWebEngine ?? mod.default?.PiperWebEngine ?? mod.default;
-        if (!Fallback) throw new Error('PiperWebEngine not found');
-        const OnnxRuntime = (mod as any).OnnxWebRuntime;
-        engine = new Fallback(
+        const OnnxRuntime = mod.OnnxWebRuntime;
+        engine = new mod.PiperWebEngine(
           OnnxRuntime ? { onnxRuntime: new OnnxRuntime({ basePath: '/onnx/', numThreads: 1 }) } : undefined
         );
       }
     } else {
-      const Fallback = (mod as any).PiperWebEngine ?? mod.default?.PiperWebEngine ?? mod.default;
-      if (!Fallback) throw new Error('PiperWebEngine not found');
-      engine = new Fallback();
+      engine = new mod.PiperWebEngine();
     }
 
     piperEngine = engine;
@@ -90,7 +101,7 @@ export async function speakWithPiper(
     voice?: string;
     onStart?: () => void;
     onEnd?: () => void;
-    onError?: (e: any) => void;
+    onError?: (e: unknown) => void;
     signal?: AbortSignal;
   } = {}
 ): Promise<HTMLAudioElement | null> {
@@ -102,7 +113,7 @@ export async function speakWithPiper(
 
     // No onStart antes de generate — toast debe quedarse hasta que suene (playStarted)
     // piper-tts-web: engine.generate(text, voice, speaker=0) → { file: Blob, duration, phonemeData }
-    const result: any = await engine.generate(text, voice, 0);
+    const result: PiperGenerateResult = await engine.generate(text, voice, 0);
 
     if (opts.signal?.aborted) return null;
 
@@ -127,7 +138,7 @@ export async function speakWithPiper(
     const url = URL.createObjectURL(blob);
     // onStart se dispara cuando el audio realmente empieza (playStarted), no antes
     return playAudioElement(url, opts);
-  } catch (e: any) {
+  } catch (e: unknown) {
     // Cancelación durante generate no debe reportarse como error
     if (opts.signal?.aborted) return null;
     opts.onError?.(e);
@@ -137,7 +148,7 @@ export async function speakWithPiper(
 
 function playAudioElement(
   url: string,
-  opts: { onStart?: () => void; onEnd?: () => void; onError?: (e: any) => void; signal?: AbortSignal }
+  opts: { onStart?: () => void; onEnd?: () => void; onError?: (e: unknown) => void; signal?: AbortSignal }
 ): Promise<HTMLAudioElement> {
   const el = new Audio(url);
   el.preload = 'auto';
@@ -153,7 +164,7 @@ function playAudioElement(
   };
 
   let playStarted = false;
-  let abortHandler: any = null;
+  let abortHandler: (() => void) | null = null;
   if (opts.signal) {
     abortHandler = () => {
       if (playStarted && !el.paused) {
@@ -197,19 +208,20 @@ function playAudioElement(
         // onStart real: cuando el audio efectivamente empieza
         opts.onStart?.();
       })
-      .catch((playErr: any) => {
+      .catch((playErr: unknown) => {
         if (opts.signal?.aborted) {
           cleanup();
           if (opts.signal && abortHandler) opts.signal.removeEventListener('abort', abortHandler);
           resolve(el);
           return;
         }
+        const playText = String(playErr);
         if (
-          playErr?.name === 'AbortError' ||
-          String(playErr).includes('interrupted') ||
-          String(playErr).includes('removed') ||
-          String(playErr).includes('pause') ||
-          String(playErr).includes('NotSupportedError')
+          errorName(playErr) === 'AbortError' ||
+          playText.includes('interrupted') ||
+          playText.includes('removed') ||
+          playText.includes('pause') ||
+          playText.includes('NotSupportedError')
         ) {
           // NotSupportedError tras abort también es cancel silencioso
           if (opts.signal?.aborted) {

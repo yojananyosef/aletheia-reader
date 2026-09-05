@@ -1,0 +1,7 @@
+- [x] Configurar ignores de assets generados en `eslint.config.mjs`
+- [x] Arreglar scripts `lint/typecheck/test` en `package.json`
+- [x] Instalar `vitest`, remover `playwright` duplicado
+- [x] Incluir `lib/__tests__` en tsconfig + `.gitignore` reportes
+- [x] Tipar `piper-service`/`tts-service`/`utils` (cero `any`) + header CJS en script
+- [x] Disables puntuales + TODO a los 8 casos del compilador React
+- [x] Verificación: lint + typecheck + test + build en verde

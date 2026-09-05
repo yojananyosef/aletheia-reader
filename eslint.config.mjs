@@ -15,6 +15,17 @@ const eslintConfig = defineConfig([
     "app/context/**",
     "context/**",
     ".context/**",
+    // Third-party / generated assets copied at build time (not our code):
+    "public/worker/**",
+    "public/onnx/**",
+    "public/piper/**",
+    // Bible data JSON (content, not code):
+    "public/data/**",
+    "public/json/**",
+    // Test / coverage reports:
+    "coverage/**",
+    "playwright-report/**",
+    "test-results/**",
   ]),
 ]);
 

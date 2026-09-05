@@ -239,6 +239,7 @@ export const LineFocusOverlay: React.FC<LineFocusOverlayProps> = ({
   const bottomMaskTop = windowCenterY + apertureHeight / 2;
 
   // No transitions during active drag — instant position update
+  // eslint-disable-next-line react-hooks/refs -- TODO(reader-hygiene): ref read in render, move to state/event
   const transitionClass = isDragging.current
     ? 'transition-none'
     : isLocked

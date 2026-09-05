@@ -356,7 +356,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
       return { chapterKey: currentChapterKey, pages: [data.verses || []] };
     }
 
-    const { availableHeight, availableWidth } = getAvailableDimensions();
+    const { availableHeight, availableWidth } = getAvailableDimensions(); // eslint-disable-line react-hooks/refs -- TODO(reader-hygiene): hoist measurement helpers above component
 
     const result = buildPagination(
       data.verses,
