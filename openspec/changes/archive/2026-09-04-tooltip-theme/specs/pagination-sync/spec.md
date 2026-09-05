@@ -1,17 +1,4 @@
-# pagination-sync Specification
-
-## Purpose
-Sincronización paginación↔TTS confiable y tooltips sin recorte ni sobrecarga de providers.
-
-## Requirements
-
-### Requirement: Robust pagination fingerprint
-
-`onPagesComputed` SHALL re-emit whenever any page's verse set or text changes (per-page verse count, first/last verse number, total text length), not only when the first verse changes.
-
-#### Scenario: Middle-verse change re-emits
-- **WHEN** a middle verse text changes with identical length
-- **THEN** a new fingerprint is computed and `onPagesComputed` fires again
+## MODIFIED Requirements
 
 ### Requirement: Single tooltip provider without clipping
 

@@ -1,0 +1,3 @@
+- [x] Sincronizar clase de tema en `document.body`
+- [x] Delta MODIFIED en spec pagination-sync
+- [x] Verificación: gates + visual en 3 temas (usuario)

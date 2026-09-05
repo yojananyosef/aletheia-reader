@@ -63,6 +63,15 @@ export const ComfortBibleReader: React.FC<ComfortBibleReaderProps> = ({
   // Effective active theme (prop takes precedence if provided)
   const currentTheme: ThemeMode = theme || settings.theme;
 
+  // Mirror theme to <body> so body-portalled tooltips inherit --reader-* vars
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    document.body.classList.remove('theme-pergamino', 'theme-noche', 'theme-sepia');
+    document.body.classList.add(
+      currentTheme === 'noche' ? 'theme-noche' : currentTheme === 'sepia' ? 'theme-sepia' : 'theme-pergamino'
+    );
+  }, [currentTheme]);
+
   // --- Pagination State ---
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
