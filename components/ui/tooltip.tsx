@@ -4,12 +4,12 @@ import * as React from 'react'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { cn } from '@/lib/utils'
 
-function getPortalContainer(): HTMLElement | undefined {
-  if (typeof document === 'undefined') return undefined
-  return document.getElementById('aletheia-reader-container') ?? document.body
-}
-
-function TooltipProvider({
+/**
+ * Single app-level provider (mounted once in app/page.tsx).
+ * Do NOT wrap individual tooltips: one provider per tooltip costs hundreds
+ * of contexts per chapter. Without an ancestor provider Radix falls back
+ * to safe defaults, so standalone reader renders keep working.
+ */function TooltipProvider({
   delayDuration = 250,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
@@ -24,11 +24,7 @@ function TooltipProvider({
 }
 
 function Tooltip({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
-  return (
-    <TooltipProvider>
-      <TooltipPrimitive.Root data-slot="tooltip" {...props} />
-    </TooltipProvider>
-  )
+  return <TooltipPrimitive.Root data-slot="tooltip" {...props} />
 }
 
 function TooltipTrigger({
@@ -44,7 +40,8 @@ function TooltipContent({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content>) {
   return (
-    <TooltipPrimitive.Portal container={getPortalContainer()}>
+    // Default body portal: the reader container is overflow:hidden and would clip tooltips
+    <TooltipPrimitive.Portal>
       <TooltipPrimitive.Content
         data-slot="tooltip-content"
         sideOffset={sideOffset}

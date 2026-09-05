@@ -19,7 +19,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogHeader, DialogTitle, DialogContent } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 import {
   getStoredSettings,
   saveStoredSettings,
@@ -322,6 +322,8 @@ export default function Home() {
   const visibleBookmarks = bookmarksList; // keep all; UI will badge version
 
   return (
+    // Single tooltip provider for explorer + reader (see ui/tooltip: one per tooltip is too costly)
+    <TooltipProvider>
     <div
       className={`relative h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col w-full transition-colors duration-200 ${themeClass}`}
       style={{
@@ -626,5 +628,6 @@ export default function Home() {
         </DialogContent>
       </Dialog>
     </div>
+    </TooltipProvider>
   );
 }

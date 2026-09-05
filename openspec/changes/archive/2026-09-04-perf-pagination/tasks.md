@@ -1,0 +1,3 @@
+- [x] TooltipProvider único + portal a body
+- [x] Fingerprint robusto por página
+- [x] Verificación: gates + checklist dev

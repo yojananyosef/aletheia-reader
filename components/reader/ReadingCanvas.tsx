@@ -390,12 +390,17 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
     resizeRevision,
   ]);
 
-  // Report paginated pages to parent for fragment-level TTS synchronization with fingerprint guard
+  // Report paginated pages to parent for fragment-level TTS synchronization with fingerprint guard.
+  // Fingerprint covers every page (verse count, first/last number, total text length) so
+  // middle-verse edits with identical length still re-emit instead of desyncing TTS.
   const lastReportedFingerprintRef = useRef<string>('');
   useEffect(() => {
     if (!onPagesComputed || !pagination.pages) return;
     const fingerprint = `${pagination.chapterKey}-${pagination.pages.length}-${pagination.pages
-      .map((p) => `${p.length}:${p[0]?.number}:${p[0]?.text?.length}`)
+      .map((p) => {
+        const textLen = p.reduce((acc, v) => acc + (v.text?.length ?? 0), 0);
+        return `${p.length}:${p[0]?.number}:${p[p.length - 1]?.number}:${textLen}`;
+      })
       .join(',')}`;
     if (lastReportedFingerprintRef.current !== fingerprint) {
       lastReportedFingerprintRef.current = fingerprint;
@@ -724,7 +729,7 @@ export const ReadingCanvas: React.FC<ReadingCanvasProps> = ({
                         </Tooltip>
                       )}
 
-                      <Tooltip delayDuration={500}>
+                      <Tooltip>
                         <TooltipTrigger asChild>
                           <span
                             onClick={(e) => {
