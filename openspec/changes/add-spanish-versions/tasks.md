@@ -1,7 +1,0 @@
-- [x] Sincronizar 9 versiones desde gateway + generar catálogos
-- [x] Actualizar `types/bible.ts` con `TranslationId/Meta` y `versionId` en payloads
-- [ ] Refactorizar `lib/bible-service.ts` con adapter gateway y cache por versión
-- [ ] Actualizar `lib/storage-service.ts` con versionado de posición y marcadores
-- [ ] Crear componente `VersionSelector` (pill + drawer)
-- [ ] Integrar selector en `app/page.tsx` + `ReaderToolbar` + SW `alethia-v2`
-- [ ] Verificación build/tests y migración legacy

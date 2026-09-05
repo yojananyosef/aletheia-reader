@@ -1,0 +1,3 @@
+- [x] Crear `app/icon.svg` con motivo libro abierto y paleta de iconos PWA
+- [x] Regenerar `app/favicon.ico` (16/32/48) desde el SVG
+- [x] Verificación: identify + build + link rel=icon en HTML
